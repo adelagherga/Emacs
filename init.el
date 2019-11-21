@@ -131,8 +131,6 @@ indent-tabs-mode nil
 (append '(("\\.mgm$\\|\\.m$" . magma-mode))
         auto-mode-alist))
 (add-hook 'magma-mode-hook 'auto-insert)
-(setq magma-default-directory "/zfs/users/ghergaa/ghergaa")
-
 
 ;; ―――――――――――――――――――――――――――――― Themes ――――――――――――――――――――――――――――――
 (load-theme 'solarized-dark t)

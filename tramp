@@ -1,4 +1,4 @@
-;; -*- emacs-lisp -*- <19/11/20 20:12:56 /Users/adela016/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <19/11/20 22:10:25 /Users/adela016/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
@@ -17,4 +17,7 @@
   ("id" "/usr/bin/id")
   ("gid-string" "grad")
   ("gid-integer" 12000)
-  ("case-insensitive" nil)))
+  ("case-insensitive" nil)
+  ("~" "/zfs/users/ghergaa/ghergaa")
+  ("readlink" "\\readlink")
+  ("git" "\\git")))
