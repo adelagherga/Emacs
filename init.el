@@ -1,10 +1,11 @@
 
 ;; ――――――――――――――――――――――――― Set up 'package' ―――――――――――――――――――――――――
+
 (require 'package)
 
 ;; Add melpa to package archives.
 (add-to-list 'package-archives
-	     '("melpa" . "http://melpa.org/packages/"))
+	     '("melpa" . "https://melpa.org/packages/"))
 
 ;; Load and activate Emacs packages.
 (package-initialize)
@@ -15,6 +16,7 @@
   (package-install 'use-package))
 
 ;; ――――――――――――――――――――――― Use better defaults ――――――――――――――――――――――
+
 (setq-default
  ;; Don't use the compiled code if its the older package.
  load-prefer-newer t
@@ -44,9 +46,6 @@
 ;; Change all yes/no questions to y/n type.
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; Make the command key behave as 'meta'.
-(setq mac-command-modifier 'meta)
-
 ;; 'C-x o' is a 2 step key binding. 'M-o' is much easier.
 (global-set-key (kbd "M-o") 'other-window)
 
@@ -65,7 +64,16 @@ indent-tabs-mode nil
 ;; Automatically update buffers if file content on the disk has changed.
 (global-auto-revert-mode t)
 
+;; Load 'customize' config file.
+(load custom-file 'noerror)
+
+;; Enable transparent title bar on macOS.
+(when (memq window-system '(mac ns))
+ (add-to-list 'default-frame-alist '(ns-appearance . dark)) ;; {light, dark}
+ (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
+
 ;; ――――――――――――――――― Disable unnecessary UI elements ――――――――――――――――-
+
 (progn
   ;; Do not show menu bar.
   (menu-bar-mode -1)
@@ -82,6 +90,9 @@ indent-tabs-mode nil
   (global-hl-line-mode t))
 
 ;; ―――――――――――――― Added functionality (Generic usecases) ――――――――――――――
+
+(yas-global-mode t)
+
 (defun toggle-comment-on-line ()
   "comment or uncomment current line"
   (interactive)
@@ -122,10 +133,50 @@ indent-tabs-mode nil
 
 (global-set-key (kbd "C-c ;") 'comment-pretty)
 
-;; ――――――――――― Additional packages and their configurations ―――――――――――
-(setq tramp-default-method "ssh")
+(ivy-mode 1) ;; Turn on ivy by default.
+(global-set-key "\C-s" 'swiper) ;; Replace I-search with swiper.
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
+(setq ivy-count-format "(%d/%d) ") ;; Change format of the number of results.
 
+;; ――――――――――― Additional packages and their configurations ―――――――――――
+
+;; AucTeX configuration.
+
+;; Add working tex distribution to PATH for AucTeX.
+(setenv "PATH" (concat (getenv "PATH") ":/Library/TeX/texbin"))
+(setq exec-path (append exec-path '("/Library/TeX/texbin")))
+
+(setq TeX-parse-self t) ;; Enable parse on load.
+(setq TeX-auto-save t) ;; Enable parse on save.
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(setq reftex-plug-into-AUCTeX t)
+(setq TeX-PDF-mode t)
+
+;; Use Skim as viewer, enable source <-> PDF sync.
+;; Make latexmk available via C-c C-c.
+;; Note: SyncTeX is setup via ~/.latexmkrc (see below).
+(add-hook 'LaTeX-mode-hook (lambda ()
+ (push
+   '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t
+     :help "Run latexmk on file")
+   TeX-command-list)))
+(add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
+
+;; Use Skim as default PDF viewer.
+;; Skim's displayline is used for forward search (from .tex to .pdf)
+;; option -b highlights the current line; option -g opens Skim in the background
+(setq TeX-view-program-selection '((output-pdf "PDF Viewer")))
+(setq TeX-view-program-list
+    '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
+
+
+
+
+;; searching tools: Ivy, Counsel, Swiper, or Helm?
 ;; ―――――――――――――――――――――― Programming languages ―――――――――――――――――――――
+
 (require 'magma-mode)
 (setq auto-mode-alist
 (append '(("\\.mgm$\\|\\.m$" . magma-mode))
@@ -133,4 +184,5 @@ indent-tabs-mode nil
 (add-hook 'magma-mode-hook 'auto-insert)
 
 ;; ―――――――――――――――――――――――――――――― Themes ――――――――――――――――――――――――――――――
+
 (load-theme 'solarized-dark t)
