@@ -1,4 +1,4 @@
-;; -*- emacs-lisp -*- <19/12/13 18:55:35 /Users/adela016/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <20/01/30 14:21:51 /Users/adela016/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
@@ -21,4 +21,6 @@
   ("~" "/zfs/users/ghergaa/ghergaa")
   ("readlink" "\\readlink")
   ("git" "\\git")
-  ("uid-integer" 11596)))
+  ("uid-integer" 11596))
+ ((tramp-file-name "0x1F5" nil nil "0x0" nil nil nil)
+  nil))
