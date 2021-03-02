@@ -17,7 +17,6 @@
   (package-install 'use-package))
 
 (require 'use-package)
-(setq use-package-always-ensure t)
 
 ;; ――――――――――――――――――――――― Use better defaults ――――――――――――――――――――――
 
@@ -90,7 +89,7 @@ indent-tabs-mode nil
   (menu-bar-mode -1)
 
   ;; Disable tooltips
-  (tooltip-mode -1)
+;;  (tooltip-mode -1)
 
   ;; Do not show tool bar
   (when (fboundp 'tool-bar-mode)
@@ -221,13 +220,104 @@ indent-tabs-mode nil
   :config
   (setq org-ellipsis " ")
   (setq org-hide-emphasis-markers t)
+
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+  (setq org-agenda-files
+  	'("~/Dropbox/OrgFiles/Tasks.org"))
+
+  (setq org-refile-targets
+    '(("Archive.org" :maxlevel . 1)
+      ("Tasks.org" :maxlevel . 1)))
+
+  ;; Save Org buffers after refiling!
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+
+  (setq org-todo-keywords
+  	'((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
+  	  (sequence "|" "WAIT(w)" "BACK(b)")))
+
+  ;; TODO: org-todo-keyword-faces
+  (setq org-todo-keyword-faces
+  	'(("NEXT" . (:foreground "orange red" :weight bold))
+  	  ("WAIT" . (:foreground "HotPink2" :weight bold))
+  	  ("BACK" . (:foreground "MediumPurple3" :weight bold))))
+
+  ;; Configure common tags
+  (setq org-tag-alist
+  	'((:startgroup) ; Put mutually exclusive tags here
+  	  (:endgroup)
+  	  ("@home" . ?H)
+  	  ("@work" . ?W)
+  	  ("batch" . ?b) ; do i need a batch tag? task that can be batched with others (low effort)
+  	  ("followup" . ?f)))
+
+  ;; Agendas
+  (setq org-agenda-window-setup 'current-window)
+  (setq org-agenda-span 'day)
+  (setq org-agenda-start-with-log-mode t)
+
+  (setq org-agenda-custom-commands
+      `(("d" "Dashboard"
+         ((agenda "" ((org-deadline-warning-days 7)))
+          (tags-todo "+PRIORITY=\"A\""
+                     ((org-agenda-overriding-header "High Priority")))
+          (tags-todo "+followup" ((org-agenda-overriding-header "Needs Follow Up")))
+          (todo "NEXT"
+                ((org-agenda-overriding-header "Next Actions")))
+          (todo "TODO"
+                ((org-agenda-overriding-header "Unprocessed Inbox Tasks") ))))
+
+        ("n" "Next Tasks"
+         ((agenda "" ((org-deadline-warning-days 7)))
+          (todo "NEXT"
+                ((org-agenda-overriding-header "Next Tasks")))))
+
+        ;; Low-effort next actions
+        ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
+         ((org-agenda-overriding-header "Low Effort Tasks")
+          (org-agenda-max-todos 20)
+          (org-agenda-files org-agenda-files)))))
+
+  (setq org-capture-templates
+  	`(("t" "Tasks")
+  	  ("tt" "Task" entry (file+olp "~/Dropbox/OrgFiles/Tasks.org" "Inbox")
+           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+
+  	  ;; can use General Entry for meetings, courses, etc
+  	  ;; can use Task Entry to take notes on a specific project part
+  	  ;; journal for anything else (minor)
+
+  	  ("j" "Journal Entries")
+  	  ("je" "General Entry" entry
+  	   (file+olp+datetree "~/Dropbox/OrgFiles/Journal.org")
+  	   "\n* %<%I:%M %p> - %^{Title} \n\n%?\n\n"
+  	   :tree-type month
+  	   :clock-in :clock-resume
+  	   :empty-lines 1)
+  	  ("jt" "Task Entry" entry
+  	   (file+olp+datetree "~/Dropbox/OrgFiles/Journal.org")
+  	   "\n* %<%I:%M %p> - Task Notes: %a\n\n%?\n\n"
+  	   :tree-type month
+  	   :clock-in :clock-resume
+  	   :empty-lines 1)
+  	  ("jj" "Journal" entry
+  	   (file+olp+datetree "~/Dropbox/OrgFiles/Journal.org")
+  	   "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
+  	   :tree-type month
+  	   :clock-in :clock-resume
+  	   :empty-lines 1)))
   (adela/org-font-setup))
 
-(use-package org-bullets
+;; Set global keyboard shortcut for org-capture
+(global-set-key (kbd "C-c c") 'org-capture)
+
+(use-package org-superstar
   :after org
-  :hook (org-mode . org-bullets-mode)
+  :hook (org-mode . org-superstar-mode)
   :custom
-  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+  (org-superstar-remove-leading-stars t)
+  (org-superstar-headline-bullets-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 ;; ―――――――――――――――――――――― Programming languages ―――――――――――――――――――――
 
