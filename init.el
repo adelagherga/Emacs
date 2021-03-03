@@ -249,13 +249,16 @@ indent-tabs-mode nil
   	  (:endgroup)
   	  ("@home" . ?H)
   	  ("@work" . ?W)
-  	  ("batch" . ?b) ; do i need a batch tag? task that can be batched with others (low effort)
+  	  ("batch" . ?b) ; do i need a batch tag?
   	  ("followup" . ?f)))
+  ;; Control the distance of tags at the end of heading
+  (setq org-tags-column 0)
 
   ;; Agendas
   (setq org-agenda-window-setup 'current-window)
   (setq org-agenda-span 'day)
   (setq org-agenda-start-with-log-mode t)
+  (setq org-agenda-tags-column -90)
 
   (setq org-agenda-custom-commands
       `(("d" "Dashboard"
@@ -280,8 +283,7 @@ indent-tabs-mode nil
           (org-agenda-files org-agenda-files)))))
 
   (setq org-capture-templates
-  	`(("t" "Tasks")
-  	  ("tt" "Task" entry (file+olp "~/Dropbox/OrgFiles/Tasks.org" "Inbox")
+  	`(("t" "Task" entry (file+olp "~/Dropbox/OrgFiles/Tasks.org" "Inbox")
            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
 
   	  ;; can use General Entry for meetings, courses, etc
