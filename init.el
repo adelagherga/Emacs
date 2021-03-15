@@ -62,7 +62,15 @@ indent-tabs-mode nil
 (column-number-mode t)
 
 ;; Display line numbers on the left-hand side
-(global-linum-mode t)
+;; (global-linum-mode t) ;; this one used to shift the UI constantly
+(global-display-line-numbers-mode t)
+
+;; Disable line numbers for some modes
+(dolist (mode '(org-mode-hook
+		shell-mode-hook
+		term-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
 
 ;; Automatically update buffers if file content on the disk has changed
 (global-auto-revert-mode t)
@@ -158,6 +166,36 @@ indent-tabs-mode nil
   (setq enable-recursive-minibuffers t)
   (setq ivy-count-format "(%d/%d) ")) ;; Change format of the number of results
 
+;; Descriptions of M-x functions
+(use-package ivy-rich
+  :init
+  (ivy-rich-mode 1))
+
+(use-package counsel
+  :bind (("M-x" . counsel-M-x) ;; bind M-x to counsel-M-x to get ivy-rich descriptions
+	 ("C-x C-f" . counsel-find-file)) ;; use counsel find file instead of usual
+  :config
+  (setq ivy-initial-inputs-alist nil)) ;; Don't start searches with ^
+
+;; displays key bindings
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 0.5)) ;; time delay for it to show up
+
+;; better help info in C-h f, etc;; not sure about this one
+(use-package helpful
+  :commands (helpful-callable helpful-variable helpful-command helpful-key)
+  :custom
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable)
+  :bind
+  ([remap describe-function] . counsel-describe-function)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-variable] . counsel-describe-variable)
+  ([remap describe-key] . helpful-key))
+
 ;; ――――――――――― Additional packages and their configurations ―――――――――――
 
 ;; AucTeX configuration
@@ -198,10 +236,10 @@ indent-tabs-mode nil
 
 (defun adela/org-font-setup ()
 ;; Replace list hyphen with dot
-  (font-lock-add-keywords 'org-mode
-                          '(("^ *\\([-]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1)
-							  (match-end 1) "•"))))))
+  ;; (font-lock-add-keywords 'org-mode
+                          ;; '(("^ *\\([-]\\) "
+                             ;; (0 (prog1 () (compose-region (match-beginning 1)
+							  ;; (match-end 1) "•"))))))
 
 ;; Set faces for heading levels
 (with-eval-after-load 'org-faces
