@@ -196,6 +196,18 @@ indent-tabs-mode nil
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
+;; might need to function with evil mode - use with magit (later)
+;(use-package general
+;  :config
+;  (general-create-definer rune/leader-keys
+;			  :keymaps '(normal insert visual emacs)
+;			  :prefix "SPC"
+;			  :global-prefix "C-SPC")
+;
+;  (rune/leader-keys
+;   "t"  '(:ignore t :which-key "toggles")
+;   "tt" '(counsel-load-theme :which-key "choose theme")))
+
 ;; ――――――――――― Additional packages and their configurations ―――――――――――
 
 ;; AucTeX configuration
