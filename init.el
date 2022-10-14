@@ -90,6 +90,10 @@ indent-tabs-mode nil
 
 (use-package all-the-icons)
 
+;; Add vertical line in at column 80
+(add-hook 'prog-mode-hook (lambda () (display-fill-column-indicator-mode)))
+(setq-default display-fill-column-indicator-column 81)
+
 ;; ――――――――――――――――― Disable unnecessary UI elements ――――――――――――――――-
 
 (progn
@@ -227,7 +231,7 @@ indent-tabs-mode nil
 ;; Make latexmk available via C-c C-c
 ;; Note: SyncTeX is setup via ~/.latexmkrc (see below)
 (add-hook 'LaTeX-mode-hook (lambda ()
- (push
+ (add-to-list
    '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t
      :help "Run latexmk on file")
    TeX-command-list)))
