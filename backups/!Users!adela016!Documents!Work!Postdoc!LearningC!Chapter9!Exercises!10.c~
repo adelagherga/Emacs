@@ -1,0 +1,76 @@
+/*
+ * 10.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created: 31 January 2021
+ *
+ * Description: Returns the largest element in an array, the average element in array, and the
+ *              number of positive elements in array.
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+#define N = 10
+
+int largest(int a[], int N);
+float average(int a[], int N);
+int positives(int a[], int N);
+
+int main(void)
+{
+  int i, a[N] = {0};
+
+  printf("Enter an array with %d entries: ", N);
+  for (i = 0; i < N; i++)
+    scanf("%d", &a[i]);
+
+  printf("The largest element of the array is %d\n", largest(a,N));
+  printf("The average element of the array is %f\n", average(a,N));
+  printf("The number of positive elements in the array is %d\n", positives(a,N));
+
+  return 0;
+}
+
+int largest(int a[], int N)
+{
+  int i, max = 0;
+
+  for (i = 0; i < N; i++)
+    {
+      if (a[i] > max)
+	max = a[i];
+    }
+
+  return max;
+}
+
+float averate(int a[], int N)
+{
+  int i, average = 0;
+
+  for (i = 0; i < N; i++)
+    average += a[i];
+
+  return float (average)/N;
+}
+
+int positives(int a[], int N)
+{
+  int i, positives = 0;
+
+  for (i = 0; i < N; i++)
+    {
+      if (a[i] > 0)
+	positives++;
+    }
+
+  return positives;
+}

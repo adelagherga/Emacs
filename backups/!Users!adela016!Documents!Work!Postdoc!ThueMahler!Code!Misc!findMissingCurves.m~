@@ -1,0 +1,33 @@
+findMissingCurves:=function(N,aInvs)
+
+    E:=MinimalModel(EllipticCurve(aInvs));
+    assert Conductor(E) eq N;
+    c4:=Integers()!(cInvariants(E)[1]);
+    c6:=Integers()!(cInvariants(E)[2]);
+    deltaE:=Discriminant(E);
+    if deltaE lt 0 then
+	delta:=1;
+    else
+	delta:=0;
+    end if;
+    D:=&*[p^Min(Floor(Valuation(c4,p)/2),Floor(Valuation(c6,p)/3))
+	  : p in PrimeDivisors(GCD(c4,c6))];
+    X:=Integers()!(c4/D^2);
+    Y:=Integers()!(c6/D^3);
+    M:=Integers()!(D^(-6)*2^6*3^3*Abs(deltaE));
+    assert Y^2 eq (X^3 + (-1)^(delta+1)*M);
+    M1:=&*[p^(Valuation(M,p)) : p in PrimeDivisors(X)];
+    M2:=&*[p^(Valuation(M,p))
+	   : p in PrimeDivisors(M) | p notin PrimeDivisors(X)];
+    assert M eq M1*M2;
+    a1:=&*[p^(Floor((Valuation(M,p)-1)/2)) : p in PrimeDivisors(M1)];
+    if (Valuation(X,3) eq 0) and (Valuation(M,3) mod 2 eq 0) and
+       (Valuation(M,3) ge 4) then
+	a2:=3^(-1)*&*[p^(Floor(Valuation(M,p)/2)) : p in PrimeDivisors(M2)];
+    else
+	a2:=&*[p^(Floor(Valuation(M,p)/2)) : p in PrimeDivisors(M2)];
+    end if;
+    a:=a1*a2;
+    assert IsDivisibleBy(M1,a1^2);
+    assert IsDivisibleBy(X,a1);
+    assert IsDivisibleBy(Y,a1^2);

@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1.5in]{geometry} 	% See geometry.pdf to learn the layout options. There are lots.
+
+%\usepackage[parfill]{parskip}		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{comment}
+\usepackage{abstract}
+\renewcommand{\abstractname}{}    % clear the title
+\renewcommand{\absnamepos}{empty} % originally center
+
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{lemma}{Lemma}
+\newtheorem{question}{Question}
+
+\numberwithin{equation}{section}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+\begin{document}
+\title{Abstract}
+\maketitle
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\begin{abstract}
+  \noindent \textbf{Title:} Efficient resolution of Thue-Mahler equations\\
+
+\noindent Let $F$ be a homogenous irreducible form of degree at least $3$ with integer coefficients. A Thue-Mahler equation is a Diophantine equation of the form
+  \[F(X,Y) = a\cdot p_1^{z_1}\cdots p_v^{z_v},\]
+  where $a$ is an integer and $p_1, \dots, p_v$ are rational primes. To explicitly solve these equations when the degree and set of primes is small, there exists a practical method of Tzanakis-de Weger using linear forms in logarithms. We give new lattice sieving techniques and a refined algorithm capable of resolving Thue-Mahler equations with high-degree and large prime sets. In this talk, we describe our refined implementation of this method and discuss the key steps used in our algorithm.
+
+\end{abstract}
+
+
+
+
+\end{document}

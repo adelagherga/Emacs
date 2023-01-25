@@ -1,0 +1,8 @@
+// Created: Mon Nov 18 14:47:11 2019
+// Last modified: Mon Nov 18 14:47:44 2019
+// Hash: 9857d2ec76dde55a6ffb1c19bdceb841
+// load "/ssh:ghergaa@l16xl1-bennett1.math.ubc.ca:/zfs/users/ghergaa/ghergaa/testm.m";
+
+//ChangeDirectory("/ssh:ghergaa@l16xl1-bennett1.math.ubc.ca:/zfs/users/ghergaa/ghergaa/");
+
+print "remote testing...";

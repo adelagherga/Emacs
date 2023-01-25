@@ -1,0 +1,33 @@
+/*
+ * 6.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  1 January 2021
+ *
+ * Description: Computes 3x^5 + 2x^4 - 5x^3 - x^2 + 7x - 6 for user-input integer x using
+ *              Horner's Rule
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+int main(void)
+{
+  int x, poly_value;
+
+  printf("Enter a value for x: ");
+  scanf("%d", &x);
+
+  poly_value = ((((3 * x + 2) * x - 5) * x + 7) * x - 6);
+
+  printf("The value is: %d\n", poly_value);
+
+  return 0;
+}

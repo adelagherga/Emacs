@@ -1,0 +1,21 @@
+/*
+
+PIRLtest.m
+
+Author: Adela Gherga <adelagherga@gmail.com>
+Copyright © 2021, Adela Gherga, all rights reserved.
+Created: 19 July 2021
+
+Description: This program runs "tmpackAllCasesChanges1001.m" as well as "GhergaHambrook.m" on
+             various sets in "ObsRegeneratedTMFormData.csv". The output is used to ensure that
+	     the PIRL applied to a-values is correct. All output is printed in
+	     "PIRLtestout.txt" and will include the log.
+
+Commentary:  Run with nohup magma
+
+
+To do list:
+
+Example:
+
+*/

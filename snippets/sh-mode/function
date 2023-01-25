@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: function
+# key: function_
+# --
+
+# $2
+$1 () {
+
+   # Input: $3
+   #
+   # Output: $4
+   #
+   # Example: $5
+
+$0
+
+}

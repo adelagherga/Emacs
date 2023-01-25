@@ -1,0 +1,35 @@
+/*
+ * 4.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  1 January 2021
+ *
+ * Description: Adds taxes to user-input dollar-and-cents amount
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+#define TAX 0.05f
+
+int main(void)
+{
+  float amount, tax_amount, total;
+
+  printf("Enter a dollars-and-cents amount: ");
+  scanf("%.2f", &amount);
+
+  tax_amount = amount * TAX;
+  total = amount + tax_amount;
+
+  printf("With tax added: %.2f", total);
+
+  return 0;
+}

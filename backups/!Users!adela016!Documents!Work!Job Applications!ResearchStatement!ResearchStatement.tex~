@@ -1,0 +1,528 @@
+\documentclass[12pt]{report}
+
+\usepackage[margin=2.2cm,bottom=2.5cm]{geometry}%rounded up from 1.87, just to be safe...
+\usepackage{comment}
+\usepackage[matrix,arrow]{xy}
+%\usepackage[parfill]{parskip}		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{threeparttable}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{comment}
+\usepackage{color}
+\usepackage{abstract}
+\usepackage{hyperref}
+\usepackage[sectionbib]{natbib}
+\renewcommand{\abstractname}{}    % clear the title
+\renewcommand{\absnamepos}{empty} % originally center
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{lemma}{Lemma}
+\newtheorem{question}{Question}
+\renewcommand{\bibname}{\normalsize References}
+
+\numberwithin{equation}{section}
+\setcounter{equation}{0}
+\renewcommand{\theequation}{\arabic{equation}}
+
+% stylistic environment
+\definecolor{ubcBlue1}{RGB}{0,85,183}
+\hypersetup{
+  colorlinks=true,
+  citecolor=ubcBlue1,
+  linkcolor=ubcBlue1,
+  filecolor=magenta,
+  urlcolor=ubcBlue1,
+}
+
+% new commands
+\newcommand{\edit}[1]{\textcolor{red}{#1}}
+
+%\textwidth6in
+
+\setlength{\topmargin}{0in} \addtolength{\topmargin}{-\headheight}
+\addtolength{\topmargin}{-\headsep}
+
+%\setlength{\oddsidemargin}{0in}
+
+%\oddsidemargin  0.0in \evensidemargin 0.0in \parindent0em
+
+\pagestyle{fancy}\lhead{Research Statement} \rhead{Adela Gherga}
+\chead{{}} \lfoot{} \rfoot{} \cfoot{\thepage}
+
+\bibliographystyle{plain}
+%\bibliography{ResearchStatement.bib}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+\begin{document}
+%\title{}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\begin{comment}
+\section{Introduction}
+
+\begin{itemize}
+\item Call it	a Research Prospectus. It sounds better.
+\item Start with a very	broad overview of your research	and where it fits into mathematics. If your first sentence	is “I study mapping class groups,” then	you’ve	already	lost most of your audience.
+\item Give a brief history of your subject. Give the names of the founders of your area, with
+dates. Also, give the names of some of the most researchers in your area, either because
+they invented or inspired your subfield, or because they are responsible for the tools you use.
+\item Give in a	few words the flavor of	your work. What	kinds of techniques do you use?	What
+other areas of mathematics does	your research borrow from or have connections to?
+\end{itemize}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Outline}
+
+\begin{enumerate}
+\item Summary of statement
+  \begin{enumerate}
+  \item type of research (general statment)
+  \item types of projects I'm interested in
+  \item value of the research projects I'm interested in
+  \item programming languages and proficiency
+  \end{enumerate}
+\item Past and current Work: Thue--Mahler
+
+\item Current Work: Elliptic curves
+  \begin{enumerate}
+  \item basic definition
+  \item value of computation (BSD, Szpiro conjecture, etc)
+  \item LMFDB
+  \item how the LMFDB is computed
+  \item Goal
+  \end{enumerate}
+\end{enumerate}
+\end{comment}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+My research focuses on problems in computational number theory. In particular, I develop and implement efficient algorithms and computational tools to explicitly resolve Diophantine equations, often related to elliptic curves. These are ubiquitous objects in pure mathematics that serve vital functions in primality testing, fast factorization of integers, lattices and the sphere packing problem, and most notably in the proof of Fermat's Last Theorem.
+
+More precisely, an elliptic curve defined over a number field $K$ is the set of points
+\[E(K):=\{(x,y)\in K^2 \ | \ y^2=x^3+ax+b \} \cup \{\mathcal{O}\}\]
+for some $a,b \in K$, along with some distinguished point at infinity $\mathcal{O}$. This curve is required to be nonsingular. When $K=\mathbb{Q}$, this means simply that $4a^3+27b^2 \neq 0$. For a rational prime $p$, it may happen that $4a^3+27b^2 = 0$ in $\mathbb{F}_p$, in which case we say $E$ has \textit{bad reduction} at $p$, otherwise we say it has \textit{good reduction} at $p$. This information is encoded in an invariant $N$ of an elliptic curve called the \textit{conductor}; the prime factors of $N$ are those at which $E$ has bad reduction.
+
+Much of our progress in the understanding of elliptic curves derives from our ability to compute with these objects explicitly. The Birch and Swinnerton-Dyer conjecture \cite{BSD}, for example, originated in computational observations. My work centers on explicitly generating elliptic curves of a given conductor $N$ and expanding existing elliptic curve databases with the goal of providing a larger testing ground for conjectures and discoveries. I achieve this by developing fast algorithms to resolve Diophantine equations, many of which have extensive applications beyond elliptic curves. This work is the result of several on-going independent international collaborations.
+
+
+
+%\edit{collaboration}
+% In the $1950$'s and $1960$'s, Taniyama and Weil asked whether all elliptic curves over $\mathbb{Q}$ are related to certain complex analytic functions called modular forms. This conjecture has since been proven to be true in what is now the celebrated Modularity Theorem. However, until it's proof in $2001$, attempts to verify it have sparked a large effort to tabluate all elliptic curves over $\mathbb{Q}$ of given conductor $N$. Indeed, much of our progress in the understanding of elliptic curves derives from our ability to compute with these objects explicitly. The Birch and Swinnerton-Dyer conjecture \cite{BSD}, for example, originated in computational observations.
+
+
+
+% My interest in Diophantine equations is two-fold. They describe patterns in our number system, often inter-connected to many other patterns, and with deep mathematical theory underlying their behaviour.
+
+% (interconnectivity of Diophantine equations)
+
+% often with deep mathematical results underlying
+
+
+
+% To this end, there has been a large effort to tabulate elliptic curves over $\mathbb{Q}$ of given conductor $N$.
+
+
+% and are part of my largest project to date, the development of a software package to generate elliptic curves over $\mathbb{Q}$ to expand the L-functions and Modular Forms Database (\cite{LMFDB}).
+
+
+% accelerate research through the development of computational tools that realize recent theoretical advances in arithmetic geometry and number theory and seeks to exploit these tools to advance the research frontier in these fields.
+
+% This position will engage in a combination of mathematical research and the development of algorithms, software, and datasets.
+
+% ** Talk about ECs here
+
+% several ongoing independent international collaborations
+
+% Here, an elliptic curve is...
+% reduction means...
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\subsubsection*{PAST AND CURRENT RESEARCH INTERESTS}
+
+\paragraph{Efficient resolution of Thue--Mahler equations.}
+
+Let
+\[F(X,Y)=a_0 X^d+a_1 X^{d-1} Y+ \cdots + a_d Y^d\]
+be an irreducible homogeneous polynomial of degree $d \geq 3$ with integer coefficients $a_i\in\mathbb{Z}$.
+A Thue--Mahler equation is a Diophantine equation of the form
+\begin{equation}\label{eqn:TM}
+  F(X,Y) = a\cdot p_1^{z_1}\cdots p_v^{z_v}, \qquad X,~Y \in \mathbb{Z}, \; \gcd(X,Y)=1,
+\end{equation}
+where $a$ is a non-zero integer and $p_1, \dots, p_v$ are distinct prime numbers. These equations have at most finitely many integer solutions, and these solutions are often tied to other Diophantine problems. For instance, Goormaghtigh's equation \cite{BeGhKr}, the Lebesgue--Nagell equations (e.g.\ \cite{Cangul}, \cite{SoTz}), and asymptotic cubic superelliptic equations \cite{BennettDahmen} all naturally reduce to the resolution of Thue--Mahler equations. These Thue--Mahler equations have varying degrees, sometimes as large as $d=20$, and often involving as many as $v=10$ primes. To completely resolve these related problems, one therefore requires an efficient Thue--Mahler solver, capable of handling large degrees, large sets of primes, and often, a very high volume of Thue--Mahler equations.
+
+Perhaps the most compelling motivation for such a solver, however, arises from the correspondence between solutions of \eqref{eqn:TM} and elliptic curves. In \cite{BeGhRe}, we show how the problem of determining all elliptic curves over $\mathbb{Q}$ with good reduction outside a given set of primes (having no rational point of order $2$) algorithmically reduces to the problem of solving certain Thue--Mahler equations. This method of generating exhaustive lists of elliptic curves provides a simple alternative to the current method, which relies on deep theoretical results about modularity and highly complex algorithms. In the Thue--Mahler case, one only needs to be able to solve a very large number of Thue--Mahler equations of degree $d=3$.
+
+Until recently, the only general algorithm for solving Thue--Mahler equations was the one due to Tzanakis and de Weger \cite{TW}. This algorithm relies on extensive computations in the number field ${K=\mathbb{Q}(\theta,\theta^\prime,\theta^{\prime\prime})}$, where $\theta$, $\theta^\prime$, $\theta^{\prime\prime}$ are distinct roots of $F(X,1)=0$, as well as $\mathfrak{p}$-adic completions of $K$. The field $K$ typically has degree $d(d-1)(d-2)$, making this algorithm impractical if the degree $d$ is large. The first step of this algorithm is to reduce to a number of equations in $K$, a computation which runs into a combinatorial explosion of cases if the number of primes $v$ is large or if the class number, an invariant of $K$, is large, even if the degree $d$ is small.
+
+\begin{table}[h]
+  \centering
+  \caption{Runtime Comparison Examples}\label{table1}
+  \begin{threeparttable}
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    & Degree & Previous runtime & Our runtime & Solutions\\
+    \hline\hline
+    Equation \eqref{eqn:ex1} & $5$ & $72$ days & $0.1$ seconds & $0$ \\
+    \hline
+    Equation \eqref{eqn:ex2} & $3$ & timeout & $42$ seconds & $4$ \\
+    \hline
+    Equation \eqref{eqn:ex3} & $11$ & timeout & $4.7$ hours & $4$ \\
+    \hline
+    Equation \eqref{eqn:ex4} & $3$ & $54$ minutes & $21$ seconds & $7$ \\
+    \hline\hline
+  \end{tabular}
+  \begin{tablenotes}
+        \item This table compares the total runtimes of the old algorithm with our new Thue--Mahler solver, across several examples.
+    \end{tablenotes}
+    \end{threeparttable}
+\end{table}
+
+Consider, for example
+\begin{equation} \label{eqn:ex1}
+F(X,Y) = 3 X^5 + 65 X^4 Y - 290 X^3 Y^2 - 2110 X^2 Y^3 + 975 X Y^4 + 3149 Y^5.
+\end{equation}
+A modern implementation \cite{Hambrook} of Tzanakis and de Weger requires roughly 72 days to solve the equation
+\[
+F(X,Y)\; = \;
+-2^5 \cdot 3^4 \cdot 5^{z_1} \cdot 11^{z_2},
+\]
+concluding that there are no solutions. On the other hand, applying the solver to the equation
+\begin{equation} \label{eqn:ex2}
+  14X^3 + 20X^2Y + 24XY^2 + 15Y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 17^{z_3}\cdot 37^{z_4} \cdot 53^{z_5}
+\end{equation}
+fails after $6$ months due to the high memory demand. In this case, a large class number of $33$ creates $113,848,416$ equations in $K$ to resolve, each generating billions of potential solutions to extract, store, and test, ultimately resulting in the program's failure. A similar outcome occurs for
+\begin{multline} \label{eqn:ex3}
+5 X^{11} + X^{10} Y + 4 X^9 Y^2 + X^8 Y^3 + 6 X^7 Y^4 + X^6 Y^5 + 6 X^5 Y^6 +
+    6 X^3 Y^8 + 4 X Y^{10} - 2 Y^{11}\\
+=
+2^{z_1} \cdot 3^{z_2} \cdot 5^{z_3} \cdot 7^{z_4} \cdot 11^{z_5},
+\end{multline}
+this time the explosion of cases being due to the high degree. Finally, consider the Thue--Mahler equation
+\begin{equation}\label{eqn:ex4}
+  4X^3+ X^2 Y + 12X Y^2 - 6Y^3= 3^{z_1} \cdot  7^{z_2}\cdot 41^{z_3}.
+\end{equation}
+This requires $54$ minutes to find all $4$ solutions.
+
+In \cite{GhSi}, Samir Siksek and I determine an efficient algorithm for resolving Thue--Mahler equations that requires computations only in $K=\mathbb{Q}(\theta)$, making it far more suited for higher degree examples. We also introduce a lattice sieving technique that makes it practical to tackle Thue--Mahler equations of higher degree and with larger sets of primes. This algorithm builds on many of the powerful ideas in the paper of Tzanakis and de Weger but avoids all computations in $p$-adic fields or their extensions, and includes a number of refinements that circumvent the explosion of cases in the existing solver. We have implemented this algorithm in the computer algebra system \texttt{Magma} \cite{Magma} and have published it publicly at \newline
+{\small \url{https://github.com/adelagherga/ThueMahler/tree/master/Code/TMSolver}.}
+
+These improvements mean that we can now solve Thue--Mahler equations which were not possible before, as well as significantly faster runtimes. Table~\ref{table1} demonstrates the strength of our algorithm, comparing the total runtime of the Tzanakis-de Weger algorithm on the aforementioned examples with the runtimes of our new solver. We make use of this implementation in \cite{BeGhKr}, \cite{BGPS}, where we solve Thue--Mahler equations of degrees $5$ and $20$, respectively.
+
+%--------------------------------------------------------------------------------------------%
+
+\paragraph{Algorithms for the sum of $2$ $S$-units being a square.}
+
+For $v \geq 1$, let $p_1,\dots,p_v$ be distinct prime numbers, and let $S$ be the set of positive rational integers with no prime divisors outside of $\{p_1,\dots,p_v\}$. A rational number is called an \textit{$S$-unit} if its absolute value is a quotient of elements of $S$. Presently, I am interested in the Diophantine equation
+\begin{equation} \label{eqn:xyz2}
+  X + Y = Z^2
+\end{equation}
+in $X$, $Y$ $S$-units, and $Z\in\mathbb{Q}$. Like Thue--Mahler equations, these Diophantine equations have finitely many solutions, and these solutions play a role in determining elliptic curves over $\mathbb{Q}$. In particular, in \cite{BeGhRe}, we show that the set of all solutions of \eqref{eqn:xyz2} yields all elliptic curves with good reduction outside $\{p_1, \dots, p_v\}$ with at least one rational point of order $2$. This correspondence is not only valuable for generating provably complete lists of elliptic curves, but for solving certain Fermat-type equations as well \cite{Mocanu}. It is therefore of some importance to be able to explicitly and efficiently resolve the sum of $2$ $S$-units being a square, for any given set of primes.
+
+An algorithm for solving such equations is described in detail by de Weger \cite{deWeger}. In \cite{BeGhRe}, I have implemented a refined version of this algorithm in both \texttt{SageMath} and \texttt{Magma}, and successively used this algorithm to solve \eqref{eqn:xyz2} for several small sets of primes. However, as in the Thue--Mahler case, if the number of primes $v$ is large or if the class number, an invariants of the associated number field, is large, this algorithm runs into a combinatorial explosion of cases. Furthermore, even with small prime sets, the final stage of the algorithm is often forced to iterate and test more than a trillion potential solutions, a very time-consuming and memory-intensive operation. For example, even after breaking up the computation into subcases to run in parallel across 80 computer cores, solving \eqref{eqn:xyz2} with the set $\{2,3,5,7,11\}$ requires several weeks to generate all $1386$ solutions. Conversely, solving this equation with the set of primes $\{2,3,5,7,11,433\}$ in parallel over $80$ cores fails after $3$ months following a memory overload.
+
+Fortunately, the bottlenecks of this algorithm are very similar to the bottlenecks of the Tzanakis-de Weger Thue--Mahler algorithm. This means that many of our refinements to the Thue--Mahler algorithm can be modified and applied here. Presently, I have teamed up with Samir Siksek to implement these refinements in a \texttt{Magma} package. To solve \eqref{eqn:xyz2}, we will first reduce to a number of equations in an associated number field, $K$. We will avoid the potential explostion of cases here by using the class group of $K$, which will allow us to generate a minimal set of equations in $K$, regardless of the class number. For each such equation, we will then generate a very large upper bound on the solutions, successively reducing this bound until all solutions are found.
+
+The key novel feature of this algorithm will be a modification of our strong lattice-sieving technique. This will allow us successively reduce the solution bounds while avoiding a memory-intensive and time-intensive final search, making the resolution of \eqref{eqn:xyz2} possible even for larger sets of primes. We will also avoid all computations in $p$-adic fields or their extensions, computations which are common to Diophantine equation solvers, but which tend to be error-prone and difficult to work with computationally. Finally, we will exploit the relationships between these reduced solution bounds to decrease the total number of bound reductions required. These improvements will drastically cut down the running time of the algorithm. Given the success of our Thue--Mahler solver, I expect this new algorithm to resolve, for example, \eqref{eqn:xyz2} for $\{2,3,5,7,11\}$ in less than an hour.
+
+%--------------------------------------------------------------------------------------------%
+
+\paragraph{Computing elliptic curves over $\mathbb{Q}$.}
+
+Generating exhaustive lists of elliptic curves over $\mathbb{Q}$ is a difficult task, involving deep theoretical results and highly complex algorithms with large time and memory demands. In \cite{BeGhRe}, we propose a different approach to produce provably complete lists of curves up to a given conductor, $N$. %This last quantity is an invariant that provides information about how a given elliptic curve behaves over finite fields $\mathbb{F}_p$, as $p$ ranges over all prime numbers.
+
+Along with my coauthors, in a recent published work \cite{BeGhRe}, we outline an algorithm for finding elliptic curves over $\mathbb{Q}$ with a given conductor $N$ by reducing the problem to one of solving a family of associated Diophantine equations. More specifically, to generate all elliptic curves of a given conductor $N$, one needs only to resolve a family of equations of the form
+\begin{equation}\label{eqn:TMEC}
+  F(X,Y)=a_0 X^3+a_1 X^{2} Y+ a_2XY^2 + a_3 Y^3 = u,
+\end{equation}
+where $a_i\in\mathbb{Z}$ are given and $u$ is an integer whose prime factors all divide $N$. This polynomial equation is a Thue--Mahler equation whenever $F$ is irreducible over the integers. Conversely, if $F$ is reducible over $\mathbb{Z}$, we show that solving \eqref{eqn:TMEC} is equivalent to finding all solutions to the sum of $2$ $S$-units being a square
+\begin{equation}\label{eqn:XYZ2EC}
+  X+Y=Z^2,
+\end{equation}
+where $X$ and $Y$ are made up only of the primes dividing $N$ and $Z\in\mathbb{Q}$. The elliptic curves arising from solutions to these equations correspond to curves which have no rational points of order $2$, and at least one point of order $2$, respectively. This result generalizes earlier efforts to compute elliptic curves over $\mathbb{Q}$ for conductors divisible by only one or two small primes.
+
+Having refined the general Thue--Mahler solver, I am currently developing an algorithm to compute elliptic curves over $\mathbb{Q}$ of any conductor $N$ via this approach. Presently, my algorithm generates all cubic equations needed for a given conductor, solves the corresponding Diophantine equations, and finally generates all resulting elliptic curves before comparing the output with existing databases, whenever possible. As each Diophantine equation breaks up into a number of subcases, we employ parallel computing programs to simultaneously solve mulitple subcases before amalgamating the total solution set into a single document. This algorithm is implemented on a combination of \texttt{Magma}, \texttt{Python}, \texttt{C++} and \texttt{bash}, and features many refinements to avoid redundant computations, bottlenecks, and memory-intensive operations. These refinements are the result of several on-going independent international collaborations.
+
+Presently, there is only one bottleneck remaining, the reducible case, corresponding to \eqref{eqn:XYZ2EC}. As previously mentioned, I am in the process of developing and implementing an efficient algorithm to resolve this case, using the powerful ideas we developed for the Thue--Mahler solver. Moreover, I am currently also modifying the Thue--Mahler solver for degree $3$ by exploiting the much simpler relationships and patterns afforded to us at this degree. The primary goal of this work is to push the limits of current existing elliptic curve databases, while providing anyone the ability to generate their own exhaustive list of elliptic curves on their home machines. This means making the algorithm as fast and efficient as possible, wherever possible.
+
+This algorithm and is publicly available at {\small \url{https://github.com/adelagherga/TMEC}.}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\subsubsection*{FUTURE DIRECTIONS}
+
+\paragraph{Elliptic curves over number fields.}
+
+It is a widely believed conjecture that all elliptic curves are modular, that is, related to certain complex analytic functions called modular forms. This correspondence is the mechanism by which databases of elliptic curves over number fields are generated. However, whether these databases are complete depends on the number field and whether modularity of elliptic curves over the number field in question has been proven. For example, it has been proven that all elliptic curves over $\mathbb{Q}$ are modular, and thus all databases generated using modularity are guaranteed to be complete. On the other hand, modularity has not yet been proven for elliptic curves over imaginary quadratic fields, for example, and non-modular curves (if any exist) are not in the databases generated this way.
+
+Conversely, tabulating elliptic curves over $\mathbb{Q}$ via Thue--Mahler equations is an exhaustive process that does not rely on modularity. Furthermore, the correspondence between elliptic curves and these cubic Diophantine equations is not restricted to curves over $\mathbb{Q}$. Our result in \cite{BeGhRe} can be extended to computing elliptic curves over number fields. Indeed, one should be able to reduce the problem of computing curves over a number field to a problem of solving a family of degree $3$ Thue--Mahler equations over the given number field. In future work, I plan to formalise this result to elliptic curves over quadratic number fields.
+
+My goal is to not only prove this correspondence theoretically, but also to develop an algorithm, analogous to the rational case, to generate all elliptic curves over a given quadratic field of given conductor norm. To do so, I will need to develop and implement an algorithm to resolve Thue--Mahler equations over quadratic fields. From a theoretical perspective, I anticipate that extending the Thue--Mahler program to this setting will be relatively straight-forward, with many of the results over $\mathbb{Q}$ needing only minor modifications. Computationally, however, I expect many new challenges. In particular, this will mean working in number fields of larger degree, where generating necessary field invariants such as the class number and unit group may prove to be very time-intensive operations.
+
+Ultimitely, this will provide us with a method to verify whether existing databases of elliptic curves over quadratic number fields are complete, as well as new repositories of elliptic curves in which we can test and formulate new conjectures and results.
+
+%--------------------------------------------------------------------------------------------%
+
+\paragraph{Efficient algorithms with machine learning.}
+
+Many Diophantine equation algorithms follow the same structure. A very large initial bound is generated on the solutions and then successively reduced using various lattice-reduction techniques until a final sieve or search algorithm can be applied. This reduction relies heavily on a sequence of well-chosen heuristic parameters. Different choices of these parameters can result in vastly different run times, sometimes taking hours or days, and in the worst case, may even cause the program to run out of memory and fail. In many cases, the computation is so intricate and convoluted that it is difficult to predict whether the computation will terminate within $k$ seconds without actually running the computation for $k$ seconds.
+
+As an example, suppose that we have computed a very large upper bound $B$ on all solutions, and suppose further that some solution must exist whose size lies in the range $[L,B]$, where $L$ is some positive integer (strictly smaller than $B$) of our choosing. Under this assumption, we can associate a lattice in which this solution must exist. We generate this lattice and then compute all lattice vectors whose size lies in $[L,B]$, iterating and testing all such vectors to determine whether they are solutions to the initial Diophantine equation. After extracting all solutions, we replace $B$ with $L$ and repeat this process until all solutions are found. Different choices of $L$ will result in different runtimes and memory demands. If the choice of $L$ is too small, the lattice may contain far more vectors than the program's memory allows for, while larger choices of $L$ may be as time-consuming as choosing smaller values of $L$.
+
+Most Diophantine equation algorithms rely on strong heuristic computations to choose these parameters dynamically. However, it is difficult to ensure that this is the best possible choice in every instance and across every equation fed into the solver. Instead, I wish to better anticipate the difficulty of each computation so that I may discard parameters which lead to more time-consuming operations in favour of faster, less memory-intensive ones. To approach this prediction problem, I plan to team up with machine learning experts and utilize deep learning models.
+
+% While complexity analyses can help determine the next best choice of parameters, these algorithms are generally so convoluted that doing this at the scale and generality needed is not often realistic.
+
+Solving a single Thue--Mahler equation, for example, requires a large sequence of well-chosen parameters. As a simplification, suppose each parameter is a choice of $L$, an integer to which we wish to reduce our solution bound to during the successive lattice-reduction iteration. We can reframe the problem of finding a good sequence of parameters $\{L_i\}$ into one of finding a short path in a weighed graph. Consider the complete graph $G$ with some weight function $\phi$ defined on the edges with vertex set $\{L_i\}$. For an edge $e$ of $G$, we may define $\phi(e)$ to be the number of seconds it takes to reduce the bound from $L_i$ to $L_j$. If the weight function $\phi$ was known, then finding such an optimal path could be solved using standard graph traversal strategies such as Dijkstra's algorithm. The problem we face is that the cost of evaluating $\phi$ at an edge $e$ is just as expensive as performing the reduction itself.
+
+To address this, I will enlist data-driven learning models to help better predict whether $\phi(e)$ is reasonably small. My plan is to generate a random subset of the edge set of the graph $G$ and determine the cost $\phi$ on the edges of these resulting subgraphs. I will then train models on this set, which will thus learn whether the cost of traversing a given edge $e$ of $G$ is fast and inexpensive. Informed by predictions of these models, I should thus be able to perform the lattice-sieving iteration, for example, with optimal parameters and thus shorter runtimes and reduced risk of program failure.
+
+Despite the prevalence of machine learning in computational research, its use in number theory is still relatively new. If successful, these models and refinements could have extensive applications to Diophantine equation solvers, and more generally, open the door to new machine learning applications in computational number theory.
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\bibliography{ResearchStatement.bib}
+
+
+\begin{comment}
+\subsection{Other stuff}
+
+
+
+
+- future direction/programming projects/etc
+* norm equation ?
+* S unit
+* ECs over number fields
+* hyperelliptic equations
+* x + y = z^3
+
+
+This work focuses on tabulating elliptic curves over $\mathbb{Q}$ with prescribed properties.
+
+p
+
+
+My approach to explicitly resolving Diophantine equations is to reduced them to a family
+
+In collaboration with Samir Siksek, I have developed fast lattice sieving techniques to efficiently resolve certain Diophantine equations. These results lend themselves easily to many classical Diophantine problems,
+
+My algorithms are a combination of Python,
+
+
+This work is result of a collabortion with Michael Bennett and Andrew Rechnitzer, with whom
+
+
+
+By efficiently solving a large family of certain Diophantine equations, this software is an alternative to the existing algorithms which made the LMFDB possible, and which will
+
+
+This project stems from my work with Michael Bennett and Andrew Rechnitzer, with whom I have deve
+
+
+with a particular focus on elliptic curves and Diophantine equations \edit{Double use of the word focus}. During the last few years, my research has centered on developing and implementing efficient algorithms to generate elliptic curves over $\mathbb{Q}$, in an effort to expand the L-functions and modular forms database (LMFDB). This project stems from my work With Michael Bennett and Andrew Rechnitzer, with whom I have developed a practical algorithm to generate elliptic curves by solving large families of certain Diophantine equations \edit{cite}. This endeavor has led to collaborations with Rafael von Kanel, Benjamin Mathske, John Cremona, Andrew Sutherland, and in particular with Samir Siksek, with whom I have developed an efficient algorithm to solve Thue--Mahler equations - one such family of Diophantine equations \edit{cite}.
+- collaboration
+- S-unit solver
+- use of the TM solver for other projects
+
+- maybe a header for Thue--Mahler equations
+- a header for S-unit equations
+- future direction/programming projects/etc
+* ML for TM code
+* S unit is a square
+* S unit
+* ECs over number fields
+* hyperelliptic curves (Nigel smart)
+
+\end{comment}
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+% \scriptsize{
+% \begin{thebibliography}{99}
+
+% \bibitem{BennettDahmen}
+% M.\ Bennett, S.\ R.\ Dahmen,
+% \emph{Klein forms and the generalized superelliptic equation},
+% Ann.\ of Math.\ {\bf 177} (2013), no.\ 1, 171--239.
+
+% \bibitem{BeGhKr}
+% M.\ Bennett, A.\ Gherga, and D. Kreso,
+% \emph{An old and new approach to Goormaghtigh’s equation},
+% Trans. Amer. Math. Soc. {\bf 373} (2020), 5707--5745.
+
+% \bibitem{BGPS}
+% M.\ Bennett, A.\ Gherga, V.\ Patel and S.\ Siksek,
+% \emph{Odd values of the Ramanujan tau function},
+% Math.\ Ann.\ {\bf 382} (2022), 203--238.
+%   %https://doi.org/10.1007/s00208-021-02241-3
+
+% \bibitem{BeGhRe}
+% M.\ Bennett, A.\ Gherga and A.\ Rechnitzer,
+% \emph{Computing elliptic curves over $\mathbb{Q}$},
+% Math.\ Comp. {\bf 88} (2019), no. 317, 1341--1390.
+
+% \bibitem{BeSiNew}
+% M.\ Bennett, S.\ Siksek,
+% \emph{Differences between perfect powers: prime power gaps},
+% arXiv:2110.05553v1. \edit{fix hyperlink here}
+
+% \bibitem{BeSiLN}
+% M.\ Bennett, S.\ Siksek,
+% \emph{Differences between perfect powers: the Lebesgue--Nagell equation},
+% arXiv:2109.09128v1. \edit{fix hyperlink here} 5,7,11
+
+% \bibitem{BSD}
+%   Bryan Birch and Peter Swinnerton-Dyer,
+%   Notes on elliptic curves II, J. Reine Angew. Math. 218 (1965), 79–108.
+
+% \bibitem{Magma}
+% W.\ Bosma, J.\ Cannon and C.\ Playoust,
+% \emph{The Magma Algebra System I: The User Language},
+% J.\ Symb.\ Comp.\ {\bf 24} (1997), 235--265.
+% %(See also \url{http://magma.maths.usyd.edu.au/magma/})
+
+% \bibitem{Mod}
+% C. Breuil, B. Conrad, F. Diamond, and R. Taylor, On the modularity of elliptic curves over
+% Q: wild 3-adic exercises, J. Amer. Math. Soc. 14 (2001), no. 4, 843–939, DOI 10.1090/S0894-
+% 0347-01-00370-8. MR1839918
+
+% \bibitem{BruinStollMWI}
+% Bruin, Nils and Stoll, Michael,
+% \emph{Deciding existence of rational points on curves: an experiment},
+% Experiment. Math., {\bf 17} (2008), 181-189.
+
+% \bibitem{BruinStollMWII}
+% Bruin, Nils and Stoll, Michael,
+% \emph{The {M}ordell-{W}eil sieve: proving non-existence of rational points on curves},
+% LMS J. Comput. Math., {\bf 13} (2010), 272-306.
+
+% \bibitem{Cangul}
+% I.\ N.\ Cangul, M.\ Demirci, G.\ Soydan and N.\ Tzanakis,
+% \emph{On the Diophantine equation $x^2 + 5^a11^b = y^n$},
+% Funct. Approx. {\bf 43} (2010), no.\ 2, 209--225.
+
+% \bibitem{Cremona1}
+% J. Cremona,
+% \emph{Elliptic curve tables}, http://johncremona.github.io/ecdata/
+% \vspace{-0.1in}
+
+% \bibitem{Cremona2}
+% J. Cremona,
+% \emph{Algorithms for modular elliptic curves},
+% second ed., Cambridge University Press, Cambridge, $1997$. Available online at
+% http://homepages.warwick.ac.uk/staff/J.E.Cremona/book/fulltext/index.html
+% \vspace{-0.1in}
+
+% % \bibitem{CohenAdvanced}
+% % H.\ Cohen,
+% % \emph{Advanced topics in computational number theory},
+% % GTM \textbf{138}, Springer Verlag, 2000.
+
+% % \bibitem{FinckePohst}
+% % U.\ Fincke and M.\ Pohst,
+% % \emph{Improved methods for calculating vectors of short length in a lattice, including a complexity analysis},
+% % Math.\ Comp. {\bf 44} (1985), no.\ 170, 463--471.
+
+% % \bibitem{Homero}
+% % H.\ R.\ Gallegos-Ruiz,
+% % \emph{$S$-integral points on hyperelliptic curves},
+% % Int.\ J.\ Number Theory \textbf{7} (2011), no.\ 3, 803--824.
+
+% \bibitem{GhSi}
+%   A.\ Gherga, S. Siksek
+%   \emph{Efficient resolution of Thue--Mahler equations},
+% arXiv:2109.09128v1. \edit{fix hyperlink here} 5,7,11
+
+% \bibitem{Hambrook}
+% K.\ D.\ Hambrook,
+% \emph{Implementation of a Thue--Mahler equation solver},
+% M.Sc. Thesis, The University of British Columbia, Vancouver, 2011.
+
+% % \bibitem{KimTM}
+% % D.\ Kim,
+% % \emph{A modular approach to cubic Thue--Mahler equations},
+% % Math.\ Comp. \textbf{86} (2017), 1435--1471.
+
+% \bibitem{LMFDB}
+%   The LMFDB Collaboration,
+%   \newblock \emph{The L-functions and Modular Forms Database},
+%   http://www.lmfdb.org
+%   \vspace{-0.1in}
+
+% \bibitem{Mocanu}
+%   \emph{Asymptotic Fermat for signatures $(p,p,2)$ and $(p,p,3)$ over totally real fields},
+%   https://arxiv.org/pdf/2203.07873.pdf
+% % \bibitem{LLL}
+% % A.\ K.\ Lenstra, H.\ W.\ Lenstra Jr. and L.\ Lovasz,
+% % \emph{Factoring polynomials with rational coefficients},
+% % Math.\ Ann.\ {\bf 261} (1982), 515--534.
+
+% % \bibitem{Matveev}
+% % E.\ M.\ Matveev,
+% % \emph{An explicit lower bound for a homogeneous rational linear form in
+% % logarithms of algebraic numbers. II},
+% % %Izv.\ Ross.\ Akad.\ Nauk Ser.\ Mat.\ \textbf{64} (2000),
+% % %no. 6, 125‚Äì180 (in Russian); English transl.:
+% % Izv.\ Math.\ \textbf{64} (2000), 1217--1269.
+
+% %\bibitem{Meyer}
+% %C.\ D.\ Meyer,
+% %\emph{Matrix Analysis and Applied Linear Algebra},
+% %Society for Industrial \& Applied Mathematics, June 2000.
+
+% \bibitem{Smart}
+% N.\ P.\ Smart,
+% \emph{The algorithmic resolution of Diophantine equations},
+% Cambridge University Press, 1998.
+
+% \bibitem{SoTz}
+% G.\ Soydan and N.\ Tzanakis,
+% \emph{Complete solution of the Diophantine equation
+% $x^2+5^a \cdot 11^b=y^n$},
+% Bull.\ Hellenic Math.\ Soc.\ \textbf{60} (2016), 125--151.
+
+% \bibitem{TW}
+% N.\ Tzanakis and B.\ M.\ M.\ de Weger,
+% \emph{How to explicitly solve a Thue--Mahler equation},
+% Compos. Math. \textbf{84} (1992), no.\ 3, 223--288.
+
+% \bibitem{deWeger}
+% B. M. M. de Weger,
+% \emph{Algorithms for diophantine equations},
+% CWI-Tract No. $65$, Centre for Mathematics and Computer Science, Amsterdam, $1989$.
+
+% \bibitem{Wiles}
+%   A. Wiles, Modular elliptic curves and Fermat’s last theorem, Ann. of Math. (2) 141 (1995), no. 3, 443–551, DOI 10.2307/2118559. MR1333035
+
+% \end{thebibliography}}
+
+
+
+
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+
+\end{document}

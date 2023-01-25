@@ -1,0 +1,313 @@
+\documentclass[11pt]{article}
+
+% relevant packages
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs }
+\usepackage{amsthm}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[all]{xy}
+\usepackage[english]{babel}
+\usepackage{setspace}
+% begin paragraphs with an empty line rather than an indent.
+\usepackage[parfill]{parskip}
+
+% stylistic environment
+\definecolor{grau}{rgb}{0.3,0.3,0.3}
+\usepackage[colorlinks, linkcolor=grau, citecolor=grau, urlcolor=grau]{hyperref}
+\urlstyle{same}
+\usepackage[top=1.3in, bottom=1.6in, left=1.3in, right=1.3in]{geometry}
+\frenchspacing
+\sloppy
+\usepackage{booktabs}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{enumerate}
+\onehalfspacing
+
+% relevant environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{properties}[theorem]{Properties}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{question}[theorem]{Question}
+\theoremstyle{definition}
+\newtheorem{Algorithm}[theorem]{Algorithm}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+% math operators
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Gal}{Gal}
+
+% new commands
+\newcommand{\eps}{\varepsilon}
+
+% draft edit commands
+\usepackage{soul}
+\newcommand{\edit}[1]{\textcolor{red}{#1}}
+\newcommand{\strike}[1]{\textcolor{blue}{\st{#1}}}
+
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\title{XYZ2Background}
+
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Bound}
+
+\begin{itemize}
+\item By Matshke, von Kanel, any elliptic curve $E$ over $\mathbb{Q}$ of conductor $N$ and minimal discriminant $\Delta_E$ satisfies
+  \[ \log|\Delta_E| \leq \nu \log N + \frac{3}{8}\nu \log\log\log N + \frac{2}{3}\nu + 115.1,\]
+  where $\nu = N\nu^*(N)$ and $\nu^*$ is the multiplcative function on $\mathbb{Z}_{\geq 1}$ defined by $\nu^*(p) = 1$ for $p$ a rational prime and $\nu^*(p^k) = 1 - 1/p^2$ for $k \in \mathbb{Z}_{\geq 2}$
+
+\item let $\{p_1, \dots, p_s\}$ ($s \geq 1$) be distinct primes and let $S$ be the set of positive rational prime integers which have no prime divisors different from the $p_i$
+
+\item The set of $S$-units is
+  \[\{ \pm p_1^{x_1} \cdots p_s^{x_s} \ | \ x_i \in \mathbb{Z} \text{ for } i = 1, \dots, s\}\]
+
+\item we study the diophantine equation
+  \[x + y = z^2 \]
+  in $S$-units $x,y$ and $z \in \mathbb{Q}$
+
+\item To clear denominators: let $x,y,z$ be a solution. There exists $d \in S$ such that $|dx|, |dy| \in S$. Put $d = d_1 d_2^{2}$ where $d_1, d_2 \in S$ and $d_1$ squarefree. Then
+  \[ d_1 d x + d_1 d y = (d_1 d_2 z)^2,\]
+  which has the same form as $x + y = z^2$ but now $|d_1 d x|, |d_1 d y| \in S \subset \mathbb{Z}$ and $d_1d_2 z \in \mathbb{Z}$
+
+\item Without loss of generality, we may therefore study
+  \[ x + y = z^2, \]
+  where
+  \[\begin{cases}
+      x \in S,\ \pm y \in S,\ z\in\mathbb{Z}, &\\
+      x \geq y,\ (x,y) \text{ is squarefree} &
+    \end{cases}\]
+  Note that we could also require $z > 0$ here, but to make our lives easier, we ignore this (for now, maybe)
+
+\item let $d = (x,y) > 0$ and consider the equivalent equation
+  \[a + b = dc^2\]
+  where $a = \frac{x}{d}$, $b = \frac{y}{d}$, $c = \frac{z}{d}$ are pairwise coprime and
+  \[\begin{cases}
+      a \in S,\ \pm b \in S,\ c\in\mathbb{Z}, &\\
+      a \geq b,\ d \text{ is squarefree} & \\
+    \end{cases}\]
+  Note that we may interchange $a$, $b$ later, so that we do not necessarily guarantee that $a \geq b$
+
+\item Since $d = (x,y)$ is squarefree and $d \in S \cap \mathbb{Z}$, we have
+  \[d = p_1^{a_1}\cdots p_s^{a_s}\]
+  where $a_i \in \{0,1\}$ for $i = 1, \dots, s$; thus there are $2^s$ possibilities for $d$
+
+\item without loss of generality, we may suppose we are in one of the following situations
+  \begin{itemize}
+  \item $c \equiv 0 \mod{2}$
+    \begin{enumerate}[(i)]
+    \item $abd \equiv 1 \mod{2}$ and $b \equiv -d \mod{4}$
+    \item $ab \equiv 1 \mod{2}$ and $\ord_2(d) = 1$
+    \end{enumerate}
+  \item $c \equiv 1 \mod{2}$
+    \begin{enumerate}[(i)]
+      \setcounter{enumi}{2}
+    \item same as (ii)
+    \item $ad \equiv 1 \mod{2}$ and $\ord_2(b) = 1$
+    \item $ad \equiv 1 \mod{2}$, $\ord_2(b) = 2$ and $c \equiv -b/4 \mod{4}$
+    \item $ad \equiv 1 \mod{2}$, $\ord_2(b) \in \{3,4,5\}$ and $c \equiv d \mod{4}$
+    \item $ad \equiv 1 \mod{2}$, $\ord_2(b) \geq 6$, and $c \equiv d \mod{4}$
+    \end{enumerate}
+  \end{itemize}
+
+  In cases (i), (ii), (iii), (iv), we will consider the curve
+  \[E_1(a,b,c): Y^2 = X^3 + 2cdX + dbX \implies Y^2 = X^3 + 2zX + yX.\]
+  In cases (v) and (vi), we will consider the curve
+  \[E_2(a,b,c): Y^2 = X^3 + cdX + \frac{db}{4}X \implies Y^2 = X^3 + zX + \frac{y}{4}X,\]
+  and in case (vii) we use
+  \[E_3(a,b,c): Y^2 + XY = X^3 + \frac{cd - 1}{4}X^2 + \frac{db}{64}X \implies Y^2 + XY = X^3 + \frac{z-1}{4}X^2 + \frac{y}{64}X.\]
+  These are all elliptic curves defined over $\mathbb{Q}$
+
+\item As per Bennett-Skinner, we have
+  \begin{lemma}
+    Let $i = 1,2$ or $3$.
+    \begin{enumerate}[(a)]
+    \item The discriminant $\Delta_E$ of the curve $E = E_i(a,b,c)$ is given by
+      \[\Delta_E = 2^{\delta_i}d^3b^2a = 2^{\delta_i}y^2x,\]
+      where
+      \[\delta_i =
+        \begin{cases}
+          6 & \text{ if } i = 1\\
+          0 & \text{ if } i = 2\\
+          -12 & \text{ if } i = 3
+        \end{cases}\]
+    \item The conductor $N$ of the curve $E = E_i(a,b,c)$ is given by
+      \[N = 2^{\alpha}d^2 \prod_{p|ab}p,\]
+      where
+      \[\alpha =
+        \begin{cases}
+          5 & \text{ if } i = 1, \text{ case (i)}\\
+          6 & \text{ if } i = 1, \text{ case (ii), (iii), or (iv)}\\
+          1 & \text{ if } i = 2, \text{ case (v)}, \ord_2(b) = 2 \text{ and } bd/4 \equiv -1 \mod{4}\\
+          2 & \text{ if } i = 2, \text{ case (v)}, \ord_2(b) = 2 \text{ and } bd/4 \equiv 1 \mod{4}\\
+          4 & \text{ if } i = 2, \text{ case (vi) and } \ord_2(b) = 3\\
+          2 & \text{ if } i = 2, \text{ case (vi) and } \ord_2(b) \in \{4,5\}\\
+          -1 & \text{ if } i = 3, \text{ case (vii) and } \ord_2(b) = 6\\
+          0 & \text{ if } i = 3 \text{ case (vii) and } \ord_2(b) \geq 7.
+        \end{cases}\]
+      In particular, $E$ has multiplicative reduction at each odd prime $p$ dividing $ab$. Also, $E$ has multiplicative reduction at $2$ if $\ord_2(b) \geq 7$.
+    \item The curve $E_i(a,b,c)$ has a $\mathbb{Q}$-rational point of order $2$
+    \end{enumerate}
+  \end{lemma}
+
+% \item in particular, we have
+%   \begin{itemize}
+%   \item For $E = E_1$
+%     \[\text{Case (i): }\quad
+%       \begin{cases}
+%         \Delta_{E} = 2^6 d^3 b^2 a & \text{ where }\ord_2(\Delta_E) = 6,\\
+%         N = 2^5d^2\prod_{p|ab}p & \text{ where } \ord_2(N) = 5
+%       \end{cases}\]
+
+%     \[\text{Case (ii), (iii): }\quad
+%       \begin{cases}
+%         \Delta_{E} = 2^6 d^3 b^2 a & \text{ where }\ord_2(\Delta_E) = 9,\\
+%         N = 2^6d^2\prod_{p|ab}p & \text{ where } \ord_2(N) = 8
+%       \end{cases}\]
+
+%     \[\text{Case (iv): }\quad
+%       \begin{cases}
+%         \Delta_{E} = 2^6 d^3 b^2 a & \text{ where }\ord_2(\Delta_E) = 8,\\
+%         N = 2^5d^2\prod_{p|ab}p & \text{ where } \ord_2(N) = 7
+%       \end{cases}\]
+%   \item For $E = E_2$
+%     \[\text{Case (v): }\quad
+%       \begin{cases}
+%         \Delta_{E} = d^3 b^2 a & \text{ where }\ord_2(\Delta_E) = 4,\\
+%         N = 2d^2\prod_{p|ab}p & \text{ where } \ord_2(N) = 2 \text{ if } bd/4 \equiv -1 \mod{4}\\
+%         N = 2^2d^2\prod_{p|ab}p & \text{ where } \ord_2(N) = 3 \text{ if } bd/4 \equiv 1 \mod{4}\\
+%       \end{cases}\]
+
+%     \[\text{Case (vi): }\quad
+%       \begin{cases}
+%         \Delta_{E} = d^3 b^2 a & \text{ where }\ord_2(\Delta_E) = 6 \text{ if } \ord_2(b) = 3,\\
+%         \Delta_{E} = d^3 b^2 a & \text{ where }\ord_2(\Delta_E) = 8 \text{ if } \ord_2(b) = 4,\\
+%         \Delta_{E} = d^3 b^2 a & \text{ where }\ord_2(\Delta_E) = 10 \text{ if } \ord_2(b) = 5,\\
+%         N = 2^4d^2\prod_{p|ab}p & \text{ where } \ord_2(N) = 5 \text{ if } \ord_2(b) = 3\\
+%         N = 2^2d^2\prod_{p|ab}p & \text{ where } \ord_2(N) = 3 \text{ if } \ord_2(b) \in \{4,5\}\\
+%       \end{cases}\]
+
+%   \item For $E = E_3$
+%     \[\text{Case (vii): }\quad
+%       \begin{cases}
+%         \Delta_{E} = 2^{-12}d^3 b^2 a & \text{ where }\ord_2(\Delta_E) = 0 \text{ if } \ord_2(b) = 6,\\
+%         \Delta_{E} = 2^{-12}d^3 b^2 a & \text{ where }\ord_2(\Delta_E) \geq 2 \text{ if } \ord_2(b) \geq 7\\
+%         N = 2^{-1}d^2\prod_{p|ab}p & \text{ where } \ord_2(N) = 0 \text{ if } \ord_2(b) = 6\\
+%         N = d^2\prod_{p|ab}p & \text{ where } \ord_2(N) = 1 \text{ if } \ord_2(b) \geq 7\\
+%       \end{cases}\]
+%   \end{itemize}
+
+% \item Note that as $a > 0$ and $a \geq b$, $\pm b \in S$, where $a,b,d$ are pairwise coprime, we have $\Delta_E > 0$
+
+\item In particular, for each value of $d$, we have the following
+  \begin{enumerate}[(1)]
+  \item if $2 \nmid d$, then $N = 2^{\alpha} d^2 \prod_{p | ab} p$ where $\alpha \in \{-1, 0, 1, 2, 4, 5\}$ and ${\ord_2(N) \in \{0,1,2,3,5,7\}}$. Let
+    \[N_1 = 2^7 d^2 \prod_{\substack{p \in \{p_1, \dots, p_s\} \\ p \neq 2 \\ p \nmid d}} p.\]
+    Since $a,b,d$ are pairwise coprime, it follows that
+    \[N \leq 2^7 d^2 \prod_{p| ab} p \leq 2^7 d^2 \prod_{\substack{p \in \{p_1, \dots, p_s\} \\ p \neq 2 \\ p \nmid d}} p = N_1.\]
+
+    By definition of $\nu^*$, it follows that
+    \[\nu^*(N) =
+      \begin{cases}
+        0.75\prod_{p|d} (1-\frac{1}{p^2}) & \text{ if } \ord_2(N) \geq 2 \\
+        \prod_{p|d} (1-\frac{1}{p^2}) & \text{ otherwise }
+      \end{cases}\]
+    Note that the latter case happens only in case (vii). Let
+    \[\nu = N\nu^*(N) \leq 2^7 d^2 \prod_{p \mid d} (1 - \frac{1}{p^2}) \prod_{\substack{p \in \{p_1, \dots, p_s\} \\ p \neq 2 \\ p \nmid d}} p.\]
+    Let
+    \[\nu_1 = 2^7 d^2 \prod_{p \mid d} (1 - \frac{1}{p^2}) \prod_{\substack{p \in \{p_1, \dots, p_s\} \\ p \neq 2 \\ p \nmid d}} p\]
+    so that $\nu \leq \nu_1$.
+
+    Now, $\Delta_E = 2^{\delta_i}d^3b^2a$ where $\delta_i \in \{6,0,-12\}$ and $\ord_2(\Delta_E) \in 2\mathbb{Z}_{\geq 0}$. It follows that
+    \[ab^2 = \frac{\Delta_E}{2^{\delta_i}d^3} \implies |a|b^2 = \frac{|\Delta_E|}{2^{\delta_i}d^3} \leq \frac{2^{12}|\Delta_E|}{d^3},\]
+    and
+    \begin{align*}
+      \log|\Delta_E| & \leq \nu \log N + \frac{3}{8}\nu \log\log\log N + \frac{2}{3}\nu + 115.1\\
+                   & \leq \nu_1 \log N_1 + \frac{3}{8}\nu_1 \log\log\log N_1 + \frac{2}{3}\nu_1 + 115.1.\\
+    \end{align*}
+
+    All together this yields
+    \[\log \max(|a|,|b|) \leq \nu_1 \log N_1 + \frac{3}{8}\nu_1 \log\log\log N_1 + \frac{2}{3}\nu_1 + 115.1 + 12\log(2) - 3\log(d).\]
+
+  \item if $2 \mid d$, then the situation simplifies to $N = 2^{\alpha}d^2 \prod_{p|ab}p$ where $\ord_2(N) = 8$, and hence
+    \[N \leq 2^8 \prod_{\substack{p \mid d \\ p \neq 2}}p^2 \prod_{\substack{p \in \{p_1, \dots, p_s\} \\ p \nmid d}}p = N_2.\]
+    Note that in this case, the last product does not include the prime $2$.
+    By definition of $\nu^*$, it follows that
+    \[\nu^*(N) = \prod_{p \mid d} (1 - \frac{1}{p^2}).\]
+    Now,
+    \[\nu = N\nu^*(N) \leq 2^8 \prod_{\substack{p \mid d \\ p \neq 2}}p^2 \prod_{p \mid d} (1 - \frac{1}{p^2})\prod_{\substack{p \in \{p_1, \dots, p_s\} \\ p \nmid d}}p = \nu_2.\]
+    Here $\Delta_E = 2^6 d^3b^2a$ where $\ord_2(\Delta_E) = 9$ and thus
+    \[ab^2 = \frac{\Delta_E}{2^6d^3} \implies |a|b^2 = \frac{|\Delta_E|}{2^6d^3},\]
+    where $d$ is known and
+    \begin{align*}
+      \log|\Delta_E| & \leq \nu \log N + \frac{3}{8}\nu \log\log\log N + \frac{2}{3}\nu + 115.1\\
+                   & \leq \nu_2 \log N_2 + \frac{3}{8}\nu_2 \log\log\log N_2 + \frac{2}{3}\nu_2 + 115.1.\\
+    \end{align*}
+
+    All together this yields
+    \[\log \max(|a|,|b|) \leq \nu_2 \log N_2 + \frac{3}{8}\nu_2 \log\log\log N_2 + \frac{2}{3}\nu_2 + 115.1 - 6\log(2) - 3\log(d).\]
+  \end{enumerate}
+
+\item Let
+  \[\alpha_i = \begin{cases}
+      12 & \text{ if } i = 1 \\
+      -6 & \text{ if } i = 2
+    \end{cases}\]
+  Thus, for $i = 1, 2$ we obtain
+  \[\log\max(|a|,|b|) \leq \nu_i \log N_i + \frac{3}{8}\nu_i \log\log\log N_i + \frac{2}{3}\nu_i + 115.1 + \alpha_i\log(2) - 3\log(d).\]
+  where we use $i = 1$ for $d$ odd and $i = 2$ otherwise.
+\end{itemize}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Sieve}
+
+\begin{itemize}
+\item Write $d = q_1\cdots q_t$ where $q_i \in \{p_1, \dots, p_s\}$ and $t \leq s$
+\item Now, recalling that $a,b,d$ are pairwise coprime, we have
+  \[\frac{a}{b} \equiv -1 \mod d.\]
+  Write
+  \[\frac{a}{b} = p_1^{m_1} \cdots p_n^{m_n}\]
+  where $p_1, \dots, p_n$ are all the primes in $\{p_1, \dots, p_s\}$ not dividing $d$, such that $n \leq s$, and $m_i \in \mathbb{Z}$. Of course, for $p_i$ in the above product such that $p_i \nmid a,b$, we have $m_i = 0$.
+\item Consider the homorphism
+  \[\phi: \mathbb{Z}^n \to \left(\mathbb{Z}/d\mathbb{Z}\right)^{\times}/ \{\pm 1\},\quad \quad
+    (u_1, \dots, u_n) \mapsto p_1^{u_1} \cdots p_n^{u_n}\]
+  This map is not surjective in general: if $p_1, \dots, p_n$ all have $p_i \equiv \pm 1 \mod d$, then $(u_1, \dots, u_n) \mapsto p_1^{u_1}\dots p_n^{u_n} \equiv 1 \mod{d}$ for all $(u_1, \dots, u_n)$. For example, consider $d = 7$ and $p_1,\dots, p_n = 29, 47$, where $(\mathbb{Z}/7\mathbb{Z})^{\times}/ \{\pm 1\} = \{\bar{1}, \bar{2}, \bar{3}\}$
+\item As $a/b = p_1^{m_1} \cdots p_n^{m_n} \equiv - 1 \mod{d}$, we have $\phi((m_1, \dots, m_n)) = \bar{1}$ and hence $(m_1, \dots, m_n) \in \ker\phi$
+\item Might be easier to consider
+  \[\left(\frac{a}{b}\right)^2 = p_1^{2m_1} \cdots p_n^{2m_n}\]
+  so that we can consider the map
+  \[\phi: \mathbb{Z}^{n} \to \left(\mathbb{Z}/d\mathbb{Z}\right)^{\times} \quad \quad (u_1, \dots, u_n) \mapsto p_1^{u_1}\cdots p_n^{u_n}.\]
+  In this case, $\phi((2m_1, \dots, 2m_n)) = 1$ and hence $(2m_1, \dots, 2m_n) \in \ker\phi$
+\item Will not work for small values of $d$, or if the primes are $\equiv \pm 1 \mod d$ as mentioned above; maybe this is better as a sieve at the end?
+
+\end{itemize}
+
+
+
+\end{document}

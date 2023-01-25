@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1.5in]{geometry} 	% See geometry.pdf to learn the layout options. There are lots.
+
+%\usepackage[parfill]{parskip}		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{comment}
+\usepackage{abstract}
+\renewcommand{\abstractname}{}    % clear the title
+\renewcommand{\absnamepos}{empty} % originally center
+
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{lemma}{Lemma}
+\newtheorem{question}{Question}
+
+\numberwithin{equation}{section}
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+\begin{document}
+\title{Abstract}
+\maketitle
+\textbf{Title:} Implementing Algorithms to Compute Elliptic Curves Over $\mathbb{Q}$
+
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+
+\begin{abstract}
+\noindent Let $S$ be a set of rational primes and consider the set of all elliptic curves over $\mathbb{Q}$ having good reduction outside $S$ and bounded conductor $N$. Currently, using modular forms, all such curves have been determined for $N \leq 500000$, the bulk of this work being attributed to Cremona.
+
+Early attempts to tabulate all such curves often relied on reducing the problem to one of solving a number of certain integral binary forms called Thue-Mahler equations. These are Diophantine equations of the form $F(x,y) = u$, where $F$ is a given binary form of degree at least $3$ and $u$ is an $S$-unit.
+A theorem of Bennett-Rechnitzer shows that the problem of computing all elliptic curves over $\mathbb{Q}$ of conductor $N$ reduces to solving a number of Thue-Mahler equations. To resolve all such equations, there exists a practical method of Tzanakis-de Weger using bounds for linear forms in $p$-adic logarithms and various reduction techniques. In this talk, we describe our refined implementation of this method and discuss the key steps used in our algorithm.
+
+
+\end{abstract}
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+
+%\begin{thebibliography}{99}
+%
+%\bibitem{BeRe}
+%M.A. Bennett and A. Rechnitzer
+%\emph{Computing elliptic curves over $\mathbb{Q}$: bad reduction at one prime},
+%Submitted to Proceedings of $2015$ AMMCS-CAIMS Congress, Fields Institute Communications, https://www.math.ubc.ca/~bennett/B-Cubic.pdf
+%
+%\bibitem{Cremona1}
+%J. Cremona,
+%\emph{Elliptic curve tables}, http://johncremona.github.io/ecdata/
+%
+%\bibitem{Cremona2}
+%J. Cremona,
+%\emph{Algorithms for modular elliptic curves},
+%second ed., Cambridge University Press, Cambridge, $1997$. Available online at
+%http://homepages.warwick.ac.uk/staff/J.E.Cremona/book/fulltext/index.html
+%
+%\bibitem{Tzanakis}
+%N. Tzanakis and B. M. M. de Weger,
+%\emph{Solving a specific Thue-Mahler equation},
+%Math. Comp. $57$ ($1991$) $799-815$.
+%
+%\bibitem{deWeger1}
+%B. M. M. de Weger,
+%\emph{Algorithms for diophantine equations},
+%CWI-Tract No. $65$, Centre for Mathematics and Computer Science, Amsterdam, $1989$.
+%
+%\bibitem{deWeger2}
+%B. M. M. de Weger,
+%\emph{The weighted sum of two $S$-units being a square},
+%Indag. Mathem. $1$ ($1990$), $243-262$.
+%
+%\end{thebibliography}
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+
+\end{document}

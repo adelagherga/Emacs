@@ -1,0 +1,1165 @@
+\documentclass[reqno]{amsart}
+\usepackage{url}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing, matrix, arrows,tikzmark}
+\usepackage{enumerate}
+%\usepackage{array}
+\usepackage{accents}
+\usepackage{tabu}
+\usepackage{longtable}
+%\usepackage{blkarray}
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amscd}
+\usepackage{amsbsy}
+\usepackage{comment}
+\usepackage[matrix,arrow]{xy}
+\usepackage{arydshln}
+%\usepackage[bookmarks,bookmarksnumbered,%
+%    allbordercolors={0.8 0.8 0.8},%
+%    linktocpage%
+%    ]{hyperref}
+%\usepackage{hyperref}
+%\usepackage{showlabels}
+
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Rad}{Rad}
+\DeclareMathOperator{\Radp}{Rad_{\{2,5,7\}}}
+\DeclareMathOperator{\Radpp}{Rad_{\{2,3,5,7\}}}
+\DeclareMathOperator{\Norm}{Norm}
+\DeclareMathOperator{\Disc}{Disc}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\Sel}{Sel}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Img}{Image}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\red}{red}
+\newcommand{\vv}{\mathbf{v}}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\divisor}{div}
+\DeclareMathOperator{\Alb}{Alb}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\norm}{Norm}
+\DeclareMathOperator{\trace}{Tr}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\image}{im}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\Reg}{Reg}
+\DeclareMathOperator{\Aut}{Aut}
+\newcommand{\crt}{\sqrt[3]{2}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+%\newcommand{\SHA}[1]{{\cyr X}(#1)}
+%\newcommand{\p}{{\mathfrak P}}
+%\newcommand{\A}{{\mathbb A}}
+\newcommand{\mS}{\mathcal{S}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+%\newcommand{\N}{{\mathbb N}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{{\mathbb F}}
+%\newcommand{\D}{{\mathbb D}}
+\newcommand{\PP}{{\mathbb P}}
+%\newcommand{\LL}{{\mathbb L}}
+%\newcommand{\HH}{{G_{\LL}}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\fL}{\mathfrak{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\fM}{\mathfrak{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\fQ}{\mathfrak{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cJ}{{\mathcal J}}
+\newcommand{\cC}{\mathcal C}
+\newcommand{\cV}{\mathcal V}
+\newcommand{\cW}{\mathcal W}
+\newcommand{\OO}{{\mathcal O}}
+\newcommand{\ga}{{\mathfrak{a}}}
+\newcommand{\gb}{{\mathfrak{b}}}
+\newcommand{\gc}{{\mathfrak{c}}}
+\newcommand{\pic}{{\rm Pic}^0(Y)}
+\newcommand{\sS}{\mathfrak{S}}
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fb}{\mathfrak{b}}
+\newcommand{\fc}{\mathfrak{c}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\fq}{\mathfrak{q}}
+\newcommand{\fr}{\mathfrak{r}}
+\newcommand{\fl}{\mathfrak{l}}
+\newcommand{\mP}{\mathfrak{P}}
+\newcommand{\xx}{\mathbf{x}}
+\newcommand{\zz}{\mathbf{z}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\hh}{\mathbf{h}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\bfl}{\mathbf{l}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\aaf}{\mathbf{a}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\mm}{\mathbf{m}}
+\newcommand{\nn}{\mathbf{n}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\fA}{\mathfrak{A}}
+\newcommand{\fB}{\mathfrak{B}}
+\DeclareMathOperator{\Jac}{Jac}
+%\def\mod#1{{\ifbmode\text{\rm\ (mod~$#1$)}
+%\else\discretionary{}{}{\hbox{ }}\rm(mod~$#1$)\fi}}
+
+
+\newcommand\Tstrut{\rule{0pt}{6ex}}         % = `top' strut
+\newcommand\Bstrut{\rule[-5ex]{0pt}{0pt}}   % = `bottom' strut
+
+\newcommand\margnote[1]{\marginpar{\tiny\begin{minipage}{20mm}\begin{flushleft} #1\end{flushleft}\end{minipage}}}
+\newcommand{\edit}[1]{\textcolor{red}{#1}}
+
+%\renewcommand{\baselinestretch}{1.5}
+
+\begin {document}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{proc}{Procedure}
+\newtheorem{alg}{Algorithm}
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{prop}[lem]{Proposition}
+\newtheorem{cor}[lem]{Corollary}
+\newtheorem*{conj}{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{defn}[lem]{Definition}
+\newtheorem{example}[lem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+
+\newtheorem{ack}{Acknowledgement}
+
+\title[]{Solving $X+Y=Z^2$}
+
+%\author{Adela Gherga}
+%\email{adela.gherga@warwick.ac.uk}
+%\address{Mathematics Institute, University of Warwick, Coventry CV4 7AL, United Kingdom}
+%\author{Samir Siksek}
+%\email{S.Siksek@warwick.ac.uk}
+%\address{Mathematics Institute, University of Warwick, Coventry CV4 7AL, United Kingdom}
+%\thanks{
+%The authors are supported by the
+%EPSRC grant \emph{Moduli of Elliptic curves and Classical Diophantine Problems}
+%(EP/S031537/1).
+%}
+
+\date{\today}
+\maketitle
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+Let $P:=\{p_1,\dots,p_v\}$, $v \ge 1$, be a set of distinct rational primes  with $p_1=2$, and let $S$ be the set of positive rational integers with no prime divisors outside of $P$. A rational number is called an \textit{$S$-unit} if its absolute value is a quotient of elements of $S$. (\edit{We use the variable $S$ later on in a different way...}) We study the Diophantine equation
+\begin{equation} \label{xyz2}
+  X + Y = Z^2
+\end{equation}
+in $X$, $Y$ $S$-units, and $Z\in\mathbb{Q}$. Without loss of generality, by clearing denominators we may therefore study
+\begin{equation} \label{maineq}
+  X + Y= Z^2,
+\end{equation}
+where
+\begin{equation} \label{maincond}
+  \left\{\begin{array}{l l l}
+  X \in S, & \pm y \in S, & Z\in \mathbb{Z}, \\
+  X \geq Y, & Z > 0 & \\
+  \gcd(X,Y) & \text{ is squarefree.} & \\
+  \end{array} \right.
+\end{equation}
+
+In \cite{deWeger1}, de Weger proves that there exists an effectively computable constant $C$, depending on $p_1, \dots, p_s$ only, such that any solution $(x,y,z)$ of equation (\ref{maineq}) with conditions (\ref{maincond}) satisfies
+\[\max(x,|y|,z) < C.\]
+This bound is computed using the theory of logarithmic forms to rule out the existence of solutions with very ``large" height. Then, $C$ is reduced using the LLL lattice reduction algorithm applied to certain approximation lattices, which are defined using $p$-adic logarithms. To find solutions below this reduced bound, de Weger applies a sieve which makes use of the Fincke-Pohst algorithm, a procedure for computing all ``short" vectors in a lattice. This reduces the bound further, until the remaining solutions may be computed via brute force.
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{The Setup} \label{sec:setup}
+Equation (\ref{maineq}) can be transformed into a number of Pell-like equations. Put
+\[X = DU^2,\]
+where $D, U\in S$, and $D$ is square-free. We note that there are only $2^v$ possibilities for $D$. Now, (\ref{maineq}) is equivalent to a finite number of equations
+\begin{equation} \label{Deq}
+  Z^2 - DU^2 = Y
+\end{equation}
+in $U \in S$, $\pm Y\in S$, $Z \in \mathbb{Z}$, with $Z > 0$ and $\gcd(U,Y) = 1$.
+
+Consider first the special case $D = 1$. Then to solve (\ref{Deq}), it may be shown that it suffices to solve the equation
+\[a + b = c\]
+in $S$-integers. In some sense, the algorithm to handle this case is a simpler version of the algorithm used to treat the remaining cases $D > 1$, and we therefore exclude the details of resolving $D = 1$ in this paper.
+
+For the remainder of this section, we assume $D > 1$. Let $K = \mathbb{Q}(\sqrt{D})$ and let $\sigma: K \to K$ be the automorphism of $K$ with $\sigma(\sqrt{D}) = -\sqrt{D}$. For any number or ideal $x$ in $K$, for convenience, we write $x'$ for $\sigma(x)$. For $i = 1, \dots, v$, let $\mathfrak{p}_i$ be the prime ideal in $K$ such that $\text{ord}_{p_i}(\mathfrak{p}_i) > 0$. If $p_i$ splits in $\mathcal{O}_K$ (the ring of integers in $K$), this is well-defined if a choice has been made from the possibilities for $\sqrt{D} \mod{p}$.
+
+Equation (\ref{Deq}) leads to the conjugated ideal equations
+\begin{equation} \label{chis}
+\begin{cases}
+  (Z+U\sqrt{D})\mathcal{O}_K = \prod_{i = 1}^v \mathfrak{p}_i^{\ a_i} {\mathfrak{p}_i}'^{\ b_i} & \\
+  (Z-U\sqrt{D})\mathcal{O}_K = \prod_{i = 1}^v {\mathfrak{p}_i}'^{\ a_i} \mathfrak{p}_i^{\ b_i} &,
+\end{cases}
+\end{equation}
+where $a_i, b_i \in \mathbb{N}_0$ and $b_i = 0$ if $\mathfrak{p}_i = \mathfrak{p}_i'$.
+
+\begin{enumerate}
+\item If $p_i$ remains prime in $K$, then $\mathfrak{p}_i = \mathfrak{p}_i'$.
+  \begin{enumerate}
+  \item If $p_i \neq 2$, necessarily $(a_i,b_i)=(0,0)$. In this case, $\ord_{p_i}(U) \geq 0$.
+  \item If $p_i = 2$, then either $(a_i,b_i)=(0,0)$ so $\ord_{p_i}(U) \geq 0$, or ${(a_i,b_i)=(1,0)}$, in which case $\ord_{2}(U) = 0$.
+  \end{enumerate}
+\item
+  Similarly, if $p_i$ ramifies in $K$, then $\mathfrak{p}_i = \mathfrak{p}_i'$.
+  \begin{enumerate}
+  \item Either $(a_i,b_i)=(0,0)$ and $\ord_{p_i}(U) \geq 0$, or $(a_i,b_i)=(1,0)$ and $\ord_{p_i}(U)= 0$.
+  \end{enumerate}
+\item Lastly, if $p_i$ splits in $K$ so that $(p_i)\mathcal{O}_K = \mathfrak{p}_i\mathfrak{p}_i'$, we have 2 possible scenarios.
+  \begin{enumerate}
+  \item If $a_i \neq b_i$ then necessarily $(a_i,b_i)=(0,0)$ and $\ord_{p_i}(U)\geq 0$.
+  \item If $a_i = b_i$ and $p_i \neq 2$, then necessarily $\min(a_i,b_i)=0$, $\max(a_i,b_i) > 0$, in which case $\ord_{p_i}(U)= 0$.
+  \item If $a_i = b_i$ and $p_i = 2$, then necessarily $\min(a_i,b_i)=1$, $\max(a_i,b_i) > 1$, in which case $\ord_{p_i}(U)= 0$.
+  \end{enumerate}
+\end{enumerate}
+
+Note that when $p_i$ splits in $K$ and $a_i \neq b_i$, we assume $\min(a_i,b_i)=b_i$ and $\max(a_i,b_i)=a_i$ as otherwise we would repeat this case in the factorization of the conjugate ideal, $(Z-U\sqrt{D})\mathcal{O}_K$.
+
+In \edit{TMV4}, for a rational prime $p$, we let $L_p$ be a subset of the ideals $\fb$ supported at the prime ideals
+above $p$, and $M_p$ be a subset of the set of pairs $(\fb,\fp)$ where $\fb$ is supported at the prime ideals above $p$, and $\fp \mid p$ is a prime ideal satisfying $e(\fp|p)=f(\fp|p)=1$, where $e(\fp|p)$ and $f(\fp|p)$ are, respectively, the ramification index and inertial degree of $\fp$ over $p$. In this language, we have the following:
+
+\begin{enumerate}
+\item If $p$ remains prime in $K$, then $\mathfrak{p} = \mathfrak{p}'$.
+  \begin{enumerate}
+  \item If $p \neq 2$, $L_p= \{(1)\mathcal{O}_K\}$ and $M_p=\{\}$.
+  \item If $p_i = 2$, then $L_p= \{(1)\mathcal{O}_K, \fp\}$ and $M_p=\{\}$.
+  \end{enumerate}
+\item
+  Similarly, if $p$ ramifies in $K$, then $\mathfrak{p} = \mathfrak{p}'$.
+  \begin{enumerate}
+  \item $L_p= \{(1)\mathcal{O}_K, \fp\}$ and $M_p=\{\}$.
+  \end{enumerate}
+\item Lastly, if $p_i$ splits in $K$ so that $(p)\mathcal{O}_K = \mathfrak{p}\mathfrak{p}'$, we have 2 possible scenarios.
+  \begin{enumerate}
+  \item If $p \neq 2$, then $L_p= \{(1)\mathcal{O}_K\}$ and $M_p=\{((1)\mathcal{O}_K,\fp)\}$.
+  \item If $p = 2$, then $L_p= \{(1)\mathcal{O}_K\}$ and $M_p=\{(\fp',\fp)\}$.
+  \end{enumerate}
+\end{enumerate}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{An Equation in Ideals} \label{sec:eq-in-ideals}
+
+For every $p \in P:=\{p_1,\dotsc,p_v\}$ we let $L_p$, $M_p$ be a corresponding satisfactory pair. From the above definition, we see that there is some partition  $P=P_1 \cup P_2$ such that for every $p \in P_1$, the $p$-part of $(\chi) \OO_K$ equals $\fb \fp^{l}$ for some $(\fb,\fp) \in M_p$ and $l \ge 0$, and for every $p \in P_2$, it equals some $\mathfrak{b} \in L_p$. Let $P=P_1 \cup P_2$ be a partition of $P$ and write
+\[
+P_1=\{q_1,\dotsc,q_{s}\}, \qquad P_2=\{q_{s+1},\dotsc,q_v\}.
+\]
+Let $\mathcal{Z}_{P_1,P_2}$ be the set of all pairs $(\fa,S)$
+such that
+there are $(\fb_i,\fp_i) \in M_{q_i}$ for $1 \le i \le s$,
+and $\fb_j \in L_{q_j}$ for $s+1 \le j \le v$
+satisfying
+\[
+\fa= \fb_1 \fb_2 \cdots \fb_s \cdot \fb_{s+1} \cdots \fb_v, \qquad
+S=\{\fp_1,\dotsc,\fp_s\}.
+\]
+Let
+\[
+\mathcal{Z} \; := \; \bigcup_{P_1 \subseteq P}
+\mathcal{Z}_{P_1,P-P_1}.
+\]
+\begin{prop}\label{prop:Sprop}
+Let $(Z,U,Y)$ be a solution to
+\eqref{Deq}. Then there is some $(\fa,S) \in \mathcal{Z}$
+such that
+\begin{equation}\label{XYZ2factored}
+  \begin{cases}
+  (Z+U\sqrt{D})\OO_K=\fa \cdot \fp_1^{n_1}\cdots \fp_s^{n_s} & \\
+  (Z-U\sqrt{D})\OO_K=\fa' \cdot \fp_1'^{n_1}\cdots \fp_s'^{n_s} &,
+\end{cases}
+\end{equation}
+where
+$S=\{\fp_1,\dotsc,\fp_s\}$, and $n_1,\dotsc,n_s$
+are non-negative integer. Moreover, the set $S$ has the following
+properties:
+\begin{enumerate}
+\item[(a)] $e(\fp_i|q_i)=f(\fp_i|q_i)=1$ for $1 \le i \le s$.
+\item[(b)] Let $1 \le i \le s$. Let $p$ be the unique rational
+prime below $\fp_i$. Then $\fp_j \nmid p$ for all $1 \le j \le s$
+with $j \ne i$.
+\end{enumerate}
+\end{prop}
+
+To solve \eqref{Deq}, we will solve \eqref{XYZ2factored}
+for every possible choice of $(\fa,S) \in \mathcal{Z}$.\\
+
+\noindent\textbf{Remark.} Let $(Z,U,Y)$ denote a solution of \eqref{Deq} corresponding to some $(a,S) \in \mathcal{Z}$, where $S=\{\fp_1,\dotsc,\fp_s\}$. For every such set, we denote by $(\fa',S')$, the corresponding set of primes ideals in the factorization of $(Z-U\sqrt{D})\OO_K$, where $S'=\{\fp'_1,\dotsc,\fp'_s\}$,
+\[(Z-U\sqrt{D})\OO_K=\fa' \cdot \fp_1'^{n_1}\cdots \fp_s'^{n_s},\]
+as well as $S_U:=\{q_1,\dots,q_t\}$, the set of rational primes of $q_i \in P$ such that
+\[U = q_1^{c_1}\cdots q_t^{c_t}.\]
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Making the Ideals Principal}
+\label{sec:making-ideals-princ}
+
+From now on we fix $(\fa,S) \in \mathcal{Z}$ and we focus on a solution of \eqref{XYZ2factored}. \edit{The method of Tzanakis and de Weger \cite{TW} reduces
+\eqref{eqn:TMfactored}
+to at most $(m/2) \cdot h^s$ $S$-unit equations, where $m$
+is the number of roots of unity and $h$ is the class number of $K$. Our method,
+explained below, gives at most only $m/2$ $S$-unit equations.}
+
+Given an ideal $\fb$ of $\OO_K$, we denote its class in
+the class group $\Cl(K)$ by $[\fb]$.
+\begin{lem}
+Let
+\[
+\phi : \Z^s \rightarrow \Cl(K), \qquad (m_1,\dotsc,m_s)
+\mapsto [\fp_1]^{m_1}\cdots [\fp_s]^{m_s}.
+\]
+\begin{enumerate}
+\item[(a)] If $[\fa]^{-1}$ is not in the image of $\phi$ then \eqref{XYZ2factored} has no solutions.
+\item[(b)] Suppose $[\fa]^{-1}=\phi(\rr)$,
+where $\rr=(r_1,\dotsc,r_s)$. Let $\zeta$
+be a generator of the roots of unity in $K$,
+and suppose it has order $m$.
+Let $\delta_1,\dotsc,\delta_r$ be a basis
+for the group of $S$-units $\OO_S^\times$
+modulo the torsion subgroup $\langle \zeta \rangle$.
+Let $\alpha$ be a generator of the principal
+ideal $\fa \cdot \fp_1^{r_1} \cdots \fp_s^{r_s}$.
+Let $(Z,U,Y)$ satisfy \eqref{XYZ2factored}.
+Then \edit{after possibly replacing $(X,Y)$ by $(-X,-Y)$; haven't put any thought toward this},
+we have
+\begin{equation}\label{eqn:taudeltaorig}
+Z+U\sqrt{D} \; = \; \tau \cdot \delta_1^{b_1} \cdots \delta_r^{b_r}
+\end{equation}
+where $\tau=\zeta^{a} \cdot \alpha$ with $0 \le a \le \frac{m}{2}-1$,
+and $b_1,\dotsc,b_r \in \Z$.
+\end{enumerate}
+\end{lem}
+\edit{\begin{proof}
+Note that if \eqref{eqn:TMfactored} has a solution
+$\nn=(n_1,\dotsc,n_s)$ then
+\[
+\phi(\nn)=[\fa]^{-1}.
+\]
+This proves $(a)$.
+For $(b)$, suppose $[\fa]^{-1}=\phi(r_1,\dotsc,r_s)$. Thus $\fa \cdot \fp_1^{r_1} \cdots \fp_s^{r_s}$ is principal
+and we let $\alpha$ be a generator. Then the fractional ideal
+$((a_0X-\theta Y)/\alpha) \OO_K$ is supported on $S=\{\fp_1,\dotsc,\fp_s\}$.
+Hence $(a_0X-\theta Y)/\alpha \in \OO_S^\times$.
+Now $\zeta,\delta_1,\dotsc,\delta_r$ is a basis for the $S$-unit
+group. Thus \eqref{eqn:taudeltaorig} holds
+for some $0\le a \le m-1$, and $b_1,\dotsc,b_r \in \Z$.
+However $\zeta^{m/2}=-1$. Thus we can suppose
+$0 \le a \le m/2-1$ by replacing $(X,Y)$ by $(-X,-Y)$
+if necessary.
+\end{proof}}
+
+\edit{\begin{lem}\label{lem:tauden}
+The denominator of the fractional ideal $\tau \OO_K$
+is supported on the set of prime ideals ${S=\{\fp_1,\dotsc,\fp_s\}}$.
+\end{lem}
+\begin{proof}
+This follows immediately from \eqref{eqn:taudeltaorig}
+since $\delta_1,\dotsc,\delta_r$ are $S$-units.
+\end{proof}}
+
+We have reduced the task of solving our original equation \eqref{Deq} to solving
+a pair of equations of the form
+\begin{equation}\label{eqn:XYZ2delta}
+  \begin{cases}
+    Z+U\sqrt{D}=\tau \cdot \delta_1^{b_1} \cdots \delta_r^{b_r}, & \\
+    Z-U\sqrt{D}=\tau' \cdot \delta_1'^{b_1} \cdots \delta_r'^{b_r}, &
+  \end{cases}
+  \end{equation}
+subject to the conditions
+\begin{equation}\label{eqn:restrictions}
+U,~Z \in \Z, \quad \gcd(U,Y)=1, \quad
+b_i \in \Z.
+\end{equation}
+Recall $U = q_1^{c_1}\cdots q_t ^{c_t}$, where $q_i \in P = \{p_1, \dots, p_v\}$ and $c_i \in \mathbb{N}$.
+
+We will tackle each of these equations
+\eqref{eqn:XYZ2delta} separately, first obtaining a bound
+\begin{equation}\label{eqn:B}
+	N:=\max\{\lvert b_1\rvert,\dotsc,\lvert b_r\lvert, c_1, \dots, c_t\}.
+\end{equation}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Lower Bounds for Linear Forms in Logarithms}\label{sec:lower-bounds}
+
+We establishing some notation, as well as some key results which we will need for the lower bound.
+
+\begin{tabular}{ccl}
+$L$ & \qquad & a number field.\\
+$D$ & & the degree $[L:\Q]$.\\
+$M_L$ & \qquad & the set of all places of $L$.\\
+$M_L^\infty$ & & the subset of infinite places.\\
+$M_L^{0}$ & & the subset of finite places.\\
+$\nu$ & & a place of $L$.\\
+$D_\nu$ & & the local degree $[L_\nu : \Q_\nu]$.\\
+$\lvert \cdot \rvert_\nu$ & & the usual normalized absolute value
+associated to $\nu$. \\
+&& If $\nu$ is infinite and associated to
+a real or complex embedding $\sigma$ of $L$, \\
+&& then $\lvert \alpha \rvert_\nu=\lvert \sigma(\alpha) \rvert$.\\
+&& If $\nu$ is finite and above the rational prime $p$,
+then $\lvert p \rvert_\nu=p^{-1}$.\\
+$\lVert \cdot \rVert_\nu$ && $=\lvert \cdot \rvert_\nu^{D_\nu}$.\\
+$h(\cdot)$ && the absolute logarithmic height, defined in
+\eqref{eqn:heightdef}.
+\end{tabular}
+
+Let $L$ be a number field of degree $D$ over $\Q$.
+We shall write $M_L$ for the set of all places
+of $L$,
+and $M_L^\infty$, $M_L^{0}$ for the subset of infinite and finite places, respectively.
+For $\nu \in M_L$,
+we let $\lvert \cdot \rvert_\nu$ denote the
+usual normalized absolute value corresponding to $\nu$.
+If $\nu$ is finite
+and $p$ is the rational prime below $\nu$,
+then $\lvert p \rvert_\nu=p^{-1}$.
+We denote
+by $D_\nu$ the local degree $[L_\nu:\Q_\nu]$,
+and define
+\begin{equation}\label{eqn:normdef}
+\lVert \alpha \rVert_\nu=\lvert \alpha \rvert_\nu^{D_\nu}.
+\end{equation}
+The product formula may be stated as
+\begin{equation}\label{eqn:productformula}
+\prod_{\nu \in M_L} \lVert \alpha \rVert_\nu=1
+\end{equation}
+for all $\alpha \in L^\times$.
+In particular, if $\nu$
+is infinite, corresponding to a real or complex
+embedding $\sigma$ of $L$, then
+\begin{equation}\label{eqn:arch}
+\lvert \alpha \rvert_\nu=\lvert \sigma(\alpha) \rvert,
+\qquad
+\text{and}
+\qquad
+\lVert \alpha \rVert_\nu=
+\begin{cases}
+\lvert \sigma(\alpha) \rvert & \text{if $\sigma$ is real,}\\
+\lvert \sigma(\alpha) \rvert^2 & \text{if $\sigma$ is complex.}
+\end{cases}
+\end{equation}
+If $\nu$ is finite, and $\mP$ is the prime ideal corresponding to
+$\nu$, then for $\alpha \in L^\times$ we have
+\begin{equation}\label{eqn:normval}
+\lVert \alpha \rVert_\nu=\Norm(\mP)^{-\ord_\mP(\alpha)};
+\end{equation}
+this easily follows from $D_\nu=e(\mP|p)f(\mP|p)$, where
+$e(\mP|p)$ and $f(\mP|p)$ are respectively the
+ramification index and the inertial degree of $\mP$.
+
+For $\alpha \in L$, we define the absolute logarithmic height
+$h(\alpha)$ by
+\begin{equation}\label{eqn:heightdef}
+h(\alpha)=
+\frac{1}{[L:\Q]} \sum_{\nu \in M_L}
+D_\nu \log \max\{1, \lvert \alpha \rvert_\nu\}
+=
+\frac{1}{[L:\Q]} \sum_{\nu \in M_L}
+\log \max\{1, \lVert \alpha \rVert_\nu\}.
+\end{equation}
+\begin{lem}\label{lem:conjheight}
+The absolute logarithmic height of an algebraic number $\alpha$ is independent
+of the number field $L$ containing $\alpha$.
+Moreover, if $\alpha$ and $\beta$ are Galois conjugates, then
+$h(\alpha)=h(\beta)$.
+\end{lem}
+For proofs of the following two lemmata,
+see \cite[Lemma 4.1]{IntegralHyp}
+and \cite[Lemma 3.2]{Homero}.
+\begin{lem}\label{lem:heightsum}
+For $\alpha_1,\dotsc,\alpha_n \in L$ we have
+\[
+h(\alpha_1\cdots \alpha_n) \le h(\alpha_1)+\cdots+h(\alpha_n),
+\quad
+h(\alpha_1+\cdots+\alpha_n) \le \log{n}+h(\alpha_1)+\cdots+h(\alpha_n).
+\]
+For any $\alpha \in L^\times$, we have $h(\alpha)=h(\alpha^{-1})$.
+Moreover, for any place $\nu \in M_L$,
+\begin{equation}\label{eqn:logheightbd}
+\log{\lVert \alpha \rVert_\nu} \le [L:\Q] \cdot h(\alpha).
+\end{equation}
+\end{lem}
+%\begin{proof}
+%For the first part of the lemma see \cite[Lemma 4.1]{IntegralHyp}.
+%The second part follows immediately from the definition
+%of height.
+%\end{proof}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{The $S$-Unit Equation}\label{sec:sunit}
+
+We now return to the task of studying
+the solutions of \eqref{eqn:XYZ2delta}. Here, we use the theorems of K\"{a}nel and Matschke to establish bounds for $b_1, \dots, b_r,c_1,\dots, c_t$,
+
+We begin by establishing the following notation:
+
+\begin{tabular}{rcl}
+$\sqrt{D}$, $K$ & \qquad & as defined in Section~\ref{sec:intro}.\\
+ $d$ & & the degree $[K:\Q] =2$.\\
+$S$ & & a set $\{\fp_1,\dotsc,\fp_s\}$ of prime ideals of $K$
+satisfying \\
+& & conditions (a), (b) of Proposition~\ref{prop:Sprop}.\\
+$s$ & & the cardinality $\#S$ of the set $S$.\\
+$\delta_1,\dotsc,\delta_r$ & & a basis for the $S$-unit group
+$\OO_S^\times$ modulo torsion,\\
+& & also appearing in \eqref{eqn:TMdelta}.\\
+$\tau$ & & a non-zero element of $K$, appearing in \eqref{eqn:TMdelta}.\\
+$Z$, $U$, $b_1,\dotsc,b_r$ & & a solution to \eqref{eqn:TMdelta}
+	satisfying \eqref{eqn:restrictions}, \eqref{eqn:restrictions2}.\\
+$\varepsilon$ & & $=\delta_1^{b_1} \cdots \delta_r^{b_r}$. Thus
+                  \eqref{eqn:TMdelta} can be rewritten as \\
+& & $Z+U\sqrt{D}= \tau \cdot \varepsilon$.\\
+$\mu$ & & $=\tau \cdot \varepsilon=Z+U\sqrt{D}$.\\
+$B$  & & $=\max\{\lvert b_1 \rvert, \dotsc,\lvert b_r\rvert,c_1,\dots,c_t\}$.\\
+$\sigma$ & & the automorphism $K \to K$, $\sqrt{D} \mapsto -\sqrt{D}$.\\
+$\mu'$, $\varepsilon'$, $\tau'$, $\delta_j'$
+& & the images of $\mu$, $\varepsilon$, $\tau$, $\delta_j$ under the
+automorphism $\sigma$.\\
+\end{tabular}
+
+Recall $\gcd(U,Y)=1$ and $P=\{p_1,\dots, p_v\}$, where $p_1=2$. Following \edit{vKM}, we observe that
+\begin{equation}
+X+Y= U^2D + Y = Z^2 \implies (Z/U)^2-D = Y/U^2.
+\end{equation}
+Writing $x=(Z/U)$ and $y=Y/U^2$, we obtain $x^2+b=cy$, a generalized Ramanujan-Nagell equation with $b=-D$ and $c=1$. Note here that $x$ is an $P$-integer and $y$ is an $P$-unit.
+Let $N_S=p_1\cdots p_v$ and $a=bc^2=-D$. Now, applying Corollary 9.1 of \edit{vKM}, we have
+\begin{align*}
+  h(x^2),h(y) & \leq 3\Omega_{\text{opt}}+3h(c)+8\log N_S \\
+              & = 3\Omega_{\text{opt}}+8\log N_S \\
+              & = 3\Omega_{\text{opt}}+8\log (p_1\cdots p_v).
+\end{align*}
+It follows that
+\[ 2h(Z),2h(U),h(Y) \leq 3\Omega_{\text{opt}}+8\log N_S.\]
+
+Here $\Omega_{\text{opt}} = \Omega_{\text{opt}}(a,P) = \Omega_{\text{opt}}(-D,P)$. To find this value, we must first define $D_S=1728N_S^2 = 2^6 3^3 N_S^2$ and $\kappa = 4\pi + \log(163/\pi)$. Then, by Proposition 10.7 of \edit{vKM}
+\begin{align*}
+  \Omega_{\text{opt}}(-D,P) & = \frac{1}{3}h(D) + 4\alpha(D_S) + 2\log(\alpha(D_S) + \kappa) + 35 + 4\kappa.
+\end{align*}
+Now, $\alpha(D_S) = \min(\beta(D_S),\beta^*(D_S))$, where
+\[\beta(D_S) = \frac{1}{2}m\log m + \frac{5}{8}m(18+\log l) \quad \text{ and } \quad \beta^*(D_S) = \frac{1}{2}g\log(gl^*) + \frac{1}{2}l^*\log(4+4\log l^*),\]
+where
+\[l = \lfloor \frac{D_S}{6} \prod_{p|D_S}(p+1)\rfloor \quad \text{ and } \quad l^* = \lfloor \frac{D_S}{6} \prod_{p|D_S}(1+1/p)\rfloor,\]
+and finally, $m$ is the number of newforms of level dividing $D_S$ and $g=g(D_S)$ is the genus of $X_0(D_S)$. To compute $m$ and $g$, we use \edit{Mar05, Theorem 4} and \edit{DS05, p.107}:
+\[m=\frac{D_S}{12}\prod_{p|D_S}\left(1-\frac{1}{p^2}\right)-\frac{1}{2}\prod_{p|D_S}p^{\lfloor\frac{\ord_p(D_S)}{2}-1\rfloor}(p-1),\]
+\[g \leq 1 + \frac{D_S\prod_{p|D_S}(1+1/p)}{12}.\]
+
+Let
+\begin{equation}\label{eqn:varepsilondef}
+\delta_1^{b_1} \cdots \delta_r^{b_r} \; = \; \varepsilon
+\; = \;
+(Z + U \sqrt{D})/\tau \,
+\end{equation}
+and recall $U = q_1^{c_1} \cdots q_t^{c_t}$. We have
+\begin{align}\label{eqn:heps}
+  h(\varepsilon) & \leq h(Z+U\sqrt{D}) + h(\tau)\\
+                 & \leq \log{2} + h(Z) + h(U) + h(\sqrt{D}) + h(\tau)\\
+                 & \leq 3\Omega_{\text{opt}} + \left(\log{2} + 8\log (p_1\cdots p_v) + h(\sqrt{D}) + h(\tau)\right)
+\end{align}
+and
+\[|c_i| = c_i \leq \frac{h(U)}{\log{q_i}} \leq \frac{3\Omega_{\text{opt}}}{2\log{q_i}} + \frac{4\log(p_1\cdots p_v)}{\log{q_i}},\]
+where this last inequality follows from
+\[h(U) = \log(q_1^{c_1} \cdots q_t^{c_t}).\]
+
+\begin{lem}\label{lem:htlbB}
+Let $U$ be any subset of $S \cup M_K^{\infty}$ of size $r$.
+Let $\cM$ be the $r\times r$-matrix
+\[
+\cM=(\, \log{\lVert \delta_j \rVert_\nu} \, )_{\nu \in U,~1 \le j \le r} \, .
+\]
+The matrix $\cM$ is invertible. Let $c_{17}$ be the largest
+of the absolute values of the entries of $\cM^{-1}$.
+Then
+\[
+\max\{\lvert b_1\rvert,\dotsc,\lvert b_r\lvert\} \;  \le \;  2d \cdot c_{17} \cdot h(\varepsilon).
+\]
+\end{lem}
+\begin{proof}
+The determinant of $\cM$ is in fact
+\[
+\pm \left(\prod_{\nu \in U} D_\nu\right) \cdot R(\delta_1,\dotsc,\delta_r)
+\]
+where $R(\delta_1,\dotsc,\delta_r)$ is the regulator of system
+of $S$-units $\delta_1,\dotsc,\delta_r$,
+and therefore does not vanish (c.f. \cite[Section 3]{BG}).
+Consider the vectors
+$\bb:=\big[b_j\big]_{j=1,\dotsc,r}$ and
+$\uu:=\big[\log{\lVert \varepsilon \rVert_\nu} \big]_{\nu \in U}$
+in $\R^r$. As $\varepsilon=\delta_1^{b_1} \cdots \delta_r^{b_r}$
+we see that $\uu=\cM \bb$ and so $\bb=\cM^{-1} \uu$. It follows,
+for $j=1,\dotsc,r$ that
+\[
+\begin{split}
+\lvert b_j \rvert \; %:= \; \max\{ \lvert b_1 \rvert,\dotsc,\lvert b_r \rvert\}
+\; & \le \; c_{17} \cdot \sum_{\nu \in U} \lvert \log{\lVert \varepsilon \rVert_\nu}\rvert\\
+& \le \; c_{17} \cdot \sum_{\nu \in M_K} \log{\max\{1,\lVert \varepsilon \rVert_\nu\}} + \log{\max\{1,\lVert \varepsilon^{-1} \rVert_\nu\}}\\
+& = \; 2d \cdot c_{17} \cdot h(\varepsilon)\\
+& = \; 4 \cdot c_{17} \cdot h(\varepsilon)
+\end{split}
+\]
+as required.
+\end{proof}
+
+\noindent\textbf{Remark.} Observe that there are $r+1$ possibilities for the set $U$. To compute $c_{17}$ in practice, we iterate across all such sets and select $c_{17}$ as the smallest possible value across each of the associated $r+1$ matrices $\cM$.
+
+Combining the proof od Lemma~\ref{lem:htlbB} with \eqref{eqn:heps}, we obtain
+\[
+  \begin{split}
+  \lvert b_j \rvert & \leq 4 \cdot c_{17} \cdot h(\varepsilon) \\
+  & \leq 4\cdot c_{17} \cdot \left(3\Omega_{\text{opt}} + \left(\log{2} + 8\log (p_1\cdots p_v) + h(\sqrt{D}) + h(\tau)\right)\right).
+\end{split}
+\]
+It follows that
+\[B :=\max\{\lvert b_1\rvert,\dotsc,\lvert b_r\lvert\} \leq \cB,\]
+where
+\[\cB:= 4\cdot c_{17} \cdot \left(3\Omega_{\text{opt}} + \left(\log{2} + 8\log (p_1\cdots p_v) +
+        h(\sqrt{D}) + h(\tau)\right)\right).\]
+Recall also that we have
+\[|c_i| \leq \frac{3\Omega_{\text{opt}}}{2\log{q_i}} + \frac{4\log(p_1\cdots p_v)}{\log{q_i}}\]
+so that
+\[C:=\max\{c_1, \dots, c_t\} \leq \cC,\]
+where
+\[\cC:=\max_{1\leq i \leq t}\left(\frac{3\Omega_{\text{opt}}}{2\log{q_i}} + \frac{4\log(p_1\cdots p_v)}{\log{q_i}}\right).\]
+Altogether, we thus have a bound for
+\[N:=\max\{\lvert b_1\rvert,\dotsc,\lvert b_r\lvert, c_1, \dots, c_t\} \leq \max\{\cB,\cC\}.\]
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Controlling the Valuations of $Z+U\sqrt{D}$}\label{sec:controlling-vals}
+
+In this section and the next, we will suppose that we have a bound
+\begin{equation}\label{eqn:cB0}
+N \le \cN_{\infty}
+\end{equation}
+and we will explain a method for replacing this
+bound with what is hopefully a smaller bound. Our
+subsequent constants will depend on $\cN_{\infty}$.
+Initially we may take $\cN_{\infty}$ as in the previous section.
+However, if we succeed in obtaining a smaller bound for $N$,
+we may replace $\cN_{\infty}$ by that bound and repeat the process.
+
+We shall replace the reduction step
+using linear forms in $\fp$-adic logarithms as in
+the paper of Tzanakis and de Weger \cite{TW}. In particular
+we will eliminate all computations with
+completions of extensions of $K$, as these are extremely tedious
+and error-prone.
+
+\bigskip
+
+\subsection{The bounds $\cN_\infty$ and $\cN_2$.}
+Henceforth $\cN_\infty$ and $\cN_2$ will denote
+the known bounds for the $\infty$-norm and $2$-norm
+of our exponent vector
+$\nn=(b_1,\dots,b_r,c_1,\dots,c_t)$:
+\begin{equation}\label{eqn:cB1}
+	N:=\lVert \nn \rVert_\infty \le \cN_\infty, \qquad
+\lVert \nn \rVert_2 \le \cN_2.
+\end{equation}
+Initially,
+thanks to \edit{Proposition~\ref{prop:initialBd}}, we can make the assignments
+%\begin{equation}\label{eqn:cB0tocB1}
+%\cB_1:=\sqrt{r} \cdot \cB_{\infty}, \edit{\qquad \cB_0 = c_{20} \quad \text{(initial value for $\cB_0$)}}.
+%\end{equation}
+%Note that
+%\begin{equation}\label{eqn:cB1}
+%\lVert \bb \rVert \le \cB_1
+%\end{equation}
+%where $\lVert \bb \rVert$ denotes the $L^2$-norm of $\bb=\big[b_j\big]_{j=1,\dotsc,r}$. \edit{To reiterate, we will update $\cB_{\infty}$ and $\cB_1$ throughout our algorithm, keeping in mind that $\cB_0$ will always denote the bound on the $L^{\infty}$-norm of $\bb$, while $\cB_1$ will always be a bound for the $L^2$-norm of $\bb$.}
+\begin{equation}\label{eqn:cB0tocB1}
+  \cN_{\infty} = \max\{\cB,\cC\}, \quad \cN_2=\sqrt{r \cdot \cB \; + \; t\cdot \cC}.
+    \quad \text{(initial values for $\cN_\infty$ and $\cN_2$)}.
+\end{equation}
+However, as we progress in our algorithm, we will update
+the values of $\cB$, $\cC$, $\cN_\infty$, $\cN_2$
+so that \eqref{eqn:cB1} is still satisfied.
+
+\noindent \textbf{Remark.} Let $\cB_j$ denote the best known upper bound on $|b_j|$, and let $\cC_j$ denote the best known upper bound on $|c_j|$,
+\begin{equation}\label{eqn:BjCj}
+  |b_j| \leq \cB_j, \quad |c_j| \leq \cC_j.
+\end{equation}
+Initially, we take
+\[\cB_j = \cB \quad \text{and} \quad \cC_j = \frac{3\Omega_{\text{opt}}}{2\log{q_i}} + \frac{4\log(p_1\cdots p_v)}{\log{q_i}},\]
+and
+\[\cN_2 = \left(\sum_{j=1}^r \cB_j^2 + \sum_{j=1}^t \cC_j^2\right)^{1/2}.\]
+We will update $\cB_j$ and $\cC_j$ as we progress through the algorithm, and thus will use \eqref{eqn:BjCj} to update $\cN_{\infty}$ and $\cN_2$.
+
+%Note that
+%where $\lVert \bb \rVert_2$ denotes the $L^2$-norm of the vector
+%while $\lVert \bb \rVert_1$ denotes the $L^1$-norm. To reiterate, we will update $\cB_{\infty}$, $\cB_1$, and $\cB_2$ throughout our algorithm, keeping in mind that these will always denote bounds on the $L^{\infty}$-norm, $L^1$-norm, and $L^2$-norm of $\bb$, respectively. Note that we will focus primarily on $\cB_{\infty}$ and $\cB_2$, but we include $\cB_1$ here to simplify our notation in the remainder of the paper. %Unless specified, we will always refer to the $L^2$-norm when discussing vector lengths, often denoting it simply by $\lVert \cdot \rVert$.
+
+Given a lattice $L \subseteq \Z^{r+t}$ and
+a vector $\ww \in \Z^{r+t}$, we denote by
+$D(L,\ww)$ the shortest length of a vector
+belonging to the coset $\ww+L$. This value can be
+computed using a closest vector algorithm.
+Indeed, for $\vv \in \Z^{r+t}$, write $\cc(L,\vv)$ for the closest
+vector in $L$ to $\vv$ (if there is more than one
+at the closest distance, choose any of them).
+\begin{lem}\label{lem:closest}
+$D(L,\ww)=\lVert \ww+\cc(L,-\ww) \rVert_2$.
+\end{lem}
+\begin{proof}
+Let $\bfl \in L$ and suppose
+\[
+\lVert \ww+\bfl \rVert_2 < \lVert \ww+\cc(L,-\ww) \rVert_2.
+\]
+Then
+\[
+\lVert \bfl-(-\ww) \rVert_2 < \lVert \cc(L,-\ww) -(-\ww)\rVert_2.
+\]
+Thus $\bfl$ is a vector belonging to $L$ that is strictly closer
+to $-\ww$ than $\cc(L,-\ww)$ giving a contradiction.
+\end{proof}
+
+Our first goal is to use the bounds \eqref{eqn:cB1}
+to deduce  bounds on the valuations $\ord_\fp(Z+U\sqrt{D})$
+for $\fp \in S$. Recall that $\nn=(b_1, \dots, b_r, c_1, \dots, c_t)$.
+
+\begin{prop}\label{prop:valbd}
+Let $\fp \in S$ and let $p$ be the rational prime below $\fp$.
+Let $k \ge 1$ if $p \neq 2$, otherwise let $k \geq 2$. \edit{(Is this necessary? We can probably just leave it as $k \ge 1$)} Then $\gcd(\fp^k,\tau^{\prime}) = \gcd(\fp^k,2)$.
+Let
+\[
+\fb:=\fp^k/\gcd(\fp^k,\tau^{\prime}) \, .
+\]
+Given $u \in K^\times$ whose support is coprime with $\fb$, denote
+its image in $(\OO_K/\fb)^\times$ by $\overline{u}$.
+Let
+\[
+\phi: \Z^{r+t} \rightarrow (\OO_K/\fb)^\times,
+\qquad (n_1,\dotsc,n_{r+t}) \mapsto \frac{\delta_1'^{n_1} \cdots \delta_r'^{n_r}}{q_1^{n_{r+1}}\cdots q_t^{n_{r+t}}}.
+\]
+Write
+\[
+\tau_0:=\frac{-2\sqrt{D}}{\tau^{\prime}}.
+\]
+Then the support of $\tau_0$ is coprime with $\fb$ and the following hold:
+\begin{enumerate}[(i)]
+\item If $\overline{\tau_0}$ does not belong to $\Img(\phi)$ then
+\begin{equation}\label{eqn:valup}
+ \ord_{\fp}(Z+U\sqrt{D}) \leq k-1.
+\end{equation}
+\item Suppose $\overline{\tau_0}=\phi(\ww)$ for some $\ww \in \Z^{r+t}$. Let $L=\Ker(\phi)$ and suppose $D(L,\ww) >\cN_2$.
+Then \eqref{eqn:valup} holds.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+  Let $\fp$, $p$, and $k$ be as in the statement of the proposition. We suppose that
+\begin{equation}\label{eqn:kbound}
+\ord_\fp(Z+U\sqrt{D}) \ge k
+\end{equation}
+and show that this leads to a contradiction under
+the hypotheses of of (i) or (ii).
+Recall $k \ge 1$ if $p \neq 2$ and $k \geq 2$ otherwise. Note that this is consistent with the lower bounds established in Section~\ref{sec:setup}.
+
+Since
+\[\begin{split}
+    \tau \cdot \delta_1^{b_1} \cdots \delta_r^{b_r} - \tau' \cdot \delta_1'^{b_1} \cdots \delta_r'^{b_r} & = Z+U\sqrt{D} - (Z-U\sqrt{D})\\
+    & = 2U\sqrt{D} \\
+    & = 2\sqrt{D}\cdot q_1^{c_1}\cdots q_t^{c_t},
+  \end{split}\]
+we have
+\[- \tau' \cdot \delta_1'^{b_1} \cdots \delta_r'^{b_r} \equiv  2\sqrt{D}\cdot q_1^{c_1}\cdots q_t^{c_t} \pmod{\fp^k}.\]
+Note that the prime $\fp$ belongs to the support of the $\delta_i$ and $\fp$ does not belong to the support of the $\delta_i^{\prime}$. The primes $q_i|U$ do not divide $\fp$, and as $p$ splits in $K$, $\fp$ is coprime to the support of $\sqrt{D}$. If $p\nmid 2$, then the support of $\tau^{\prime}$ is coprime with $\fp$ so that $\gcd(\fp^k,\tau^{\prime}) = \gcd(\fp^k,2) = 1$. Conversely, if $p = 2$, we have
+\[\gcd(\fp^k,\tau^{\prime}) = \gcd(\fp^k,2) = \fp.\]
+Define $\fb$ as in the proposition. Then
+\[\frac{\delta_1'^{b_1} \cdots \delta_r'^{b_r}}{q_1^{c_1}\cdots q_t^{c_t}} \equiv \tau_0 \pmod{\fb},\]
+where the $\delta_i^{\prime}, q_i$ and $\tau_0$ all have support disjoint from $\fb$. Thus $\phi(\nn) = \overline{\tau_0}$. If $\overline{\tau_0} \notin \Img(\phi)$, then we have a contradiction, and so our original assumption~\eqref{eqn:kbound}
+is false. This proves (i).
+
+Suppose now that $\overline{\tau_0} \in \Img(\phi)$ and write
+$\overline{\tau_0}=\phi(\ww)$ with $\ww \in \Z^{r+t}$.
+Then
+$\nn \in \ww+L$. Thus
+$\lVert \nn\rVert_2 \ge D(L,\ww)$. If $D(L,\ww) > \cN_2$
+then $\lVert \nn \rVert_2 > \cN_2$ and we contradict \eqref{eqn:cB1}.
+This proves (ii).
+\end{proof}
+
+\edit{The next proposition is essentially identical to the previous one, but we take the conjugate essentially everywhere}
+
+\begin{prop}\label{prop:valbd2}
+Let $\fp^{\prime} \in S^{\prime}$ and let $p$ be the rational prime below $\fp^{\prime}$.
+Let $k \ge 1$ if $p \neq 2$, otherwise let $k \geq 2$. \edit{(Is this necessary? We can probably just leave it as $k \ge 1$)} Then $\gcd(\fp^{\prime\ k},\tau) = \gcd(\fp^{\prime\ k},2)$.
+Let
+\[
+\fb^{\prime}:=\fp^{\prime\ k}/\gcd(\fp^{\prime\ k},\tau) \, .
+\]
+Given $u \in K^\times$ whose support is coprime with $\fb^{\prime}$, denote
+its image in $(\OO_K/\fb^{\prime})^\times$ by $\overline{u}$.
+Let
+\[
+\phi: \Z^{r+t} \rightarrow (\OO_K/\fb^{\prime})^\times,
+\qquad (n_1,\dotsc,n_{r+t}) \mapsto \frac{\delta_1^{n_1} \cdots \delta_r^{n_r}}{q_1^{n_{r+1}}\cdots q_t^{n_{r+t}}}.
+\]
+Write
+\[
+\tau_0^{\prime}:=\frac{2\sqrt{D}}{\tau}.
+\]
+Then the support of $\tau_0^{\prime}$ is coprime with $\fb^{\prime}$ and the following hold:
+\begin{enumerate}[(i)]
+\item If $\overline{\tau_0^{\prime}}$ does not belong to $\Img(\phi)$ then
+\begin{equation}\label{eqn:valup2}
+ \ord_{\fp^{\prime}}(Z-U\sqrt{D}) \leq k-1.
+\end{equation}
+\item Suppose $\overline{\tau_0^{\prime}}=\phi(\ww)$ for some $\ww \in \Z^{r+t}$. Let $L=\Ker(\phi)$ and suppose $D(L,\ww) >\cN_2$.
+Then \eqref{eqn:valup2} holds.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+  Let $\fp^{\prime}$, $p$, and $k$ be as in the statement of the proposition. We suppose that
+\begin{equation}\label{eqn:kbound2}
+\ord_{\fp^{\prime}}(Z-U\sqrt{D}) \ge k
+\end{equation}
+and show that this leads to a contradiction under
+the hypotheses of of (i) or (ii).
+Recall $k \ge 1$ if $p \neq 2$ and $k \geq 2$ otherwise. Note that this is consistent with the lower bounds established in Section~\ref{sec:setup}.
+
+Since
+\[\begin{split}
+    \tau \cdot \delta_1^{b_1} \cdots \delta_r^{b_r} - \tau' \cdot \delta_1'^{b_1} \cdots \delta_r'^{b_r} & = Z+U\sqrt{D} - (Z-U\sqrt{D})\\
+    & = 2U\sqrt{D} \\
+    & = 2\sqrt{D}\cdot q_1^{c_1}\cdots q_t^{c_t},
+  \end{split}\]
+we have
+\[\tau \cdot \delta_1^{b_1} \cdots \delta_r^{b_r} \equiv  2\sqrt{D}\cdot q_1^{c_1}\cdots q_t^{c_t} \pmod{\fp^{\prime\ k}}.\]
+Note that the prime $\fp^{\prime}$ belongs to the support of the $\delta_i^{\prime}$ and $\fp^{\prime}$ does not belong to the support of the $\delta_i$. The primes $q_i|U$ do not divide $\fp^{\prime}$, and as $p$ splits in $K$, $\fp^{\prime}$ is coprime to the support of $\sqrt{D}$. If $p\nmid 2$, then the support of $\tau$ is coprime with $\fp^{\prime}$ so that $\gcd(\fp^{\prime\ k},\tau) = \gcd(\fp^{\prime\ k},2) = 1$. Conversely, if $p = 2$, we have
+\[\gcd(\fp^{\prime\ k},\tau) = \gcd(\fp^{\prime\ k},2) = \fp^{\prime}.\]
+Define $\fb^{\prime}$ as in the proposition. Then
+\[\frac{\delta_1^{b_1} \cdots \delta_r^{b_r}}{q_1^{c_1}\cdots q_t^{c_t}} \equiv \tau_0^{\prime} \pmod{\fb^{\prime}},\]
+where the $\delta_i, q_i$ and $\tau_0^{\prime}$ all have support disjoint from $\fb^{\prime}$. Thus $\phi(\nn) = \overline{\tau_0^{\prime}}$. If $\overline{\tau_0^{\prime}} \notin \Img(\phi)$, then we have a contradiction, and so our original assumption~\eqref{eqn:kbound2}
+is false. This proves (i).
+
+Suppose now that $\overline{\tau_0^{\prime}} \in \Img(\phi)$ and write
+$\overline{\tau_0^{\prime}}=\phi(\ww)$ with $\ww \in \Z^{r+t}$.
+Then
+$\nn \in \ww+L$. Thus
+$\lVert \nn\rVert_2 \ge D(L,\ww)$. If $D(L,\ww) > \cN_2$
+then $\lVert \nn \rVert_2 > \cN_2$ and we contradict \eqref{eqn:cB1}.
+This proves (ii).
+\end{proof}
+
+Finally, we apply a similar result to the rational primes $q_i \in S_U$. That is, the primes dividing $U$. Let $\bb = (b_1, \dots, b_r)$, so that $\lVert \bb \rVert_2 \leq \left(\sum_{j=1}^r \cB_j^2\right)^{1/2}$.
+
+
+\begin{prop}\label{prop:valbd3}
+Let $q \in S_U$ and let $k \ge 1$ and let
+\[\fb:=(q\OO_K)^k.\]
+Given $u \in K^\times$ whose support is coprime with $\fb$, denote
+its image in $(\OO_K/\fb)^\times$ by $\overline{u}$.
+Let
+\[
+\phi: \Z^{r} \rightarrow (\OO_K/\fb)^\times,
+\qquad (n_1,\dotsc,n_r) \mapsto \left(\frac{\delta_1}{\delta_1^{\prime}}\right)^{n_1} \cdots \left(\frac{\delta_r}{\delta_r^{\prime}}\right)^{n_r}.
+\]
+Write
+\[
+\tau_0:=\frac{\tau^{\prime}}{\tau}.
+\]
+Then the support of $\tau_0$ is coprime with $\fb$ and the following hold:
+\begin{enumerate}[(i)]
+\item If $\overline{\tau_0}$ does not belong to $\Img(\phi)$ then
+\begin{equation}\label{eqn:valup3}
+ \ord_{q}(U) \leq k-1.
+\end{equation}
+\item Suppose $\overline{\tau_0}=\phi(\ww)$ for some $\ww \in \Z^{r}$. Let $L=\Ker(\phi)$ and suppose $D(L,\ww) >\left(\sum_{j=1}^r \cB_j^2\right)^{1/2}$.
+Then \eqref{eqn:valup3} holds.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+  Let $q$, and $k$ be as in the statement of the proposition. We suppose that
+\begin{equation}\label{eqn:kbound3}
+\ord_{q}(U) \ge k
+\end{equation}
+and show that this leads to a contradiction under
+the hypotheses of of (i) or (ii). Recall $k \ge 1$.
+
+Since
+\[\begin{split}
+    \tau \cdot \delta_1^{b_1} \cdots \delta_r^{b_r} - \tau' \cdot \delta_1'^{b_1} \cdots \delta_r'^{b_r} & = Z+U\sqrt{D} - (Z-U\sqrt{D})\\
+    & = 2U\sqrt{D} \\
+    & = 2\sqrt{D}\cdot q_1^{c_1}\cdots q_t^{c_t},
+  \end{split}\]
+we have
+\[\tau \cdot \delta_1^{b_1} \cdots \delta_r^{b_r} \equiv
+  \tau' \cdot \delta_1'^{b_1} \cdots \delta_r'^{b_r} \pmod{(q\OO_K)^{k}}.\]
+Note $\tau, \tau^{\prime}$, the $\delta_i$ and the $\delta_i^{\prime}$ all have supports coprime to the support of $q\OO_K$. Thus
+\[\left(\frac{\delta_1}{\delta_1^{\prime}}\right)^{b_1} \cdots \left(\frac{\delta_r}{\delta_r^{\prime}}\right)^{b_r} \equiv \tau_0 \pmod{\fb}\]
+where the $\delta_i, \delta_i^{\prime}$ and $\tau_0$ all have support disjoint from $\fb$. Thus $\phi(\bb) = \overline{\tau_0}$. If $\overline{\tau_0} \notin \Img(\phi)$, then we have a contradiction, and so our original assumption~\eqref{eqn:kbound3}
+is false. This proves (i).
+
+Suppose now that $\overline{\tau_0} \in \Img(\phi)$ and write
+$\overline{\tau_0}=\phi(\ww)$ with $\ww \in \Z^{r}$.
+Then
+$\bb \in \ww+L$. Thus
+$\lVert \bb\rVert_2 \ge D(L,\ww)$. If $D(L,\ww) > \left(\sum_{j=1}^r \cB_j^2\right)^{1/2}$
+then
+\[\lVert \bb \rVert_2 > \left(\sum_{j=1}^r \cB_j^2\right)^{1/2}\]
+and we contradict \edit{\eqref{eqn:cB1}}.
+This proves (ii).
+\end{proof}
+
+
+\medskip
+
+\noindent \textbf{Remarks.}
+\begin{itemize}
+\item $\theta_0$ can be easily computed using Hensel's Lemma.
+\item To apply the proposition in practice,
+it is necessary to compute the abelian group structure
+of $(\OO_K/\fb)^\times$ for ideals $\fb$ of very large norm (but
+supported on the primes above $p$). For this we may apply
+the algorithms in \cite[Section 4.2]{CohenAdvanced}.
+\item $\cc(-\ww,L)$ (and therefore $D(\ww,L)$) can be computed using a closest
+vector algorithm such as Fincke and Pohst \cite{FinckePohst}.
+\item To effectively apply Proposition~\ref{prop:valbd}
+in practice, we need to guess a value of $k$
+such that $D(L,\ww)>\cB_2$.
+We expect $D(L,\ww)$ to be around $I^{1/r}$
+where $I$ is the index $[\Z^r : L]$.
+Let us make two simplifying
+assumptions: the first is that $\phi$ is surjective,
+and the second is that $\gcd(\fa^k,\cT_1)=1$
+so that
+$\fb=\fa^k$ and $k^\prime=k$. Then
+\[
+I=\frac{\# (\OO_K/\fa^k)^\times}{\# (\Z/p^k\Z)^\times}
+\approx \frac{\Norm(\fa)^k}{{p^k}}=p^{(d-2)k}
+\]
+where $d$ is the degree of $K$. Thus we should
+expect a contradiction if $p^{(d-2)k/r}$ is much bigger than $\cB_2$,
+or equivalently
+\[k \gg \frac{r \log{\cB_2}}{(d-2) \log{p}}.\]
+This heuristic gives a good guide for which values of $k$ to try.
+\end{itemize}
+
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+
+
+
+
+
+
+
+
+
+\newpage
+Put for $n \in \mathbb{Z}$, $m_1, \dots, m_t \in \mathbb{N}_0$, and for each possible $\alpha$
+\[G_{\alpha}(n,m_1, \dots, m_t) = \frac{\alpha}{2\sqrt{D}}\varepsilon^{\ n} \prod_{i\in I}\pi^{\ m_i}\prod_{i\in I'}							\pi'^{\ m_i} - \frac{\alpha\ '}{2\sqrt{D}}\varepsilon'^{\ n} \prod_{i\in I}
+							\pi'^{\ m_i}\prod_{i\in I'}\pi^{\ m_i}, \]
+\[H_{\alpha}(n,m_1, \dots, m_t) = \frac{\alpha}{2}\varepsilon^{\ n} \prod_{i\in I}\pi^{\ m_i}\prod_{i\in I'}									\pi'^{\ m_i} + \frac{\alpha\ '}{2}\varepsilon'^{\ n} \prod_{i\in I}
+							\pi'^{\ m_i}\prod_{i\in I'}\pi^{\ m_i}.\]
+Then (\ref{chis2}) is equivalent to
+\begin{equation} \label{uz}
+\begin{cases}
+	\pm u & = G_{\alpha}(n,c_1, \dots, c_t) \\
+	\pm z & = H_{\alpha}(n,c_1, \dots, c_t).\\
+\end{cases}
+\end{equation}
+Write $u_i = \text{ord}_{p_i}(u)$ for $i = 1, \dots, s$, and put for each $\alpha$
+\[I_U = \left\{\text{all prime divisors of } G_{\alpha}(n,m_1, \dots, m_t)\right\} \cap \{p_1, \dots, p_s\}.\]
+Now,
+\begin{equation} \label{main}
+\begin{aligned}
+G_{\alpha}(n,c_1, \dots, c_t) 	&= \frac{\alpha}{2\sqrt{D}}\varepsilon^{\ n} \prod_{i\in I}\pi^{\ c_i}\prod_{i\in I'}								\pi'^{\ c_i} - \frac{\alpha\ '}{2\sqrt{D}}\varepsilon'^{\ n} \prod_{i\in I}
+								\pi'^{\ c_i}\prod_{i\in I'}\pi^{\ c_i} \\
+						&= \pm \prod_{i \in I_U} p_i^{\ u_i},
+\end{aligned}
+\end{equation}
+so that $n, c_i, u_i$ are unknowns to be determined. Since there are only finitely many $\alpha$, by solving (\ref{main}) completely for each such $\alpha$, we can find all solutions of (\ref{uz}) and hence of the equation $x + y = z^2$.
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+
+\subsubsection{Computational Note}
+The above setup assumes that we have a solution $(x,y,z)$ to equation (\ref{maineq}). In practice, the positive integers $a_i, b_i$ in the decomposition of $\chi, \chi'$ of (\ref{chis}) are the unknowns that we are solving for.
+
+In our algorithm, we first compute the decomposition of the primes of $S$ in $K = Q(\sqrt{D})$, and, for those primes which split in $K$, we compute every possible $I, I'$ which may occur, modulo symmetry. This, in itself, is a simple and quick computation. However, in the final part of the algorithm, the number of possible combinations of $I,I'$ creates the largest bottleneck in the entire procedure. This is because for each possible $I,I'$, we must compute every possible $\alpha$, and subsequently, every possible $G_{\alpha}$. If more than $1$ prime of $S$ splits in $K$, the complexity of solving $G_{\alpha}$ at the tail end of the procedure increases exponentially, as does the number of such cases to be considered.
+
+Currently, however, we have a potential nontrivial patch for this issue which would allow us to eliminate over half of the possible $I,I'$ cases. This patch requires some rigour and has not yet been implemented, though we are hopeful it will provide the timing improvement we are looking for.
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+
+\subsection{Upper Bounds for the Solutions and the Reduction Technique}
+For each $I,I'$, let
+\[M = \max_{i \in I\cup I'}\left(c_i\right), \quad U = \max_{i \in I_U}(u_i), \quad \text{ and } \quad B = \max\left(M,U,|n|\right).\]
+Using the application of the theory of $p$-adic linear forms in logarithms, following de Weger's notation, we derive an explicit upper bound
+\begin{equation} \label{bound}
+B \leq {C_{12}},
+\end{equation}
+which we compute over all possible $\alpha$ associated to $I,I'$. While we omit the details in this paper, generating this bound is a straightforward computation, and does not pose any timing difficulties.
+
+We now want to reduce the upper bound $C_{12}$ for $B$ to a much smaller upper bound. We do so using the $p$-adic computational Diophantine approximation technique described in \cite{deWeger1}. In particular, we derive a new bound and show that there are no solutions between the new and the old upper bound so that we can replace (\ref{bound}) by much sharper inequalities. In general, we expect that it is in this way possible to reduce, in one step, the upper bound $C_{12}$ for $B$ to a reduced bound of size $\log{C_{12}}$.
+
+When reduced upper bounds for $B$ are found in this way, we may try the procedure again, with $C_{12}$ replaced by its reduced bound. We may repeat the argument as long as improvement is still being made. Afterwards, once the procedure does not yield any further improvement, we have to find all solutions by some other method, either by Fincke Pohst (\cite{FP}), or to search directly for solutions below the reduced bounds. We outline this process below.
+
+Using equation (\ref{main}), we generate the following linear forms in logarithms:
+\begin{itemize}
+\item For each $i \in I_U$, let
+\[\Lambda_i = \log_{p_i}\left(\frac{\alpha}{\alpha'}\right) + n \log_{p_i}\left(\frac{\varepsilon}{\varepsilon'}\right)
+	+ \sum_{j \in I} c_j \log_{p_i}\left(\frac{\pi_j}{\pi_j'}\right)
+	- \sum_{j \in I'} c_j \log_{p_i}\left(\frac{\pi_j}{\pi_j'}\right). \]
+\item For each $i \in I$, let
+\[K_i = \log_{p_i}\left(\frac{\alpha'}{2\sqrt{D}}\right) + n \log_{p_i}(\varepsilon')
+	- \sum_{j \in I_U} u_j \log_{p_i}(p_j) + \sum_{j \in I} c_j \log_{p_i}(\pi_j') + \sum_{j \in I'} c_j \log_{p_i}(\pi_j).\]
+\item For each $i \in I'$, let
+\[K_i' = \log_{p_i}\left(\frac{\alpha}{2\sqrt{D}}\right) + n \log_{p_i}(\varepsilon)
+	- \sum_{j \in I_U} u_j \log_{p_i}(p_j) + \sum_{j \in I} c_j \log_{p_i}(\pi_j) + \sum_{j \in I'} c_j \log_{p_i}(\pi_j').\]
+\end{itemize}
+Here $\log_{p}$ denotes the $p$-adic logarithm.
+Recall that $n, c_i$, and $u_i$ are all unknown integers, and note that these equations are all of the form
+\[ \Lambda = \sum_{i=1}^n x_i \cdot \vartheta_i,\]
+where $n \geq 2$. Here, as in each $\Lambda_i, K_i, K_i'$, for a fixed prime $p$, $\vartheta_1, \dots, \vartheta_n$ are given numbers in $\Omega_p$, the algebraic closure of $\mathbb{Q}_p$, and $x_1, \dots, x_n$ are unknowns in $\mathbb{Z}$. Of course, we understand that the $x_i$ are the unknowns $n,c_i$ and $u_i$, while the $\vartheta_i$ represent the $p$-adic log terms in $\Lambda_i, K_i, K_i'$. For convenience, we will work with the more general linear form in logarithms, $\Lambda$, though in practice we apply this technique to each of $\Lambda_i, K_i, K_i'$.
+
+Put $X= \max|x_i|$. Then
+\[ X \leq C_{12},\]
+where $C_{12}$ is the aforementioned upper bound. We shall assume that $x_j > 0$ for some index $j \in \{1, \dots, n\}$, and
+\begin{equation} \label{Lem33}
+\text{ord}_p(\Lambda) \geq x_j.
+\end{equation}
+Then, necessarily $x_j \leq C_{12}$. Our aim is to find a constant $X_1$, of the size of $\log(C_{12})$, such that the bound $x_j \leq C_{12}$ can be improved to $x_j \leq X_1$. We will apply this procedure to each of the lattices $\Lambda_i, K_i$, and $K_i'$, but for simplicity, we will demonstrate this technique with the generic linear form in logarithms, $\Lambda$.
+
+That said, note that for each $\vartheta_i$ of $\Lambda$, we have $\vartheta_i/\vartheta_j \in \mathbb{Q}_p$ for all $i,j$. We may assume that $\mu_0 = \text{ord}_p(\vartheta_i)$ is minimal for $i = n$. Put
+\[ \vartheta_i' = -\frac{\vartheta_i}{\vartheta_n} \quad \text{ for } \quad i = 1, \dots, n-1.\]
+Then $\vartheta_i' \in \mathbb{Z}_p$ for all $i$. Put
+\[ \Lambda'	= \Lambda/\vartheta_n
+			= -\sum_{i=1}^{n-1}x_i\cdot \vartheta_i' + x_n.\]
+Recall that every nonzero number $\alpha \in \mathbb{Q}_p$ has a $p$-adic expansion
+\[\alpha = \sum_{i = k}^{\infty} u_i\cdot p^i,\]
+where $k = \text{ord}_p(\alpha)$ and the $p$-adic digits $u_i$ are in $\{0,1,\cdots, p-1\}$, wich $u_k \neq 0$. For any $p$-adic integer $\alpha$ and any $\mu \in \mathbb{N}_0$ there exists a unique rational integer $\alpha^{(\mu)} = \sum_{i = 0}^{\mu - 1} u_i \cdot p^i$ satisfying
+\[\text{ord}_p(\alpha-\alpha^{(\mu)}) \geq \mu \quad \text{ and } \quad 0 \leq \alpha^{(\mu)} \leq p^{\mu}-1.\]
+
+Returning to our linear form $\Lambda$, for $\mu \in \mathbb{N}_0$ the rational integer $\vartheta^{(\mu)}$ is defined by ${\text{ord}_p(\vartheta-\vartheta^{(\mu)}) \geq \mu}$ and $0 \leq \vartheta^{(\mu)} < p^{\mu}$, as above. We define for any $\mu \in \mathbb{N}_0$ the $p$-adic approximation lattice $\Gamma_{\mu}$ by a matrix to which a basis of $\Gamma_{\mu}$ is associated, namely the matrix
+\[\mathcal{B}_{\mu} =
+	\begin{pmatrix}
+  		1 & 0 & \cdots & 0 \\
+  		0 & 1 & \cdots & 0 \\
+  		\vdots  & \vdots  & \ddots & \vdots  \\
+  		0 & 0 & \cdots & 1 \\
+		\vartheta_1'^{\ (\mu)} & \cdots  & \vartheta_{n-1}'^{\ (\mu)} & p^{\mu}\\
+ 	\end{pmatrix}. \]
+We have the following result, as found in \cite{deWeger1}, \cite{deWeger2}.
+\begin{lem}
+  [de Weger]
+The lattice $\Gamma_{\mu}$, associated to the above matrix $\mathcal{B}_{\mu}$ is equal to the set
+\[\Gamma_{\mu} =
+		\left< \left(x_1, \dots, x_n\right)^{T} \in \mathbb{Z}^n \ | \ \text{ord}_p(\Lambda') \geq \mu \right>.\]
+\end{lem}
+
+We denote by $l(\Gamma_{\mu})$ the length of the shortest non-zero vector in the lattice, viz
+\[l(\Gamma_{\mu}) = \min_{\vec{0} \neq \vec{x} \in \Gamma_{\mu}}|\vec{x}|.\] Using the $L^3$-algorithm, we can compute a lower bound for $l(\Gamma_{\mu})$. Then we can apply the following lemma of de Weger.
+\begin{lem}[de Weger] \label{lem2}
+Let $X_1$ be a constant such that
+\[ l(\Gamma_{\mu}) > \sqrt{n}\cdot X_1.\]
+Then (\ref{Lem33}) has no solutions with
+\[\ \mu - 1 + \mu_0 < x_j \leq \max|x_i| = X \leq X_1.\]
+\end{lem}
+Combining these Lemmata, we first calculate the matrix associated to the lattice, $\Gamma_{\mu}$, for some $\mu$. This is the $p$-adic approximation lattice associated to $\Lambda$. In practice, we take $\mu$ such that $p^{\mu}$ is of the size of $C_{12}^n$. Then, using the $L^3$-algorithm, we compute a lower bound for $l(\Gamma_{\mu})$. We expect that $l(\Gamma_{\mu})$ is of the size of $C_{12}$ so that $l(\Gamma_{\mu}) > \sqrt{n}\cdot X_1$ is a reasonable condition. By Lemma \ref{lem2}, we may reduce $x_j \leq C_{12}$ to
+\[x_j \leq \mu + \mu_0.\]
+
+We perform this procedure for $\Lambda = \Lambda_i, K_i, K_i'$, for the relevant $i$. Once we have found the reduced bounds for $\text{ord}_p(\Lambda)$ for the above mentioned $\Lambda$, we combine these bounds to generate a reduced bound for $B$.
+
+\subsection{Computational Note}
+The computational bottlenecks in the reduction technique are the computation of the $p$-adic logarithms to the desired precision, and the application of the $L^3$-algorithm. Of course, this reduction also depends on the size of the sets $I_U, I$, and $I'$, as more lattices must be considered if these sets are large. Generally, however, this algorithm is not the source of the main timing issues in this algorithm.
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+
+\subsection{Finding All Short Lattice Points: the Fincke and Pohst Algorithm}
+Now that we have reduced the bound $C_{12}$ on $B$, to find solutions of (\ref{main}) below this reduced bounds, we use the following procedure. Suppose, for any $\Lambda = \Lambda_i, K_i, K_i'$, that we are at a certain moment interested in finding solutions with $\text{ord}_p(\Lambda) \leq f(p)$ where $f(p)$ is given for $p$ in $S$. Choose $p$ and $\mu < f(p) - \mu_0$, and consider the lattice $\Gamma_{\mu}$ for these values of $p,\mu$. If a solution of (\ref{main}) exists with $\text{ord}_p(\Lambda) \geq \mu + \mu_0$, then the vector $\vec{x} = (x_1, \dots, x_{n-1}, x_0)^T$ is in the lattice, where the $x_i$ correspond to the values $n, c_i$, or $u_i$ of $\Lambda$. The length of this vector is bounded by $\sum_{i = 1}^nf(p_i)^2$. All vectors in $\Gamma_{\mu}$ with length below this bound can be computed by the algorithm of Fincke and Pohst. Then, all solutions corresponding to lattice points can be selected. Then we replace $f(p)$ by $\mu + \mu_0 - 1$, and we repeat the procedure for the newly chosen $p,\mu$.
+
+Let $\Gamma$ be a lattice. We denote by $l(\Gamma)$ the length of the shortest non-zero vector in the lattice, viz
+\[l(\Gamma) = \min_{\vec{0} \neq \vec{x} \in \Gamma}|\vec{x}|.\]
+
+The $L^3$-algorithm is used to determine a lower bound for $l(\Gamma)$. Sometimes, it is not enough just to know $l(\Gamma)$. It might be useful to know exactly all vectors $\vec{x} \in \Gamma$ such that $|\vec{x}| \leq C$ for a given constant $C$. Specifically, this can be used to determine the solutions below the reduced bounds once the above reduction technique no longer yields an improvement. To do this, we use the algorithm of Fincke and Pohst. The rest of this section is focused the Fincke-Pohst algorithm and how it would be most efficiently employed.
+
+The algorithm of Fincke and Pohst is an efficient method for determining vectors $\vec{y} = (y_1, \dots, y_n)^T$ of short Euclidean length in a lattice $\Gamma$ of rank $m$,
+\[\Gamma = \mathbb{Z}\vec{b}_1 + \cdots + \mathbb{Z}\vec{b}_m,\]
+for linearly independent vectors $\vec{b}_1, \dots, \vec{b}_m$ of $\mathbb{R}^n$. Let $B$ denote the $n \times m$ matrix with columns $\vec{b}_1, \dots \vec{b}_m$, the basis vectors of the lattice $\Gamma$. Since we are assuming that $\vec{y}$ is an element of the lattice $\Gamma$, there exists some coordinate vector $\vec{x} \in \mathbb{Z}^m$ such that
+\[ \vec{y} = B\vec{x}.\]
+
+The standard algorithm for finding all vectors of short Euclidean length is to compute all $\vec{y} \in \mathbb{Z}\backslash\{\vec{0}\}$ subject to
+\[\vec{y}^T \cdot \vec{y} \leq C,\]
+for a suitable $C \in \mathbb{R}_{>0}$. Equivalently, since $\vec{y} = B\vec{x}$, we must solve for all $\vec{x}$ such that
+\[ \vec{y}^T \cdot \vec{y}  = \vec{x}^T B^T  B \vec{x} \leq C,\]
+where $B$ denotes the $n \times m$ matrix with columns $\vec{b}_1, \dots \vec{b}_m$.
+
+We note that $A= B^TB$ is a positive definite matrix. On the other hand, each positive-definite matrix $A \in \mathbb{R}^{m\times m}$ can be considered as the inner product matrix of the basis vectors $\vec{b}_1, \dots, \vec{b}_m$ of some lattice $\Lambda$ of rank $m$. Hence it suffices to discuss
+\[\vec{x}^TA\vec{x} \leq C.\]
+From here, we compute the Cholesky Decomposition and proceed with the Fincke-Pohst algorithm as outlined in \cite{deWeger1}. We note however that computing all solutions $\vec{x} \in \mathbb{Z}^m$ of
+\[\vec{x}^TA\vec{x} \leq C\]
+can be interpreted as the task of computing all points of $\mathbb{Z}^m$ in an ellipsoid.
+
+In our case, the Fincke-Pohst algorithm may be applied to the lattices associated to any one of the linear forms $\Lambda_i, K_i,K_i'$ for the respective $i$. The choice of lattice is based on the heuristic idea that the smaller the volume of the ellipsoid, the fewer short lattice vectors to compute. Therefore, we apply the Fincke-Pohst algorithm to the lattice of smallest volume. Once this algorithm is no longer a viable option, we compute the remaining solutions via a simple brute force search.
+
+\subsubsection{Computational Note}
+Generally, the Fincke-Pohst algorithm proves to be the largest bottleneck in our algorithm. As we cycle through the lattices, the number of short vector points coming out of the lattices increases dramatically, creating massive memory and timing issues. To resolve this, we have restricted the number of short lattice vectors that may be computed, so that if this restriction is surpassed, this procedure is terminated and the remaining solutions are found via a brute force search. In these instances, the brute force often search takes less time, but more importantly, significantly less memory, than the Fincke-Pohst search.
+
+\section{The Next Steps}
+Bennett and Rechnitzer \cite{BeRe} show that, by solving a number of Thue-Mahler equations, one can compute all elliptic curves over $\mathbb{Q}$ of bounded conductor. In particular, they outline a (very efficient) algorithm to generate the binary forms necessary to compute these curves. To solve the resulting Thue-Mahler equations, Tzanakis and de Weger \cite{Tzanakis} describe a similar, yet more complex technique involving linear forms of logarithms of algebraic numbers in both the complex and $p$-adic case. This brings us to the one of the main aims of this research and our next step in the project: to implement the algorithm of Tzanakis and de Weger in MAGMA and, in conjunction with our currently implemented code, generate all elliptic curves over $\mathbb{Q}$ having conductor $N \leq 10^8$. Many of the procedures outlined above are used in this general Thue-Mahler algorithm, though the overall technique is much more involved. One of the main challenges which we will ultimitely encounter in this is how we will store and handle the large number of elliptic curves which will be output.
+
+Finally, we aim to generalize this concept and algorithm to compute elliptic curves over $K$, where $K$ is a number field, beginning first with $K = \mathbb{Q}(i)$.
+
+
+%--------------------------------------------------------------------------------------------%
+%\begin{thebibliography}{99}
+
+
+% \bibitem{FP}
+% U. Fincke, M. Pohst,
+% \emph{Improved Methods for calculating vectors of short length in a lattice, including a complexity analysis},
+% Math. Comp. $44$ ($1985$), $463-471$)
+
+% \bibitem{LLL}
+% A.K. Lenstra, H.W. Lenstra, L. Lovasz,
+% \emph{Factoring polynomials with rational coefficients},
+% Math. Ann. $261$ ($1982$), $515-534$)
+
+% \bibitem{Tzanakis}
+% N. Tzanakis and B. M. M. de Weger,
+% \emph{Solving a specific Thue-Mahler equation},
+% Math. Comp. $57$ ($1991$) $799-815$.
+
+% \bibitem{deWeger1}
+% B. M. M. de Weger,
+% \emph{Algorithms for diophantine equations},
+% CWI-Tract No. $65$, Centre for Mathematics and Computer Science, Amsterdam, $1989$.
+
+% \bibitem{deWeger2}
+% B. M. M. de Weger,
+% \emph{The weighted sum of two $S$-units being a square},
+% Indag. Mathem. $1$ ($1990$), $243-262$.
+
+
+\end{document}

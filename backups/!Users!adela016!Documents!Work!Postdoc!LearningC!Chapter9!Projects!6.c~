@@ -1,0 +1,58 @@
+/*
+ * 6.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created: 18 January 2021
+ *
+ * Description: Translates strings into B1FF-speak.
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+#include <ctype.h>
+
+#define CHAR_LIMIT 100;
+
+int main(void)
+{
+  char ch, message[CHAR_LIMIT] = {0};
+  int i = 0;
+
+  printf("Enter message: ");
+  while ((ch = getchar()) != '\n' && i < CHAR_LIMIT)
+    {
+      message[i++] = ch;
+    }
+
+  printf("In B1FF-speak: ");
+  for (i = 0; i < CHAR_LIMIT; i++)
+    {
+      switch (ch = toupper(message[i]))
+	{
+	case 'A':
+	  putchar('4'); break;
+	case 'B':
+	  putchar('8'); break;
+	case 'E':
+	  putchar('3'); break;
+	case 'I':
+	  putchar('1'); break;
+	case 'O':
+	  putchar('0'); break;
+	case 'S':
+	  putchar('5'); break;
+	default:
+	  putchar(ch); break;
+	}
+    }
+  printf("!!!!!!!!!!\n");
+
+  return 0;
+}

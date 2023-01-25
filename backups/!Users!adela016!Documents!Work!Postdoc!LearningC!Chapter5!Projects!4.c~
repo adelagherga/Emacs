@@ -1,0 +1,42 @@
+/*
+ * 4.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  5 January 2021
+ *
+ * Description: Displays Beaufort value of user-input wind speed (in knots)
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+int main(void)
+{
+  int speed;
+
+  printf("Enter wind speed (knots): ");
+  scanf("%d", speed);
+
+  printf("Beaufort description: ");
+  if (speed < 1)
+    printf("calm\n");
+  else if (speed <= 3)
+    printf("light air"\n);
+  else if (speed <= 27)
+    printf("breeze\n");
+  else if (speed <= 47)
+    printf("gale\n");
+  else if (speed <= 63)
+    printf("storm\n");
+  else
+    printf("hurricane\n");
+
+  return 0;
+}

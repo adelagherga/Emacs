@@ -1,0 +1,1020 @@
+\documentclass[10pt]{beamer}
+
+\usetheme[progressbar=frametitle]{metropolis}
+
+\definecolor{ubcBlue}{RGB}{12,35,68}
+\definecolor{ubcBlue1}{RGB}{0,85,183}
+\definecolor{ubcBlue2}{RGB}{0,167,225}
+\definecolor{ubcBlue3}{RGB}{64,180,229}
+\definecolor{ubcBlue4}{RGB}{110,196,232}
+\definecolor{ubcBlue5}{RGB}{151,212,223}
+
+% \setbeamercolor{normal text}{bg=ubcBlue1}
+\setbeamercolor{alerted text}{bg=ubcBlue1, fg = ubcBlue}
+\setbeamercolor{example text}{fg=ubcBlue1, bg=ubcBlue1}
+\setbeamercolor{title separator}{fg = ubcBlue, bg=ubcBlue}
+\setbeamercolor{progress bar}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{progress bar in head/foot}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{progress bar in section page}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{frametitle}{bg=ubcBlue}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{color}
+\usepackage{soul}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows,calc}
+
+\tikzset{onslide/.code args={<#1>#2}{%
+  \only<#1>{\pgfkeysalso{#2}} % \pgfkeysalso doesn't change the path
+}}
+\tikzset{alt/.code args={<#1>#2#3}{%
+  \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+}}
+\tikzset{temporal/.code args={<#1>#2#3#4}{%
+  \temporal<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}{\pgfkeysalso{#4}} % \pgfkeysalso doesn't change the path
+}}
+
+\DeclareMathOperator{\ord}{ord}
+
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\makeatletter
+\newsavebox{\mybox}
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+  \savebox{\mybox}{%
+      \begin{beamercolorbox}[%
+          wd=\paperwidth,%
+          sep=0pt,%
+          leftskip=\metropolis@frametitle@padding,%
+          rightskip=\metropolis@frametitle@padding,%
+        ]{frametitle}%
+      \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
+      \end{beamercolorbox}%
+    }
+  \begin{beamercolorbox}[%
+      wd=\paperwidth,%
+      sep=0pt,%
+      leftskip=\metropolis@frametitle@padding,%
+      rightskip=\metropolis@frametitle@padding,%
+    ]{frametitle}%
+  \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
+  \hfill%
+  \raisebox{-\metropolis@frametitle@padding}{}%{\includegraphics[height=\dimexpr\ht\mybox+\metropolis@frametitle@padding\relax]{2_2016_UBCNarrow_Signature_ReverseCMYK}}%
+    \hspace*{-\metropolis@frametitle@padding}
+  \end{beamercolorbox}%
+}
+\makeatother
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\begin{document}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\title{ On the sum of two S-units being a square}
+\subtitle{}
+% \date{\today}
+\date{}
+\author{Adela Gherga}
+\institute{The University of Warwick}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+\maketitle
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Background}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Shafarevich's theorem}
+
+\begin{theorem}[Shafarevich]
+Let $K$ be a number field and let $S$ be a finite set of primes of $K$. Then
+\begin{equation*}
+\resizebox{.9\hsize}{!}{$\varepsilon_{K,S} := \{ \text{elliptic curves $E/K$ with good reduction at all primes $\mathfrak{p} \notin S$ } \} /\cong$}
+\end{equation*}
+is finite.
+\end{theorem}
+\end{frame}
+
+% Let $K$ be a number field and let $S$ be a finite set of places of $K$ containing the infinite places.
+
+% In $1963$ Shafarevich proved that there are at most finitely many $K$-isomorphism classes of elliptic curves defined over $K$ having good reduction outside $S$.
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Our objective}
+
+\centering
+Given $K$ and $S$, find $\varepsilon_{K, S}$ explicitly!
+
+% Before we go into the details of how this is to be done, look at some historical data
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{A brief history}
+
+\begin{itemize}
+\item <1-> Taniyama, Weil (1950s, 1960's): Are all $E/\mathbb{Q}$ of a given conductor $N$ related to modular functions?
+
+% in the 1950Õs and 1960Õs, Taniyama and Weil asked whether all elliptic curves over Q of a given conductor N are related to modular functions.
+
+% While this conjecture is now known as the Modularity Theorem, until its proof in 2001, attempts to verify it sparked a large effort to tabulate all elliptic curves over Q of given conductor N.
+
+\begin{itemize}
+\item <2->$\varepsilon_{\mathbb{Q},\{2\}}$: Ogg ($1966$)
+%determined all elliptic curves defined over $\mathbb{Q}$ with conductor of the form $2^a$.
+
+\item <2->$\varepsilon_{\mathbb{Q},\{2,3\}}$: Coghlan ($1967$)
+%in his dissertation \cite{Coghlan}, studied the curves of conductor $2^a3^b$ independently of Ogg,
+
+\item <2->$\varepsilon_{\mathbb{Q},\{p\}}$ for certain small primes $p$: Setzer ($1975$)
+%while Setzer \cite{Setzer} computed all $\mathbb{Q}$-isomorphism classes of elliptic curves of conductor $p$ for certain small primes $p$.
+
+\item <2->$\varepsilon_{\mathbb{Q},\{11\}}$: Agrawal, Coates, Hunt, and van der Poorten ($1980$)
+%determined all elliptic curves of conductor $11$ defined over $\mathbb{Q}$ to verify the (then) conjecture of Taniyama-Weil for $N= 11$.
+
+\end{itemize}
+\end{itemize}
+
+% All of these early attempts have much in common in that they often reduce the problem to one of solving a number of certain integral binary forms called Thue-Mahler equations.
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The modern approach}
+
+% There are very few, if any, subsequent attempts in the literature to find elliptic curves of given conductor via Thue-Mahler equations.
+
+% Instead, many of the approaches involve a completely different method to the problem, using modular forms.
+
+% This method relies upon the Modularity Theorem, which was still a conjecture (under various guises) when these ideas were first implemented. Much of the success of this approach can be attributed to Cremona and his collaborators, who have devoted decades of work to it. In fact, using this method, all elliptic curves over $\mathbb{Q}$ of conductor $N$ have been determined for values of $N$ as follows
+
+% Cremona between 1988 - 2017
+
+\begin{itemize}
+\item<2-> Subsequent methods rely on the Modularity Theorem
+\item<3-> All $E/\mathbb{Q}$ of conductor $N$ have been determined for
+
+\begin{itemize} \itemsep0em
+\item<4-> Antwerp IV ($1972$): $N \leq 200$
+\item<4-> Tingley ($1975$): $N \leq 320$
+\item<4-> Cremona ($2019$): $N \leq 500000$
+\end{itemize}
+\end{itemize}
+
+% In our present work, we will instead return to techniques based upon solving Thue-Mahler equations.
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The Thue-Mahler approach}
+
+
+\begin{itemize}
+% More precisely, fix K and S
+\item<1-> Let $K = \mathbb{Q}$ and $S = \{p_1, \dots, p_v\}$ be a set of rational primes
+
+% In the 1970's, Coates provided the first effective proof of ShafaravichÕs Theorem, for the the special case K = Q and S = {2, 3}
+
+% We note that early attempts to compute ECs with good reduction outside S have much in common with the approach used by Coates
+
+% in that they often reduce the problem to one of solving a number of Thue-Mahler equations.
+
+\item<2-> Reduce problem to solving a number of \textit{Thue-Mahler equations}
+\begin{itemize}
+\item<3-> ie. Diophantine equations of the form
+\[F(x,y) = w_0x^3 + w_1x^2y + w_2xy^2 + w_3y^3 = u,\]
+where $u$ is an \textit{$S$-unit}
+
+% where F is a given binary form of degree at least $3$ and $u$ is an \textit{$S$-unit}
+% that is, an integer whose prime factors all lie in S
+
+% degree 3 not necessary, but for out purposes, we only need degree 3
+
+\item <4> Associated to $F$ is the Hessian,
+\[H_F(x,y) = -\frac{1}{4}\left( \frac{\partial^2F}{\partial x^2} \frac{\partial^2F}{\partial y^2} - \left(\frac{\partial^2F}{\partial x \partial y}\right)^2\right), \]
+and the Jacobian discriminant,
+\[G_F(x,y) = \frac{\partial F}{\partial x} \frac{\partial H}{\partial y} - \frac{\partial F}{\partial y} \frac{\partial H}{\partial x} \]
+
+% Here, two such forms $F_1$ and $F_2$ are called \textit{equivalent} if they are equivalent under the $GL_{2}(\mathbb{Z})$-action.
+% In which case, $F_1$ and $F_2$, have the same discriminant
+
+\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Objectives}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Current work}
+
+\begin{itemize}
+\item<1-> Let $K = \mathbb{Q}$ and $S = \{p_1, \dots, p_v\}$ be a set of rational primes
+% going to stop saying this
+\item<2-> Find $\varepsilon_{\mathbb{Q}, S}$ explicitly via Thue-Mahler equations
+\begin{itemize}
+\item<3-> Implementation of a TM equation solver based on Tzanakis, de Weger
+\end{itemize}
+
+\item<4> Goal: compute all curves over $\mathbb{Q}$ having conductor $N \leq 10^6$
+\item<5-> Lofty dreams and aspirations: $N \leq 10^8$
+
+\end{itemize}
+
+% In our research, we have implemented a computer program which generates all elliptic curves over $K$ having good reduction outside $S$ and bounded conductor.
+% This algorithm is based on the work of de Weger, Tzanakis, following the work of BeRe
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{The main algorithm}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{An overview}
+
+% a theorem by Bennett and Rechnitzer (who has asked to not be mentioned) illustrates the connection between elliptic curves over Q and cubic forms,
+% and leads us to the algorithm for determining all elliptic curves over Q of conductor N
+
+% this theorem is technical;
+
+\begin{itemize}
+\item<1-> Let $K = \mathbb{Q}$ and $S = \{p_1, \dots, p_v\}$ be a set of rational primes \\
+% suppose we want to find an EC with conductor N
+
+\item<2-> Compute $\varepsilon_{\mathbb{Q},S} \Leftrightarrow$ find $E/\mathbb{Q}$ with conductor $N = p_1^{a_1}\cdots p_v^{a_v}$, $a_i \in \mathbb{N}$\\
+% there exists an integral binary cubic form F with discriminant $N_0$ "dividing" $N$ and relatively prime integers u,v with
+
+\item<3-> For $N_0 \mid 12 N$, there exists
+\[F(u,v) = w_0u^3 + w_1u^2v + w_2uv^2 + w_3v^3 = 2^{\alpha_1}3^{\beta_1}\prod_{p|N_0}p^{\kappa_p}\]
+with discriminant $N_0$
+
+\item <4-> Then $E \cong_{\mathbb{Q}} E_{\mathcal{D}}$, where $E_{\mathcal{D}}$ is determined by the form $F$ and $(u,v)$
+\end{itemize}
+\end{frame}
+
+% prime database has 400bilion/trillion? a lot
+
+% algorithmically can write down forms in linear time
+
+%We note that there might exist such a form $F$ and corresponding $E_{\mathcal{D}}$, but it may be the case that conductor $N_{E_{\mathcal{D}}} \neq N$. This can occur if certain local conditions at $2$ are not satisfied.
+
+% Additionally, if the curve $E$ has at least one rational $2$-torsion point, the cubic forms arising from this theorem will necessarily be reducible.
+
+% easier if has 2 torsion, or if prime case (thue)
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The theorem}
+
+% More precisely
+
+\begin{theorem}[Bennett, G., Rechnitzer] \label{BeRe}
+Let $E/\mathbb{Q}$ be an elliptic curve of conductor $N = 2^{\alpha}3^{\beta}N_0$ where $N_0$ is coprime to $6$.
+% and suppose $j_E \neq 0$
+\pause
+Then there exists an integral binary cubic form $F$ of discriminant
+\[D_F = \text{sign}(\Delta_E)2^{\alpha_0}3^{\beta_0}N_1,\]
+and relatively prime integers $u$ and $v$ with
+\[F(u,v) = w_0u^3 + w_1u^2v + w_2uv^2 + w_3v^3 = 2^{\alpha_1}3^{\beta_1}\prod_{p|N_0}p^{\kappa_p}\]
+\pause
+such that $E$ is isomorphic over $\mathbb{Q}$ to $E_{\mathcal{D}}$, where
+\[E_{\mathcal{D}} : 3^{[\beta_0/3]} y^2 = x^3 - 27\mathcal{D}^2 H_F(u,v)x + 27\mathcal{D}^3G_F(u,v).\]
+\end{theorem}
+\end{frame}
+% $0 \leq \alpha \leq 8$, $0 \leq \beta \leq 5$. S
+% square brackets [r] mean that its the greatest integer not exceeding the real number r
+
+\begin{frame}
+  \begin{theorem}[Bennett, G., Rechnitzer]
+    % \vspace*{-\baselineskip}\setlength\belowdisplayshortskip{0pt}
+    Here, $N_1\mid N_0$,
+    \[ (\alpha_0, \alpha_1) =
+      \begin{cases}
+	(2,0) \text{ or } (2,3)  & \text{ if } \alpha = 0 \\
+	(3,\geq 3) \text{ or } (2,\geq 4)  & \text{ if } \alpha = 1 \\
+	(2,1), (4,0) \text{ or } (4,1)  & \text{ if } \alpha = 2 \\
+	(2,1), (2,2), (3,2), (4,0) \text{ or } (4,1)  & \text{ if } \alpha = 3 \\
+	(2,\geq 0), (3,\geq 2), (4,0) \text{ or } (4,1)  & \text{ if } \alpha = 4 \\
+	(2,0) \text{ or } (3,1)  & \text{ if } \alpha = 5 \\
+	(2,\geq 0), (3,\geq 1), (4,0) \text{ or } (4,1)  & \text{ if } \alpha = 6 \\
+	(3,0) \text{ or } (4,0)  & \text{ if } \alpha = 7 \\
+	(3,1) & \text{ if } \alpha = 8,
+      \end{cases} \]
+    % non-negative integers, where $alpha \in [0,8]$ and $\beta \in [0,5]$
+  \end{theorem}
+\end{frame}
+
+\begin{frame}
+  \begin{theorem}[Bennett, G., Rechnitzer]
+
+\[ (\beta_0, \beta_1) =
+\begin{cases}
+	(0,0) & \text{ if } \beta = 0 \\
+	(0,\geq 1) \text{ or } (1,\geq 0) & \text{ if } \beta = 1 \\
+	(3,0), (0,\geq 0), \text{ or } (1,\geq 0)  & \text{ if } \beta = 2 \\
+	(\beta,0) \text{ or } (\beta,1)  & \text{ if } \beta \geq 3,
+\end{cases} \]
+\[\mathcal{D} = \prod_{p|\gcd(c_4(E),c_6(E))} p^{\min\{ [\nu_p(c_4(E))/2], [\nu_p(c_6(E))/3] \}},\]
+and $\kappa_p \in \mathbb{Z}_{>0}$
+with $\kappa_p \in \{0,1\}$ whenever $p^2|N_{1}$.
+% excluding some additional details that we know about kappas here
+%\[\text{ and } \kappa_p \in \mathbb{Z}_{>0} \text{ with } \nu_p(\Delta_E) =
+%\begin{cases}
+%	\nu_p(D_F) + 2\kappa_p & \text{ if } p \nmid \mathcal{D} \\
+%	\nu_p(D_F) + 2\kappa_p + 6 & \text{ if } p \mid \mathcal{D},
+%\end{cases}\]
+%and
+%\[\kappa_p \in \{0,1\} \text{ whenever } p^2|N_{1}.\]
+\pause Further,
+\[\text{ if } \beta_0 \geq 3, \text{ then } 3|w_1 \text{ and } 3|w_2\]
+and
+\[\text{ if } \nu_p(N) = 1, \text{ for } p \geq 3, \text{ then } p \mid D_FF(u,v).\]
+\end{theorem}
+
+\end{frame}
+
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The main algorithm}
+
+%Using this theorem, we may compute all $E/\mathbb{Q}$ of conductor $N$ via the following algorithm:
+\begin{enumerate}
+\item<2-4> Compute $GL_2({\mathbb{Z}})$-representatives for every binary form $F$ with discriminant
+\[D_F = \pm 2^{\alpha_0}3^{\beta_0}N_1\]
+for each divisor $N_1$ of $N_0$, and each possible pair $(\alpha_0,\beta_0)$ given in the statement of the Theorem  \\
+\item<3-5> Solve the corresponding Thue-Mahler equations \\
+\item<4> Check ``local" conditions and output the elliptic curves that arise
+\end{enumerate}
+
+
+% the first and the third of these steps are straightforward.
+
+% Indeed, in  Bennett and Rechnitzer describe an efficient algorithm for carrying out Step 1,
+% and Step 3 is essentially trivial.
+
+% The bulk of the work is concentrated in Step 2. This is the main focus of this report and in fact one of the main objective of this research. The remaining chapters of this report are devoted to carrying out this step.
+
+% We carried out a one-time computation of all irreducible cubic forms that can arise in Theorem 1, of abso- lute discriminant bounded by 10^10. There are ?? such forms; storing them takes ?? space.
+
+% 120 gigs to store, big computation, took couple of days, (forms conductor up to 10^10)
+% but now have the forms - one time computation
+% simply storing it, past this
+% been done! hence, trivial, just a matter of table look-up
+% can happen that there are no forms (happens quite a lot; a positive proportion of the time)
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Representative Forms}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Irreducible forms}
+
+\begin{itemize}
+\item<1-2> Fix $a \in \mathbb{Z}$ and a set of distinct rational primes $S = \{p_1, \dots, p_v\}$
+% fix a non-zero integer a and a set of distinct rational primes
+\item<2> Reduce problem to solving a number of \textit{Thue-Mahler equations},
+\[F(x,y) = w_0x^3 + w_1x^2y + w_2xy^2 + w_3y^3 = a p_1^{z_1} \cdots p_v^{z_v}\]
+% for unknown integers $x,y,z_1, \dots, z_v$ with $z_i \geq 0$
+% irreducible binary form over Z
+\end{itemize}
+
+% this is fine in our case, f_0 = 1
+%\end{itemize}
+% explanation of coefficient business here
+
+% based on work by Tzanakis, de Weger
+% GL2Z ISSUES MENTIONED HERE
+% timing example
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{Irreducible forms: an example}
+
+\begin{itemize}
+\item<2-> Let $S = \{2,3,5,7,11,13\}$
+\item<3-> There are 7893 corresponding forms which need to be solved
+\begin{itemize}
+\item<4->$F(x,y) = 19x^3 + 69x^2y + 76xy^2 + 126y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$
+\item<4-> $F(x,y) = 22x^3 + 22x^2y + 55xy^2 + 100y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$
+\item<4-> $F(x,y) = 46x^3 + 24x^2y + 85xy^2 + 7y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$
+\item<4-> $F(x,y) = 13x^3 + 3x^2y + 18xy^2 + 14y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$
+\item<4-> $F(x,y) = 17x^3 + 36x^2y + 39xy^2 + 26y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$
+\item<4-> $F(x,y) = 2x^3 + 18x^2y + 21xy^2 + 65y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$
+\item<4-> $F(x,y) = x^3 + 12x^2y + 18xy^2 + 149y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$ \\
+\[\vdots\]
+\end{itemize}
+
+\end{itemize}
+
+% one-time computation
+% split into irreducible, reducible
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{Irreducible forms: an example}
+
+For $N \leq 10^6$
+\begin{itemize}
+\item<2-> There are $6,078,277$ corresponding forms which need to be solved
+\item<3-> At $5$ seconds per form, this requires 11.55 months on a single core
+  % or a out 5.5 days on 64 cores
+\end{itemize}
+
+% one-time computation
+% split into irreducible, reducible
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{Reducible forms}
+
+  \begin{itemize}
+  \item<1-> Fix $a \in \mathbb{Z}$ and a set of distinct rational primes $S = \{p_1, \dots, p_v\}$
+  \item<2-> Reduce problem to solving a number of equations of the form
+    \[F(x,y) = bx^2y + cxy^2 + dy^3 = ap_1^{z_1}\cdots p_v^{z_v}\]
+  \item<3-> Let $S^* = S \cup \{2\}$
+    \begin{itemize}
+    \item<4-> $D_F = b^2(c^2 - 4bd)$ and $F(x,y)$ are $S^*$-units
+    \item<5-> $b$, $c^2 - 4bd$, $y$, and $\mu = bx^2 + cxy + dy^2$ are $S^*$-units
+    \item<6-> Thus, for some $Z\in\mathbb{Z}$,
+      \[(c^2 - 4bd)y^2 + 4b\mu = Z^2\]
+    \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{Reducible forms}
+
+  \begin{itemize}
+  \item<1-> Fix \only<1> {$a \in \mathbb{Z}$ and }a set of distinct rational primes $S = \{p_1, \dots, p_v\}$ \only<2-> {and let $S^* = S \cup \{2\}$}
+  \item<1-> Reduce problem to solving a number of equations of the form
+    \only<1-2> {\[F(x,y) = bx^2y + cxy^2 + dy^3 = ap_1^{z_1}\cdots p_v^{z_v}\]}
+    \only<3> {\[x + y = z^2\]
+      in $S^*$-units $x,y$ and $z \in \mathbb{Z}$}
+  \end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{$x + y = z^2$ and elliptic curves}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{Elliptic curves}
+
+  Solving $x + y = z^2$ for $x,y$ $S$-units, $z \in \mathbb{Z}$
+  \begin{itemize}
+  \item <2-> $E/\mathbb{Q}$ with good reduction outside $S$ and rational $2$-torsion
+  \item <3-> $E_1(x,y): Y^2 = X^3 + zX^2 + \frac{x}{4}X$ where $\Delta_{E_1} = x^2y$\\
+    $E_2(x,y): Y^2 = X^3 + zX^2 + \frac{y}{4}X$ where $\Delta_{E_2} = xy^2$
+  \end{itemize}
+
+\end{frame}
+% 2-division field bit
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{The set $S$}
+
+  For $N \leq 10^6$
+  \begin{itemize}
+  \item<2-> There are $176644$ sets of primes $S$ for which $x + y = z^2$ needs to be solved
+  \item<3-> Of those, only $142393$ are maximal
+    % 7 with 7 primes;
+  \end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{The many cases of $x + y = z^2$}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{First steps}
+
+  \begin{itemize}
+  \item Fix $S = \{p_1, \dots, p_v\}$
+  \item Reduce problem to solving
+    \[x + y = z^2\]
+    in $S$-units $x,y$ and $z \in \mathbb{Z}$
+  \item<2-> Without loss of generality,
+    \[\begin{cases}
+        x \geq y, \ z > 0, \\
+        \gcd(x,y) \text{ is squarefree }
+      \end{cases}\]
+
+  \end{itemize}
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{The setup}
+
+  \begin{itemize}
+  \item<1-> Put $x = D u^2$, where $D$ is squarefree
+  \item<2-> Solving $x + y = z^2$ is equivalent to solving the $2^{v}$ equations
+    \[z^2 - D u^2 = y\]
+    in $S$-units $u,y$, and $z \in \mathbb{Z}_{>0}$, where $\gcd(u,y) = 1$
+  \end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{$D = 1$}
+
+  Solving $z^2 - u^2 = y$ is equivalent to solving
+  \only<2> {\[ 2 u = y_1 - y_2 \quad \text{ where } y = y_1y_2\]}
+  \only<3> {\[a + b = c \quad \text{ in $S$-units } a,b,c\]}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{$D > 1$}
+
+  \begin{itemize}
+  \item <1-> Let $K = \mathbb{Q}(\sqrt{D})$
+  \item <2-> Solving $z^2 - Du^2 = y$ is equivalent to solving
+    \[\begin{cases}
+	& (z + u\sqrt{D})\mathcal{O}_K = \displaystyle \prod_{i = 1}^v \mathfrak{p}_i^{\ a_i} {\mathfrak{p}_i}'^{\ b_i} \\
+	& (z - u\sqrt{D})\mathcal{O}_K = \displaystyle \prod_{i = 1}^v {\mathfrak{p}_i}'^{\ a_i} \mathfrak{p}_i^{\ b_i},
+      \end{cases}\]
+    \only<3> {where}
+    \begin{itemize}
+      \item<3-> $\mathfrak{p}_i$ is a prime ideal in $K$ such that $\ord_{p_i}(\mathfrak{p}_i) > 0$ for $p_i \in S$
+      \item<3-> $\mathfrak{p}_i'$ denotes ideal $\sigma(\mathfrak{p}_i)$ where $\sigma: K \to K$, $\sigma(\sqrt{D}) = -\sqrt{D}$
+      \item<3-> $a_i, b_i \in \mathbb{N}_0$
+      \item<3-> $b_i = 0$ if $\mathfrak{p}_i = \mathfrak{p}_i'$
+    \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{Prime ideals}
+
+  \begin{itemize}
+  \item<1-> $a_i, b_i$ can be explicitly determined if $p_i$ remains prime or ramifies in $K$
+    % either 0,1
+    \pause
+  \item<2-> If $p_i$ splits in $K$
+    \begin{itemize} \itemsep0em
+    \item<3-> If $a_i = b_i$ then necessarily $a_i = b_i = 0$
+      \pause
+    \item<4-> Else $a_i + b_i > 0$
+    \end{itemize}
+    \only<5-> {Let
+      \[I = \left\{ i \ | \ 1 \leq i \leq t, \ a_i > b_i\right\},\]
+      \[I' = \left\{ i \ | \ 1 \leq i \leq t, \ a_i < b_i\right\}\]
+      where $p_1, \dots, p_t \in S$ split in $K$ }
+
+      % Here, $a_i$ and $b_i$ are unknown positive integers.
+  \end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{An example}
+
+  Let $S = \{2,3,5,7,13,23\}$ \\
+  \only<2-> {Then $D \in \{ 1, 2, 3, 5, \dots, 6279, 8970, 10465, 12558, 20930, 31395, 62790\}$}
+
+  \only<3-> {
+\begin{center}
+  \begin{tabular}{ c c c }
+    $D$ & $I$ & $I'$ \\ [0.5ex]
+    \hline \hline
+    2 & $\{7\}$ & $\emptyset$ \\
+    2 & $\{23\}$ & $\emptyset$ \\
+    2 & $\{7,23\}$ & $\emptyset$ \\
+    2 & $\{7\}$ & $\{23\}$ \\
+    $\vdots$ & $\vdots$ & $\vdots$ \\
+    105 & $\emptyset$ & $\emptyset$ \\
+    105 & $\{2,13\}$ & $\emptyset$ \\
+    105 & $\{2,13\}$ & $\{23\}$ \\
+    105 & $\{2,23\}$ & $\emptyset$ \\
+    105 & $\{2,23\}$ & $\{13\}$ \\
+    $\vdots$ & $\vdots$ & $\vdots$ \\
+\end{tabular}
+\end{center}}
+% 168 total possibilities across all values of D, 64 possibilities for $D$
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Solving a specific case of $x + y = z^2$}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}
+  Now, fix $D, I, I'$
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+
+\begin{frame}{Principalization}
+
+  \begin{itemize}
+  \item<2-> For $i = 1, \dots, t$ let $h_i$ be the smallest positive integer such that
+    \[\mathfrak{p}_i^{h_i} = \pi_i\mathcal{O}_K\]
+  \item<3-> Consider the set of all tuples
+    \[\{(d_1, \dots, d_t)\ |\ 0 \leq d_i < h_i \text{ for } i = 1, \dots, t\}\]
+    such that $\mathfrak{a} = \alpha\mathcal{O}_K$, where
+    \[\mathfrak{a}:= (2)^{b_0} \cdot \prod_{i \in I} \mathfrak{p}_i^{\ d_i} \cdot \prod_{i \in I'}\mathfrak{p}_i'^{\ d_i}		\cdot \prod_{i = t+1}^s\mathfrak{p}_i^{\ a_i}\]
+    % \[ b_0 = \begin{cases}
+    %     1 & \text{ if $2$ splits in } K \\
+    %     0 & \text{ if $2$ does not split in } K,
+    %   \end{cases}\]
+    % \item Store the values $\alpha \in K$ for which $\mathfrak{a}$ is principal, that is
+    %   \[\mathfrak{a} = (\alpha).\]
+
+  \end{itemize}
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{An equation in $K = \mathbb{Q}(\sqrt{D})$}
+
+  \begin{itemize}
+  \item <2-> Solving $z^2 - Du^2 = y$ is equivalent to solving
+    \[\begin{cases}
+	& (z + u\sqrt{D})\mathcal{O}_K = \displaystyle \displaystyle\prod_{i = 1}^v \mathfrak{p}_i^{\ a_i} {\mathfrak{p}_i}'^{\ b_i} \\
+	& (z - u\sqrt{D})\mathcal{O}_K = \displaystyle \displaystyle\prod_{i = 1}^v {\mathfrak{p}_i}'^{\ a_i} \mathfrak{p}_i^{\ b_i}
+      \end{cases}\]
+    \only<3-> {is equivalent to solving
+      \[\begin{cases}
+          & z + u\sqrt{D} = \pm \alpha  \varepsilon^{\ n}\displaystyle\prod_{i \in I} \pi_i^{\ c_i}  \prod_{i \in I'}\pi_i'^{\ c_i} \\
+          & z - u\sqrt{D} = \pm \alpha' \varepsilon'^{\ n} \displaystyle \prod_{i \in I} \pi_i'^{\ c_i}  \prod_{i \in I'}\pi_i^{\ c_i} \\
+        \end{cases}\]}
+    \only<4-> {where
+    \begin{itemize}
+    \item $n \in \mathbb{Z}$, $c_i \in \mathbb{N}_0$ are unknown
+    \item $\varepsilon$ is a fundamental unit of $K$
+    \end{itemize}}
+\end{itemize}
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Towards linear forms in logarithms}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{Generalized recurrences}
+
+  \begin{itemize}
+  \item<1-> Let $G_{\alpha} = G_{\alpha}(n,m_1, \dots, m_t)$ and $H_{\alpha} = H_{\alpha}(n,m_1, \dots, m_t)$, where
+    \[G_{\alpha} = \frac{\alpha}{2\sqrt{D}}\varepsilon^{\ n} \prod_{i\in I}\pi_i^{\ m_i}\prod_{i\in I'}\pi_i'^{\ m_i} - \frac{\alpha\ '}{2\sqrt{D}}\varepsilon'^{\ n} \prod_{i\in I}\pi_i'^{\ m_i}\prod_{i\in I'}\pi_i^{\ m_i}, \]
+    \[H_{\alpha} = \frac{\alpha}{2}\varepsilon^{\ n} \prod_{i\in I}\pi_i^{\ m_i}\prod_{i\in I'}\pi_i'^{\ m_i} + \frac{\alpha\ '}{2}\varepsilon'^{\ n} \prod_{i\in I}\pi_i'^{\ m_i}\prod_{i\in I'}\pi_i^{\ m_i}\]
+
+    \item<2-> Then solving $z^2 - Du^2 = y$ is equivalent to solving
+      \begin{equation*} \label{uz}
+        \begin{cases}
+          & \pm u = G_{\alpha}(n,c_1, \dots, c_t) \\
+          & \pm z = H_{\alpha}(n,c_1, \dots, c_t)\\
+        \end{cases}
+      \end{equation*}
+      for $n \in \mathbb{Z}$ and $c_i \in \mathbb{N}_0$
+    \end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{The main equation}
+
+  In particular
+\[ G_{\alpha} = \frac{\alpha}{2\sqrt{D}}\varepsilon^{\ n} \prod_{i\in I}\pi_i^{\ c_i}\prod_{i\in I'}	\pi_i'^{\ c_i} - \frac{\alpha\ '}{2\sqrt{D}}\varepsilon'^{\ n} \prod_{i\in I} \pi_i'^{\ c_i}\prod_{i\in I'}\pi_i^{\ c_i} = \pm \prod_{i \in I_U} p_i^{\ u_i},\]
+\only<2-> {where
+  \begin{itemize}
+  \item $I_U = \left\{\text{all prime divisors of } G_{\alpha}(n,m_1, \dots, m_t)\right\} \cap \{p_1, \dots, p_v\}$
+  \item $n, c_i, u_i$ are unknowns to be determined
+  \end{itemize}}
+  % Since there are only finitely many $\alpha$, by solving (\ref{main}) completely for each such $\alpha$, we can find all solutions of (\ref{uz}) and hence of the equation $x + y = z^2$.
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Next steps}
+
+  \begin{itemize}
+  \item Generate a very large upper bound on the solutions using the theory of linear forms in logarithms
+  \item Reduce this bound via Diophantine approximation computations
+  \item Search below this reduced bound
+
+  \end{itemize}
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{Upper bounds}
+
+  \[ G_{\alpha} = \frac{\alpha}{2\sqrt{D}}\varepsilon^{\ n} \prod_{i\in I}\pi_i^{\ c_i}\prod_{i\in I'}	\pi_i'^{\ c_i} - \frac{\alpha\ '}{2\sqrt{D}}\varepsilon'^{\ n} \prod_{i\in I} \pi_i'^{\ c_i}\prod_{i\in I'}\pi_i^{\ c_i} = \pm \prod_{i \in I_U} p_i^{\ u_i},\]
+  \begin{itemize}
+    \item<2-> Let $M = \displaystyle \max_{i \in I \cup I'}(c_i)$ and $U = \displaystyle \max_{i \in I_U}(u_i)$
+  % Using the application of the theory of $p$-adic linear forms in logarithms, we
+    \item<3-> Derive an explicit upper bound
+      \[\max\left(M,U,|n|\right) \leq {C}\]
+    \end{itemize}
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{An example}
+
+For $S = \{2,3,5,7,11,13\}$; $D = 5$; $I = \{11\}, I' = \emptyset$ \\
+\pause
+\[\max\left(M,U,|n|\right) \leq  3.07682284851718749252059008295x10^{33}\]
+
+% i.e. calculations of C8
+% GO TO SAGE C8
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The reduction strategy}
+
+\begin{itemize}
+\item<1-> In each reductive step, let
+\[\begin{cases}
+M_i: \text{ the best current upper bound for } c_i \text{ for } c_i \in I\cup I' &\\
+U_i: \text{ the best current upper bound for } u_i \text{ for } u_i \in I_U &\\
+C_0: \text{ the best known upper bound for } C &
+\end{cases}\]
+
+\item <2-> For each $i \in I \cup I'$ use LLL to reduce $M_i$ to the size of $\log{C_0}$
+\item<3-> Apply a similar procedure to reduce $U_i$ to the size of $\log{C_0}$
+\item<4-> Repeat the above reduction procedures until no further reduction is possible
+\item<5-> Reduce these bounds further using Fincke-Pohst
+\item<6-> Search below these bounds using congruence sieves and brute force
+
+\end{itemize}
+\end{frame}
+% inital bounds are huge, can expect them to be the size 10^40
+% enumeration at this point is impossible
+% instead do a reductive process, and at each step, ...
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Linear forms in logarithms}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{Linear forms in logarithms}
+
+  Using
+  \[ G_{\alpha} = \frac{\alpha}{2\sqrt{D}}\varepsilon^{\ n} \prod_{i\in I}\pi_i^{\ c_i}\prod_{i\in I'}	\pi_i'^{\ c_i} - \frac{\alpha\ '}{2\sqrt{D}}\varepsilon'^{\ n} \prod_{i\in I} \pi_i'^{\ c_i}\prod_{i\in I'}\pi_i^{\ c_i} = \pm \prod_{i \in I_U} p_i^{\ u_i},\]
+  generate the following linear forms in logarithms:
+
+  \begin{itemize}
+  \item<2-> For each $i \in I_U$, let
+    \resizebox{.9 \textwidth}{!}{$\Lambda_i = \log_{p_i}\left(\frac{\alpha}{\alpha'}\right) + n \log_{p_i}\left(\frac{\varepsilon}{\varepsilon'}\right)
+      + \sum_{j \in I} c_j \log_{p_i}\left(\frac{\pi_j}{\pi_j'}\right)
+      - \sum_{j \in I'} c_j \log_{p_i}\left(\frac{\pi_j}{\pi_j'}\right) $}\\
+  \item<3-> For each $i \in I$, let
+    \resizebox{.9 \textwidth}{!}{$K_i = \log_{p_i}\left(\frac{\alpha'}{2\sqrt{D}}\right) + n \log_{p_i}(\varepsilon')
+      - \sum_{j \in I_U} u_j \log_{p_i}(p_j) + \sum_{j \in I} c_j \log_{p_i}(\pi_j') + \sum_{j \in I'} c_j \log_{p_i}(\pi_j)$}\\
+  \item<4-> For each $i \in I'$, let
+    \resizebox{.9 \textwidth}{!}{$ K_i' = \log_{p_i}\left(\frac{\alpha}{2\sqrt{D}}\right) + n \log_{p_i}(\varepsilon)
+      - \sum_{j \in I_U} u_j \log_{p_i}(p_j) + \sum_{j \in I} c_j \log_{p_i}(\pi_j) + \sum_{j \in I'} c_j \log_{p_i}(\pi_j')$}
+  \end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{Linear forms in logarithms}
+
+These equations are all of the form
+\[ \Lambda_i = \sum_{j=1}^n x_j \cdot \vartheta_j,\]
+for some $i \in I, I'$ or $I_U$, where
+\begin{itemize}
+\item<2-> $i$ corresponds to some $p \in S$
+\item<3-> $\vartheta_1, \dots, \vartheta_n \in \mathbb{Z}_p$
+\item<4-> $x_1, \dots, x_n \in \mathbb{Z}$ are unknown
+\end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{Approximation lattices}
+  For each linear form in logarithms
+  \[ \Lambda_i = \sum_{j=1}^n x_j \cdot \vartheta_j\]
+  \begin{itemize}
+  \item<2-> Pick $\mu \in \mathbb{N}$ such that
+    \[\begin{cases}
+        \mu < M_i & \text{ if } i \in I \cup I' \\
+        \mu < U_i & \text{ if } i \in I_U
+      \end{cases}\]
+%    $\mu < M_i$ if $i \in I\cup I'$
+  \item<3-> Associate to $\Lambda_i$ the $p$-adic approximation lattice $\Gamma_{\mu}$
+    \[\Gamma_{\mu} = \left\{ (x_1, \dots, x_n)^{\text{T}} \in \mathbb{Z}^{n} \ : \ ||\Lambda_{p}||_{p} \leq p^{-\mu}\right\}\]
+  \end{itemize}
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Basic $p$-adic reduction}
+
+  For each linear form in logarithms
+  \[ \Lambda_i = \sum_{j=1}^n x_j \cdot \vartheta_j\]
+
+  \begin{itemize}
+  \item<2-> Suppose $\mathbf{x} = (x_1, \dots, x_n)$ is a solution to
+    \[ G_{\alpha} = \frac{\alpha}{2\sqrt{D}}\varepsilon^{\ n} \prod_{i\in I}\pi_i^{\ c_i}\prod_{i\in I'}	\pi_i'^{\ c_i} - \frac{\alpha\ '}{2\sqrt{D}}\varepsilon'^{\ n} \prod_{i\in I} \pi_i'^{\ c_i}\prod_{i\in I'}\pi_i^{\ c_i} = \pm \prod_{i \in I_U} p_i^{\ u_i},\]
+    such that
+    \[x_i > \mu\]
+  \item<3-> Then $\mathbf{x} \in \Gamma_{\mu}$
+  \item<4-> Hence
+    \[ ||\mathbf{x}||^2 \leq 1+ \sum_{j \in I \cup I'} M_j^2 + \sum_{j \in I_U} U_j^2\]
+  \end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Basic $p$-adic reduction}
+
+  For each linear form in logarithms
+  \[ \Lambda_i = \sum_{j=1}^n x_j \cdot \vartheta_j\]
+
+  \begin{itemize}
+  \item <2-> Apply the LLL Algorithm to $\Gamma_{\mu}$ to compute a lower bound for $\ell(\Gamma_{\mu})$, where
+    \[\ell(\Gamma_{\mu}) = \min_{\mathbf{0} \neq \mathbf{x} \in \Gamma_{\mu}} ||\mathbf{x}||\]
+  \item<3-> Put
+    \[Q = 1+  \sum_{j \in I \cup I'} M_j^2 + \sum_{j \in I_U} U_j^2\]
+  \end{itemize}
+
+  \only<4->{
+    \begin{Lemma} \label{lem:LLL}
+      If $\ell(\Gamma_{\mu}) > Q^{1/2}$ then $x_i < \mu.$
+    \end{Lemma}}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Basic $p$-Adic Reduction}
+  \begin{itemize}
+    \item<1-> If the Lemma holds, replace $M_i$ (resp. $U_i$) by $\mu - 1$
+    \item<2-> Repeat this procedure for every $i \in I, I'$ and $I_U$ until no further improvement is made
+\end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Refined $p$-adic reduction}
+
+  For each linear form in logarithms
+  \[ \Lambda_i = \sum_{j=1}^n x_j \cdot \vartheta_j\]
+  \begin{itemize}
+  \item<2-> Pick $\mu \in \mathbb{N}$ such that
+    \[\begin{cases}
+        \mu < M_i & \text{ if } i \in I \cup I' \\
+        \mu < U_i & \text{ if } i \in I_U
+      \end{cases}\]
+    % $\mu < M_i$ if $i \in I\cup I'$
+  \item<3-> Associate to $\Lambda_i$ the $p$-adic approximation lattice $\Gamma_{\mu}$
+    \[\Gamma_{\mu} = \left\{ (x_1, \dots, x_n)^{\text{T}} \in \mathbb{Z}^{n} \ : \ ||\Lambda_{p}||_{p} \leq p^{-\mu}\right\}\]
+  \end{itemize}
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Refined $p$-adic reduction}
+
+  For each linear form in logarithms
+  \[ \Lambda_i = \sum_{j=1}^n x_j \cdot \vartheta_j\]
+
+  \begin{itemize}
+  \item<2-> Suppose $\mathbf{x} = (x_1, \dots, x_n)$ is a solution to
+    \[ G_{\alpha} = \frac{\alpha}{2\sqrt{D}}\varepsilon^{\ n} \prod_{i\in I}\pi_i^{\ c_i}\prod_{i\in I'}	\pi_i'^{\ c_i} - \frac{\alpha\ '}{2\sqrt{D}}\varepsilon'^{\ n} \prod_{i\in I} \pi_i'^{\ c_i}\prod_{i\in I'}\pi_i^{\ c_i} = \pm \prod_{i \in I_U} p_i^{\ u_i},\]
+    such that
+    \[x_i > \mu\]
+  \item<3-> Then $\mathbf{x} \in \Gamma_{\mu}$
+  \item<4-> Hence
+    \[ ||\mathbf{x}||^2 \leq 1+ \sum_{j \in I \cup I'} M_j^2 + \sum_{j \in I_U} U_j^2\]
+  \end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Refined $p$-adic reduction}
+
+  For each linear form in logarithms
+  \[ \Lambda_i = \sum_{j=1}^n x_j \cdot \vartheta_j\]
+
+  \begin{itemize}
+  \item <2-> Apply the Fincke-Pohst Algorithm to $\Gamma_{\mu}$ to find all vectors
+    $\mathbf{y}$ in $\Gamma_{\mu}$ such that
+    \[||\mathbf{y}||^2 \leq  1+ \sum_{j \in I \cup I'} M_j^2 + \sum_{j \in I_U} U_j^2\]
+
+  \item<2-> Test whether each such vector $\mathbf{y} \in \Gamma_{\mu}$ is a solution to
+
+  \item <3-> Discard non-solutions, replace $M_i$ (resp. $U_i$) by $\mu - 1$, and repeat the procedure for a new choice of $i, \mu$
+  \end{itemize}
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Final search}
+
+\begin{itemize}
+\item Once the bounds $M_i, U_i$ are sufficiently small, apply a brute force search below these bounds
+\end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Elliptic curves}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}{Repeat...}
+  \begin{itemize}
+  \item<2-> Repeat the above process for every $i \in I, I'$ and $I_U$ to obtain solutions corresponding to the choice of $D$, $I$, $I'$
+  \item<3-> Repeat for every possible $D$, $I$, $I'$ to obtain solutions corresponding to $x + y = z^2$
+  \item<4-> Repeat for every set $S$ corresponding to $N < 10^6$
+
+  \end{itemize}
+
+\end{frame}
+
+%--------------------------------------------------------------------------------------------%
+
+\begin{frame}
+\frametitle{}
+
+\centering Thank You
+
+\end{frame}
+
+% --------------------------------------------------------------------------------------------%
+
+
+\end{document}

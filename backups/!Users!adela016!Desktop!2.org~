@@ -1,0 +1,109 @@
+#+STARTUP: showall
+
+
+* To do for tomorrow
+
+** DONE Stretch
+** TODO Number theory talk
+** TODO Book haircut/hairdye
+** TODO Work
+** TODO Meeting with Rafael
+
+** Org mode
+*** TODO Basic setup (in dropbox)
+*** TODO Set up daily log
+*** Later: Org mode version (currently added line to add-to-list in init file, but doesn't actually give us new version (check orgmode website for latest version update)
+    Adding stuff test
+***
+*** [[https://orgmode.org][Org Mode Website]]
+** Work
+*** TODO Generate S-Unit eqs for remaining curves
+*** TODO Generate S-Unit eqs, with primesets, etc, correct Thue eqs code
+*** TODO KilledJobs2 also contains jobs that died because of internal errors
+
+** Quarantine shows
+*** Dark
+
+** Read about procrastination
+*** About emotions, not laziness
+*** Allows escape from stress, anxiety and provides instant reward/gratification
+*** Creates more stress, anxiety, and therefore a loop
+*** Cannot exit loop until provide bigger, better reward
+*** One option: forgive self when procrastinate
+*** Procrastinators tend to have high stress and low self-compassion
+**** Self-compassion: commitment to meeting your challenges with greater acceptance and kindness rather than rumination and regret. Try to reframe the task by considering a positive aspect of it, ie. positive outcome, praise from boss, etc.
+*** Other ways to manage procrastination triggers:
+**** When feeling urge to procrastinate, focus on the thought and ask why, what is source, etc
+**** Focus on next action instead of breaking up task into bite-sized chunks
+**** Make temptations more inconvenient, and tasks at hand more convenient (ie. block social media apps, leave gym clothes handy, resp.)
+
+*** Try self-dialogue: ie. ask self why not do task at hand, what does doing task make me feel that makes me want to not do it, etc.
+*** Leisure activities at a time when leisure is not supposed to happen: full of guild, self-hatred, anxiety and dread, leading to bizare purgatory of weird activities like refreshing email, fantasizing about completing a job, scrolling facie, etc.
+*** Only time this goes away is when the Panic Monster arrives (deadline or other scary consequence thing)
+**** But sometimes the Panic Monster doesn't show up at all or only does so for the things we have to do, not want to do, leaving us feel unfullfilled
+*** It doesn't make sense to stop work to procrastinate; both suck to do, but procrastination only leads to misery, whereas doing the work actually leads to happiness
+*** If can work for some time, making progress on a task leads further away from procrastination; if can work until reach the tipping point where all desire goes to finishing the work task
+*** I need to prove/show to myself that I can do it, not just tell myself that I need to stop procrastinating
+    1. Try to internalize that everything is a choice
+    2. Create methods to avoid procrastination (set a reminder a month from now to see if things have improved; if not, change the aforementioned methods)
+    3. Aim for slow, steady progress, both in work completion and in stopping chronic procrastination (goal isn't to be perfect, but to improve)
+       a. ie. aim to go from "I procrastinate on every hard task" to "Once a week, I do a hard task without procrastinating"
+*** Eisenhower Matrix (Urgent and Important, Urgent but not important, etc)
+    | -------         | *Urgent*    | *Not Urgent*         |
+    | *Important*     | 1.  do now  | 2. decide when to do |
+    | *Not Important* | 3. delegate | 4. discard           |
+    |                 |             |                      |
+*** Quadrant 1 and 3 are visited, but most time is spent in Q4. To thrive, grow, and blossom, need to spend time in Q2 also
+*** Q1 often doesn't exist: "What's important is seldom urgent, and what's urgent is seldom importnat"
+*** Like most PhD students, I'm spending my time in Q4, occasionally in Q3 (learning C at the start of the day instead of focusing on TM code)
+*** When I'm *busy*, I'm usually just in Q3
+*** Undergrad and highschool, I was probably in Q1, Q3, Q4; had a solution-ish to procrastinating (scary deadlines), but it wasn't healthy or sustainable (often too stressed or too busy to do anything else)
+*** Need to shake off delusion and have a clearly defined "important" and "urgent", which delves into the question of what matters most to me
+*** Important: contributes to our long term goals, values
+*** Urgent: should revolve around self-discussion about what's most self-important; ie what would benefit most from happening sooner or later
+*** Need to be conscious of the monkey; remind self with "Yup, there's the monkey, right on que"
+
+1. *Need to forgive self*. Accept that I have been procrastinating, recognize that there is nothing I can do about the past, and forgive myself for it. Nnot feel guilty about procrastinating up until this point. Start fresh with a clean slate and pretend that I was only now just assigned the work. Let go. Be free.
+2. *To start*. Pick a small thing to do; make it super easy, always think about Next Action and plan small reward for it. Use the 3 second rule or non-negotiable timeslot
+3. *Become a slave*. Pretend you have no choice in the matter. No free will. Will get the crap beaten out of me if I don't work. (ie. like group marking, or in a lecture theatre teaching)
+4. Find something enjoyable in the task.
+
+
+** reply to Gene
+** reply to women+non-binary in math group
+
+** Meeting with Rafael - January 25, 2021
+*** leave Thue solver stuff for now
+*** find out why Thue stuff is slow: explain why it's slow (see if they come from complex case; use our TM solver if possible)
+*** find bottleneck of TM code
+
+
+
+
+
+** Trich, dermotilamania
+
+* Org mode setup: (youtube) [[https://www.youtube.com/watch?v=VcgjTEa0kU4&list=PLEoMzSkcN8oPH1au7H6B7bBJ4ZO7BXjSZ&index=5&t=1s][Emacs from Scratch:Org mode basics]]
+
+
+  - [ ] testy
+  - [X] C-cxb
+  - [ ] Shift-M-enter for new box
+  - M(alt)-enter
+
+* UK house
+- make sure to tell landlord that Beliza is moving out due to consistent breaking of UK Covid rules and bringing people over
+- make sure to have Beliza pay rent seperately of Em (so that Em doesn't have to be accountable if Beliza decides to stop paying rent)
+- vet the roommate replacement hard (regardless of how long it takes to find one); Beliza to pay rent until we find someone capable of following covid protocol
+
+
+* To Do - Feb 1
+- stretch
+- NT talk
+- no reddit
+- procrastination tools
+- find errors in TM code to submit
+- list of things to buy before UK
+- workout
+- early morning walk (?)
+- 1 chapter of C or 1 lecture of Udemy

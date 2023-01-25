@@ -1,0 +1,42 @@
+/*
+FinalSieve.m
+
+Author: Adela Gherga <adelagherga@gmail.com>
+Copyright © 2022, Adela Gherga, all rights reserved.
+Created: 12 August 2022
+
+Description:
+
+Commentary:
+
+To do list:
+
+Example:
+
+*/
+
+DetSVP:=function(Zr,L)
+    /*
+      Compute the determinant of L regarded as a lattice of Z^r and the norm
+      of the shortest vector contained in L.
+
+      Parameters
+          Zr: GrpAb
+              The abelian group isomorphic to Z^r.
+          L:
+      Returns
+          D: RngIntElt
+              The smallest possible degree of L = Q(theta_1,theta_2,theta_3).
+   */
+
+
+    // L is a subgroup of Z^r
+    // return the determinant of L regarded as a lattice
+    // and also the norm of the shortest vector.
+    assert L subset Zr;
+    r:=#Invariants(Zr);
+    ZZr:=StandardLattice(r);
+    LL:=sub<ZZr | [ Eltseq(Zr!l) : l in OrderedGenerators(L)] >;
+    len:=Norm(ShortestVectors(LL)[1]);
+    return Determinant(LL), len;
+end function;

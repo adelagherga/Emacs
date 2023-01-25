@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: function
+# key: function_
+# --
+
+$1:=function($2)
+    /*
+      $3<description>
+
+      Parameters
+          $4<param>: <param type>
+	      <param description>
+      Returns
+          $5<param>: <param type>
+	      <param description>
+   */

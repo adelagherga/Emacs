@@ -1,0 +1,43 @@
+#!/bin/bash
+# computeEllipticCurves.sh
+
+# Author: Adela Gherga <adelagherga@gmail.com>
+# Copyright © 2022, Adela Gherga, all rights reserved.
+# Created: 24 August 2022
+#
+# Description:
+#
+# Commentary:
+#
+# To do list:
+#
+# Example:
+#
+
+# start
+cd LMFDB
+# Run ThueMahler code.
+nohup cat Data/Forms/TMTestForms.csv | parallel -j20 --joblog Data/TMTest1Log magma set:={} Code/computeEllipticCurvesTM.m 2>&1 &
+
+# Run Thue code.
+nohup cat Data/Forms/ThueTestForms.csv | parallel -j20 --joblog Data/ThueTest1Log magma set:={} Code/computeEllipticCurvesThue.m 2>&1 &
+
+
+# postprocessing
+END=500999
+START=500000
+for ((N=START;N<=END;N++)); do
+    echo $N
+    touch Data/EllipticCurves/$N.csv
+done
+
+# Amalgamate all elliptic curves from Thue--Mahler output.
+for F in Data/TMOutfiles/*; do
+    N=$(echo $F | grep -o -E '[0-9]+' | head -1 | sed -e 's/^0\+//')
+    cat "$F" >> "Data/EllipticCurves/$N.csv"
+done
+# Amalgamate all elliptic curves from Thue output.
+for F in Data/ThueOutfiles/*; do
+    N=$(echo $F | grep -o -E '[0-9]+' | head -1 | sed -e 's/^0\+//')
+    cat "$F" >> "Data/EllipticCurves/$N.csv"
+done

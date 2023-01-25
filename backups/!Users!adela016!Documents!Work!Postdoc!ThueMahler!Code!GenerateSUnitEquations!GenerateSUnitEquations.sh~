@@ -1,0 +1,47 @@
+#!/bin/bash
+# GenerateSUnitEquations.sh
+
+# Author: Adela Gherga <adelagherga@gmail.com>
+# Copyright © 2020, Adela Gherga, all rights reserved.
+# Created: 26 January 2020
+#
+# Description:
+#
+# Commentary:
+#
+# To do list:
+#
+# Example:
+#
+
+# Description: this is for sortedFormsforCond10to6 (find text)
+InputTMForm() {
+
+    # Input:
+    #
+    # Output:
+    #
+    # Example:
+
+    line0="$1"
+    # remove white space between characters
+    # ie. write [ p_1, p_2, ..., p_n ] as [p_1,p_2,...,p_n]
+    # this step is necessary as Magma input does not allow for empty spaces
+    line="$(echo -e "${line0}" | tr -d '[:space:]')"
+
+    lineB="${line/\*/}" # remove * sign
+    lineC="${lineB/\*]/}" # remove *] characers
+
+    # compute the conductor (ie. first number)
+    N=$(echo $lineC | grep -o -E '[0-9]+' | head -1 | sed -e 's/^0\+//')
+    # compute the coefficients of the TM form
+    clist="$(echo $lineC | cut -d"," -f2-)"
+
+    echo $N
+    echo $clist
+}
+
+ cat /Users/adela016/Desktop/SortedForms_for_Cond_10to6\ copy.txt | parallel InputTMForm
+
+
+ should run as magma N:=$N C:=$clist

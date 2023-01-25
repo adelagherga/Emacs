@@ -1,0 +1,19 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Fri Nov 15 13:52:16 2019
+;; Desktop file format version 208
+;; Emacs version 26.2
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (24015 7696 971173 0) (desktop . "208") "adela016@adela-ghergas-macbook.local" nil nil ((((minibuffer . t) (font-backend mac-ct) (fontsize . 0) (font . "-*-Menlo-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1") (border-width . 0) (internal-border-width . 2) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#f6f3e8") (background-color . "#242424") (line-spacing) (left-fringe . 8) (right-fringe . 8) (no-special-glyphs) (undecorated) (ns-appearance . unbound) (ns-transparent-titlebar . unbound) (z-group) (no-focus-on-map) (no-accept-focus) (menu-bar-lines . 0) (tool-bar-lines . 0) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 0) (scroll-bar-height . 0) (alpha) (fullscreen) (display-type . color) (background-mode . dark) (cursor-color . "#656565") (environment) (frameset--id . "3F63-228C-7FF0-FB10") (frameset--mini t . t) (modeline . t) (unsplittable) (icon-name) (visibility . t) (display . "adela-ghergas-macbook.local") (explicit-name) (tool-bar-position . top) (height . 35) (width . 80) (left . 851) (top . 23)) ((min-height . 8) (min-width . 10) (min-height-ignore . 5) (min-width-ignore . 5) (min-height-safe . 2) (min-width-safe . 2) (min-pixel-height . 112) (min-pixel-width . 70) (min-pixel-height-ignore . 70) (min-pixel-width-ignore . 35) (min-pixel-height-safe . 28) (min-pixel-width-safe . 14)) vc (pixel-width . 576) (pixel-height . 476) (total-width . 82) (total-height . 34) (normal-height . 1.0) (normal-width . 1.0) (combination-limit) (leaf (pixel-width . 576) (pixel-height . 238) (total-width . 82) (total-height . 17) (normal-height . 0.5) (normal-width . 1.0) (buffer "*Messages*" (selected . t) (hscroll . 0) (fringes 8 8 nil) (margins nil) (scroll-bars nil 0 t nil 0 t) (vscroll . 0) (dedicated) (point . 20) (start . 1))) (leaf (last . t) (pixel-width . 576) (pixel-height . 238) (total-width . 82) (total-height . 17) (normal-height . 0.5) (normal-width . 1.0) (buffer "*Buffer List*" (selected) (hscroll . 0) (fringes 8 8 nil) (margins nil) (scroll-bars nil 0 t nil 0 t) (vscroll . 0) (dedicated) (point . 1) (start . 1)))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring '("magma"))
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("/Users/adela016/.emacs" "/Users/adela016/.emacs.d" "~/.emacs.d/" "/../Users/adela016/.emacs" "/Users/adela016/test.txt" "/ssh:ghergaa@l16xl1-bennett1.math.ubc.ca:testremote.txt" "/../Users/adela016/ssh:ghergaa@l16xl1-bennett1.math.ubc.ca:" "/../Users/adela016/ssh ghergaa@l16xl1-bennett1.math.ubc.ca:" "/Users/adela016/test.txt" "/../Users/adela016/ssh ghergaa@l16xl1-bennett1.math.ubc.ca:test.txt" "/../Users/adela016/test.txt" "/Users/adela016/ghergaa@l16xk1-bennett1.math.ubc.ca:/test" "/Users/adela016/ThueMahler/TMSolver.m"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:

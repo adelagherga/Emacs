@@ -1,0 +1,221 @@
+/*
+ellipticCurves.m
+
+<description>
+
+Authors
+    Adela Gherga <adelagherga@gmail.com>
+Created
+    23 August 2022
+*/
+
+convertTMToEllipticCurves:=function(N,alist,sols)
+    /*
+      Determine elliptic curves over Q of conductor N associated to the
+      solutions of the Thue--Mahler form
+      a_0 X^d + ... + a_d Y^d = a p_1^{z_1} ... p_v^{z_v}. Here, all elliptic
+      curves have no nontrivial rational 2-torsion points.
+
+      Parameters
+          N: RngIntElt
+	  alist: SeqEnum
+              A list of coefficients a_0, a_1,...,a_d.
+          sols: SetEnum
+              A list of solutions [X,Y,z_1,...,z_v] to the Thue-Mahler
+	      equation.
+      Returns
+          sols: SetEnum
+   */
+    d:=#alist-1;
+    assert d eq 3;
+    QXY<X,Y>:=PolynomialRing(Integers(),2);
+    F:=&+[alist[i+1]*X^(d-i)*Y^i : i in [0..d]];
+    a0,a1,a2,a3:=Explode(alist);
+    G:=(-27*a0^2*a3+9*a0*a1*a2-2*a1^3)*X^3 +
+       (-3*a1^2*a2-27*a0*a1*a3+18*a0*a2^2)*X^2*Y +
+       (3*a1*a2^2-18*a1^2*a3+27*a0*a2*a3)*X*Y^2 +
+       (-9*a1*a2*a3+2*a2^3+27*a0*a3^2)*Y^3;
+    H:=(a1^2-3*a0*a2)*X^2 + (a1*a2-9*a0*a3)*X*Y + (a2^2-3*a1*a3)*Y^2;
+    DF:=-27*a0^2*a3^2 + a1^2*a2^2 + 18*a0*a1*a2*a3 - 4*a0*a2^3 - 4*a1^3*a3;
+
+    alpha:=Integers()!Valuation(N,2);
+    beta:=Integers()!Valuation(N,3);
+    assert (alpha in [0..8]);
+    assert (beta in [0..5]);
+    divs6N:=[D : D in Divisors(6*N) | IsSquarefree(D)];
+    assert 1 in divs6N;
+    ECs:=[];
+    for sol in sols do
+        u:=sol[1];
+        v:=sol[2];
+	a4:=-27*(Evaluate(H,[u,v]));
+	a6:=27*(Evaluate(G,[u,v]));
+        E:=[0,0,0,a4,a6];
+        minE:=MinimalModel(EllipticCurve(E));
+        condE:=Conductor(minE);
+        Append(~ECs,<condE,aInvariants(minE),[u,v]>);
+	for D in divs6N do
+	    minE2:=MinimalModel(QuadraticTwist(minE,D));
+	    condE2:=Conductor(minE2);
+	    Append(~ECs,<condE2,aInvariants(minE2),[u,v]>);
+	    twistMinE2:=MinimalModel(QuadraticTwist(minE2,-1));
+	    twistCondE2:=Conductor(twistMinE2);
+	    Append(~ECs,<twistCondE2,aInvariants(twistMinE2),[u,v]>);
+	end for;
+    end for;
+    Sort(~ECs);
+    relECs:={};
+    for E in ECs do
+	if E[1] eq N then
+	    relECs:=relECs join {E};
+	end if;
+    end for;
+    return relECs;
+end function;
+
+    printf "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+    printf "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+    printf "Elliptic curves of conductor N = %o from alist:=%o :\n ",N,alist;
+    print relECs;
+
+
+
+CommaSplit:=Split(set,","); // Split bash input by ",".
+RBracketSplit:=Split(set,"()"); // Split bash input by "(" and ")".
+// Delimiter for form.
+assert CommaSplit[2][2] eq "(" and CommaSplit[5][#CommaSplit[5]-1] eq ")";
+// Delimiter for optimal form.
+assert CommaSplit[6][2] eq "(" and CommaSplit[9][#CommaSplit[9]-1] eq ")";
+// Delimiter for min poly.
+assert CommaSplit[10][2] eq "(" and CommaSplit[13][#CommaSplit[13]-1] eq ")";
+assert (#RBracketSplit eq 11) or (#RBracketSplit eq 13);
+N:=StringToInteger(CommaSplit[1]); // Convert bash input N into an integer.
+// Convert bash input for optimal form, min poly into a sequence of integers.
+alist:=[StringToInteger(i) : i in Split(RBracketSplit[4],",")];
+if (#RBracketSplit eq 11) then
+    assert CommaSplit[14] eq "None";
+    allAs:=[StringToInteger(i) : i in Split(RBracketSplit[8],",")];
+    primelist:=[StringToInteger(i) : i in Split(RBracketSplit[10],",")];
+else
+    allAs:=[StringToInteger(i) : i in Split(RBracketSplit[10],",")];
+    primelist:=[StringToInteger(i) : i in Split(RBracketSplit[12],",")];
+end if;
+t1:=Cputime();
+
+
+f,remainingCase,partialObstruction,localObstruction:=
+    prep0(N,clist,fclist,partialObstruction,avalues,primelist);
+Append(~timings,<Cputime(t1),"local obstructions">);
+
+if (IsEmpty(localObstruction)) then
+
+    // generate a record to store relevant info of the field K = Q(th)
+    FieldInfo:= recformat<field,gen,ringofintegers,minpoly,zeta,fundamentalunits>;
+    K<th>:=NumberField(f);
+    OK:=MaximalOrder(K);
+    th:=OK!th;
+    fieldKinfo:= rec<FieldInfo | field:= K,gen:= th,ringofintegers:= OK,minpoly:= f>;
+
+    n:= Degree(f);
+    assert (n eq #clist-1);
+    s,t:= Signature(K);
+    assert r eq (s+t-1);
+    assert (s+2*t) eq n;
+    assert (r eq 1) or (r eq 2);
+
+    afplist:= prep1(fieldKinfo,clist,remainingCase); // generate all ideal equations
+    ThueToSolve:= [];
+
+    // general setup and assertions
+    Qx<x>:= PolynomialRing(Rationals());
+    c0:=Integers()!clist[1];
+    assert c0 ne 0;
+    n:=#clist-1;
+    assert n eq 3;
+    assert fclist eq ([1] cat [clist[i+1]*c0^(i-1) : i in [1..n]]);
+    assert f eq &+[fclist[i+1]*x^(n-i) : i in [0..n]];
+    assert classnumber eq Integers()! ClassNumber(K);
+
+    // remove ideal equations which have exponent 0 on all prime ideals by generating
+    // corresponding Thue equations to be solved
+    toRemove:= [];
+    for i in [1..#afplist] do
+	fplist:= afplist[i][4];
+	if IsEmpty(fplist) then
+	    a:= afplist[i][1]`newa;
+	    aduset:= afplist[i][1]`adu;
+	    primelist:= afplist[i][2];
+	    ideal_a:= afplist[i][3];
+	    v:= #primelist;
+	    tt:= [Valuation(Norm(ideal_a), primelist[i]) : i in [1..v]];
+	    assert Norm(ideal_a) eq Abs(a)*&*[primelist[i]^tt[i] : i in [1..v]];
+	    tf,alpha:=IsPrincipal(ideal_a); // verify ideal_a is principal
+	    if tf then
+		for adu in aduset do
+		    zz:= [tt[i] - Valuation(adu[3]*adu[1],primelist[i]) : i in [1..v]];
+		    rhs:= Integers()! adu[1]*&*[primelist[i]^zz[i] : i in [1..v]];
+		    assert adu[3]*rhs eq Integers()!a*&*[primelist[i]^tt[i] : i in [1..v]];
+		    // store Thue equations to be solved
+		    if (rhs in Integers()) and (rhs notin ThueToSolve) then
+			Append(~ThueToSolve, rhs);
+		    end if;
+		end for;
+	    end if;
+	    Append(~toRemove,i);
+	end if;
+    end for;
+    Sort(~ThueToSolve);
+
+    // remove cases covered by Thue solver
+    afplistNew:= [afplist[i] : i in [1..#afplist] | i notin toRemove];
+    afplist:= afplistNew;
+    assert #afplist eq NoIdealEq;
+    assert IsEmpty(afplist) eq false;
+    assert #ThueToSolve eq NoThueEq;
+
+    // export Thue data into .csv file
+    hash:= hash cat ",\"(" cat RBracketSplit[4] cat ")\"";
+    assert hash eq &cat[set[i] : i in [1..#hash]];
+
+    if (ThueToSolve ne []) then
+	strRHS:= SeqEnumToString(Sort(ThueToSolve));
+	fprintf ThueEqToSolve, hash cat "," cat strRHS cat "\n";
+    end if;
+
+    // export SUnit data into .csv file
+    strFclist:= SeqEnumToString(fclist);
+    if IsEmpty(partialObstruction) then
+	strPartialObs:= "None";
+    else
+	strPartialObs:= SeqEnumToString(partialObstruction);
+    end if;
+    strAvalues:= SeqEnumToString(remainingCase`avalues);
+    strPrimelist:= SeqEnumToString(remainingCase`primelist);
+
+    hash:= hash cat "," cat strFclist cat "," cat strPartialObs cat ","
+	   cat IntegerToString(classnumber) cat "," cat IntegerToString(r) cat
+	   "," cat IntegerToString(#afplist) cat "," cat IntegerToString(#ThueToSolve)
+	   cat "," cat strAvalues cat "," cat strPrimelist cat "\n";
+
+    fprintf SUnitEq, hash;
+else
+    Append(~timings,<Cputime(t0),"total time">);
+    assert (#timings eq 2) and (timings[1][2] eq "local obstructions");
+
+    // export local obstruciotn into .csv file
+    hash:= hash cat "," cat Sprint(localObstruction[1]) cat ",None";
+
+    strTimings:= Sprint([t[1] : t in timings]);
+    toRemove:= [];
+    for i in [1..#strTimings] do
+	j:= strTimings[i];
+	if (j eq "[") or (j eq " ") or (j eq "]") then
+	    Append(~toRemove, i);
+	end if;
+    end for;
+    strTimings:= "," cat &cat[strTimings[i] : i in [1..#strTimings] | i notin toRemove];
+    fprintf NoSUnitEqPossible, hash cat strTimings cat "\n";
+
+end if;
+
+UnsetLogFile();

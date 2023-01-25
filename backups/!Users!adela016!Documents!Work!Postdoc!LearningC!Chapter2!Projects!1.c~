@@ -1,0 +1,27 @@
+/*
+ * 1.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  1 January 2021
+ *
+ * Description: Uses printf to display the image in Chapter 2, Project 1
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+int main(void)
+{
+  printf("        *\n");
+  printf("       *\n");
+  printf("      *\n")
+  printf("*    *\n");
+  printf(" *  *\n");
+  printf("  *\n");

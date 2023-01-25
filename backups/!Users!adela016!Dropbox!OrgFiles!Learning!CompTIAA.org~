@@ -1,0 +1,955 @@
+#+STARTUP: inlineimages
+
+* To Do
+** TODO (Section 1) Schedule CompTIA A+ exam for June (60 days)
+** TODO (Section 4) Clarify microarchitecture vs CPU
+** TODO (general) add tables/images from videos
+** TODO (general) organize notes (ie underline definitions, fix tabbing, etc)
+** TODO (Section 5) RAM technology - DDR I/O speed for DDR3 table (why is it now 4 times faster?)
+** TODO (general) attach pdfs from the videos inline
+
+* Section 1: All About the CompTIA A+
+
+** Course Introduction
+ * just intro stuff here
+ * also for people interested in computers
+
+** What is the CompTIA A+?
+ * intro stuff
+
+** Why Get A+ Certified?
+ * a lot of companies require it or strongly recommend one
+ * will get you into the door; not enough for a job
+
+** What is on the CompTIA A+ Core 1 Exam?
+ * 2 exams; Core 1 and Core 2
+ * syllabus provided (see parent folder)
+ * covers mobile devices (tablets, ereaders, heart rate monitors, smart watches, etc)
+ * networking (ie. cabling, routers, firewalls, etc)
+ * hardware (ie. Motherbords, CPUs, hard drives, power supplies, RAM, etc)
+ * cloud (how to create virtual machines etc)
+ * troubleshooting
+
+** How to Pass the A+ Exam
+ * schedule an exam with [[home.pearsonvue.com]]
+ * multiple choice mostly
+ * score doesn't really matter (but need 675 out of 900 to pass)
+ * online practice tests available (also books)
+ * schedule the exam first (from about 2 months)
+
+** How to Use This Video Course
+ * lots of free software mentioned throughout
+ * course follows quite closesly to his books
+ * lots of "important terms", "exam objective terms"
+
+* Section 2: Book Chapter 1: Safety and Professionalism
+
+** Tools of the Trade
+ * basic tools needed:
+   * phone
+   * #2 Philips screw driver (to open and take out just about any component)
+ * other tools:
+   * hemostat (surgical scissors) or tweezers to retrieve dropped screws
+   * obsolete: IC inserted (designed to plug in integrated circuts)
+   * specialized toolkit from iFixit; includes lots of nut drivers for mobile devices
+   * spudgers to pry stuff open
+   * pry bars (plastic) to split open smart phones for instance
+   * voltage tester, vol/ohm meters
+   * thumb trives with stacks of software, antimalware tools
+ * can buy a PC repair kit
+ * kits also available for mobile devices
+ * always carry multiple thumb drives
+ * use a voltage tester or volt-ohm meter to test input voltage
+
+** Troubleshooting Theory
+ * series of steps to troubleshoot as per compTIA (not necessary best)
+ * always consider company's policy/procedure first
+ * *step 1*: identify the problem/question the user (ie. the internet is down)
+ * ask about infrastructure changes/environmental (ie. ACs)
+ * review logs
+ * *step 2*: identify a probable cause
+ * *step 3*: test the theory to determine cause
+ * if theory is unconfirmed, return to step 2
+ * escalate the issue if needed
+ * *step 4*: establish a plan of action to resolve the problem and implement a solution
+ * *step 5*: verify full functionality and implement preventative methods if applicable
+ * *step 6*: document findings, actions, and outcomes
+
+ * CompTIA loves this troubleshooting theory and will be on exam
+
+** Quiz
+ * passed on first try!
+
+* Section 3: Book Chapter 2: The Visible Computer
+
+** Primary PC Connections
+ * quick overview to make sure we know the names of things
+ * system unit - the computer (contains CPU, RAM harddrives, etc)
+ * interface with the computer via monitor (output interface), keyboard and mouse for input
+ * printer (for paper output)
+ * speakers
+ * game controller
+ * web cam (antiquited) for visual input
+ * external hard drive for external storage (ie. provides more storage and portable storage)
+ * headset for audio output
+ * microphone for audio input
+ * make sure able to recognize all of these components and names (done)
+
+** External Conenctions
+ * system unit is useless by itself - need to connect peripherals to it to be able to use it
+ * unique port to reset some internal stuff on far left
+ * USB - universal serial port
+ * network cable connections - large rectangular connection for internet via cable called RJ-45 for a wired network
+ * sound connectors (round ports)
+ * power port
+
+ * video connections
+   * Digital Visual Interface (DVI) - old video connection
+   * DisplayPort - video connection
+   * High Definition Multimedia Interface (HDMI)
+ * front and side ports:
+   * USB on front/side quite common
+   * microphone/speaker port
+
+ * CompTIA wants you to be aware of older ports as well
+   * power connection
+   * mini-DIN (PS/2) - round, colourful port for keyboard/mouse (disappeared after USB, but they're coming back for pro gamers because they think it creates faster mouse response times)
+   * parallel port (LPT port) - long rectanlge, oldest port on PCs used almost exclusively for printers
+   * serial port - oldest port
+   * Video Graphics Array (VGA) for monitors
+   * first generation USBs
+   * sound connectors as before
+   * DVI (old but popular)
+   * VGA connector
+   * S-video connector
+
+ * laptop ports
+   * anti-theft connector (put cable through to bold to table)
+   * RJ-45
+   * USB connector
+   * HDMI
+   * display port - mini display port
+   * USB-C
+   * microphone/speaker connection
+   * more USB connection
+   * SD card slot (for cameras)
+   * power connectors
+   * optical media (ie CDs)
+
+ * make sure you can recognize all rear desktop connections, including USB, network, power, video and audio
+ * be familiar with common front desktop connections
+ * make sure you can identify common connections on laptops
+
+** Inside the PC
+ * major components inside of desktop pc (but everything else has similar components)
+ * power supply + tons of power connectors
+ * video card
+ * motherboard; big black rectangle that connects all innards
+   * has power connections (to give power to everything in the system)
+ * RAM stick
+ * liquid cooling system
+ * central processing unit
+   * intel Core i9 processor
+   * has thermal paste ontop as cooling system to work with fans that blow away the heat
+   * thermal paste serves as heat conductor between CPU and cooling system
+ * mass storage M.2 SSD (lives under thermal heat which takes heat away from it)
+ * connections to install harddrives
+ * expansion slots PCIe (video card was plugged into one)
+   * gives expandability ie for video cards
+ * chipset; defines all the features of motherboard
+ * front panel connectors (ie. reset button, on/off button)
+ * connectors for extra USB
+
+ * will go into all these parts in more detail in later episodes
+
+ * recognize the position and shape of power supplies and video cards
+ * be familiar with parts of the motherboard
+ * make sure you can recognize the function of core components: RAM sticks, CPU, M.2 SSDs, and hard drives
+ * understand the function of expansion slots
+
+** What is a Computer?
+ * computers: to get work or play done
+ * cornerstone of any computer is the CPU
+ * CPU: like a high speed calculator
+ * programs (ie. applications or utilities to get onto a network) have to sit somewhere when the computer is turned off - that's what mass storage does
+   * M.2 SSD (solid-state drive)
+   * hard drive (more old school)
+   * store data when you're not using it
+   * CPU talks to hard drive to get data (ie opening up Microsoft word); takes copy of program off of mass storage and puts it onto RAM (random access memory)
+ * when a program is running, it's stored in RAM (expensive so we only use it when running a program)
+ * CPU is very fast, much faster than mass storage; RAM is faster than mass storage, but not as fast as CPU
+ * CPU will copy microsoft word onto RAM, and then begins running the word program; program itself monitors peripherals (ie. like typing)
+ * saving data - CPU instructs data written on RAM to be copied to mass storage
+ * mass storage - stores programs not in use, and stores data (saved games, pictures, word documents)
+ * operating systems - king of all programs
+
+ * computers aren't just desktops
+ * ie. laptops have the same components as desktops (also a computer)
+ * tablets also computers (have CPUs, RAM, mass storage and even an OS)
+ * same with android phones
+ * raspberry pi (basically a tiny computer)
+ * routers, external cameras also have CPUs, RAM, storage, OS
+
+ * to be a computer all you need is CPU, RAM, mass storage and an operating system
+ * laptops, mobile devices, and Internet of Things (IoT) (ie raspberry pi) devices are all computers
+
+** Quiz
+ * passed on first try!
+
+* Section 4: Book Chapter 3: CPUs
+
+** What is a CPU?
+ * Central Processing Unit
+ * have little pins or wires on the bottom side
+ * the "brain" of the computer, but more like a really powerful calculator
+
+ * anaolgy: a man in a box who can add, multiply, compute really fast, but he's stuck in the box and we can't talk to him
+ * 8 lightbulbs visible outside the box, 8 lightbulbs visible inside the box (each with lightswitches)
+ * turning on switch inside will also turn on both corresponding the lights inside and outside
+ * instead of on/off, using binary 1 = on, 0 = off
+ * turn on first bulb and 4th lightbulb, get 1 0 0 1 0 0 0 0 on both inside and outside of box
+ * each of the bulbs is called a binary value, or _bit_; 8 of them across is a _byte_ (8bits = 1byte)
+ * communicate with the guy in the box using bytes
+ * but need a codebook to do so to know what each pattern means
+ * codebook is build into every CPU and is called _machine language_
+ * programmers can write langauge in this code
+ * guy in the box also has a copy of this codebook
+ * put inside the box 4 racks of 16 lightbulbs; function as storage area for the guy inside the box to add/subtract, etc, called _registered_
+ * every CPU has registered like these
+ * in our example calle each register "AX, BX, CX, DX" resp.
+ * these 4 registers are called _general purpose registers_: guy inside the box can use these 4 for anything he wants
+ * on a modern CPU, might find 100 different registers, which can be as much as 128bits across
+
+ * example codebook: based on one of the oldest CPUs, called the intel 8088 processor (not real codebook, but it's based on this codebook)
+ * 1 0 0 0 0 0 0 0 : the next line is a number; put it in the AX register
+ * 1 0 0 1 0 0 0 0 : the next line is a number; put it in the BX register
+ * 1 0 1 1 0 0 0 0 : add AX to BX and put the result in AX
+ * 1 1 0 0 0 0 0 0 : Put the value of AX on the External Data Bus
+ * in essence this just adds 2 numbers
+ * put a bell inside the box, called the _clock_
+ * the clock's job is to tell the CPU to do something
+
+ * to run a command:
+   * put in the first code ("I'm about to give you a number")
+   * ring the bell (clock); CPU zeros out everything to sign that it's ready for the next command
+   * input 2 in binary: 0 0 0 0 0 0 1 0
+   * hit the clock button
+   * input 2nd command to input "3"
+   * press clock button to zero out (so the CPU is ready for the next input)
+   * input 3 in binary and hit the clock wire
+   * can't see this, but now binary value for 2 is in AX register and 3 in BX register
+   * input 3rd command, hit the clock wire and now it's zeroed out, so we can't see what's in the box but the value for a binary 5 is in the AX register
+   * hitting the clock button zeros out both inside and outside main 8 bulbs (ie all set to 0/off)
+   * input 4th command, hit clock wire - now it doesn't zero out, but it shows us a binary 5 on the external data bus (the external 8 lightbulbs)
+ * programmer: a person who can use machine language to talk to the CPU to get things done
+
+ * but inside the CPU, it's not just a single entity, but lots of "logic units" that are doing the math, moving data around, etc
+ * lots of stuff running simultaneously (ie. like laundry, when one load finishes, move it to drier while also adding new dirty clothes to the washing machine); call this a "pipeline"
+
+ * example of a pipeline
+ * instead of a man in a box, have 4 guys in the box in front of a conveyor belt; commands come in from the conveyor belt
+ * first guy, "prefetch" guy, decides who to give the command to: 2nd guy is really good at integer math, 3rd guy is really good at long numbers, 4th guy is "cache" guy
+ * first guy sends stuff to each guy and moves them along the pipeline to each guy as they come in (ie. on each click of the clock)
+ * creates a "pipeline" or "core"
+ * 4 discrete steps, but on modern CPUS this can be 16 or 30 different steps (ie. "guys")
+
+ * to speed up a CPU, the one big thing we can do is be able to hit the clock faster
+
+ * central processing units run programs
+ * every CPU has internal features to process commands
+ * every CPU runs code based on a specified machine language
+ * CPUS use pipelines to optimize the processing commands
+
+** CPU Speeds and Cores
+ * speeds in gigaherz
+   * 1 hertz (Hz) = 1 cycle per second (ie. pressing the clock on the CPU once per second, as above)
+   * 1 megahertz (MHz) = 1 million cycles per second
+   * 1 gigahertz (GHz) = 1 billion cycles per second
+ * CPU speed = max speed the CPU can go
+ * the speed of the CPU is determined by how fast the clock button can be pressed
+ * CPUs come in makes models; 2 predominant companies - Intel or AMD
+   * make CPUs that have the exact same codebook inside (can listen and program the exact same code; ie. they speak the same language)
+ * can have 2 absolutely identical CPUs, where the only difference is the speed
+ * what presses the clock is a system crystal
+   * build onto every motherboard on earth is system crystal
+   * quartz oscillator - oscillates at a very fixed speed; acts as a metronome for the entire computer (there are a lot of things in a computer that need a clock, not just CPU)
+ * the original IBM pc ran at 4.7 megahertz - sounds really fast today
+ * over time, we pushed CPUs to become faster and faster
+ * in doing so, discovered that CPU spends an inordinate amount of time inside of itself doing calculations (ie. have to press the clock/button a lot before we see an outcome)
+   * so it's hard to get a motherboard to go faster and faster
+ * modern motherboards top out at max 400 MHz; ie all components of motherboard
+   * even this is rare (ie. high)
+ * but CPU runs in GHz, so why is the motherboard so slow?
+   * clock multiplying - any CPU today will take the beat coming from the system crystal and inside of itself double it, multiply it times 30, hence the high speed
+     * this works out because inside the CPU is where most of the calculations are happening
+ * on most modern computers, any given click of the clock, over 95% of them are just inside the CPU while the rest of the system is waiting for an output
+   * but the CPU is so fast it keeps the rest of the system working
+ * CPUID CPU-Z; software to get CPU specs
+   * Intel Core i5 6500 (brand: Intel, micro architecture: Core i5, serial number: 6500)
+   * codename - helps define the microarchitecture (the design of the internals of the system itself)
+   * Max TDP - max wattage it will take (in this case 65W)
+   * Bus speed - base speed of motherboard at 100 MHz
+   * multiplier - x33
+     * today's modern CPUs slow down and speed up based on temperature, so that's why it keeps changing
+     * 8-36 is the range of multiplier possible
+     * clock multiplying is what makes CPUs run at incredibly high speeds
+ * when buying a motherboard, have to make sure that it's designed to work with a particular make/model/model number of a CPU and plop it in
+   * base motherboard speed is set at the factory by these crystals
+   * multiplier is built into the CPU at the factory
+ * what if we pushed a CPU higher than it's rated to do?
+   * overclocking - tells the CPU to increase the multiplier past the factory max
+   * done by enthusiasts; buy special motherboards that allow the user to turn the knob past the factory set
+   * generally makes systems unstable though (and is not a good idea)
+ * if we can't push the system faster by cranking the clock up, what can we do?
+   * multiple cores
+   * in a typical pipeline (ie of 4 little people working a line), in older systems a single CPU would have multiple pipelines on it (ie multiple conveyors of 4 little people)
+   * so instead of being able to handle just one piece of code at a time, could do multiple (1 piece goes to one line, the other goes to a different line)
+   * also started to see super smart pipelines (very smart 4 little people working a line) that could handle more than 1 "thread" coming in a time
+   * prefetch (first person; triages the code) would look for anybody who isn't busy on any given click of the clock, and if the calculation was right, would just hand it to that person
+     * would seem exactly as though you were running multiple pipelines at a single time
+   * allowed us to do 2 things that showed up at around the same time
+     * hyperthreading - 1 super smart pipeline that can handle 2 pieces of code at the same time
+     * have the ability of running individual systems that have multiple of these pipelines
+       * they're treated seperately, and we call them cores
+     * on a modern system, we have systems that can be running the equivalent of 24 cores
+     * each core acts like a CPU (ie it makes one single CPU act as though it's 24 different CPUs)
+     * on Windows resource manager, on his particular CPU can see the activity level of the 4 cores it has
+ * the best thing about multiple cores, hyperthreading is that we can just go buy the best CPU and take advantage of it; don't have to tweak or adjust anything to get these features
+   * ie buy the CPU with the most cores and best hyperthreading
+
+ * CPUs have a clock speed, commonly measured in GHz (billions of cycles/sec)
+ * CPUs come in primarily 2 makes: Intel and AMD
+ * CPUs take a system speed and multiply it to reach the max CPU speed
+ * single CPUs often have multiple cores
+
+** Caching
+ * In the 18th century, fur traders in North America would store some of their food and lumber and supplies from their cabin and store it in little underground storage spots called caches
+ * cache - basically a little bit of what you already have put a lot closer to you for easier access when you're out in the woods and run into trouble
+ * CPUs use caches as well
+ * how programs move from your hard drive into the CPU
+ * previously, when you start a program, the program, or at least some of it, is copied off of the hard drive and placed into RAM; some part of the RAM now stores that program
+ * once in the RAM, individual lines from the program are fed into the CPU via it's external data bus and the program is then processed
+ * but CPUs are blindingly fast; RAM is fast but not nearly as fast as CPU; hard drives are fast but not nearly as fast as the RAM
+   * creates problems
+   * there are points where the CPU needs the next line to be added, but the RAM can't keep up
+ * inside the CPU demo, now have these little people: prefetch, integer, long numbers, and cache person
+ * and now put inside the CPU a little tiny bit of RAM (extremely fast memory inside CPU)
+ * on todays systems we have gigabytes of RAM; in this demo we mean only a few megabytes at most
+ * but this isn't regular ram; it is SRAM - much faster than the regular RAM that we snap into our systems
+   * wildly expensive so can't use it for regular RAM, but works great for this purpose
+ * prefetch person watches code coming in; if there's a piece of code that says "go to a particular place in memory and grab that piece and put it in", but he doesn't have that piece yet
+   * he will instead start grabbing lines of code and dropping it into the cache
+   * he may not even use all these lines of code, but if it's needed, he'll be able to use it
+ * every CPU has some amount of cache built into it
+ * one of the biggest differences between Intel and AMD is how they design the cache to be able to be ready for anything that you might ask for
+ * if the piece of code that the CPU needs isn't there when it needs it, we get what's called a _pipeline stall_
+   * the entire pipeline is shut down; use a couple hundred clicks of the clock to go into the RAM and get that line of code
+   * want to avoid this at all costs
+ * mathematical techniques to avoid pipeline stalls
+ * every CPU comes with 3 caches (with some variance here)
+   * 1st cache is known as the _level one cache_; has only 64K of RAM but is so fast that it runs at the multiplied speed of the CPU
+     * ie level one runs at the same speed of the CPU
+   * 2nd cache is the _level two cache_; feeds the level one cache, a lot bigger (128K, 256K) but runs at maybe half the clock multiplied speed (lots of variance here though for speed)
+   * 3rd cache, the _L3 cache_; big (ie in the megabyte size) which runs at base motherboard speed; not fast, but runs faster than RAM itself allowing us to avoid pipeline stalls
+ * using CPUZ program, can see the cache
+   * L1 cache (2 seperate on his machine), L2 and L3 (can see their size) and n-way info
+   * 4-way, 8-way, 12-way is related to _set association_
+ * set association and n-way defines how the different types of caches are efficient at being able to hand the right pieces of code to the CPU itself (well outside the scope of the exam, but very interesting)
+ * nice part of caching is that we don't mess with it
+ * ie. AMD believes in really big caches, Intel likes really small caches that are really smart
+ * up to you which type of cache is better, but it is a spec that comes with CPU info that people care about when buying computers
+
+ * CPU caching works between RAM and the CPU
+ * cache is built into the CPU
+ * it's common to have 3 caches in a CPU: L1, L2, L3
+
+** CPU Sockets
+ * CPUs have been around since the late 1970s; have been around for a lot longer than that, but CPUs for PCs have been around since late 1970s
+ * have had zillions of improvements over the years; physical CPU has had to change as well
+ * different types of physical packeges for CPUs are called _CPU sockets_
+ * not socket as in lightbult socket, but use the term socket here to describe the shape, size and pins of the CPU, but also the actual socket that the CPU fits in
+ * has 3 different CPUs; look very similar but are very different
+   * Intel and AMD will come up with new microarchitecture; circuit diagram on the inside of the CPU
+ * a CPU isn't put together through soldering; it actually uses a photolithiographic process
+   * similar to silk screening a T-shirt, but instead of putting ink onto a cloth, actually etching away layers of silicon with very caustic chemicals to create millions/billions of microscopic transistors which actually creates the CPU itself
+ * as a new features becomes developed, they have to redesign the whole thing; and this is why we say it has a new microarchitecture
+ * both Intel and AMD do this, but will concentrate on Intel
+   * will come up with a new design that will get family names
+   * make all kinds of different CPUs from that
+   * ie. will create one new microarchitecture, say Coffee Lake; once made, Intel will then make a broad cross-section of CPUs to cover different types of needs
+   * in this case, intel uses the "i" value (ie. an i3, i5, i7, i9); same microarchitecture on the inside, but certain things are turned off/on
+     * ie create a broad cross-section of different models based on that sincel microarchiteture (usually more powerful as they go up in i3-i9)
+   * microarchitecture of i3-i9 has been around for about 10 years and will probably be around for some time
+ * let's do a rundown of some of the microarchitecture we're seeing today in i3-i9
+ * Intel
+   * Nehalem (first generation of the i3, i5, i7; i9's weren't out yet)
+   * Sandy Bridge, (2nd gen, came out a few years later)
+   * Ivy Bridge (3rd gen)
+   * Haswell (4th gen)
+   * Broadwell (5th gen)
+   * Skylake (6th gen)
+   * Kaby Lake (7th gen)
+   * Coffee Lake (8th gen)
+ * as Intel keeps changing these, we come up with new types of sockets to handle these CPUs
+ * important because as look at an i7 processor, it could be from 2010, a much older generation
+   * other than the name i7, it is a completely different processor than the i7 from today
+   * hence need to also concentrate on the family name when talking about microarchitecture
+ * comes into play when looking at CPUs
+   * on the CPU itself says i7-[number 2-9; generation][SKU number; sales inventory code][value that defines a feature, ie low power]; ex i7 - 5820K
+   * unfortunately the number doesn't tell you how many cores it has, how big the cache is, or how fast it's running
+ * challenge: when looking for a CPU, can choose, say i7 and microarchitecture coffee lake, but after that it takes research to find out the rest of the details (ie. like number of cores and size of cache)
+ * usually people buy pre-assembled systems because the process of finding the right CPU for the right motherboard requires a lot of research
+ * each different version will have different configuration and different type of ability
+   * can have i7 processors that span multiple microarchitectures that have the exact same socket
+   * or can have lots of different processors that are all using different sockets
+   * have to research the specifics to make sure you're getting the right CPU
+
+ * different type of sockets that you can find
+ * pins sticking out vs no pins sticking out
+ * socket names: PGA
+   * _pin grid array_ (_PGA_) socket with pins sticking out of the bottom of it
+   * _land grid array_ (_LGA_); instead of pins it has little lands/pads and the socket we drop it into has pins to make the contact
+ * Intel vs AMD motherboards (Mike knows which is which mostly from the box)
+   * AMD motherboard has a PGA socket called an AM4
+   * Intel has an LGA 1151 socket
+     * 1151 is the number of pins on the socket
+     * we have processors out today that we have over 2000 pins, so this is not the biggest it gets
+ * 4 different sockets you might see on the exam
+   * Intel
+     * LGA 1151; mainstream type of socket (middle-of-the-road to enthusiast)
+     * LGA 2066; enthusiast world, higher end CPUs (ie high-end Intel i9 processors) will use this type of socket
+     * AM4 - neck in neck with LGA 1151 in terms of mainstream-slightly on the enthusiast side
+     * TR4 - "fancy one" used on enthusiasts and high-end workstations
+ * just because you have a particular type of CPU it may not have a unique type of socket
+ * one microarchitecture can span many of them using the exact same socket
+ * 20+ year old socket (PGA type socket); sockets have been around for a long long time
+ * have to make sure you get the right socket so that you don't have to return a CPU when buying
+
+ * CPU sockets are the mount where a CPU connects to the motherboard
+ * CPU microarchitectures
+ * there are specific CPU socket packages covered on the A+
+ * many different CPUs come from a single microarchitecture
+
+ * note to self: a bit unclear about microarchitecture vs CPU; should clarify
+
+** Installing a CPU
+ * a big part of installing a CPU happens before even buying a CPU
+ * bought an AMD motherboard - if had a particular CPU in mind, had to buy an AMD motherboard (can't interchange)
+ * if there's a particular CPU you really like, (in this case bought AMD Rizen processor) need to make sure you get a compatible motherboard
+ * AMD Rizen uses an AM4 socket, so need an AM4 motherboard
+ * one of the most important things you get is the motherboard book (ie the manual that comes with the motherboard)
+   * need to see speeds of the motherboard
+   * how fast of a CPU this particular motherboard can handle
+   * ie there are AM4 socket CPUs that are so fast that the motherboard he bought could not handle
+ * usually buy the CPU at the same time as the motherboard
+ * on the motherboard, has a _zero force insertion socket_; ie has some kind of bar that you lift up that makes it ready to drop in the CPU
+ * he's not using anti-static tools because he owns all of the equipment, but in a professional environment would probably want to consider _anti-static wristband_
+   * even if have anti-static tools, still have to be really careful about how you touch things when installing the CPU
+   * in particular, don't want to graze your finger along any of the pins of the CPU (ie just touch it from the sides)
+ * all CPUs have an orientation and will only drop in 1 way
+   * but the pins are so fine that you want to try to get it right the first time or so
+   * _orientation notch_ - corner of the CPU that you can use to align the motherboard socket with so that you can drop it in in the correct way
+   * in his case, he has a small square corner (all other 3 corners have triangle notches)
+ * if a CPU doesn't go in the right way it will be pretty obvious
+
+ * problem with CPUs is that they generate a phenomenal amount of heat, so have to put some kind of cooling on it
+ * the type of CPU he installed is also an _OEM CPU_ (AMD Ryzen), which comes with a fan, called _OEM fans_
+   * _OEM fans_ are made by AMD and guarantee that it will provide sufficient cooling for this particular system
+ * CPUs are easy to drop in, but fans are hard; industry changes frequently how you drop in a fan, so it can be a bit challenging
+ * on the fan, it has _thermal paste/heat dope_ - used as a way to pull the heat even more from the CPU into the cooling system; can also smear around the thermal paste
+ * mostly have to read the instructions to figure out how to install the CPU fans
+   * always very tightly installed
+   * generally need to use more force than you would feel comfortable with during installation
+   * usually have a lot of tension on them
+   * a well-placed fan should be incredibly tight like this
+ * gaming enthusiasts will remove thermal paste and polish the copper until it looks like a mirror and reapply their own thermal paste
+   * lots of little tricks to get the most efficienct from the fan
+   * some people do "delidding"; remove the top cover of the CPU and fill it with some stuff for better heat removal (scary)
+ * to make sure that the fan is mounted well should be able to pick up entire motherboard by the fan itself
+ * after done, pick it up to make sure that it's level that you haven't caught anything etc
+ * fan needs electricity, so have to find a connector for CPU fan (usually labelled) to provide power to the fan
+   * all motherboards have a connector for the fan now
+   * in his case has a 4pin connector
+ * other connectors that come with the fan he bought
+   * right now everyone is excited about RGB - ie can light up this fan with all kinds of beautiful RGB LED lights
+   * if want to use those, AMD will always provide a little connector to put those lights on
+
+ * to test this, still have to add some more things
+
+ * make sure you have the right socket and speed CPU for your motherboard
+ * always use thermal paste between the CPU and the fan
+ * connect the fan to a power source
+
+** Liquid Cooling
+ * CPUs generate a lot of heat
+ * computer people like to come up with alternatives to the OEM fans that come with the CPU
+   * pretty much any Intel or AMD CPU is going to come with a fan made by intel/AMD that's guaranteed to work
+ * nerds like to do weird things though
+   * overclock - push the system beyond it's rated speed
+   * fans make noise, so people try to make them less noisy
+ * a trick to make fans less noisy is to get third-party fans (ie not the one that comes with the CPU from intel/AMD)
+   * Cooler Master - very popular brand of third-party fans
+   * designed to take out more heat
+ * can also get much bigger fans which turn slower (don't necessarily remove more heat) but are therefore quieter
+ * "cool kids" will set up liquid cooling system
+   * very simple but very effective
+   * big chunck of metal; inside it, coolant (water with a bit of alcohol in it, roughly) runs through a bunch of little veins inside it
+     * has 2 hoses, one hose pulls away hot fluid that's being cooled by a fan/radiator; the other hose brings back cool fluid
+     * needs a regular radiator (similar to those used in cars)
+       * hot fluid goes through all the different veins and fans blow air through it to cool it off
+ * liquid cooling is very quiet - has fans to cool the liquid but can turn down the speed on the fans a lot
+ * liquid cooling is also very effective when overclocking (when overclocking the CPU generates way more heat than normally rated)
+ * can get really fancy liquid cooling systems that cool the CPU and also the video card, etc
+ * main benefits are: quieter and pulls more heat away than any fan ever could
+
+ * third party fans are more efficient than OEM fans
+ * liquid cooling uses a pump, a radiator and a cooling block with liquid to remove heat
+ * liquid cooling reduces fan noise
+
+** Quiz
+ * got 5/6; forgot which is the slowest type of memory in the CPU (L3 not L1)
+
+* Section 5: Book Chapter 4: RAM
+
+** RAM Technology
+ * has a bunch of RAM technologies that span over some years
+ * first RAM stick: the original RAM, known as _synchronous DRAM_ or _SDRAM_
+   * there was RAM before this but very old and won't be on the exam; computers that used it are probably in a museum
+   * system cystal sets the metronomoe for the CPU
+   * synchronous means that it's synchronized to the same crystal so any click of the clock can count on this stick of RAM to do something for us
+   * 168 pins
+   * 2 notches - only type of RAM that you will encounter that still have 2 notches
+   * runs fantastically well, but like CPU, has a speed
+   * when talk about SDRAM, we talk about the speeds associated with it
+   * SDRAM just ran at whatever the motherboard speed was (ie 66 MHz, 100MHz, etc)
+ * 2nd RAM stick: first big technological leap, known as _double data rate_ or _DDR_, but most people just call it _DDR RAM_
+   * as the name implies, for any 1 given click of the clock, DDR RAM gives us 2 bits of information; huge breakthrough and really sped RAM up a lot
+   * how do we now define this speed? motherboard needs RAM at a certain speed (as outlined in the book that comes with the motherboard)
+   * DDR or PC speed ratings; example of DDR speeds we used to see
+     * left column: clock speeds, ie speed of the motherboard measured in MHz
+       * ie 100 MHz, 133MHz, etc
+     * middle column: DDR speed ratings, just double the clock speed, written as DDR-n
+       * ie DDR-200, DDR-266, etc
+     * right column: PC speed rating, measures the same speed as DDR speed rating, but instead of using bytes it uses bits (recall 8bits = 1byte) so it's just 8 times the DDR speed, written as PC-n
+       * ie PC-1600, PC-2100, etc
+     * will see either DDR Speed rating of PC speed rating on the box the RAM comes in when purchasing
+   * DDR was a huge breakthrough, single notch
+   * uses 184-pins
+  * 3rd RAM stick: _DDR2_
+   * has a metal cover called a heat spreader, but he thinks they're mostly a gimmick
+   * uses 240 pins (a little harder to see)
+   * looks like notches are in the same place as DDR, but they're slightly offset compared from DDR
+     * 1 particular motherboard will use one particular technology of RAM and they don't want you to accidentally put DDR into a motherboard that needs DDR2
+     * so the offset is on purpose
+   * set the standard for RAM on systems; had a long lifespan
+   * speed ratings
+     * Core RAM clock speed: motherboard speed (speed of the system crystal itself)
+       * ie 100 MHz, 133MHz, etc
+     * DDR I/O speed: doubles the motherboard speed as before
+       * ie 200 MHz, 266 MHz, etc
+     * DDR 2 speed rating: doubles a second time using a function called a prefetch, so 4 times faster than regular SDRAM, and 2 times as fast as DDR, will be measured in DDR2-n; will find this printed on the RAM box when purchasing
+       * ie DDR2-400, DDR2-533, etc
+     * PC speed rating: same as before, measured in bits instead of bytes of the DDR2-speed, written as PC2-n; will find this printed on the RAM box when purchasing
+       * ie PC2-3200, PC2-4200, etc
+   * if have 2 sticks or RAM and don't know whether they're DDR or DDR2, can look at the PC rating; if it says "PC-" it's DDR, if its "PC2-" its DDR2
+ * 4th RAM stick: _DDR3_
+   * doubled from DDR2
+   * 240 pins like DDR2, but 1 notch, offset from DDR2 and DDR so that you don't accidentally put it into the wrong motherboard
+   * didn't have that long of a lifespan, was around for a while but it also introduced some much faster speeds
+     * Core RAM clock speed: same as before; NB motherboard speeds have also gotten faster over time
+       * ie 100 MHz, 133MHz, etc
+     * DDR I/O speed: now 4 times faster? but measured in MHz
+       * ie 400 MGz, 533 MHz
+       * possible explanation from Reddit:
+         * " oh boy, I just went through this ordeal a few days ago during my studies. i know your pain man. The industry didn't make it easier with certain things that get on my nerves but I digress.
+           if im not mistaken;
+
+           PC-rating = you can multiple DDR-rating by 8 or divide PC-rating by 8 (like Meyers says) to find this number. this is consistent for all kinds of modules
+
+           DDR clock speed (the speeds that your ram runs at) = DDR rating divided by 2. So, -800 runs at 400 MHz and -1600 runs at 800 MHz
+
+           DDR-rating (or what you referred to as speed in your title) = this does not represent the actual core clock. The DDR rating can be found by multiplying the clock speed by 2. 266 MHz clock = DDR-533.
+
+           Prof. Messer's magic numbers worked but DDR is the only one that is that straight-forward.
+
+           PC-1600 divided by 16 = 100 memory clock.
+
+           PC-2700 divided by 16 = 166 memory clock (rounded).
+
+           Messer's magic numbers got wonky if you applied it to DDR2 and DDR3. By his method, PC3-12800 divided by 64 would give us a clock speed of 200. This does not make sense. If you go look up ram specs, PC3-12800 should run at least at 800 MHz. So... what's up? I read (in Meyer's book or exam cram) that there's something called an I/O speed for DDR2 and DDR3. This made the calculations for DDR2 and DDR3 actually make sense.
+
+           I/O speed is the core clock multiplied by the bus clock multiplier (ddr2=2 and ddr3=4). Reverse to find the "real core clock" (same one in DDR). For all intents and purposes when referring to "clock speed" and doing calculations, we use the plain old clock speed for DDR but I/O speed (still call it clock speed) for DDR2 and DDR3.
+
+           DDR:
+
+           PC-2700 / 8 = DDR-333 (rounded)
+
+           DDR-333 / 2 = 166 MHz core clock speed
+
+           Messer method = PC-2100 / 16 = 166 MHz
+
+           DDR2:
+
+           PC2-8500 / 8 = DDR2-1066
+
+           DDR2-1066 / 2 = 533 MHz core clock speed (I/O speed because this is DDR2)
+
+           533 MHz / 2 = 266 MHz real core clock
+
+           Messer method = PC2-8500 / 32 = 266 MHz
+
+           DDR3:
+
+           PC3-12800 / 8 = DDR3-1600
+
+           DDR3-1600 / 2 = 800 MHz core clock speed (I/O speed because this is DDR3)
+
+           800 MHz / 4 = 200 MHz real core clock
+
+           Messer method = PC3-12800 / 64 = 200 MHz
+
+           So Messer's magic number gets us the REAL core clock speed for DDR2 and DDR3. Since DDR didn't have I/O speeds, it's simply the same old clock speed.
+
+           compTIA probably wants the "bigger numbers" and would probably never refer to the the actual real core clock aka memory clocks (these have been consistently 100, 133, 166, 200, 233, 266 from what I remember)
+
+           Of course, this was all from my own study and research and I could be completely off-base here."
+
+           Also check Q&A for the lecture
+
+     * DDR3 speed rating: 8 times clock-speed rating; will be measured in DDR3-n; can use this naming to identify the type of RAM, along with PC3
+       * ie DDR3-800, DDR3-1066, etc
+     * PC speed: 8 times the DD3 speed rating, again measured in bits
+       * ie PC3-6400, PC3-8500
+
+ * why are these 3 different speed ratings so important?
+   * becuase different RAM makers will use one or the other (though a lot use both)
+ * motherboard book will tell you what kind of RAM you need
+ * 4th RAM stick: _DDR4_
+   * uses 288 pins, 1 notch which is well off-set from all other notches on previous DDRs
+   * fastest RAM described on the CompTIAA exam
+   * by far the most common right now, will probably be around for a while
+   * speeds
+     * Clock speed (have gotten faster)
+       * ie. 200 MHz, 266 MHz (maybe this is what should have been listed on the previous table as well?)
+     * Bandwidth: tend to use this when talking about DDR4; MT/s means mega transfers per second (the actual amount of data being moved, not necessarily just the clicks of the clock)
+       * ie 1600 MT/s, 2133 MT/s
+     * DDR4 speed rating: measured in DDR4-n
+       * ie DDR4-1600, DDR4-2133
+     * PC speed rating: measured in PC4-n
+       * ie PC4-12800, PC4-17000
+
+ * RAM has been improving for years, but important to make sure the motherboard is compatible with the type of RAM you choose
+ * still using older types or RAM, ie in big laser printers or dedicated systems
+ * can still buy DDR today
+
+ * different motherboards support a specific RAM technology
+ * the technologies on the exam are DDR, DDR2, DDR3, and DDR4
+ * we measure RAM speeds using DDR or PC ratings
+ * multiply DDR speed by 8 to get the PC speed
+
+** RAM Capacity
+ * every RAM stores a certain amount of bytes (so 8bits) of RAM that we can use
+ * can't just look at the chips to get an idea of who much capacity we have
+ * also can't use DDR, DDR2, DDR3, DDR4 to get an idea of capacity either, these are just speed differences
+ * RAM is based on a square
+ * RAM he is holding is 256 megabytes (increibly small these days)
+ * when manufacturing RAM, when they make a bigger chip, because it's a square, they double each side, so the next step up is going to be 4 times bigger
+ * for example, from 256 megabytes, the next step up from RAM is 1 gigabyte (1000 megabytes), and then from there its going to be 4 gigabytes and then 16 gigabytes from there, etc
+ * when talking about RAM capacities, going to say things like 1 gig, 4 gig, 16 gig
+ * but can also find RAM that is like 512 megabytes, 2 gig, 8 gig
+   * this is only double though
+   * _double-sided RAM_
+ * back of RAM he's been playing with, on the back there are no RAM sticks on it (ie the black squares?)
+   * _single-sided RAM_
+ * compared to the next on, has RAM on both sides
+   * double-sided
+ * double sided RAM is very very common
+ * only downside to double-sided RAM is that there are a few motherboards that may not be compatible
+ * have to verify that motherboard is compatible with single or double sided
+
+ * _channels_
+ * on the motherboard he's looking at, there are 4 slots to add RAM, fairly common to have 4 on a desktop
+ * on a different motherboard, has only 2 slots
+ * big server systems can have 8 or 16 slots
+ * reason we have so many slots is because we want flexibility
+ * generally, when inserting RAM into your motherboard, you count all the RAM up and that's your total RAM
+   * ie 2 8 gig sticks, the system has 16 gigs of RAM, if put in 4 8 gig sticks, the system has 32 gigs of RAM, etc
+ * RAM boxes he has are sold in pairs
+ * RAM is almost always sold in pairs these days because pretty much all motherboards use this concept of channels
+ * _dual-channel-memory_: have to put 2 RAM sticks of the same size (and hopefully speed) into very specific slots
+ * from his motherboard book
+   * the 2 closer to the CPU fan are channel A, and the 2 further away are channel B
+ * if want computer to run as fast as possibly can, you will put 2 sticks of RAM in it because it's a dual-channel motherboard
+ * dual channel is really common these days (for a few years we had triple channel, where you had to put 3 sticks in)
+ * but the motherboard tells you what you have to do
+ * when using channels, can talk to both sticks or RAM at once as though we had one giant, super fast RAM stick
+ * on a lot of motherboards requiring dual-channel, if you try to put 1 stick in, it won't even boot
+ * in the book he has, it shows you a situation where you can use just 1 stick of RAM in a dual-channel, but when you boot this up, it will give you a big error telling you it's running in single-channel mode, which just tells you that you're not taking advantage of the power of the motherboard
+ * have to follow the motherboard instructions carefully to put in RAM
+ * have to make sure that you're putting identical RAM in any 1 channel (speed and capacity)
+   * on a seperate channel can put different speed RAM in but he recommends against is (some motherboards don't like it either)
+ * but can put in different sized RAM in the 2nd channel, but makes interesting counting
+   * ie 2 sticks of 8 gigs in according to the slots the motherboard tells you (channel 1), get 16 gigs of RAM
+   * in the other channel, put 2 4gigs of RAM for a total of 8 gigs of RAM
+   * 16 + 8 = 24 gigs of RAM on the system
+ * if you have a motherboard with only 1 channel, so 2 slots, and want to add more RAM, have to remove those 2 sticks you have in there and put in 2 bigger RAMs (this tends to confuse people as to why we have to remove the original RAM when they really want more, but it's only because they don't have additional slots for more RAM sticks)
+ * have a certain number of slots and a certain number of channels (motherboards these days are almost always dual-channel)
+ * motherboard will always tell you the details of the RAM you can use
+
+ * every stick of RAM has a specific capacity
+ * RAM comes in single and double sided versions
+ * motherboards offer multichannel memory
+ * RAM should be identical in the same channel
+
+** RAM Features
+ * parity vs ECC
+ * on the 3 sticks of RAM he has, we count 8 actual chips (black squares on the RAM) on each one
+ * when talking about RAM, always talking in bytes (ie gigabytes, we never measure RAM in bits)
+ * 8 bits in a byte, 8 chips to a byte, so each chip handles a bit which is why you pretty much always see 8 little chips on a stick of RAM (a few exceptions but rare)
+ * he has one stick of RAM with 9 chips
+   * _parity RAM_ or _error correction code (ECC) RAM_
+     * this is till D RAM; could be DDR, DDR2, etc
+ * has an extra chip known as a parity chip
+ * RAM very rarily dies; usually when it dies is when people grab it and electrocute it
+ * if you leave RAM alone it usually runs for a very very long time
+ * sometimes it's important to make sure that whatever the RAM is doing is right (hence when we start using parity or ECC RAM
+ * parity is a bit older; don't see it as often (usually if your motherboard needs this type of parity, we just call it error correction code
+ * main difference between parity and ECC:
+   * parity: can have 1 of the other eight chips be bad
+   * ECC: can have 2 of the other eight chips be bad
+ * ECC is great and extremely expensive, but can only put it on motherboards that use it
+ * most of the motherboards that require ECC, they have to have it; ie mostly see it on servers
+
+ * _Small Outline__ or _SO-DIMM_
+ * designed in places where big long sticks don't really work the way we want them to
+ * best example is a laptop
+ * still use DDR, DDR2, etc
+ * he has a DDR4 SO DIMM; uses 260 pins
+ * DDR3 SO DIMM uses a 204 pin package
+ * anything before DDR3 it gets kind of fuzy (he has a 200 and a 144 pin package) but there is no perfect correlation between DDR and DDR2 number of pins (only for DDR3 and DDR4 you can actually predict the number of pins)
+ * just because they are SO DIMS, doesn't mean any of the above changes; they have the same properties as regular RAM sticks, but are just a little smaller
+   * ie will often use dual (or sometimes triple) chanel
+
+ * built into every RAM stick on earth is a little bit of brains known as _Serial Presence Detect chip_ or _SPD chip_
+ * each RAM stick has a super tiny chip (very small black chip)
+ * this chip allows your system to query the RAM chip and say ask about its capacity, speed, what technology it is, and who made it and the model number
+ * the trick with SPT is that you need a tool to actually query the chip
+ * the CPU ID CPU-Z program does this for us
+   * click on SPD tab
+   * tell us there are 4 slots (can click through each one)
+   * module size: 8129 MBytes, so it's an 8 gigabyte stick
+   * max bandwidth: tells us it's DDR4, and even tells us the DDR4 speed
+   * manufacturer
+   * week and year it was made
+   * timings table - he advises to stay away from that
+     * used by overclockers to overclock their RAM
+     * don't need to worry about it unless overclocking
+   * memory tab just tells you generic info, ie DDR4, dual channel, total amount of RAM capacity (32 gigabytes here), NB frequency tells you it's running at 2198.4 MHz (or 3.2 gigahertz)
+ * checking SPD usually saves you from having to open up the computer to see if you have anymore RAM slots in case you want to add more RAM
+
+ * parity and ECC RAM contain extra chips to check for RAM errors
+ * ECC RAM is only for motherboards that support it
+ * SO-DIMMS are for smaller spaces
+ * almost all RAM has an SPD chip that stores information about the RAM stick
+ * tools like CPU-Z read SPD information
+
+** Installing RAM
+ * number one thing that he does when he goes inside a PC is to add more RAM; seems like nobody orders a PC with enough RAM
+ * has a brand new motherboard with no RAM at all
+ * check motherboard book to make sure he has the right kind of RAM
+ * in this case, DDR4 and up to 64 gigabytes
+   * has 4 slots, so the biggest stick you can put into any of the slots is 16 gigabytes
+ * gives the speeds it can handle in the motherboard book; in this case 266MHz
+ * so he has DDR4 that will work perfectly
+ * should also be sure to check channels
+
+ * when installing, ridge on the motherboard has a notch - line this up with the notch on the RAM stick
+ * make sure you are dropping in RAM straight in and give it a small push
+   * always a little finicky
+ * sometimes have little tabs on the sides which hold the RAM in place
+ * how do we know we added the RAM correctly?
+   * put a power supply and monitor and keyboard and boot the system up
+   * every modern system has some screen (average person ignores this) but as booting up, the screen will say something like RAM count or system information
+   * just have to run those screens
+ * biggest issue is when you snap in, say 32 gigabytes of RAM and when you boot up you only see 16 gigabytes of RAM
+   * usually means you've snapped them in incorrectly, have a channel problem, put 2 different speeds in and the motherboard doesn't like, most of the time it's not the RAM being faulty
+   * most of the time if you boot up and not all the RAM is there, it's usually a simple installation error and just need to reinstall it and recheck
+ * normally should be concerned with static and using an antistatic wrist strap (he isn't because he bought them)
+ * other thing to watch out for is when installing memory onto a system that already has some memory
+   * trick here is to go into the OS and find the system information to find out how much RAM it has in it
+   * install the new RAM, and recheck the system information to see that the new RAM capacity is upgraded (ie if you had 16 gigabytes and installed 2 more 8 gigabyte sticks, should now say 32 gigabytes)
+   * usually if don't see the new capacity number, just have to reinstall it, check that the channels are correct and that you haven't messed with the speed, etc
+
+ * on a laptop, have to unscrew the bottom
+ * can see the SO-DIMMS inside, and has an extra bank inside
+ * when dropping RAM into laptops, push them into a side, then push them down
+ * everything is the same as in a PC, just usually a pain to deal with the tiny screws
+
+ * use the motherboard book to make sure you're installing the right RAM capacity and speed
+ * line up the notch and drop the RAM straight into the slot
+ * watch when the system boots to verify the system sees the installed RAM
+ * make sure RAM is fully installed and channels are properly filled
+
+** Quiz
+ * got 4/6 because failed both questions about the number of pins
+
+
+* Section 6: Book Chapter 5: Firmware
+[[file:./05_Objective+Mapping_Firmware_A++Chapter+5.pdf][Learning objectives]]
+
+** What is BIOS?
+ * has a typical motherboard; so far we know this is where we snap in RAM and CPU
+   * this is also the interface by which everyone talks to everyone else on your computer
+ * a motherboard is an "assumption"
+   * assumes your going to put USB connections, so has USB ports
+   * assumes you will want to use wireless, so it has wireless ready to go
+   * assumes you will want to plug in speakers and headphones, network connections, harddrive connections, etc
+ * a motherboard is an assumption that you're going to use certain types of hardware
+ * motherboard acts as the interconnectivity for these devices
+ * there are situations where your computer needs to talk to these devices not within Windows, but even before the OS itself boots up
+ * operating systems provide device drivers (ie. if using Linux, use Linux drivers for the hard drive, USB, etc)
+ * but lots of situations where, before even booting up the OS, need to be able to speak to these devices
+ * in many situations, the OSs themselves will forego device drivers and simply use some build-in language that allows them to talk to all these things
+   * these are known as our _basic input/output services (BIOS)_
+ * built into the motherboard somewhere is programming
+   * BIOS programs are code
+ * we use the term _firmware_, because this means that its burned onto a chip as opposed to _software_ which means that it's copied onto some kind of magnetic media or electronic media
+ * on every motherboard in existence (no exception to this) there is a little bit of programming built into the motherboard designed to let you talk to the assumed hardware of the computer, and it's called BIOS
+
+ * mid-1990s motherboard; has really big parts
+   * the entire chip below is a BIOS chip
+   * very old BIOS
+ [[./Images/S6P1_90s_BIOS_chip.png]]
+
+
+ * BIOS programs (trees) are code and they have to be written by programmers
+   * there are companies out there that write BIOSes
+     * AMI, American Megatrends, Phoenix
+   * there are organizations that sell them to any motherboard manufacturers who's got the cash
+
+ * BIOS on a modern system:
+ [[./Images/S6P1_modern_BIOS.png]]
+ * really really tiny chips
+ * hard to see, but next to the chips it, it says "M BIOS" and "B BIOS"
+   * feature that's common to many motherboards today where they make 2 copies of this critical critical firmware
+   * if by any chance we were to accidently wipe ir or correct it, we've got a backup COPY of the BIOS on a completely seperate chip, _backup BIOS_
+   * this motherboard comes from a motherboard company called Gigabyte who is famous for doing exactly this
+
+ * the problem with BIOS is that he can't really show it to us; can't just open a hatch up on a computer and see the actual code itself
+   * so we can only really talk about what it can do
+
+ * on this BIOS, have the ability to talk to the mass storage devices on your motherboard
+   * so if you stamp in an SSD or an old school hard drive, you can talk to that drive without even booting into Windows
+ * for more than any other reason, the BIOS does this to test the devices on the motherboard
+   * as the computer boots up, we go through a process of checking the assumed hardwarel
+   * ie. not worth anybody's time to start up Linux if the hard drive isn't talking right, no reason to boot up Windows if you don't have a monitor that can output somethine, etc.
+ * built into the BIOS is something known as the _power-on self test (POST)_
+   * whole episode on POST coming up
+ * third thing built into BIOS is something called the _system setup/ complementary metal oxide semiconductor (CMOS)_
+   * the same hard drive you use changes, so some of the code on the BIOS has to be able to read a little data
+   * whole episode on CMOS as well coming up
+ * so BIOS is a small chip on the motherboard that talks to the assumed hardware of the system (will cover details in the next few episodes)
+
+ * BIOS progamming enables interaction with motherboard before OS loads
+ * BIOS is stored in nonvolatile media, thus called firmware
+ * POST routines are built into firmware
+ * the System Setup utility is also part of the firmware
+
+** POST
+ * there's no "run" button on a computer
+   * there's an on/off button, but that just provides electricity to the computer
+   * so there has to be something that says "CPU start running programming"
+     * indeed this is done by the CPU
+ * built into the back of every CPU is a little wire called the _power good wire_
+ * as soon as the wire gets enough voltage, the CPU starts running
+   * talks to BIAS and runs a piece of BIAS called the _Power On Self Test_ (_POST_)
+ * POST is a pretty simple program - broadcassts out throughout the motherboard and says "if you can hear me, check yourself out"
+   * all things on your motherboard then go through their own internal diagnostic and if everything checks out, they respond back to the CPU to say "I'm great"
+   * computer then boots up
+ * can tell when a computer is booting up properly by one little sound
+   * beep
+   * means that the system has booted up, has gone through the POST and reported back, and that little beep comes from the speaker
+   * the speaker is on the motherboard on his machine; and it's only job is basically to report on POST (really hard to tell from his image, so skipping the image here)
+
+ * a POST is a diagnostic before the operating system kicks in
+ * what happens if something is wrong?
+ * computer has to report to you (a human being) that there's a problem
+ * POST also checks video - so what if the video isn't working? How do you know there is a problem
+   * _beep codes_: most primitive types of POST error codes you can get
+ * not a lot of beep codes left but they all sound a little bit different
+   * there's a few that are kind of famous; ie "I don't have a video card sound", "I can't find any RAM on my computer",
+ * "No RAM" beep code will repeat until you power down the system
+ * when you you hear errors like these, we're so early into the POST that it hasn't even tested the video yet, so it has to go through these beeps
+
+ * let's assume now that we're now at least to the point where the video is coming up
+ * we still want to get an error code but on the screen in order to see some of these
+ * system just booting up:
+   [[./Images/S6P2_boot_up_screen.png]]
+ * tells you the name of the BIOS at the top (American MegaTrends)
+ * also get a lot of additional information: type of chips on motherboard, type of CPU on the system, speed it's running at, memory, all of the different types of boot devices
+ * if an error occurs during POST, it will appear on this screen
+   * ex. "No error found, press any key to continue"
+
+ * so we have beep codes and display codes that show up in plain English on the screen
+ * what if a system is in the middle of a POST and it's so much in trouble that it can't even do any type of code
+   * big problem especially when putting together a new system
+   * ie. nothing happens; no sound, nothing on screen, etc
+ * in these situations, turn to something called a _POST card_:
+   [[./Images/S6P2_POST_card.png]]
+ * all POST cards use a hexadecimal 2-digit read-out
+ * you plug them into a system and you watch what shows up
+ * motherboard he has has a built-in POST card (enthusiast computer)
+ * can actually watch the POST card work (ie. displays 2 digits as the POST is begin run)
+ * problem is that we don't know what these 2 digit hexadecimal values mean
+ * usually on the motherboard book, will have a table that will show you all the codes
+
+ * POST error codes on his machine from the motherboard book:
+   [[./Images/S6P2_POST_error_codes.png]]
+ * on his motherboard (ASUS), they call these "Q-codes"
+ * for example an error code of "2B" means "memory initialization" - so that you then know that maybe there's a problem with RAM
+
+ * a lot of POST error codes can be very confusing
+ * once the OS kicks in, anything that you read on the POST code is gibberish and doesn't mean anything
+ * POST codes are only valid as the computer is booting up
+ * once you see the OS screen, the POST codes don't mean anything
+ * POST codes absolutely helpful if booting up a system and don't get any sound or display
+
+ * you can buy POST cards today, but he urges caution
+ * very inexpensive to buy (but can also buy a motherboard with a built-in POST card)
+ * POST cards snap into an expansion slot and only cost about $30
+ * but there are companies out there that will sell you a POST card for $300
+   * don't need this - should not be THAT expensive
+ * he uses his POST card about 1-2 times a year
+
+ * POST runs at boot, requesting devices to self check
+ * POST errors manifest as specific beep codes or display (text) codes
+ * POST cards enable testing of "dead" computers
+
+** System Setup
+ * PCs have been upgrading for decades
+ * everything is getting faster and more powerful, but with 1 exception; BIAS
+ * the original BIAS was an ancienc 16-bit program
+   * for decades, everything but the BIOS was up to speed and 64bit and powerful
+ * finally, they decided to update the BIOS and came up with _Unified Extensible Firmware Interface_ (_UEFI_)
+ * tecnhincally UEFI has supplanted BIOS
+   * but still call it UEFI BIAS
+
+ * BIAS is assigned to talk to the assumed hardware of our computer
+ * but some of the hardware changes (ie. might have different USB decides, or put in new hard drives, etc)
+ * in that case, we have another part of the BIAS called the _system setup_
+   * an interface that we access on our computers and make changes on the changeable part of the BIAS
+
+
+** Troubleshooting Firmware
+
+** Quiz
+
+
+
+* Section 7: Book Chapter 6: Motherboards
+
+* Section 8: Book Chapter 7: Power Supplies
+
+* Section 9: Book Chapter 8: Mass Storage Technologies
+
+* Section 10: Book Chapter 9: Implementing Mass Storage

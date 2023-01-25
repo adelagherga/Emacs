@@ -1,0 +1,493 @@
+/*
+
+GenerateSUnitEquations_Alpha.m
+
+Author: Adela Gherga <adelagherga@gmail.com>
+Copyright © 2020, Adela Gherga, all rights reserved.
+Created:  8 July 2020
+
+Description: This program generates all S-unit equations corresponding to the Thue-Mahler
+	     forms of absolute discriminant <= 10^{10}, supplementing the results of
+	     "GenerateSUnitEquations.m". Output is printed among "SUnitErr_Alpha.txt",
+	     "Lemmatta.csv", "ThueEqToSolve.csv", and "TMFormData_Alpha.csv". The corresponding
+	     S-unit equations are printed on "TMFormData_Alpha.csv," with the results of
+	     Lemmatta 3.5.2 and 3.5.5 of Gh listed on "Lemmatta.csv". The file
+	     "ThueEqToSolve.csv" lists all Thue equations remaining to be solved. Each such
+	     file is manually generated as a .csv file with appropriately listed headings.
+	     Finally, "SUnitErr.txt" tracks any arising errors.
+
+Commentary: This algorithm uses the output "TMFormData.csv" of "GenerateSUnitEquations.m" as
+	    its input, using the optimal form as its input, and outputing all correponding
+	    alpha values for each S-unit equation in "TMFormData_Alpha.csv". Further, the file
+	    "ThueEqToSolve.csv" supercedes the "ThueEqToSolve" of "GenerateSUnitEquations.m",
+	    which is now rendered obsolete.
+
+	    In this algorithm, neither Thue nor Thue-Mahler equations are solved.
+            Generate "Lemmatta.csv", "ThueEqToSolve.csv", "TMFormData.csv" with appropriate
+	    headings before running the algorithm with
+nohup cat /home/adela/ThueMahler/Data/SUnitEqData/TMFormData.csv | parallel -j20 --joblog tmplog magma set:={} /home/adela/ThueMahler/Code/GenerateSUnitEquations/GenerateSUnitEquations_Alpha.m 2>&1 &
+
+To do list: 1. Reference list for: BeGhRe, Gh, Si, Ha
+            2. Algorithm for ThueEqToSolve.m from GenerateSUnitEquations.m
+            3. Internal error algorithm
+
+Example:
+
+*/
+
+SeqEnumToString:= function(X : Quotations:=true)
+
+    /*
+     Description: convert a SeqEnum into a string without whitespace, enclosed by "( )" for
+     		  .csv input
+     Input: X:= [x_1, _2, \dots, x_n] where Type(X):= SeqEnum
+            Quotiations:= boolean value determining whether to enclose the output in quotations
+                          default is set to true
+     Output: stX:= "\"(x_1, \dots ,x_n)\"", where Type(strX):= MonStgElt
+     Example:
+   */
+
+    strX:= "(";
+    for i in [1..#X] do
+	if X[i] in Integers() then
+	    strX:= strX cat IntegerToString(Integers()!X[i]);
+	elif X[i] in Rationals() then
+	    strX:= strX cat IntegerToString(Numerator(X[i])) cat "/" cat
+		   IntegerToString(Denominator(X[i]));
+	end if;
+	if (i ne #X) then
+	    strX:= strX cat ",";
+	end if;
+    end for;
+    strX:= strX cat ")";
+
+    if Quotations then
+	strX:= "\"" cat strX cat "\"";
+    end if;
+
+    return strX;
+end function;
+
+prep0:= function(N,clist,fclist,partialObstruction)
+
+    /*
+     Description: Verify conditions of Theorem 1 of BeGhRe for clist, N
+     Input: N:= conductor of corresponding elliptic curves in question
+     	    clist:= [c_0, \dots, c_n], the coefficients of F(X,Y)
+	    fclist:= [1,c_1, \dots, c_n], the coefficients of monic polynomial defining
+                     the number field K = Q(th)
+            partialObstruction:= set of primes p for which solutions can only be possible
+     	    			 with p having exponent 0 on RHS of the TM equation
+     Output: f:= monic polynomial defining the number field K = Q(th)
+     	     remainingCase:= list of primelist and all corresponding a values
+             		     comprising the RHS of F(x,y)
+             ThueToSolve:= Thue equations to be solved, stored as [ RHS ]
+     Example:
+   */
+
+    QUV<U,V>:=PolynomialRing(Rationals(),2);
+    Qx<x>:= PolynomialRing(Rationals());
+
+    // general setup for Thue-Mahler solver
+    assert &and[c in Integers() : c in clist];
+    c0:=Integers()!clist[1];
+    assert c0 ne 0;
+    n:=#clist-1;
+    assert n eq 3;
+
+    // generate the relevant Thue Mahler polynomial
+    F:=&+[clist[i+1]*U^(n-i)*V^i : i in [0..n]];
+    assert IsHomogeneous(F);
+    DiscF:= -27*clist[1]^2*clist[4]^2 + clist[2]^2*clist[3]^2;
+    DiscF:= DiscF + 18*clist[1]*clist[2]*clist[3]*clist[4];
+    DiscF:= DiscF - 4*clist[1]*clist[3]^3 - 4*clist[2]^3*clist[4];
+    assert DiscF eq Discriminant(Evaluate(F,[x,1]));
+
+    assert fclist eq ([1] cat [clist[i+1]*c0^(i-1) : i in [1..n]]);
+    f:=&+[fclist[i+1]*x^(n-i) : i in [0..n]];
+    c0:= Integers()!fclist[1]; // update c0
+    assert c0 eq 1;
+    assert IsMonic(f);
+    assert Coefficients(f) eq
+	   Coefficients(clist[1]^(n-1)*Evaluate(F,[x/clist[1],1]));
+    assert Degree(f) eq n;
+    assert IsIrreducible(f);
+    assert &and[c in Integers() : c in Coefficients(f)];
+
+    // verify conditions of Theorem 1 of BeGhRe
+    alpha:= Valuation(N,2);
+    beta:= Valuation(N,3);
+    alpha0:= Valuation(DiscF,2);
+    beta0:= Valuation(DiscF,3);
+    N0:= Integers()! ( N/((2^alpha)*(3^beta)));
+    N1:= Integers()! (DiscF/((2^alpha0)*(3^beta0)));
+    primelist:= PrimeDivisors(N0);
+    assert &and[IsPrime(p) : p in primelist];
+    assert (2 notin primelist) and (3 notin primelist);
+    assert alpha in [0..8];
+    assert beta in [0..5];
+    assert IsDivisibleBy(N0,N1);
+
+    RemainingCasesAllAs:= [];
+    ThueToSolve:= [];
+
+    // generate a record to store relevant prime bounds
+    // determine any bounds as per Theorem 1 of BeGhRe correspondence
+    primeInfo:= recformat<prime,alpha1,unbounded>;
+    primeBounds:= [[],[]];
+
+    // verify behaviour at p = 2
+    if (alpha eq 0) then
+	if alpha0 eq 2 then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 0>);
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 3>);
+	end if;
+    elif (alpha eq 1) then
+        if (alpha0 eq 2) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 4, unbounded:= "yes">);
+	elif (alpha0 eq 3) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 3, unbounded:= "yes">);
+	end if;
+    elif (alpha eq 2) then
+        if (alpha0 eq 2) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 1>);
+        elif (alpha0 eq 4) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 0>);
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 1>);
+        end if;
+    elif (alpha eq 3) then
+        if (alpha0 eq 2) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 1>);
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 2>);
+        elif (alpha0 eq 3) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 2>);
+        elif (alpha0 eq 4) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 0>);
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 1>);
+        end if;
+    elif (alpha eq 4) then
+        if (alpha0 eq 2) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 0, unbounded:= "yes">);
+	elif (alpha0 eq 3) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 2, unbounded:= "yes">);
+        elif (alpha0 eq 4) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 0>);
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 1>);
+        end if;
+    elif (alpha eq 5) then
+        if (alpha0 eq 2) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 0>);
+        elif (alpha0 eq 3) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 1>);
+        end if;
+    elif (alpha eq 6) then
+        if (alpha0 eq 2) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 0, unbounded:= "yes">);
+        elif (alpha0 eq 3) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 1, unbounded:= "yes">);
+        elif (alpha0 eq 4) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 0>);
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 1>);
+        end if;
+    elif (alpha eq 7) then
+        if (alpha0 eq 3) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 0>);
+        elif (alpha0 eq 4) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 0>);
+        end if;
+    elif (alpha eq 8) then
+        if (alpha0 eq 3) then
+	    Append(~primeBounds[1], rec<primeInfo | prime:= 2, alpha1:= 1>);
+        end if;
+    end if;
+
+    // verify behaviour at p = 3
+    if (beta eq 0) then
+        if (beta0 eq 0) then
+	    Append(~primeBounds[2], rec<primeInfo | prime:= 3, alpha1:= 0>);
+        end if;
+    elif (beta eq 1) then
+        if (beta0 eq 0) then
+	    Append(~primeBounds[2], rec<primeInfo | prime:= 3, alpha1:= 1, unbounded:= "yes">);
+        elif (beta0 eq 1) then
+	    Append(~primeBounds[2], rec<primeInfo | prime:= 3, alpha1:= 0, unbounded:= "yes">);
+	end if;
+    elif (beta eq 2) then
+        if (beta0 eq 0) then
+	    Append(~primeBounds[2], rec<primeInfo | prime:= 3, alpha1:= 0, unbounded:= "yes">);
+	elif (beta0 eq 1) then
+	    Append(~primeBounds[2], rec<primeInfo | prime:= 3, alpha1:= 0, unbounded:= "yes">);
+	elif (beta0 eq 3) then
+	    Append(~primeBounds[2], rec<primeInfo | prime:= 3, alpha1:= 0>);
+	end if;
+    elif (beta ge 3) then
+        if (beta0 eq beta) then
+	    Append(~primeBounds[2], rec<primeInfo | prime:= 3, alpha1:= 0>);
+	    Append(~primeBounds[2], rec<primeInfo | prime:= 3, alpha1:= 1>);
+        else
+	    // when all coefficients of the form F_1 are  divisible by 3,
+	    // since also beta1 = {0,1} and 3|LHS we must have that 3|RHS,  hence beta1 = 1
+	    // in this case, we may divide 3 from both sides
+	    // this yields the form F = F_1/3, whose discriminant has
+	    // Valuation(DiscF,3) != beta0 = beta
+	    // thus since beta1=1 is divided out, so beta1=0
+	    Append(~primeBounds[2], rec<primeInfo | prime:= 3, alpha1:= 0>);
+        end if;
+    end if;
+
+    // verify behaviour at primes dividing N1
+    for p in PrimeDivisors(N1) do
+	if IsDivisibleBy(N1,p^2) then
+	    assert p in PrimeDivisors(N0);
+	    primeBounds[#primeBounds+1]:= [];
+	    Append(~primeBounds[#primeBounds],rec<primeInfo | prime:= p, alpha1:= 0>);
+	    Append(~primeBounds[#primeBounds],rec<primeInfo | prime:= p, alpha1:= 1>);
+	end if;
+    end for;
+
+    // remove superflous cases where a partial obstruction at p exists
+    primeBoundsNew:= [];
+    for pset in primeBounds do
+	toRemove:= [];
+	ps:= [i`prime : i in pset];
+	// verify the pset corresponds to only 1 prime
+	assert &and[p eq ps[1] : p in ps];
+	p:= ps[1];
+	if (p in partialObstruction) then
+	    for i in [1..#pset] do
+		x:= pset[i];
+		assert x`prime eq p;
+		// ensure there is no conflict between Theorem 1 of BeGhRe
+		// and partial obstructions
+		assert (((assigned x`unbounded) and (x`alpha1 ge 1)) eq false);
+		if (assigned x`unbounded) and (x`alpha1 eq 0) then
+		    delete x`unbounded; // update bound at p
+		elif (assigned x`unbounded eq false) and (x`alpha1 ge 1) then
+		    // remove extra cases at p which are now not possible
+		    Append(~toRemove,i);
+		end if;
+	    end for;
+	end if;
+	psetNew:= [pset[i] : i in [1..#pset] | i notin toRemove];
+
+	// ensure there is no conflict between Theorem 1 of BeGhRe and partial obstructions
+	assert (IsEmpty(psetNew) eq false);
+	// verify pset now only includes the exponent 0 case at p
+	if (p in partialObstruction) then
+	    assert (#psetNew eq 1);
+	    assert (assigned psetNew[1]`unbounded eq false);
+	    assert (psetNew[1]`alpha1 eq 0);
+	end if;
+	Append(~primeBoundsNew, psetNew);
+    end for;
+    primeBounds:= primeBoundsNew;
+    return primelist,primeBounds;
+end function;
+
+
+
+    // generate all combinations of exponent restrictions as determined above
+    Sdata:= []; // stores all combinations of prime bounds on each p
+    expCombos:= CartesianProduct([[1..#pset] : pset in primeBounds]);
+    for c in expCombos do
+	Append(~Sdata, [primeBounds[i][c[i]] : i in [1..#c]]);
+    end for;
+    aprimelist:=[]; // store corresponding a value and primelist
+    for pset in Sdata do
+	a:= 1;
+	primes:= primelist;
+	for i in pset do
+	    if (assigned i`unbounded) then
+		if (i`prime notin primes) then
+		    assert (i`prime eq 2) or (i`prime eq 3);
+		    assert i`prime notin partialObstruction;
+		    Append(~primes, i`prime);
+		end if;
+	    else
+		if (i`prime in primes) then
+		    Exclude(~primes,i`prime);
+		end if;
+		a:= a*(i`prime)^(i`alpha1);
+	    end if;
+	end for;
+	Sort(~primes);
+	if <a,primes> notin aprimelist then
+	    Append(~aprimelist, <a,primes>);
+	end if;
+    end for;
+
+    // store Thue-Mahler equations to be solved
+    // store corresponding Thue equations to be solved, if any
+    RemainingCases:=aprimelist;
+
+    RHSlist:= [];
+    for pset in aprimelist do
+	if IsEmpty(pset[2]) then // no unbounded primes
+	    rhs:= Integers()! pset[1];
+	    if rhs notin RHSlist then
+		Append(~RHSlist, rhs);
+	    end if;
+	    Exclude(~RemainingCases, pset);
+	end if;
+    end for;
+
+    // remove Thue cases covered by Thue-Mahler cases
+    RHSlistNew:= RHSlist;
+    for a in RHSlist do
+	for pset in RemainingCases do
+	    if IsEmpty(pset[2]) eq false then
+		b:= pset[1];
+		primelist:= pset[2];
+		check1:= &and[p in primelist : p in PrimeDivisors(a) |
+			      p notin PrimeDivisors(b)];
+		check2:= &and[Valuation(b,p) eq Valuation(a,p) : p in PrimeDivisors(b)];
+		if (check1) and (check2) then
+		    assert IsDivisibleBy(a,b);
+		    DivisorsCheck:= [p : p in PrimeDivisors(a) | p in PrimeDivisors(b)] cat
+				    [p : p in primelist |
+				     p in PrimeDivisors(a) and p notin PrimeDivisors(b)];
+		    assert PrimeDivisors(a) eq DivisorsCheck;
+		    Exclude(~RHSlistNew,a);
+		    break pset;
+		end if;
+	    end if;
+	end for;
+    end for;
+    RHSlist:= RHSlistNew;
+
+    // store Thue equations to be solved, if any
+    if (RHSlist ne []) then
+	ThueToSolve:= RHSlist;
+    end if;
+
+    // ensure there are remaining cases not resolvable via Thue equations
+    assert (IsEmpty(RemainingCases) eq false);
+
+    // if there are Thue-Mahler equations yet to be solved, not resolvable via Thue equations
+    // generate the corresponding S-unit equations
+    // remove redundancy so that each primeset has all corresponding a values
+    CaseInfoAllAs:= recformat<avalues,primelist>;
+    RemainingCasesCopy:= RemainingCases;
+    for pset in RemainingCases do
+	if pset in RemainingCasesCopy then
+	    a:= pset[1];
+	    primelist:= pset[2];
+	    avalues:= [a];
+	    Exclude(~RemainingCasesCopy, pset);
+	    for pset2 in RemainingCasesCopy do
+		a2:= pset2[1];
+		primelist2:= pset2[2];
+		if (primelist eq primelist2) then
+		    Append(~avalues, a2);
+		    Exclude(~RemainingCasesCopy, pset2);
+		end if;
+	    end for;
+	    Sort(~avalues);
+	    apset:=rec<CaseInfoAllAs | avalues:=avalues, primelist:= primelist>;
+	    Append(~RemainingCasesAllAs, apset);
+	end if;
+    end for;
+
+    assert #RemainingCasesAllAs eq 1; // mulitple primelists not possible
+    remainingCase:= RemainingCasesAllAs[1];
+
+    return f,remainingCase,ThueToSolve;
+end function;
+
+// initialize timings array to store CPU runtime of relevant checkpoints
+// store as < CPUtime, checkpoint >
+t0:= Cputime();
+timings:= [];
+
+// generate relevant files; these files should already exist on the appropriate server folder
+// setup for manual .csv input
+
+// logfile tracking any errors
+SUnitErr:= "/home/adela/ThueMahler/Data/SUnitEqData_Alpha/SUnitErr_Alpha.txt";
+
+// .csv format is
+// N,"form","optimal form","(alphgamlist index,p,lemma 3.5.2 bound,lemma 3.5.5 bound)"
+Lemmatta:= "/home/adela/ThueMahler/Data/SUnitEqData_Alpha/Lemmatta.csv";
+
+// .csv format is
+// N,"form","optimal form","RHSlist"
+// optimal form is also Thue equation to solve
+ThueEqToSolve:= "/home/adela/ThueMahler/Data/SUnitEqData_Alpha/ThueEqToSolve.csv";
+
+// .csv format is
+// N,"form","optimal form","min poly","partial obstructions",class number,r,no ideal eq,
+// no Thue eq,"setup time,splitting field time,class group time,
+// unit group time,ideal eq time,Thue eq time,S-unit time,thetas time,total time,
+// "adu","primelist","alpha"
+SUnitEq:= "/home/adela/ThueMahler/Data/SUnitEqData_Alpha/TMFormData_Alpha.csv";
+
+SetLogFile(SUnitErr);
+SetAutoColumns(false);
+SetColumns(235);
+
+// convert bash input into magma integers, sets
+// bash input format is
+// N,"form","optimal form","min poly","partial obstructions",class number,r,no ideal eq,
+// no Thue eq,"S-unit ranks",local obstruction time,GL2Z action time,class group time,
+// unit group time,ideal eq time,Thue eq time,S-unit time,bound time,total time
+F:= "/home/adela/ThueMahler/Data/SUnitEqData/TMFormData.csv";
+RF:= Open(F,"r");
+set0:= Gets(RF); // first line; ignore
+NFs:= [];
+while true do
+    set:= Gets(RF);
+    if IsEof(s) then
+	break; // break at end of file
+    end if;
+
+
+
+
+
+
+CommaSplit:= Split(set,","); // split bash input by ","
+BracketSplit:= Split(set,"[]"); // split bash input by "[" and "]"
+RBracketSplit:= Split(set,"()"); // split bash input by "(" and ")"
+
+// delimiter for form
+assert CommaSplit[2][2] eq "(" and CommaSplit[5][#CommaSplit[5]-1] eq ")";
+// delimiter for optimal form
+assert CommaSplit[6][2] eq "(" and CommaSplit[9][#CommaSplit[9]-1] eq ")";
+// delimiter for min poly
+assert CommaSplit[10][2] eq "(" and CommaSplit[13][#CommaSplit[13]-1] eq ")";
+assert (#BracketSplit eq 3) or (#BracketSplit eq 5);
+assert #RBracketSplit eq 7;
+
+N:= StringToInteger(CommaSplit[1]); // convert bash input N into an integer
+hash:= CommaSplit[1] cat ","; // set hash as first element of .csv row, N
+
+// convert bash input for optimal form, min poly into a sequence of integers
+clist:= [StringToInteger(i) : i in Split(RBracketSplit[4],",")];
+fclist:= [StringToInteger(i) : i in Split(RBracketSplit[6],",")];
+
+if (#BracketSplit eq 3) then
+    assert CommaSplit[14] eq "None";
+    partialObstruction:= [];
+    classnumber:= StringToInteger(CommaSplit[15]);
+    r:= StringToInteger(CommaSplit[16]);
+else
+    partialObstruction:= [StringToInteger(i) : i in Split(BracketSplit[2],",")];
+    classnumber:= StringToInteger(Split(BracketSplit[3],",")[2]);
+    r:= StringToInteger(Split(BracketSplit[3],",")[3]);
+end if;
+
+// add original form, clist to hash in .csv format
+hash:= hash cat "\"(" cat RBracketSplit[2] cat ")\"," cat
+       "\"(" cat RBracketSplit[4] cat ")\"";
+assert hash eq &cat[set[i] : i in [1..#hash]];
+
+// print out hash in LogFile in the event of errors
+printf hash cat "\n";
+
+primelist,primeBounds:= prep0(N,clist,fclist,partialObstruction);
+Append(~NFs,<N,F,
+
+
+t1:= Cputime();
+f,remainingCase,ThueToSolve:= prep0(N,clist,fclist,partialObstruction);
+Append(~timings,<Cputime(t1),"setup">);

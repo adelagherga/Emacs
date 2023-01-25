@@ -1,0 +1,30 @@
+/*
+ * 4.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  1 January 2021
+ *
+ * Description: Declares several int and float variables without intializing them - and then
+ *              prints their values
+ *
+ * Commentary:
+ *
+ * To do list:
+ *
+ * Example:
+ *
+ */
+
+#include <stdio.h>
+
+int main(void)
+{
+  int a, b, c;
+  float A, B, C;
+
+  printf("%d,%d,%d", a, b, c);
+  printf("%f,%f,%f", A, B, C);
+
+  return 0;
+}

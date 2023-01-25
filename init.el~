@@ -1,0 +1,94 @@
+
+;; ----------------------------- Set up 'package' -----------------------------
+(require 'package)
+
+;; Add melpa to package archives.
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
+;; Load and activate emacs packages.
+(package-initialization)
+
+;; Install 'use-package' if it is not installed.
+(when (not (package-installed-p 'use-package))
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+;;---------------------------- Use better defaults ----------------------------
+(setq-default
+ ;; Don't use the compiled code if its the older package.
+ load-prefer-newer t
+
+ ;; Do not show the startup message.
+ inhibit-startup-message t
+
+ ;; Do not put 'customize' config in init.el; give it another file.
+ custom-file "~/.emacs.d/custom-file.el"
+
+ ;; Use my name in the frame title. :)
+ frame-title-format (format "Adela's Emacs")
+
+ ;; Do not create lockfiles.
+ create-lockfiles nil
+
+ ;; Do not use hard tabs.
+ indent-tabs-mode nil
+
+ ;; Emacs can automatically create backup files. This tells Emacs to put all
+ ;; backups in ~/.emacs.d/backups
+ backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
+
+ ;; Do not autosave.
+ auto-save-default nil
+
+ ;; Allow commands to be run on mininuffers.
+ enable-recursive-minibuffers t)
+
+;; Change all yes/no questions to y/n type.
+(fset 'yes-or-no-p' 'y-or-n-p)
+
+;; Make the command key behave as 'meta'.
+(setq mac-command-modifier 'meta)
+
+;; 'C-x o' is a 2 step key binding. 'M-o' is much easier.
+(global-set-key (kbd "M-o") 'other-window)
+
+;; Delete whitespace just when a file is saved.
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Disable column number in mode line.
+(column-number mode t)
+
+;; Automatically update buffers if file content on the disk has changed.
+(global-auto-revert-mode t)
+
+;; --------------------- Disable unnecessary UI elements ----------------------
+(progn
+  ;; Do not show menu bar.
+  (menu-bar-mode -1)
+
+  ;; Do not show tool bar.
+  (when (fboundp 'tool-bar-mode)
+    (tool-bar-mode -1))
+
+  ;; Do not show scroll bar.
+  (when (fboundp 'scroll-bar-mode)
+    (scroll-bar-mode -1))
+
+  ;; Highlight line on point.
+  (global-hl-line-mode t))
+
+
+
+
+
+;;(setq inhibit-startup-message t)
+;;(line-number-mode t); display line number in the mode line
+
+
+
+
+
+
+
+

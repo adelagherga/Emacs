@@ -1,0 +1,394 @@
+/*
+ECTest1.m
+
+<description>
+
+Authors
+    Adela Gherga <adelagherga@gmail.com>
+Created
+    22 August 2022
+*/
+
+load "./solveThueMahler.m";
+
+makeMonic:=function(alist,a,primelist)
+    /*
+      Applies a linear change of variables to the the Thue--Mahler form
+      a_0 X^d + ... + a_d Y^d = a p_1^{z_1} ... p_v^{z_v} to ensure a_0 = 1.
+      This is necessary in order to compute all solutions subject to the
+      assumptions that X, Y are coprime integers and Y, a_0 are not necessarily
+      coprime.
+
+      Parameters
+          alist: SeqEnum
+              A list of coefficients a_0, a_1,...,a_d.
+          a: RngIntElt
+          primelist: SeqEnum
+              A list of rational primes p_1, p_2,...,p_v.
+      Returns
+          nD: <param type>
+	      <param description>
+   */
+    // Output: nD
+    // nD is the change of variables to convert the solutions to satisfy the
+    // original Thue-Mahler equation as given by clist.
+    n:=#clist-1;
+    v:=#primelist;
+    a_i:=[];
+    b_i:=[];
+    q:=[f[1] : f in Factorization(a)];
+    d:=[];
+    for i in [1..v] do
+        Append(~a_i,[0..Valuation(clist[1],primelist[i])]);
+    end for;
+    for i in [1..#q] do
+        Append(~b_i,[0..Min( Valuation(a,q[i]),Valuation(clist[1],q[i]))]);
+    end for;
+    Prod1:=[];
+    Prod2:=[];
+    ExponentCombos1:=CartesianProduct(a_i);
+    for c in ExponentCombos1 do
+        Append(~Prod1,&*{primelist[i]^c[i] : i in [1..v]});
+    end for;
+    if q ne [] then
+        ExponentCombos2:=CartesianProduct(b_i);
+        for c in ExponentCombos2 do
+            Append(~Prod2,&*{q[i]^c[i] : i in [1..#q]});
+        end for;
+    else
+        Prod2:=[1];
+    end if;
+    if Prod1 eq [] then
+        Prod1:=[1];
+    end if;
+    D:=[];
+    for c in Prod1 do
+        for d in Prod2 do
+            Append(~D,c*d);
+        end for;
+    end for;
+    Sort(~D);
+    b_d:=[**];
+    a_d:=[];
+    for i in [1..#D] do
+        d:=D[i];
+        b_d[i]:=[[d],[]];
+        new_a:=(clist[1]/d)^(n-1)*a*(1/d);
+        for j in [1..v] do
+	    // Store ord_{p_i}(a) to ensure gcd(a,p_1,...,p_v) = 1.
+            b_d[i][2][j]:=Valuation(new_a,primelist[j]);
+	    // Divide out factors of p_i from a; ensure gcd(a,p_1,...,p_v) = 1.
+            new_a:=new_a/(primelist[j]^b_d[i][2][j]);
+        end for;
+        a_d[i]:=new_a;
+    end for;
+    U_a:= [];
+    for i in [1..#D] do
+        if a_d[i] notin U_a then
+            Append(~U_a, a_d[i]);
+        end if;
+    end for;
+    Sort(~U_a);
+
+    nD:= [];
+    for i in [1..#U_a] do
+        nD[i]:= [* [U_a[i]] *];
+        nD[i][2]:= [];
+        for j in [1..#D] do
+            if a_d[j] eq U_a[i] then
+                Append(~nD[i][2], b_d[j]);
+            end if;
+        end for;
+    end for;
+
+    return nD;
+end function;
+
+preProcessTM:=function(clist,primelist,a)
+    // Input: clist, a, primelist
+    // clist is a list of coefficients c_0,c_1,..,c_n.
+    // a is an integer.
+    // primelist is a list of the primes p_1,p_2,..,p_v.
+    // This solves c_0 X^n+...+c_n Y^n= a \times p_1^{z_1} ... p_t^{z_t}
+    // subject to the assumptions that X, Y are coprime integers
+    // and gcd(Y,c_0)!=1.
+    // Output: sols.
+    // sols is a list of solutions to the Thue--Mahler equation.
+    n:= #clist-1;
+    v:= #primelist;
+    originalp:= primelist;
+    originalv:= v; // generates a copy of the number of primes, {p_1, ..., p_v}
+
+    c:= []; // stores coefficients of F(X,Y) = X^n + c[1]X^{n-1}Y + \cdots + c[n]Y^n
+    b:= []; // stores
+
+    for i in [1..n] do
+        c[i]:=clist[i+1]*clist[1]^(i-1); // c_i = C[i+1]*C[1]^{i-1} for i = 1, ..., n
+	                                   // used to reduce to the case where c_0 = 1
+    end for;
+    c:= [1] cat c;
+
+    for i in [1..originalv] do
+	// stores ord_{p_i}(a) to ensure gcd(a,p_1, ..., p_v) = 1
+        b[i]:= Valuation(a,primelist[i]);
+	// divides out factors of p_i from a; ensures gcd(a,p_1, ..., p_v) = 1
+        a:= a/( primelist[i]^b[i] );
+    end for;
+    a:= Integers()! a;
+
+    SOL2:=[];
+    nD:= SetC0To1(clist,primelist,a);
+    R<X,Y>:= PolynomialRing(Integers(),2);
+    F:= clist[1]*X^3 +clist[2]*X^2*Y + clist[3]*X*Y^2 + clist[4]*Y^3;
+
+    for D in nD do
+        new_a:= D[1][1];
+        b_d:= D[2];
+
+        a:= Integers() ! new_a;
+	time SOL1:=solveThueMahler(c,primelist,a);
+
+        for b2 in b_d do
+            d:= b2[1][1];
+            bd:= b2[2];
+            for sol1 in SOL1 do
+                sol2:=[0 : i in [1..v+2]];
+                if IsDivisibleBy(d*sol1[1],clist[1]) then
+                    sol2[1]:=Integers() ! (d*sol1[1]/clist[1]);
+                    sol2[2]:=Integers() ! (d*sol1[2]);
+                    if Evaluate(F,[sol2[1],sol2[2]]) ne 0 then
+                        Fac:= Factorization(Evaluate(F,[sol2[1],sol2[2]]));
+			// primes appearing in Factorization of RHS of F
+                        Fac1:= [f[1] : f in Fac];
+			 // exponents on primes appearing on RHS of F
+                        Fac2:= [f[2] : f in Fac];
+                        for i in [1..v] do
+                            for j in [1..#Fac] do
+                                if originalp[i] eq Fac1[j] then
+                                    sol2[i+2]:= Fac2[j];
+                                end if;
+                            end for;
+                        end for;
+                        Append(~SOL2,sol2);
+                    end if;
+                end if;
+            end for;
+        end for;
+    end for;
+    return SOL2;
+end function;
+
+function ConvertTMToEllipticCurves(N,clist,sols)
+    // INPUT: N, clist, sols
+    // Here N is the conductor corresponding to the
+    // Thue-Mahler form given by clist with solutions sols
+    // OUTPUT: Elliptic curves with no nontrivial 2-torsion points
+    d:=#clist-1;
+    assert d eq 3;
+    a,b,c,d:= Explode(clist);
+    Q<x,y>:= PolynomialRing(Integers(),2);
+    H:= (b^2-3*a*c)*x^2 + (b*c-9*a*d)*x*y + (c^2-3*b*d)*y^2;
+    G:= (-27*a^2*d + 9*a*b*c-2*b^3)*x^3 + (-3*b^2*c - 27*a*b*d + 18*a*c^2)*x^2*y +
+	(3*b*c^2 - 18*b^2*d + 27*a*c*d)*x*y^2 + (-9*b*c*d + 2*c^3 + 27*a*d^2)*y^3;
+    F:= a*x^3 + b*x^2*y + c*x*y^2 + d*y^3;
+    DF:= -27*a^2*d^2 + b^2*c^2 + 18*a*b*c*d - 4*a*c^3 - 4*b^3*d;
+
+    a0:= Integers()!Valuation(DF,2);
+    b0:= Integers()!Valuation(DF,3);
+    N1:= Integers()! (Abs(DF)/(2^a0*3^b0));
+    assert (a0 eq 3) or (a0 eq 4);
+    assert (b0 eq 0) or (b0 eq 1);
+    assert N1 in Divisors(7^2*41);
+
+    Divs6N:= [D : D in Divisors(6*N) |  IsSquarefree(D)];
+    assert 1 in Divs6N;
+
+    ECs:= [];
+    for s in sols do
+        u:= s[1];
+        v:= s[2];
+	Fuv:= Integers()!Evaluate(F,[u,v]);
+	a1:= Integers()!Valuation(Fuv,2);
+	b1:= Integers()!Valuation(Fuv,3);
+	if (a1 eq 0) and (b1 ge 0) and
+	   (&and[Valuation(Fuv,p) in [0,1] : p in [7,41] | IsDivisibleBy(N1,p^2)]) then
+
+	    a_4:= -27*(Evaluate(H,[u,v]));
+	    a_6:= 27*(Evaluate(G,[u,v]));
+            E:= [0,0,0, a_4, a_6];
+
+            MinE:= MinimalModel(EllipticCurve(E));
+            CondE:= Conductor(MinE);
+            Append(~ECs, < CondE, aInvariants(MinE), [u,v] > );
+
+	    for D in Divs6N do
+		MinE2:= MinimalModel(QuadraticTwist(MinE,D));
+		CondE2:= Conductor(MinE2);
+		Append(~ECs, < CondE2, aInvariants(MinE2), [u,v] > );
+
+		TwistMinE2:= MinimalModel(QuadraticTwist(MinE2,-1));
+		TwistCondE2:= Conductor(TwistMinE2);
+		Append(~ECs, < TwistCondE2, aInvariants(TwistMinE2), [u,v] > );
+	    end for;
+	end if;
+    end for;
+
+    Sort(~ECs);
+    RelECs:= {};
+    for E in ECs do
+	if E[1] eq N then
+	    RelECs:= RelECs join {E};
+	end if;
+    end for;
+
+    printf "Elliptic curves corresponding to conductor N = %o and form clist:=%o :\n ",
+	   N, clist;
+    print RelECs;
+    printf
+	"============================================================================== \n";
+
+    return RelECs;
+end function;
+
+
+
+
+CommaSplit:=Split(set,","); // Split bash input by ",".
+RBracketSplit:=Split(set,"()"); // Split bash input by "(" and ")".
+// Delimiter for form.
+assert CommaSplit[2][2] eq "(" and CommaSplit[5][#CommaSplit[5]-1] eq ")";
+// Delimiter for optimal form.
+assert CommaSplit[6][2] eq "(" and CommaSplit[9][#CommaSplit[9]-1] eq ")";
+// Delimiter for min poly.
+assert CommaSplit[10][2] eq "(" and CommaSplit[13][#CommaSplit[13]-1] eq ")";
+assert (#RBracketSplit eq 11) or (#RBracketSplit eq 13);
+N:=StringToInteger(CommaSplit[1]); // Convert bash input N into an integer.
+// Convert bash input for optimal form, min poly into a sequence of integers.
+alist:=[StringToInteger(i) : i in Split(RBracketSplit[4],",")];
+if (#RBracketSplit eq 11) then
+    assert CommaSplit[14] eq "None";
+    allAs:=[StringToInteger(i) : i in Split(RBracketSplit[8],",")];
+    primelist:=[StringToInteger(i) : i in Split(RBracketSplit[10],",")];
+else
+    allAs:=[StringToInteger(i) : i in Split(RBracketSplit[10],",")];
+    primelist:=[StringToInteger(i) : i in Split(RBracketSplit[12],",")];
+end if;
+t1:=Cputime();
+
+
+f,remainingCase,partialObstruction,localObstruction:=
+    prep0(N,clist,fclist,partialObstruction,avalues,primelist);
+Append(~timings,<Cputime(t1),"local obstructions">);
+
+if (IsEmpty(localObstruction)) then
+
+    // generate a record to store relevant info of the field K = Q(th)
+    FieldInfo:= recformat<field,gen,ringofintegers,minpoly,zeta,fundamentalunits>;
+    K<th>:=NumberField(f);
+    OK:=MaximalOrder(K);
+    th:=OK!th;
+    fieldKinfo:= rec<FieldInfo | field:= K,gen:= th,ringofintegers:= OK,minpoly:= f>;
+
+    n:= Degree(f);
+    assert (n eq #clist-1);
+    s,t:= Signature(K);
+    assert r eq (s+t-1);
+    assert (s+2*t) eq n;
+    assert (r eq 1) or (r eq 2);
+
+    afplist:= prep1(fieldKinfo,clist,remainingCase); // generate all ideal equations
+    ThueToSolve:= [];
+
+    // general setup and assertions
+    Qx<x>:= PolynomialRing(Rationals());
+    c0:=Integers()!clist[1];
+    assert c0 ne 0;
+    n:=#clist-1;
+    assert n eq 3;
+    assert fclist eq ([1] cat [clist[i+1]*c0^(i-1) : i in [1..n]]);
+    assert f eq &+[fclist[i+1]*x^(n-i) : i in [0..n]];
+    assert classnumber eq Integers()! ClassNumber(K);
+
+    // remove ideal equations which have exponent 0 on all prime ideals by generating
+    // corresponding Thue equations to be solved
+    toRemove:= [];
+    for i in [1..#afplist] do
+	fplist:= afplist[i][4];
+	if IsEmpty(fplist) then
+	    a:= afplist[i][1]`newa;
+	    aduset:= afplist[i][1]`adu;
+	    primelist:= afplist[i][2];
+	    ideal_a:= afplist[i][3];
+	    v:= #primelist;
+	    tt:= [Valuation(Norm(ideal_a), primelist[i]) : i in [1..v]];
+	    assert Norm(ideal_a) eq Abs(a)*&*[primelist[i]^tt[i] : i in [1..v]];
+	    tf,alpha:=IsPrincipal(ideal_a); // verify ideal_a is principal
+	    if tf then
+		for adu in aduset do
+		    zz:= [tt[i] - Valuation(adu[3]*adu[1],primelist[i]) : i in [1..v]];
+		    rhs:= Integers()! adu[1]*&*[primelist[i]^zz[i] : i in [1..v]];
+		    assert adu[3]*rhs eq Integers()!a*&*[primelist[i]^tt[i] : i in [1..v]];
+		    // store Thue equations to be solved
+		    if (rhs in Integers()) and (rhs notin ThueToSolve) then
+			Append(~ThueToSolve, rhs);
+		    end if;
+		end for;
+	    end if;
+	    Append(~toRemove,i);
+	end if;
+    end for;
+    Sort(~ThueToSolve);
+
+    // remove cases covered by Thue solver
+    afplistNew:= [afplist[i] : i in [1..#afplist] | i notin toRemove];
+    afplist:= afplistNew;
+    assert #afplist eq NoIdealEq;
+    assert IsEmpty(afplist) eq false;
+    assert #ThueToSolve eq NoThueEq;
+
+    // export Thue data into .csv file
+    hash:= hash cat ",\"(" cat RBracketSplit[4] cat ")\"";
+    assert hash eq &cat[set[i] : i in [1..#hash]];
+
+    if (ThueToSolve ne []) then
+	strRHS:= SeqEnumToString(Sort(ThueToSolve));
+	fprintf ThueEqToSolve, hash cat "," cat strRHS cat "\n";
+    end if;
+
+    // export SUnit data into .csv file
+    strFclist:= SeqEnumToString(fclist);
+    if IsEmpty(partialObstruction) then
+	strPartialObs:= "None";
+    else
+	strPartialObs:= SeqEnumToString(partialObstruction);
+    end if;
+    strAvalues:= SeqEnumToString(remainingCase`avalues);
+    strPrimelist:= SeqEnumToString(remainingCase`primelist);
+
+    hash:= hash cat "," cat strFclist cat "," cat strPartialObs cat ","
+	   cat IntegerToString(classnumber) cat "," cat IntegerToString(r) cat
+	   "," cat IntegerToString(#afplist) cat "," cat IntegerToString(#ThueToSolve)
+	   cat "," cat strAvalues cat "," cat strPrimelist cat "\n";
+
+    fprintf SUnitEq, hash;
+else
+    Append(~timings,<Cputime(t0),"total time">);
+    assert (#timings eq 2) and (timings[1][2] eq "local obstructions");
+
+    // export local obstruciotn into .csv file
+    hash:= hash cat "," cat Sprint(localObstruction[1]) cat ",None";
+
+    strTimings:= Sprint([t[1] : t in timings]);
+    toRemove:= [];
+    for i in [1..#strTimings] do
+	j:= strTimings[i];
+	if (j eq "[") or (j eq " ") or (j eq "]") then
+	    Append(~toRemove, i);
+	end if;
+    end for;
+    strTimings:= "," cat &cat[strTimings[i] : i in [1..#strTimings] | i notin toRemove];
+    fprintf NoSUnitEqPossible, hash cat strTimings cat "\n";
+
+end if;
+
+UnsetLogFile();

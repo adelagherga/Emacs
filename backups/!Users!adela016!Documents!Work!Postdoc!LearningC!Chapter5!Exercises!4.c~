@@ -1,0 +1,31 @@
+/*
+ * 4.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  5 January 2021
+ *
+ * Description: Displays an expression whose value is either -1, 0, or 1 depending on whether i
+ *              is less than, equal to, or greater than j, respectively
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+int main(void)
+{
+  int i, j;
+
+  printf("Enter integers i,j: ");
+  scanf("%d, %d", &i, &j);
+
+  printf("%d\n", (i > j) + (i == j) - (i <= j));
+
+  return 0;
+}

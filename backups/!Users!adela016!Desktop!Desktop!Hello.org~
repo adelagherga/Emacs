@@ -1,0 +1,144 @@
+* First Heading
+
+  Here is *some* /italic/ _underlined_ content
+
+  Here is the [[https://orgmode.org][org mode homepage]] (C-c C-l to create, C-c C-o to open page)
+
+#+BEGIN_SRC magma
+  strX:= "(";
+  for i in [1..#X] do
+      if X[i] in Integers() then
+          strX:= strX cat IntegerToString(Integers()!X[i]);
+      elif X[i] in Rationals() then
+          strX:= strX cat IntegerToString(Numerator(X[i])) cat "/" cat
+                 IntegerToString(Denominator(X[i]));
+      end if;
+      if (i ne #X) then
+          strX:= strX cat ",";
+      end if;
+  end for;
+  strX:= strX cat ")";
+
+  if Quotations then
+      strX:= "\"" cat strX cat "\"";
+  end if;
+#+END_SRC
+
+* council ag/ ivy/ counsel, swyper, ivy and counsel-ag
+also I really like the multi-cursor package
+
+* Standard To-Dos
+  - *to-do list for the UK*
+  - back up data (emacs setup on git, org files on dropbox (may need to reset dropbox))
+  - external monitor and stand (UK)
+  - extra fridge (?)
+  - go through Emacs from scratch
+  - order Romanian book
+  - move plants
+  - fridge this weekend
+  - consolidate to-dos
+  - Shoppers trip
+    - toothpaste, floss, mascara, eyeliner, small blending brush, lashes, prescription, masks,
+    - visors
+  - C programming book
+  - packing + storage
+  - insurance
+
+* To Do List for UK
+** TODO cancel Hive membership
+** TODO prescription for Tretinoin (still have one more....)
+** TODO register at a GP
+** DONE pack stuff away in storage
+** DONE pack suitcase
+** DONE baking: scones (done), peanut butter bar
+** DONE move plants (need to buy soil)
+** DONE deposit on furniture
+** DONE preflight Covid test (Friday)
+** DONE pre-flight UK questionnaire (Saturday)
+** DONE Gather stuff from gym
+** DONE See Celina, Matt, Charlie (Friday)
+** DONE Gather up sewing stuff (+ figure out which ones to pack)
+** DONE book tests (3) for UK
+- pre-flight test booked - just need to take test - complete
+- day 2, 8 booked
+** DONE Pack tools (?)
+** DONE insurance for Hans
+** DONE buy masks (will get from Pat)
+** DONE dentist
+** DONE hair cut + dye (Monday)
+** DONE deposit Costco cheque
+** DONE photos of room
+** DONE Food delivery service (order)
+** DONE clean bathroom
+** DONE replace fridge door handles
+** DONE pick up for fresh prep bag
+** DONE double-check phone plan (UK)
+** DONE bike helmet?
+
+* To Do
+
+
+
+
+
+** DONE abstract and info for women in math talk
+- title - done
+- abstract - done
+- brief bio
+- photo -
+
+
+
+* Organizational To Do (London)
+** finish TM - procrastination
+** art - painting, sewing (pants to fit me, couch cushions, dess, bra?)
+** set up emacs via Emacs from scratch playlist
+** save moneys for Canada
+** get back into working out
+** climbing setup (?)
+** rebuy charging cable
+** learn to make muhamara
+** stretching
+** bike lots
+** be outside more (morning coffees)
+** C book
+** Crypto? CompTIA?
+** set up a good log system for work
+
+
+* TM Code
+** DONE currently gathering jobs which are not printed in any of TMForms, NoSUnitEqNeeded, NoSUnitEqPossible
+- this is the only places these output pieces should have gone
+** TODO run GenerateSUnitEq on IncompleteForms
+** TODO clean up files
+** TODO Start daily work log using org - backup in dropbox
+
+
+
+
+** Next Steps
+   - gather all TMform data and seperate by clist,optimal clist
+     + see if they have same optimal clist, and if not, ensure they do
+   - generate new Thue forms while also generating TMforms to have alist, primelist printed (ie.
+     remainingCase)
+   - issue: cases such as
+     + 891869,"(2,1,2,2)","(1,6,5,2)","(1,6,5,2)","[ 3 ]"
+     + 891958,"(2,1,2,2)","(2,-20,-9,-1)","(1,-20,-18,-4)","[ 3 ]"
+     + 892136,"(2,1,2,2)","(7,-10,7,-2)","(1,-10,49,-98)","[ 3 ]"
+   - all have the same original clist, but opted for different GL2Zaction; *should consolidate*
+   - generate individual files based on original form; consolidate afterwards
+     - retrieve from TMforms via ie. grep "[0-9],\"(1,15,-93,-207)\"" TMFormData.csv
+
+   - idea: generate seperate documents of TMforms for each clist and consolidate there
+     + [do this after ensuring all jobs are finished]
+
+
+
+   - re-align headers (verify all code in TMForms/Code to date
+   - iterate through TMForms.m to generate proper Thue equations
+   - iterate through NoSUnitEqNeeded.m to generate proper Thue quations
+
+
+*
+
+* Third Heading

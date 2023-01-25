@@ -1,0 +1,77 @@
+\documentclass[11pt]{letter}
+
+% relevant packages
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs }
+\usepackage{amsthm}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[all]{xy}
+\usepackage[english]{babel}
+\usepackage{setspace}
+% begin paragraphs with an empty line rather than an indent.
+\usepackage[parfill]{parskip}
+
+% stylistic environment
+\definecolor{grau}{rgb}{0.3,0.3,0.3}
+\usepackage[colorlinks, linkcolor=grau, citecolor=grau, urlcolor=grau]{hyperref}
+\urlstyle{same}
+\usepackage[top=1.3in, bottom=1.6in, left=1.3in, right=1.3in]{geometry}
+\frenchspacing
+\sloppy
+\usepackage{booktabs}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{enumerate}
+\onehalfspacing
+
+% relevant environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{properties}[theorem]{Properties}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{question}[theorem]{Question}
+\theoremstyle{definition}
+\newtheorem{Algorithm}[theorem]{Algorithm}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+% math operators
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Gal}{Gal}
+
+% new commands
+\newcommand{\eps}{\varepsilon}
+
+% draft edit commands
+\usepackage{soul}
+\newcommand{\edit}[1]{\textcolor{red}{#1}}
+\newcommand{\strike}[1]{\textcolor{blue}{\st{#1}}}
+
+
+% --------------------------------------------------------------------------------------------%
+% --------------------------------------------------------------------------------------------%
+
+\title{}
+
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+% --------------------------------------------------------------------------------------------%
+% --------------------------------------------------------------------------------------------%
+
+\end{document}

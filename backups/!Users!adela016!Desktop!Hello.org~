@@ -1,0 +1,79 @@
+* First Heading
+
+  Here is *some* /italic/ _underlined_ content
+
+  Here is the [[https://orgmode.org][org mode homepage]] (C-c C-l to create, C-c C-o to open page)
+
+#+BEGIN_SRC magma
+  strX:= "(";
+  for i in [1..#X] do
+      if X[i] in Integers() then
+          strX:= strX cat IntegerToString(Integers()!X[i]);
+      elif X[i] in Rationals() then
+          strX:= strX cat IntegerToString(Numerator(X[i])) cat "/" cat
+                 IntegerToString(Denominator(X[i]));
+      end if;
+      if (i ne #X) then
+          strX:= strX cat ",";
+      end if;
+  end for;
+  strX:= strX cat ")";
+
+  if Quotations then
+      strX:= "\"" cat strX cat "\"";
+  end if;
+#+END_SRC
+
+
+
+* Standard To-Dos
+  - *reply to Athena Swan meeting (for next week)*
+  - *call Air Canada*
+  - *to-do list for the UK*
+
+  - back up data (emacs setup on git, org files on dropbox (may need to reset dropbox))
+  - external monitor and stand (UK)
+  - extra fridge (?)
+  - go through Emacs from scratch
+  - order Romanian book
+  - move plants
+  - fridge this weekend
+  - consolidate to-dos
+  - Shoppers trip
+    - toothpaste, floss, mascara, eyeliner, small blending brush, lashes, prescription, masks,
+    - visors
+  - C programming book
+  - packing + storage
+  - insurance
+
+* TM Code
+  - currently gathering jobs which are not printed in any of TMForms, NoSUnitEqNeeded,
+    NoSUnitEqPossible
+    - this is the only places these output pieces should have gone
+
+** Next Steps
+   - gather all TMform data and seperate by clist,optimal clist
+     + see if they have same optimal clist, and if not, ensure they do
+   - generate new Thue forms while also generating TMforms to have alist, primelist printed (ie.
+     remainingCase)
+   - issue: cases such as
+     + 891869,"(2,1,2,2)","(1,6,5,2)","(1,6,5,2)","[ 3 ]"
+     + 891958,"(2,1,2,2)","(2,-20,-9,-1)","(1,-20,-18,-4)","[ 3 ]"
+     + 892136,"(2,1,2,2)","(7,-10,7,-2)","(1,-10,49,-98)","[ 3 ]"
+   - all have the same original clist, but opted for different GL2Zaction; *should consolidate*
+   - generate individual files based on original form; consolidate afterwards
+     - retrieve from TMforms via ie. grep "[0-9],\"(1,15,-93,-207)\"" TMFormData.csv
+
+   - idea: generate seperate documents of TMforms for each clist and consolidate there
+     + [do this after ensuring all jobs are finished]
+
+
+
+   - re-align headers (verify all code in TMForms/Code to date
+   - iterate through TMForms.m to generate proper Thue equations
+   - iterate through NoSUnitEqNeeded.m to generate proper Thue quations
+
+
+*
+
+* Third Heading

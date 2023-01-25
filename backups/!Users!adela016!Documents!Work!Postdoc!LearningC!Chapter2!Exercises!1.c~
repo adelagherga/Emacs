@@ -1,0 +1,23 @@
+/*
+ * 1.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  1 January 2021
+ *
+ * Description: Run Kernighan and Ritchie's famous "hello, world" program
+ *
+ * Commentary:
+ *
+ * To do list:
+ *
+ * Example:
+ *
+ */
+
+#include <stdio.h>
+
+int main(void)
+{
+  printf("hello, world\n");
+}

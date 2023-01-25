@@ -1,0 +1,19 @@
+/*
+ * 1.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  4 January 2021
+ *
+ * Description: Asks the user to enter a two or three digit number, then prints the number with
+ *              digits reversed.
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>

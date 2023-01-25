@@ -1,0 +1,615 @@
+#!/usr/bin/python
+# RemoveRedundancy.py
+
+# Author: Adela Gherga <adelagherga@gmail.com>
+# Copyright © 2020, Adela Gherga, all rights reserved.
+# Created:  2 December 2020
+#
+# Description: This program iterates through each line of the files irred_pos.txt,
+#              irred_neg.txt, as compute by as computed by A. Rechnitzer.
+#              It takes as input discF c_1 .. c_4 and outputs
+#              on each line of FormsCond10To6.txt
+#              N [disc(F),c_1,..,c_4]
+#
+# Commentary:
+#
+# To do list:
+#
+# Example:
+#
+
+
+
+
+#
+# Description: This program iterates through each line of the files irred_pos.txt,
+#              irred_neg.txt, as compute by as computed by A. Rechnitzer.
+#              It takes as input discF c_1 .. c_4 and outputs
+#              on each line of FormsCond10To6.txt
+#              N [disc(F),c_1,..,c_4]
+#
+# Commentary: This program only needs to be applied once.
+#             Run with
+#             python3 /Users/adela016/Documents/Work/Postdoc/ThueMahler/Code/GenerateTMForms/conductorForms.py > /Users/adela016/Documents/Work/Postdoc/ThueMahler/Data/FormsCond10To6/FormsCond10To6.txt
+#
+# To do list: N/A
+#
+# Example: N/A
+#
+
+
+import sys
+import itertools
+import sympy
+import numpy
+from copy import deepcopy
+
+def ModpCheck(F,RHSprimes,q,qDividesRHS = False):
+    hasSolutions=False
+    # set hasSolutions to true if F(X,Y) has a solution (u,v) != (0,0) mod q when q | RHS
+    if (qDividesRHS == True):
+        for u in range(0,q):
+            for v in range(0,q):
+                if [u,v] != [0,0]:
+                    F_q = F.subs([(x,u),(y,v)])
+                    if (F_q % q == 0):
+                        hasSolutions = True
+                        break
+            else: # execute if inner loop did not break
+                continue
+            break # execute if inner loop did break
+    else:
+        # when q does not divide RHS
+        RHSprimesModq = []
+        for p in RHSprimes:
+            RHSprimesModq.append(list(set([((p**i) % q) for i in range(0,q)])))
+        RHSprod=list(itertools.product(*RHSprimesModq)) # cartesian product of all possiblities
+        # determine all possibilities of RHS mod q
+        rhs = list(set([(numpy.prod(divs) % q) for divs in RHSprod]))
+        # set hasSolutions to true if F(X,Y) has a solution (u,v) != (0,0) mod q
+        # when q does not divide RHS
+        for u in range(0,q):
+            for v in range(0,q):
+                F_q = (F.subs([(x,u),(y,v)])) % q
+                if F_q in rhs:
+                    hasSolutions = True
+                    break
+            else: # execute if inner loop did not break
+                continue
+            break # execute if inner loop did break
+    return hasSolutions
+
+def localtest(N,F,DiscF):
+    Nfactors = sympy.factorint(N)
+    testPrimes = sorted(Nfactors)
+    if 2 not in testPrimes:
+        testPrimes.append(2)
+    if 3 not in testPrimes:
+        testPrimes.append(3)
+    testPrimes.sort()
+    local_obstruction = []
+    partial_obstruction = []
+    # search for solutions (u,v) of F(u,v) mod p
+    # under the assumption that the exponent on p is > 0
+    for p in testPrimes:
+        if (p <= 13) or (p in range(13,152) and len(testPrimes) <= 3):
+            # the bounds 13,151 are arbitrary, but serve to decrease search time
+            posExpSol = ModpCheck(F,testPrimes,p,qDividesRHS=True)
+            if (p >= 3) and (N % p == 0) and (DiscF % p != 0) and (Nfactors[p] == 1):
+                # verify local obstructions as per Theorem 1 of BeGhRe
+		# ie. if Valuation(N,p) = 1 for p >= 3, then p | DiscF*F(u,v)
+		# thus if DiscF != 0 mod p, then F(u,v) = 0 mod p for some (u,v)
+		# if u = v = 0 mod p is the only solution, gcd(u,v) != 1
+		# hence local obstruction at p
+                if (posExpSol == False):
+                    local_obstruction.append(p)
+                    return partial_obstruction, local_obstruction
+            else:
+                # verify local obstructions for primes possible on RHS
+		# this includes divisors of N, and 2,3
+		# search for solutions (u,v) of F(u,v) mod p
+		# under the assumption that the exponent on p is 0
+                zeroExpSol = ModpCheck(F,[q for q in testPrimes if q!=p],p,qDividesRHS=False)
+                if (zeroExpSol == False) and (posExpSol == False):
+                    # if u = v = 0 mod p is the only solution in both cases
+		    # gcd(u,v) != 1, hence local obstruction at p
+                    local_obstruction.append(p)
+                    return partial_obstruction, local_obstruction
+                elif (zeroExpSol == True) and (posExpSol == False):
+		    # if a solution (u,v) != (0,0) mod p exists
+		    # when the exponent on p is 0
+		    # but u = v = 0 mod p is the only solution
+		    # when the exponent on p is > 0
+		    # partial obstruction at p; can remove p from primelist
+                    partial_obstruction.append(p)
+    return partial_obstruction, local_obstruction
+
+def exponents(N,DiscF):
+    Nfactors = sympy.factorint(N)
+    Nprimes = sorted(Nfactors)
+    DFfactors = sympy.factorint(DiscF)
+    DFprimes = sorted(DFfactors)
+
+    if 2 in Nprimes:
+        alpha = Nfactors[2]
+    else:
+        alpha = 0
+    if 3 in Nprimes:
+        beta = Nfactors[3]
+    else:
+        beta = 0
+
+    if 2 in DFprimes:
+        alpha0 = DFfactors[2]
+    else:
+        alpha0 = 0
+    if 3 in DFprimes:
+        beta0 = DFfactors[3]
+    else:
+        beta0 = 0
+
+    N0 = int( N/((2**alpha)*(3**beta)))
+    N1 = abs(int(DiscF/((2**alpha0)*(3**beta0))))
+    N0factors = sympy.factorint(N0)
+    N0primes= sorted(N0factors)
+    N1factors = sympy.factorint(N1)
+    N1primes = sorted(N1factors)
+
+    assert (2 not in N0primes) and (3 not in N0primes)
+    assert (2 not in N1primes) and (3 not in N1primes)
+    assert {key:value for key,value in Nfactors.items() if key not in {2,3}} == N0factors
+    assert alpha in range(0,9)
+    assert beta in range(0,6)
+    assert N0 % N1 == 0
+    prime_bounds = [[],[]]
+
+    # verify behaviour at p = 2
+    if (alpha == 0):
+        if (alpha0 == 2):
+            prime_bounds[0].append([2,0])
+            prime_bounds[0].append([2,3])
+    elif (alpha == 1):
+        if (alpha0 == 2):
+            prime_bounds[0].append([2,4,"+"])
+        elif (alpha0 == 3):
+            prime_bounds[0].append([2,3,"+"])
+    elif (alpha == 2):
+        if (alpha0 == 2):
+            prime_bounds[0].append([2,1])
+        elif (alpha0 == 4):
+            prime_bounds[0].append([2,0])
+            prime_bounds[0].append([2,1])
+    elif (alpha == 3):
+        if (alpha0 == 2):
+            prime_bounds[0].append([2,1])
+            prime_bounds[0].append([2,2])
+        elif (alpha0 == 3):
+            prime_bounds[0].append([2,2]);
+        elif (alpha0 == 4):
+            prime_bounds[0].append([2,0]);
+            prime_bounds[0].append([2,1]);
+    elif (alpha == 4):
+        if (alpha0 == 2):
+            prime_bounds[0].append([2,0,"+"])
+        elif (alpha0 == 3):
+            prime_bounds[0].append([2,2,"+"])
+        elif (alpha0 == 4):
+            prime_bounds[0].append([2,0])
+            prime_bounds[0].append([2,1])
+    elif (alpha == 5):
+        if (alpha0 == 2):
+            prime_bounds[0].append([2,0])
+        elif (alpha0 == 3):
+            prime_bounds[0].append([2,1])
+    elif (alpha == 6):
+        if (alpha0 == 2):
+            prime_bounds[0].append([2,0,"+"])
+        elif (alpha0 == 3):
+            prime_bounds[0].append([2,1,"+"])
+        elif (alpha0 == 4):
+            prime_bounds[0].append([2,0])
+            prime_bounds[0].append([2,1])
+    elif (alpha == 7):
+        if (alpha0 == 3):
+            prime_bounds[0].append([2,0])
+        elif (alpha0 == 4):
+            prime_bounds[0].append([2,0])
+    elif (alpha == 8):
+        if (alpha0 == 3):
+            prime_bounds[0].append([2,1])
+
+    # verify behaviour at p = 3
+    if (beta == 0):
+        if (beta0 == 0):
+            prime_bounds[1].append([3,0])
+    elif (beta == 1):
+        if (beta0 == 0):
+            prime_bounds[1].append([3,1,"+"])
+        elif (beta0 == 1):
+            prime_bounds[1].append([3,0,"+"])
+    elif (beta == 2):
+        if (beta0 == 0):
+            prime_bounds[1].append([3,0,"+"])
+        elif (beta0 == 1):
+            prime_bounds[1].append([3,0,"+"])
+        elif (beta0 == 3):
+            prime_bounds[1].append([3,0])
+    elif (beta >= 3):
+        if (beta0 == beta):
+            prime_bounds[1].append([3,0])
+            prime_bounds[1].append([3,1])
+        else:
+            # when all coefficients of the form F_1 are  divisible by 3,
+            # since also beta1 = {0,1} and 3|LHS we must have that 3|RHS,  hence beta1 = 1
+            # in this case, we may divide 3 from both sides
+            # this yields the form F = F_1/3, whose discriminant has
+            # Valuation(DiscF,3) != beta0 = beta
+            # thus since beta1=1 is divided out, so beta1=0
+            prime_bounds[1].append([3,0])
+
+    assert (prime_bounds[0] != []) and (prime_bounds[1] != [])
+
+    # verify behaviour at primes dividing N1
+    for p in N1primes:
+        if N1factors[p] >= 2:
+            assert N0 % p == 0
+            prime_bounds.append([])
+            prime_bounds[len(prime_bounds)-1].append([p,0])
+            prime_bounds[len(prime_bounds)-1].append([p,1])
+    return prime_bounds
+
+
+#def prep0(clist,N,forms):
+    # generate the relevant Thue-Mahler polynomial
+all_forms = neg_forms[DF]
+# sign is +1 or -1
+def prep0(N,all_forms,sign):
+    x,y = sympy.symbols('x y')
+    # N,"form",local obstruction,partial vs BeGhRe
+    # local obstruction, partial vs BeGhRe may be output as p or None
+    no_SUnit_eq_possible = []
+    # N,"form","optimal form",no Thue eq,
+    # "optimal form" may be output as form or None
+    no_SUnit_eq_needed = []
+    # N,form,Thue eq, RHSlist
+    Thue_eq_to_solve = []
+    # N,form,local_obstruction,a_values,primelist
+    TM_forms = []
+
+    all_forms_new = []
+    for i in range(0,len(all_forms)):
+        clist = all_forms[i]
+        F = sum([clist[i+1]*x**(3-i)*y**i for i in range(0,4)])
+        DiscF= -27*clist[1]**2*clist[4]**2 + clist[2]**2*clist[3]**2;
+        DiscF= DiscF + 18*clist[1]*clist[2]*clist[3]*clist[4];
+        DiscF= DiscF - 4*clist[1]*clist[3]**3 - 4*clist[2]**3*clist[4];
+        assert (DiscF == sign*DF*4) and (DiscF == clist[0]*4)
+        partial_obstruction,local_obstruction = localtest(N,F,DiscF)
+        if local_obstruction == []:
+            all_forms_new.append([all_forms[i],partial_obstruction])
+        else:
+            no_SUnit_eq_possible.append([N,all_forms[i],local_obstruction,'None'])
+    # [form, partial_obstruction]
+    all_forms = all_forms_new
+
+    # all forms present a local obstruction
+    if all_forms == []:
+        return TM_forms,no_SUnit_eq_needed,no_SUnit_eq_possible, Thue_eq_to_solve
+
+    # determine all exponent bounds
+    prime_bounds = exponents(F,DiscF)
+
+    # remove superflous cases where a partial obstruction at p exists
+    for i in range(0,len(all_forms)):
+        prime_bounds_i = deepcopy(prime_bounds)
+        flag_i = False
+        for j in range(0,len(prime_bounds_i)):
+            pset = prime_bounds_i[j]
+            ps = [k[0] for k in pset]
+            # verify the pset corresponds to only 1 prime
+            assert all([p == ps[0] for p in ps])
+            p = ps[0]
+            # if p in partial_obstruction
+            if p in all_forms[i][1]:
+                for k in range(0,len(pset)):
+                    assert pset[k][0] == p
+                    if (len(pset[k]) == 3) and (pset[k][1] >= 1):
+                        no_SUnit_eq_possible.append([N,all_forms[i][0],'None',p])
+                        to_remove.append(i)
+                        flag_i = True
+                        break
+                    elif (len(pset[k]) == 3) and (pset[k][1] == 0):
+                        del pset[k][2]
+                    elif (len(pset[k]) == 2) and (pset[k][1] >= 1):
+                        del pset[k]
+
+            if pset == []:
+                no_SUnit_eq_possible.append([N,all_forms[i][0],'None',p])
+
+            # verify pset now only includes the exponent 0 case at p
+            if p in all_forms[i][1]:
+                assert len(pset) == 1
+                assert len(pset[0]) == 2
+                assert pset[1] == 0
+
+        if flag_i:
+            continue
+        # generate all combinations of exponent restrictions as determined above
+        Sdata = [] # stores all combinations of prime bounds on each p
+        for c in itertools.product(*prime_bounds_i):
+            Sdata.append(c)
+        aprimelist = [] # store corresponding a value and primelist
+        for pset in Sdata:
+            a = 1
+            primes = list(N0primes)
+            for x in pset:
+                if len (x) == 3:
+                    if x[0] not in primes:
+                        assert (x[0] == 2) or (x[0] == 3)
+                        assert (x[0] not in all_forms_i[1])
+                        primes.append(x[0])
+                else:
+                    if x[0] in primes:
+                        primes.remove(x[0])
+                    a = a*(x[0]**x[1])
+            primes.sort()
+            if [a,primes] not in aprimelist:
+                aprimelist.append([a,primes])
+
+        # store Thue-Mahler equations to be solved
+        # store corresponding Thue equations to be solved, if any
+        remaining_cases = aprimelist
+
+        RHS_list = []
+        for pset in aprimelist:
+            if pset[1] == []: # no unbounded primes
+                rhs = pset[0]
+                if rhs not in RHS_list:
+                    RHS_list.append(rhs)
+                remaining_cases.remove(pset)
+
+        # remove Thue cases covered by Thue-Mahler cases
+        RHS_list_new = deepcopy(RHS_list)
+        for a in RHS_list:
+            afactors = sympy.factorint(a)
+            aprimes = sorted(afactors)
+            for pset in remaining_cases:
+                if pset[1] != []:
+                    b = pset[0]
+                    primelist = pset[1]
+                    bfactors = sympy.factorint(b)
+                    bprimes = sorted(bfactors)
+                    check1 = all([p in primelist for p in aprimes if p not in bprimes])
+                    check2 = all([bfactors[p] == afactors[p] for p in bprimes])
+                    if check1 and check2:
+                        assert (a % b == 0)
+                        divisors_check = [p for p in aprimes if p in bprimes]
+                        divisors_check.extend([p for p in primelist if (p in aprimes and p not in bprimes)])
+                        assert aprimes == divisors_check
+                        RHS_list_new.remove(a)
+                        break
+        RHS_list = RHS_list_new
+
+        # store Thue equations to be solved in array as < Thue equation, RHS >, if any
+        if (RHS_list != []):
+            Thue_eq_to_solve.append([N,all_forms[i],RHS_list])
+
+        # if all cases are resolved via Thue equations
+        if remaining_cases == []:
+            no_SUnit_eq_needed.append([N,all_forms[i],'None',len(RHS_list)])
+            return TM_forms,no_SUnit_eq_needed,no_SUnit_eq_possible, Thue_eq_to_solve
+
+        # if there are Thue-Mahler equations yet to be solved, not resolvable via Thue equations
+        # generate the corresponding S-unit equations
+        # remove redundancy so that each primeset has all corresponding a values
+        remaining_cases_new = []
+        remaining_cases_copy = deepcopy(remaining_cases)
+        for pset in remaining_cases:
+            print(pset)
+            if pset in remaining_cases_copy:
+                print(pset)
+                a = pset[0]
+                primelist = pset[1]
+                a_values = [a]
+                remaining_cases_copy.remove(pset)
+                for pset2 in remaining_cases_copy:
+                    a2 = pset2[0]
+                    primelist2 = pset2[1]
+                    if primelist == primelist2:
+                        a_values.append(a2)
+                        remaining_cases_copy.remove(pset2)
+                a_values.sort()
+                remaining_cases_new.append([a_values,primelist])
+
+        assert len(remaining_cases_new) == 1
+        remaining_cases = remaining_cases_new[0]
+        assert len(remaining_cases) == 2
+        form = [N,all_forms[i][0],all_forms[i][1],remaining_cases[0],remaining_cases[1]]
+        if form not in TM_forms:
+            TM_forms.append(form)
+
+    return TM_forms,no_SUnit_eq_needed,no_SUnit_eq_possible, Thue_eq_to_solve
+
+
+
+
+
+
+
+#somelists = [
+   [1, 2, 3],
+   ['a', 'b'],
+   [4, 5]
+]
+for element in itertools.product(*somelists):
+    print(element)
+
+
+
+
+
+
+
+
+
+
+N = 1000 * 1000
+Nf = N * 1.0
+
+# determine largest exponent twos[k] such that k = (2^(twos[k]))*b, where (2,b) = 1
+twos = {}
+for k in range(1, 3 * N + 1):
+    if k % 2 == 0:
+        twos[k] = twos[k / 2] + 1
+    else:
+        twos[k] = 0
+    # print k,twos[k]
+
+threes = {}
+for k in range(1, 3 * N + 1):
+    if k % 3 == 0:
+        threes[k] = threes[k / 3] + 1
+    else:
+        threes[k] = 0
+    # print k,threes[k]
+
+
+def a_okay(
+    a, a0
+):  # note that in BeRe a0 is 2 higher, since I factor out 4 from every discrim in my code.
+    if a == 0:
+        return a0 == 0
+    elif a == 1:
+        return a0 <= 1
+    elif a == 2:
+        return a0 == 0 or a0 == 2
+    elif a == 3:
+        return a0 <= 2
+    elif a == 4:
+        return a0 <= 2
+    elif a == 5:
+        return a0 <= 1
+    elif a == 6:
+        return a0 <= 2
+    elif a == 7:
+        return a0 == 1 or a0 == 2
+    elif a == 8:
+        return a0 == 1
+    else:
+        return 0
+
+
+def b_okay(b, b0):
+    if b == 0:
+        return b0 == 0
+    elif b == 1:
+        return b0 <= 1
+    elif b == 2:
+        return (b0 == 3) or (b0 <= 1)
+    elif b >= 3:
+        return b0 == b
+    else:
+        return 0
+
+
+def fargle(X):
+    Y = []
+    for char in X.split():
+        Y.append(int(char))
+    return [Y]
+
+
+pos_forms = {}
+neg_forms = {}
+
+for line in open("/Users/adela016/Documents/Work/Postdoc/ThueMahler/Data/FormsCond10To6/Raw/irreduc_pos.txt"):
+    conductor = int(line.split()[0])
+    if conductor in pos_forms:
+        pos_forms[conductor] = pos_forms[conductor] + fargle(line)
+    else:
+        pos_forms[conductor] = fargle(line)
+
+for line in open("/Users/adela016/Documents/Work/Postdoc/ThueMahler/Data/FormsCond10To6/Raw/irreduc_neg.txt"):
+    conductor = -int(line.split()[0])
+    if conductor in neg_forms:
+        neg_forms[conductor] = neg_forms[conductor] + fargle(line)
+    else:
+        neg_forms[conductor] = fargle(line)
+
+
+def noTwoThree(DF, a0, b0):
+    return DF // (2 ** a0) // (3 ** b0)
+
+N0s = []
+all_forms = {}
+for DF in sorted(pos_forms):
+    a0 = twos[DF]
+    b0 = threes[DF]
+    N1 = noTwoThree(DF, a0, b0)
+    for k in range(1, int(Nf / N1) + 1):
+        N = N1 * k
+        a = twos[N]
+        b = threes[N]
+        if a_okay(a, a0) and b_okay(b, b0):
+            numpy.vectorize(prep0(N,pos_forms[DF],+1))
+    print(DF)
+
+# 2999484
+# 2998431
+
+
+x,y = sympy.symbols('x y')
+n = 3
+F = sum([clist[i]*x**(n-i)*y**i for i in range(0,n+1)])
+DiscF= -27*clist[0]**2*clist[3]**2 + clist[1]**2*clist[2]**2
+DiscF= DiscF + 18*clist[0]*clist[1]*clist[2]*clist[3]
+DiscF= DiscF - 4*clist[0]*clist[2]**3 - 4*clist[1]**3*clist[3]
+assert DiscF == DF*4
+
+for clist in pos_forms[DF]:
+    F = sum([clist[i+1]*x**(n-i)*y**i for i in range(0,n+1)])
+    DiscF= -27*clist[1]**2*clist[4]**2 + clist[2]**2*clist[3]**2;
+    DiscF= DiscF + 18*clist[1]*clist[2]*clist[3]*clist[4];
+    DiscF= DiscF - 4*clist[1]*clist[3]**3 - 4*clist[2]**3*clist[4];
+    assert DiscF == DF*4
+    partial_obstruction,local_obstruction = localtest(N0,F,DiscF)
+    print(partial_obstruction)
+    print(local_obstruction)
+
+
+
+
+for N0 in N0s:
+    partial_obstruction,local_obstruction = localtest(N0,F,DiscF)
+    if partial_obstruction != []:
+        print(N0)
+    if local_obstruction != []:
+        print("n0")
+        print(N0)
+        print("--")
+
+
+
+#            if N0 in all_forms:
+#                all_forms[N0] = all_forms[N0] + pos_forms[DF]
+#            else:
+#                all_forms[N0] = pos_forms[DF]
+
+
+for DF in sorted(neg_forms):
+    a0 = twos[DF]
+    b0 = threes[DF]
+    N1 = noTwoThree(DF, a0, b0)
+    for k in range(1, int(Nf / N1) + 1):
+        N0 = N1 * k
+        a = twos[N0]
+        b = threes[N0]
+        if a_okay(a, a0) and b_okay(b, b0):
+            if N0 in all_forms:
+                all_forms[N0] = all_forms[N0] + neg_forms[DF]
+            else:
+                all_forms[N0] = neg_forms[DF]
+
+for key in sorted(all_forms):
+    for form in all_forms[key]:
+        print( "[" + str(key)+ "," + str(form).replace(" ","") + "]")

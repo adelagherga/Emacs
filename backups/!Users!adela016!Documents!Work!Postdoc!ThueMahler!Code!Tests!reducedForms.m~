@@ -1,0 +1,52 @@
+/*
+reducedForms.m
+
+<description>
+
+Authors
+    Adela Gherga <adelagherga@gmail.com>
+Created
+    16 September 2022
+*/
+
+
+reduce:=function(a,b,c,d)
+    k:=Round(-(b*c-9*a*d)/(2*(b^2-3*a*c)));
+    a,b,c,d:=Explode([a,3*a*k+b,3*a*k^2+2*b*k+c,a*k^3+b*k^2+c*k+d]);
+    if ((b^2-3*a*c) le (c^2-3*b*d)) then
+	return [a,b,c,d];
+    else
+	a,b,c,d:=Explode([d,-c,b,-a]);
+	return $$(a,b,c,d);
+    end if;
+end function;
+
+
+posDiscriminant:=function(DF)
+    /*
+      <description>
+
+      Parameters
+          <param>: <param type>
+	      <param description>
+      Returns
+          <param>: <param type>
+	      <param description>
+   */
+    forms:=[];
+    for a in [1..Floor(2*DF^(1/4)/(3*Sqrt(3)))] do
+	for b in [Ceiling(-(3*a)/2)..Floor(3*a/2)] do
+	    for c in [Ceiling((b^2-DF^(1/2))/(3*a))..Floor(b^2/(3*a))] do
+		P:=b^2-3*a*c;
+		tf,U:=IsSquare(4*P^3-27*DF*a^2);
+		if tf then
+		    d:=(U-2*b^3+9*a*b*c)/(27*a^2);
+		    if (d in Integers()) then
+			Append(~forms,reduce(a,b,c,d));
+		    end if;
+		end if;
+	    end for;
+	end for;
+    end for;
+    return forms;
+end function;

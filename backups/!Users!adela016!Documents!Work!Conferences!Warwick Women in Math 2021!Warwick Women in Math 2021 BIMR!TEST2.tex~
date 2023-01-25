@@ -1,0 +1,157 @@
+\documentclass[10pt]{beamer}
+\usetheme[progressbar=frametitle]{metropolis}
+
+\definecolor{ubcBlue}{RGB}{12,35,68}
+\definecolor{ubcBlue1}{RGB}{0,85,183}
+\definecolor{ubcBlue2}{RGB}{0,167,225}
+\definecolor{ubcBlue3}{RGB}{64,180,229}
+\definecolor{ubcBlue4}{RGB}{110,196,232}
+\definecolor{ubcBlue5}{RGB}{151,212,223}
+
+% \setbeamercolor{normal text}{bg=ubcBlue1}
+\setbeamercolor{alerted text}{bg=ubcBlue1, fg = ubcBlue}
+\setbeamercolor{example text}{fg=ubcBlue1, bg=ubcBlue1}
+\setbeamercolor{title separator}{fg = ubcBlue, bg=ubcBlue}
+\setbeamercolor{progress bar}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{progress bar in head/foot}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{progress bar in section page}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{frametitle}{bg=ubcBlue}
+
+\usepackage{fontawesome}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{animate}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{color}
+\usepackage{soul}
+\usepackage{tikz}
+\usepackage{tabulary}
+\usepackage{ifthen}
+\usetikzlibrary{positioning,arrows,calc}
+
+
+\tikzset{onslide/.code args={<#1>#2}{%
+  \only<#1>{\pgfkeysalso{#2}} % \pgfkeysalso doesn't change the path
+}}
+
+\DeclareMathOperator{\ord}{ord}
+
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\makeatletter
+\newsavebox{\mybox}
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+  \savebox{\mybox}{%
+      \begin{beamercolorbox}[%
+          wd=\paperwidth,%
+          sep=0pt,%
+          leftskip=\metropolis@frametitle@padding,%
+          rightskip=\metropolis@frametitle@padding,%
+        ]{frametitle}%
+      \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
+      \end{beamercolorbox}%
+    }
+  \begin{beamercolorbox}[%
+      wd=\paperwidth,%
+      sep=0pt,%
+      leftskip=\metropolis@frametitle@padding,%
+      rightskip=\metropolis@frametitle@padding,%
+    ]{frametitle}%
+  \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
+  \hfill%
+  \raisebox{-\metropolis@frametitle@padding}{}%{\includegraphics[height=\dimexpr\ht\mybox+\metropolis@frametitle@padding\relax]{2_2016_UBCNarrow_Signature_ReverseCMYK}}%
+    \hspace*{-\metropolis@frametitle@padding}
+  \end{beamercolorbox}%
+}
+\makeatother
+
+\pgfdeclarelayer{bg}
+\pgfdeclarelayer{fg}
+\pgfsetlayers{bg,main,fg}
+
+\newcounter{angle}
+\setcounter{angle}{0}
+
+
+\title{Beamer Example}
+\author{Author}
+\subject{Presentation Programs}
+\institute[ University]{
+    Department of XZ\\
+     University}
+
+
+\begin{document}
+
+\begin{frame}
+
+  \begin{center}
+    \begin{animateinline}[poster=first,controls]{10}
+      \multiframe{10}{ix=0+1}{
+        \pgfplotsset{ticks=none}
+        \begin{tikzpicture}[line cap=round,line width=3pt]
+          \begin{axis}[
+            xmin=-6,
+            xmax=6,
+            ymin=-6,
+            ymax=6,
+            xlabel={$x$},
+            ylabel={$y$},
+            axis lines=middle,
+            scale only axis,
+            small,
+            xtick={},
+            samples=100,
+            smooth,
+            font=\small,
+            clip=false,
+            % use same unit vectors on the axis
+            axis equal image=true,
+            ]
+            \clip (axis cs: -5,-5) rectangle (axis cs:6,6);
+
+            \addplot[ubcBlue, domain=-2.382975:6]{sqrt(x^3-4*x+4)};
+            \addplot[ubcBlue, domain=-2.382975:6]{-sqrt(x^3-4*x+4)};
+
+            \node[circle,inner sep=1.5pt,minimum size=2pt, draw = ubcBlue1, fill=ubcBlue1] (Q)
+            at (axis cs:-1+\ix*0.3,{sqrt((-1+\ix*0.3)^3-4*(-1+\ix*0.3)+4)}) [label=Q] {};
+            \draw[color=ubcBlue]
+%            (axis cs:-1+\ix*0.3+0.4,{sqrt((-1+\ix*0.3)^3-4*(-1+\ix*0.3)+4) + 0.6}) node [left]
+ %           {$Q$};
+            \node[circle,inner sep=1.5pt,minimum size=2pt, draw = ubcBlue1, fill=ubcBlue1] (P)
+            at (axis cs:-2,2) {};
+            \draw [color=ubcBlue, fill=ubcBlue] (axis cs:-2,2.3) node [left]{$P$};
+
+            \begin{pgfonlayer}{bg}
+              \draw[red, shorten >=-1cm, shorten <=-1cm] (P) -- ($(Q)! -2cm!(P)$) coordinate (C);
+%                        \draw [draw=ubcBlue1, fill=ubcBlue1] (axis cs:1.54,-1.222) circle
+ %         (2pt);
+  %        \draw [color=ubcBlue] (axis cs:1.6,-0.9) node [right]{$P+Q$};
+
+            \end{pgfonlayer}
+
+
+          \end{axis}
+        \end{tikzpicture}
+      }
+    \end{animateinline}
+  \end{center}
+
+\end{frame}
+
+\end{document}

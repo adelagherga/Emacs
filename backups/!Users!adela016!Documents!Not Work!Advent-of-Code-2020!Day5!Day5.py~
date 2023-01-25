@@ -1,0 +1,58 @@
+#!/usr/bin/python
+# Day5.py
+
+# Author: Adela Gherga <adelagherga@gmail.com>
+# Copyright © 2021, Adela Gherga, all rights reserved.
+# Created: 20 May 2021
+#
+# Description: Day 5 of Advent of Code 2020
+#
+# Commentary:
+#
+# To do list:
+#
+# Example:
+#
+
+# Test Data
+# IDs = ["BFFFBBFRRR", "FFFBBBFRRR", "BBFFBBFRLL"]
+
+import math
+
+# Part 1 - find the highest seat ID on a boaring pass
+
+IDs = open('./Day5/Day-5-Data.txt','r');
+seat_IDs = []
+for id in IDs:
+    row_back = 127
+    row_front = 0
+    for i in range(0,7):
+        if ord(id[i]) == 70: # front
+            row_back = math.floor((row_back + row_front)/2)
+        elif ord(id[i]) == 66: # back
+            row_front = math.ceil((row_back + row_front)/2)
+    assert row_back == row_front
+    row = row_back
+
+    col_right = 7
+    col_left = 0
+    for i in range(7,10):
+        if ord(id[i]) == 82: # right
+            col_left = math.ceil((col_left + col_right)/2)
+        elif ord(id[i]) == 76: # left
+            col_right = math.floor((col_left + col_right)/2)
+    assert col_left == col_right
+    col = col_right
+
+    seat_id = (row*8) + col
+    seat_IDs.append(seat_id)
+
+print(max(seat_IDs))
+
+# Part 2 - find the ID of your seat
+
+seat_IDs.sort()
+for i in range(seat_IDs[0],seat_IDs[len(seat_IDs)-1]):
+    if seat_IDs[i - seat_IDs[0]] != i:
+        print(i);
+        break;

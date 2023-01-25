@@ -1,0 +1,59 @@
+%basic cover letter template
+\documentclass{letter}
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+
+\oddsidemargin=.2in
+\evensidemargin=.2in
+\textwidth=5.9in
+\topmargin=-.5in
+\textheight=9in
+
+%\address{Mathematics Department\\University of Illinois\\
+%1409 W. Green St\\Urbana, Illinois 61801}
+
+%\newcommand {\qed}{\mbox{$\Box$}}
+\renewcommand {\iff}{\Longleftrightarrow}
+\newcommand {\R}{\mathbb{R}}
+\newcommand {\N}{\mathbb{N}}
+\newcommand {\Q}{\mathbb{Q}}
+\newcommand {\Z}{\mathbb{Z}}
+
+\newcommand {\sub}{\mbox{SB}}
+
+
+\begin{document}
+\begin{letter}{}
+
+\begin{proof}
+\opening{Dear Hiring Manager,}
+
+%
+I am writing to you because I am interested in becoming your next Cryptography Engineer Intern. I have a Ph.D. in mathematics, earned in May 2020, with my dissertation on generating and implementing algorithms to compute elliptic curves using lattice-based reduction techniques. I have over 10 years of experience in mathematics research in collaborative environments, merging algebraic number theory with programming. I have the academic background, programming experience, and enthusiasm for cryptography that I believe QEDIT is looking for. 
+
+As a computational and algebraic number theorist, my Ph.D. and research work focused on computing elliptic curves over the rational integers via solutions of certain equations called Thue-Mahler forms. To solve these equations, my collaborators and I developed new mathematical techniques and refined algorithms which I then implemented as software packages in programming languages called Magma and SageMath. This work involved solving nearly $10^8$ Thue-Mahler forms and subsequently storing and appropriately categorizing their solutions. To speed up this process, I taught myself how to code in Unix bash to setup a parallel-computing algorithm, as well as how to work with large data structures to parse the results using Python. This experience not only prepared me with the necessary academic background to work as a Cryptography Engineer Intern, but it also developed my proficiency in learning new coding languages and gave me valuable experience collaboratively developing and maintaining code through GitHub. 
+
+My strong communication skills are attributed to my many years of teaching and community outreach experience. As a Ph.D. student, I held the role of course instructor for several undergraduate calculus courses, as well as Teaching Assistant for many other undergraduate courses. In particular, I was Teaching Assistant to 6 undergraduate number theory courses, wherein I implemented affine and RSA encryption algorithms for students to download and experiment with during the Cryptography portion of the course. Alongside with the instructor, I helped write and develop an open-source elementary number theory textbook which is still in use by the mathematics department today. In addition to teaching, for 3 years I helped train incoming graduate and undergraduate students in their roles as Teaching Assistants. Outside of the university, I have spent 4 years volunteering with Future Science Leaders, an after-school program for high-school students interested in science and mathematics. I helped organize and facilitate lectures on mathematics, and even developed and delivered a course introducing cryptography through affine and shift ciphers. This experience has not only improved my general communication skills, but also my ability to break down complex mathematical topics into simple terms understandable to a non-expert. 
+
+Though I currently hold a Postdoctoral Fellowship at Warwick University, I am eager for an opportunity to gain industry experience, especially in a setting which combines cryptography, mathematics, and programming. The majority of my experience with cryptography has been to demonstrate how certain encryption algorithms work and why, but I have rarely had the opportunity to use algorithms in real-life settings, and I am excited by the prospect of doing so in and industry setting at QEDIT. Of course, I also know what Q.E.D. means. 
+
+
+Thank you for your consideration.
+
+
+\closing{Sincerely,
+%\includegraphics[width=6cm]{signature.pdf}
+}
+%I made a pdf file of my signature using the scanner, so that all the cover letters I sent
+%electronically were "signed."  
+
+Adela Gherga\\
+{(416)-268-8289} \hfill 2155 East 33rd Ave. \\
+\verb+adelagherga@gmail.com+ \hfill Vancouver BC\\
+\verb+https://www.adelagherga.ca+ \hfill  V5N 3E9, Canada\\
+\end{proof}
+\end{letter}
+
+\end{document}
+

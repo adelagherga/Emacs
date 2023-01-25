@@ -1,0 +1,915 @@
+\documentclass{amsart}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing, matrix, arrows,tikzmark}
+\usepackage{enumerate}
+%\usepackage{array}
+\usepackage{accents}
+\usepackage{tabu}
+\usepackage{longtable}
+%\usepackage{blkarray}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amscd}
+\usepackage{amsbsy}
+\usepackage{comment}
+\usepackage[matrix,arrow]{xy}
+\usepackage{arydshln}
+%\usepackage[bookmarks,bookmarksnumbered,%
+%    allbordercolors={0.8 0.8 0.8},%
+%    linktocpage%
+%    ]{hyperref}
+%\usepackage{hyperref}
+%\usepackage{showlabels}
+
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Rad}{Rad}
+\DeclareMathOperator{\Radp}{Rad_{\{2,5,7\}}}
+\DeclareMathOperator{\Radpp}{Rad_{\{2,3,5,7\}}}
+\DeclareMathOperator{\Norm}{Norm}
+\DeclareMathOperator{\Disc}{Disc}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\Sel}{Sel}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Img}{Image}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\red}{red}
+\newcommand{\vv}{\mathbf{v}}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\divisor}{div}
+\DeclareMathOperator{\Alb}{Alb}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\norm}{Norm}
+\DeclareMathOperator{\trace}{Tr}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\image}{im}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\Reg}{Reg}
+\DeclareMathOperator{\Aut}{Aut}
+\newcommand{\crt}{\sqrt[3]{2}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+%\newcommand{\SHA}[1]{{\cyr X}(#1)}
+%\newcommand{\p}{{\mathfrak P}}
+%\newcommand{\A}{{\mathbb A}}
+\newcommand{\mS}{\mathcal{S}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+%\newcommand{\N}{{\mathbb N}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{{\mathbb F}}
+%\newcommand{\D}{{\mathbb D}}
+\newcommand{\PP}{{\mathbb P}}
+%\newcommand{\LL}{{\mathbb L}}
+%\newcommand{\HH}{{G_{\LL}}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\fL}{\mathfrak{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\fM}{\mathfrak{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\fQ}{\mathfrak{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cJ}{{\mathcal J}}
+\newcommand{\cC}{\mathcal C}
+\newcommand{\cV}{\mathcal V}
+\newcommand{\cW}{\mathcal W}
+\newcommand{\OO}{{\mathcal O}}
+\newcommand{\ga}{{\mathfrak{a}}}
+\newcommand{\gb}{{\mathfrak{b}}}
+\newcommand{\gc}{{\mathfrak{c}}}
+\newcommand{\pic}{{\rm Pic}^0(Y)}
+\newcommand{\sS}{\mathfrak{S}}
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fb}{\mathfrak{b}}
+\newcommand{\fc}{\mathfrak{c}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\fq}{\mathfrak{q}}
+\newcommand{\fr}{\mathfrak{r}}
+\newcommand{\fl}{\mathfrak{l}}
+\newcommand{\mP}{\mathfrak{P}}
+\newcommand{\xx}{\mathbf{x}}
+\newcommand{\zz}{\mathbf{z}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\hh}{\mathbf{h}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\bfl}{\mathbf{l}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\aaf}{\mathbf{a}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\mm}{\mathbf{m}}
+\newcommand{\nn}{\mathbf{n}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\fA}{\mathfrak{A}}
+\newcommand{\fB}{\mathfrak{B}}
+\DeclareMathOperator{\Jac}{Jac}
+%\def\mod#1{{\ifbmode\text{\rm\ (mod~$#1$)}
+%\else\discretionary{}{}{\hbox{ }}\rm(mod~$#1$)\fi}}
+
+
+\newcommand\Tstrut{\rule{0pt}{6ex}}         % = `top' strut
+\newcommand\Bstrut{\rule[-5ex]{0pt}{0pt}}   % = `bottom' strut
+
+\newcommand\margnote[1]{\marginpar{\tiny\begin{minipage}{20mm}\begin{flushleft} #1\end{flushleft}\end{minipage}}}
+\newcommand{\edit}[1]{\textcolor{red}{#1}}
+
+%\renewcommand{\baselinestretch}{1.5}
+
+\begin {document}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{proc}{Procedure}
+\newtheorem{alg}{Algorithm}
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{prop}[lem]{Proposition}
+\newtheorem{cor}[lem]{Corollary}
+\newtheorem*{conj}{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{defn}[lem]{Definition}
+\newtheorem{example}[lem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+
+\newtheorem{ack}{Acknowledgement}
+
+\title[]{Examples}
+
+\author{Adela Gherga}
+\author{Samir Siksek}
+%\address{Mathematics Institute, University of Warwick, Coventry CV4 7AL, United Kingdom}
+%\email{S.Siksek@warwick.ac.uk}
+%\thanks{
+%Research supported in part by  grants from NSERC, EPSRC, and NWO
+%The first-named author is supported
+%by NSERC.
+%The second-named author is supported by an EPSRC studentship.
+%The third-named author
+%is supported by
+%the EPSRC {\em LMF: L-Functions and Modular Forms} Programme Grant
+%EP/K034383/1.
+%}
+
+\date{\today}
+\maketitle
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section*{Edits}
+
+%--------------------------------------------------------------------------------------------%
+
+\subsection*{Paper edits}
+
+\edit{\begin{itemize}
+  \item page 2 R Kreso's name should be D. Kreso's
+  \item page 41 $L_q \subset \Z^10$ should be $L_q \subset \Z^{10}$
+  \item page 41 $[Z^{10}:L_{1753}]$ should be $[\Z^{10}:L_{1753}]$
+  \item page 3 Example 3 '$F(X,Y) = \pm \; 3^4 \cdot m$ has no solutions for any integer $m$ coprime to $3$' should say '$F(X,Y) = \pm \; 3^4 \cdot m$ has no solutions for any integer $m$ coprime to $3$ satisfying $\gcd(X,Y) = \gcd(a_0,Y) = 1$. Mike had emailed to let me know that we're missing solutions here, but in actuality they all have $\gcd(a_0,Y) = \gcd(3,Y) = 3$.
+  \item page 31, proof of Lemma 8.8, missing $c_{29}(u+j)$ in the 2nd line of the proof:
+    \[
+      \lvert \Im(\log(Y))+ \beta_{w+j}+
+      b_1 \alpha_{1,w+j}+\cdots+b_r \alpha_{r,w+j}+b^\prime \pi
+      \rvert
+      \; \le \;
+      2 c_{29}
+      \cdot \exp(-c_{26} \cdot B).
+    \]
+    should be
+    \[
+      \lvert \Im(\log(Y))+ \beta_{w+j}+
+      b_1 \alpha_{1,w+j}+\cdots+b_r \alpha_{r,w+j}+b^\prime \pi
+      \rvert
+      \; \le \;
+      2 c_{29}(u+j)
+      \cdot \exp(-c_{26} \cdot B).
+    \]
+  \item page 32, proof of Proposition 9.1, $\beta_j$ should be $\beta_{w+j}$ in the bound for $\Theta_{w+j}$:
+    \[
+      \begin{split}
+        \lvert \Theta_{w+j} \rvert
+        \; & \le \; \frac{1}{2}+\frac{\lvert b_1 \rvert}{2}+\cdots
+        + \frac{\lvert b_r \rvert}{2}+\frac{\lvert b_{r+j}\rvert}{2} \, + \,
+        C \cdot \lvert \beta_j+b_1\alpha_{1,w+j}+\cdots + b_r \alpha_{r,w+j}+b_{r+j}\pi \rvert\\
+        \; & \edit{\le \; \frac{2\pi + 1}{2\pi}+ \cB_1+ \,
+          2C \cdot c_{29}\edit{(u+j)}\cdot \exp(-c_{26} \cdot B)}
+        \qquad \text{(by \eqref{eqn:cB0}, \eqref{eqn:bdp1} and \eqref{eqn:linformcx})}\\
+        &\edit{\le \; \cA_2 + c_{29}(u+j)\cdot \eta}.\\
+      \end{split}
+    \]
+    should be
+    \[
+      \begin{split}
+        \lvert \Theta_{w+j} \rvert
+        \; & \le \; \frac{1}{2}+\frac{\lvert b_1 \rvert}{2}+\cdots
+        + \frac{\lvert b_r \rvert}{2}+\frac{\lvert b_{r+j}\rvert}{2} \, + \,
+        C \cdot \lvert \beta_{w+j}+b_1\alpha_{1,w+j}+\cdots + b_r \alpha_{r,w+j}+b_{r+j}\pi \rvert\\
+        \; & \edit{\le \; \frac{2\pi + 1}{2\pi}+ \cB_1+ \,
+          2C \cdot c_{29}\edit{(u+j)}\cdot \exp(-c_{26} \cdot B)}
+        \qquad \text{(by \eqref{eqn:cB0}, \eqref{eqn:bdp1} and \eqref{eqn:linformcx})}\\
+        &\edit{\le \; \cA_2 + c_{29}(u+j)\cdot \eta}.\\
+      \end{split}
+    \]
+  \end{itemize}}
+
+%--------------------------------------------------------------------------------------------%
+
+\subsection*{Code errors}
+
+
+\begin{itemize}
+  \item FIXED!
+    \[\text{clist}:=[ 1, 65, -870, -18990, 26325, 255069 ]; \text{a}:=27; \text{primelist}:=[ 23561, 1850803] \]
+    should have solution $(X,Y) = (43,22)$, coming from taudeltaList[1], but the prime ideal corresponding to 1850803 yields exponent bound $0$ in the reducedBound code because ClosestVector fails to find the actual closest vector. In this case, the closest vector in the lattice to $\mathbf{w}$ should have norm $5$, but the ClosestVector algorithm finds it to be something to the scale of 204115350. Previously CloseVectors was missing solutions, it's likely that this is the case with ClosestVector as well; CloseVectorsProcess does not have this issue.
+  \item \edit{include code for setc0to1 on github for anyone wanting solutions without the condition thatq $\gcd(a_0,Y) = 1$}
+  \item
+    \edit{\[\text{clist}:=[ 1, 65, -870, -18990, 26325, 255069 ]; \text{a}:=27; \text{primelist}:=[ 61315456967 ]\]
+    very slow at computing the preimage needed for
+    \[xList := [(modfp(x))@@phi1 : x in xList].\]
+    This function is in mulGroupPrimePower: multGroup: valuationBound: c21Func: reducedBoundFixedEmbedding2: reducedBound}
+\end{itemize}
+% LLMat:= Transpose(Matrix(Integers(), 6, 6, [  557,   -25,  -125,   354,   328,  -385,
+%   454,   673,   538,  -426,  -217,   529,
+%   326,  -566,   487,  -550,    27,  -902,
+%   497,  -163,   114,  -608,  1061,   756,
+%  1064,  -638,  -416,  -510,  -634,   132,
+%   177,  1151, -1576, -1317,   201, -832]));
+% w:= Matrix(Integers(), 6, 1,[11891291289090285359714460036824167,0,0,0,0,-1]);
+% ZZr:=StandardLattice(6);
+% LL:=sub<ZZr | [ ZZr!(Eltseq((Zr!l))) : l in OrderedGenerators(L)]>;
+% ww:=ZZr!Eltseq(Zr!w);
+% DLwsq:=Norm(ClosestVectors(LL,-ww)[1]+ww);
+
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Introduction} \label{sec:intro}
+
+%--------------------------------------------------------------------------------------------%
+
+\subsection*{Example 1}
+
+We consider the Thue--Mahler equation
+\[4X^3+ X^2 Y + 12X Y^2 - 6Y^3= 3^{z_1} \cdot  7^{z_2}\cdot 41^{z_3}.\]
+Our implementation solved this in 21 seconds.
+The solutions are
+\begin{gather*}
+  [ -1, -5, 2, 2, 0 ],\quad
+  [ 1, -1, 1, 1, 0 ], \quad
+  [ 19, 23, 5, 3, 0 ],\\
+  [ -3, -7, 1, 0, 1 ],\quad
+  [ 5, 11, 0, 2, 0 ],\quad
+  [ 9, 17, 1, 2, 1 ],\quad
+  [ 3, 1, 1, 2, 0 ].
+\end{gather*}
+This Thue--Mahler form arises from Theorem 1 of \cite{BeGhRe} when computing elliptic curves over $\Q$ of conductor $771456$. Of the above solutions, only $(X,Y) = (1,-1)$ gives rise to elliptic curves of conductor $771456$:
+\[E_1: y^2 = x^3 - x^2 +  13655x + 2351833,\]
+\[E_2: y^2 = x^3 - x^2 +  3414x - 295686.\]
+Including this Thue--Mahler form, there are $13$ irreducible cubic forms to solve to compute all elliptic curves over $\Q$ of conductor $771456$ with trivial $2$-torsion. These Thue--Mahler forms $F(X,Y)$ are as follows, where $(a_0, a_1, a_2, a_3)$ denote the coefficients of $F(X,Y)=a_0 X^3+a_1 X^{2} Y+ a_2XY^{2} + a_3Y^3$:
+\[\begin{array}{c|c}
+  (a_0,a_1,a_2,a_3) & (a_0,a_1,a_2,a_3) \\ \hline
+  (1,7,2,-2) & (2,1,0,3) \\
+  (1,4,3,6) & (3,4,4,4) \\
+  (4,4,6,3) & (2,5,0,6) \\
+  (1,7,4,12) & (3,3,-1,7) \\
+  (3,7,14,14) & (1,3,17,43) \\
+  (8,12,13,8) & (4,1,12,-6) \\
+  (3,9,5,19) &
+\end{array}\]
+Our implementation solved all of these forms and computed the corresponding elliptic curves in a total of $2.6$ minutes on a single core. Full computational details, as well as a list of all corresponding elliptic curves can be found at \newline
+{\url{https://github.com/adelagherga/ThueMahler/tree/master/GhSiData/Example1}}
+%Elliptic curves corresponding to conductor N = 771456 and form clist:=[ 4, 1, 12, -6 ] :
+%  {
+%     <771456, [ 0, -1, 0, 13655, 2351833 ], [ 1, -1 ]>,
+%     <771456, [ 0, 1, 0, 13655, -2351833 ], [ 1, -1 ]>,
+%     <771456, [ 0, -1, 0, 3414, -295686 ], [ 1, -1 ]>,
+%     <771456, [ 0, 1, 0, 3414, 295686 ], [ 1, -1 ]>
+% }
+%and their discriminants are as follows, where $F(X,Y)=a_0 X^3+a_1 X^{2} Y+ a_2XY^{2} + a_3Y^3$:
+% \[\begin{array}{cc|cc}
+%   (a_0,a_1,a_2,a_3) & D_F & (a_0,a_1,a_2,a_3)  & D_F \\ \hline
+%   (1,7,2,-2) & 2^3 \cdot 7 \cdot 41 & (2,1,0,3) & -2^3 \cdot 3 \cdot 41 \\
+%   (1,4,3,6) & -2^3 \cdot 3 \cdot 7^2 & (3,4,4,4) &  -2^4 \cdot 3 \cdot 41 \\
+%   (4,4,6,3) & -2^4 \cdot 3 \cdot 7^2 & (2,5,0,6) & -2^3 \cdot 3 \cdot 7 \cdot 41\\
+%   (1,7,4,12) & -2^4 \cdot 3 \cdot 7 \cdot 41 & (3,3,-1,7) & -2^4 \cdot 3 \cdot 7 \cdot 41\\
+%   (3,7,14,14) & -2^3 \cdot 7^2 \cdot 41 & (1,3,17,43) & -2^4 \cdot 7^2 \cdot 41\\
+%   (8,12,13,8) & -2^4 \cdot 7^2 \cdot 41 & (4,1,12,-6) & -2^3 \cdot 3 \cdot 7^2 \cdot 41\\
+%   (3,9,5,19) & -2^4 \cdot 3 \cdot 7^2 \cdot 41 & & \\
+% \end{array}\]
+%   Consider the elliptic curves over $\Q$ with conductor $N = 771456 = 2^7 \cdot 3 \cdot 7^2 \cdot 41$ and , so $\alpha = 7$, $\beta = 1$ and $N_0 = 7^2\cdot 41$. According to Theorem \edit{ref} of \edit{ref}, the curves arise from consideration of cubic forms of discriminant $D_F = \pm 2^{\alpha_0} \cdot 3^{\beta_0} \cdot N_1$, where $\alpha_0 \in \{3,4\}$, $\beta_0 \in \{0,1\}$, and $N_1 \mid 7^2 \cdot 41$.
+% There are 24 possibilities for the discriminant of the form, and they are
+% \begin{multline*}
+%   \{8, 16, 24, 48, 56, 112, 168, 328, 336, 392, 656, 784, 984, 1176,\\
+%   1968, 2296, 2352, 4592, 6888, 13776, 16072, 32144, 48216, 96432\}.
+% \end{multline*}
+%   [
+%     <771456, [ 2296, 1, 7, 2, -2 ]>, // no sunit possible at 3
+%     <771456, [ -984, 2, 1, 0, 3 ]>,
+%     <771456, [ -1176, 1, 4, 3, 6 ]>, // 7 has exp {0,1}
+%     <771456, [ -1968, 3, 4, 4, 4 ]>,
+%     <771456, [ -2352, 4, 4, 6, 3 ]>, // 7 has exp {0,1}
+%     <771456, [ -6888, 2, 5, 0, 6 ]>,
+%     <771456, [ -13776, 1, 7, 4, 12 ]>,
+%     <771456, [ -13776, 3, 3, -1, 7 ]>,
+%     <771456, [ -16072, 3, 7, 14, 14 ]>, // 7 has exp {0,1}
+%     <771456, [ -32144, 1, 3, 17, 43 ]>, // no sunit possible at 3
+%     <771456, [ -32144, 8, 12, 13, 8 ]>, // no sunit possible at 3
+%     <771456, [ -48216, 4, 1, 12, -6 ]>, // 7 has exp {0,1}
+%     <771456, [ -96432, 3, 9, 5, 19 ]> // 7 has exp {0,1}
+% ]
+% Elliptic curves corresponding to conductor N = 771456 and form clist:=[ 4, 1, 12, -6 ] :
+%  {
+%     <771456, [ 0, -1, 0, 13655, 2351833 ], [ 1, -1 ]>,
+%     <771456, [ 0, 1, 0, 13655, -2351833 ], [ 1, -1 ]>,
+%     <771456, [ 0, -1, 0, 3414, -295686 ], [ 1, -1 ]>,
+%     <771456, [ 0, 1, 0, 3414, 295686 ], [ 1, -1 ]>
+% }
+
+%--------------------------------------------------------------------------------------------%
+
+\subsection*{Example 2}
+We consider the Thue--Mahler equation
+% \begin{equation}\label{eqn:TMBad2}
+\[7 X^3 + X^2 Y + 29 X Y^2 - 25 Y^3 \; = \; 2^{z_1}\cdot 3^{z_2} \cdot 7^{z_3}
+\cdot 37^{z_4} \cdot 53^{z_5} \, .\]
+%\end{equation}
+Our implementation solved this in 19 seconds.
+The solutions are
+%With the Fincke and Pohst
+%this maxed the memory after two weeks.
+\[
+    [ 19, -23, 2, 4, 0, 1, 1 ], \qquad
+    [ 1, 1, 2, 1, 0, 0, 0 ].
+\]
+
+%--------------------------------------------------------------------------------------------%
+
+\subsection*{Example 3}
+Consider
+\[F(X,Y) = 3 X^5 + 65 X^4 Y - 290 X^3 Y^2 - 2110 X^2 Y^3 + 975 X Y^4 + 3149 Y^5.\]
+In \cite{ST}, Soydan and Tzanakis use the method of
+Tzanakis and de Weger \cite{TW} to solve the equation
+\[
+F(X,Y)\; = \;
+-2^5 \cdot 3^4 \cdot 5^{z_1} \cdot 11^{z_2},
+\]
+finding no solutions (subject to the usual condition $\gcd(X,Y)=\gcd(a_0,Y) = 1$).
+As a consequence of Lemma~\ref{lem:adequate} and Algorithm~\ref{alg1} of this paper -- an improved variant of the Prime Ideal Removing Lemma of \cite{TW} -- this Thue--Mahler equation yielded no ideal equations to solve, and hence no solutions. Our program solved this in 0.1 seconds, terminating after the first setup stage of the algorithm, whereas the Hambook implementation \cite{Hambrook} of Tzanakis and de Weger required roughly 72 days, and a less automatic variant of Soyden and Tzanakis took less than $2$h $20'$ with human intervention. Moreover, as a result of where our program terminated, we may also conclude that
+\[F(X,Y) = \pm \; 3^4 \cdot m\]
+has no solutions for any integer $m$ coprime to $3$, subject to the condition that $\gcd(X,Y) = \gcd(a_0,Y) = 1$.
+
+Finally, using the method of this paper, we solved the more general Thue--Mahler equation
+\[
+F(X,Y)\; = \;
+-2^{z_1} \cdot 3^{z_2} \cdot 5^{z_3} \cdot 7^{z_4} \cdot 11^{z_5} \cdot
+13^{z_6} \cdot 17^{z_7}.
+\]
+Our program took around 6 minutes to solve this. The solutions are
+\begin{gather*}
+    [ 17, -4, 0, 0, 2, 2, 0, 2, 0 ],\qquad
+    [ 5, 1, 8, 0, 0, 0, 2, 0, 0 ],\\
+    [ 1, -1, 5, 0, 0, 0, 0, 1, 0 ],\qquad
+    [ -27, 1, 8, 0, 0, 1, 1, 1, 1 ],\\
+    [ -7, -1, 5, 0, 2, 0, 0, 0, 1 ],\qquad
+    [ -1, -1, 8, 0, 0, 1, 0, 0, 0 ],\\
+    [ -3, 1, 8, 0, 2, 0, 0, 0, 0 ] \, .
+\end{gather*}
+
+%--------------------------------------------------------------------------------------------%
+
+\subsection*{Example 4}
+We take $F(X,Y)=X^4-2Y^4$.
+We would like to solve \eqref{eqn:TM} with $p_1,\dotsc,p_v$
+being the set of primes $\le 100$ (of which there are $25$).
+However, it is clear that if $-2$ is not a fourth power
+modulo $p$, then $p \nmid (X^4-2Y^4)$. Thus we reduce
+to the much smaller set of primes $p \le 100$
+for which $-2$ is a fourth power. This is the set
+\[
+\{2, 7, 23, 31, 47, 71, 73, 79, 89\}.
+\]
+Thus the Thue--Mahler equation we shall consider is
+\[
+X^4-2Y^4 \; = \; \pm 2^{z_1} \cdot 7^{z_2} \cdot 23^{z_3}
+\cdot 31^{z_4} \cdot 47^{z_5} \cdot 71^{z_6} \cdot 73^{z_7} \cdot
+79^{z_8} \cdot 89^{z_9}.
+\]
+Our implementation took roughly $85$ hours to solve this Thue--Mahler equation.
+There are $49$ solutions up to changing the signs of $X$, $Y$. The solutions corresponding to
+\[X^4-2Y^4 \; = \; 2^{z_1} \cdot 7^{z_2} \cdot 23^{z_3}
+\cdot 31^{z_4} \cdot 47^{z_5} \cdot 71^{z_6} \cdot 73^{z_7} \cdot
+79^{z_8} \cdot 89^{z_9}\]
+are
+
+\begin{gather*}
+    [ 17, 5, 0, 2, 1, 0, 0, 0, 1, 0, 0 ], \quad
+    [ 61, 48, 0, 1, 0, 0, 0, 1, 1, 0, 1 ],\\
+    [ 142, 57, 1, 1, 3, 1, 0, 0, 1, 0, 0 ],\quad
+    [ 37, 19, 0, 0, 1, 2, 0, 0, 1, 0, 0 ],\\
+    [ 21, 11, 0, 0, 0, 1, 0, 0, 2, 0, 0 ],\quad
+    [ 15, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0 ],\\
+    [ 181, 124, 0, 0, 1, 0, 1, 0, 0, 2, 1 ], \quad
+    [ 33, 13, 0, 1, 0, 0, 2, 0, 1, 0, 0 ],\\
+    [ 8, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1 ],\quad
+    [ 4, 3, 1, 0, 0, 0, 1, 0, 0, 0, 0 ],\\
+    [ 95, 58, 0, 1, 0, 1, 1, 0, 1, 1, 0 ],\quad
+    [ 3, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0 ],\\
+    [ 2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 ],\quad
+    [ 11, 9, 0, 2, 0, 1, 0, 0, 0, 0, 0 ],\\
+    [ 3, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0 ],\quad
+    [ 40, 13, 1, 1, 0, 1, 0, 0, 1, 1, 0 ],\\
+    [ 389, 96, 0, 4, 0, 1, 1, 0, 1, 0, 1 ],\quad
+    [ 6, 5, 1, 0, 1, 0, 0, 0, 0, 0, 0 ],\\
+    [ 68, 43, 1, 1, 1, 2, 1, 0, 0, 0, 0 ],\quad
+    [ 281, 199, 0, 1, 1, 0, 1, 1, 1, 1, 0 ],\\
+    [ 53, 44, 0, 1, 1, 1, 0, 0, 0, 1, 0 ],\quad
+    [ 5, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1 ],\\
+    [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ].
+\end{gather*}
+Full computational details, as well as the solutions corresponding to
+\[F(X,Y) = - 2^{z_1} \cdot 7^{z_2} \cdot 23^{z_3}\cdot 31^{z_4} \cdot 47^{z_5} \cdot 71^{z_6} \cdot 73^{z_7} \cdot79^{z_8} \cdot 89^{z_9}\]
+can be found at \newline
+{\small \url{https://github.com/adelagherga/ThueMahler/blob/master/GhSiData/Example4.txt}}
+
+%--------------------------------------------------------------------------------------------%
+
+\subsection*{Example 5}
+Our last example is
+\begin{multline*}
+5 X^{11} + X^{10} Y + 4 X^9 Y^2 + X^8 Y^3 + 6 X^7 Y^4 + X^6 Y^5 + 6 X^5 Y^6 +
+    6 X^3 Y^8 + 4 X Y^{10} - 2 Y^{11}\\
+=
+2^{z_1} \cdot 3^{z_2} \cdot 5^{z_3} \cdot 7^{z_4} \cdot 11^{z_5} \, .
+\end{multline*}
+Our program solved this in around 4.7 hours. However this time was almost entirely taken up with the computation of the class group and the units. Once the class group and unit computations were complete, it took only 2.3 minutes to provably determine the solutions. These are
+\begin{gather*}
+[ 1, 2, 0, 3, 0, 1, 1 ], \qquad
+    [ 1, 1, 5, 0, 0, 0, 0 ],\\
+    [ 0, -1, 1, 0, 0, 0, 0 ],\qquad
+    [ 1, -1, 1, 1, 1, 0, 0 ] \, .
+\end{gather*}
+
+\medskip
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{The $p$-part of $(a_0 X- \theta Y) \OO_K$}\label{sec:ppart}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{An Equation in Ideals} \label{sec:eq-in-ideals}
+
+%--------------------------------------------------------------------------------------------%
+
+\subsection*{Example 3 continued}
+We revisit Example $3$ to provide more details on our resolution of
+\[F(X,Y) = -2^5 \cdot 3^4 \cdot 5^{z_1} \cdot 11^{z_2}.\]
+For each $p \in P:= \{5,11\}$, we first observe that
+\[(11)\OO_K = \fp_{11,1}^2\fp_{11,2}^2\fp_{11,3} \quad \text{ and } \quad (5)\OO_K = \fp_{5,1}^5,\]
+where
+\begin{align*}
+\fp_{11,1} &= \langle 11,\ \frac{1}{990}(\theta^3 + 227\theta^2 + 5583\theta + 14859)\rangle, \\
+\fp_{11,2} &= \langle 11,\ \frac{1}{15840}(\theta^4 + 20\theta^3 + 10734\theta^2 + 126708\theta + 172377)\rangle,\\
+\fp_{11,3} & = \langle 11,\ \frac{1}{24}(\theta^2 + 14\theta + 117)\rangle,\\
+\fp_{5,1} & = \langle 5,\ \frac{1}{23760}(\theta^4 + 8\theta^3 + 1410\theta^2 + 46512\theta + 33669)\rangle.
+\end{align*}
+Applying Algorithm~\ref{alg1} and Lemma~\ref{lem:adequate} to each of these rational primes, we thus obtain the following possibilities for satisfactory pairs $M_p$, $L_p$:
+\begin{align*}
+  M_{11} & = \{(1)\OO_K,\ \fp_{11,3}\} \quad \text{ and } \quad L_{11} = \{\fp_{11,1}\cdot \fp_{11,2}\},\\
+  M_5 & = \emptyset \quad \text{ and } \quad L_5 = \{(1)\OO_K\} \quad \text{ or } \quad L_5 = \{\fp_{5,1}^2\}.
+\end{align*}
+Now, we have $4$ possible ideal equations of the form $(a_0 X- \theta Y)\OO_K$,
+\[(a_0 X- \theta Y)\OO_K
+= \begin{cases}
+\fb_0 \cdot \fp_{11,1}\cdot \fp_{11,2}, & \text{where } S = \emptyset,\\
+\fb_0 \cdot \fp_{5,1}^2 \cdot \fp_{11,1}\cdot \fp_{11,2}, & \text{where } S = \emptyset,\\
+\fb_0 \cdot \fp_{11,3}^{n_1}, & \text{where } S = \{\fp_{11,3}\}\\
+\fb_0 \cdot \fp_{5,1}^2 \cdot\fp_{11,3}^{n_1}, & \text{where } S = \{\fp_{11,3}\}.
+\end{cases}\]
+In each case, $\fb_0$ is an ideal of $\OO_K$ of norm $R = |2^5\cdot 3^8|$. To compute this ideal, we first note that
+\[(2)\OO_K = \fp_{2,1}^5 \quad \text{ and } \quad (3)\OO_K = \fp_{3,1}\fp_{3,2},\]
+where
+\begin{align*}
+\fp_{3,1} = \langle 3, \frac{1}{2}(\theta + 11)\rangle, \quad \fp_{3,2} = \langle 3, \theta + 3\rangle, \\
+\text{ and } \quad  \fp_{2,1} = \langle 2, \frac{1}{7920}(\theta^3 + 557\theta^2 + 4263\theta + 6939)\rangle.
+\end{align*}
+Applying Algorithm~\ref{alg1} to $p = 2$ and $p = 3$, we obtain
+\begin{align*}
+  M_3 & = \emptyset \quad \text{ and } \quad L_3 = \{\fp_{3,2}\},\\
+  M_2 & = \emptyset \quad \text{ and } \quad L_2 = \{(1)\OO_K\} \quad \text{ or } \quad L_2 = \{\fp_{2,1}^5\} \quad \text{ or } \quad L_2 = \{\fp_{2,1}^8\}.
+\end{align*}
+The $p$-part of $\fb_0$ is composed of these sets $M_p$, $L_p$. In particular, the only possible $2$-part of $\fb_0$ is $\fp_{2,1}^5$ as $\ord_2(\Norm(\fp_{2,1}^5)) = 5 = \ord_2(R)$. However, since
+\[\ord_3(\Norm(\fp_{3,2})) = 4 \neq 8 = \ord_3(R),\]
+the $3$-part of $\fb_0$ cannot be made up of any elements of $M_3$ or $L_3$. In other words, there are no ideals $\fb_0$ having norm $R = |2^5\cdot 3^8|$, and therefore none of the $4$ ideal equations listed above are possible. We may thus conclude that the Thue--Mahler equation
+\[F(X,Y) = -2^5 \cdot 3^4 \cdot 5^{z_1} \cdot 11^{z_2}\]
+has no solutions with $\gcd(X,Y) = \gcd(a_0,Y) = 1$. Moreover, we may also conclude that there are no ideals $\fb_0$ having norm $|3^8|$ and therefore the Thue--Mahler form $F(X,Y) = \pm 3^4 \cdot m$ has no solutions for any $m$ coprime to $3$.
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Making the Ideals Principal} \label{sec:making-ideals-princ}
+
+%--------------------------------------------------------------------------------------------%
+
+\subsection*{Examples continued}
+Table~\ref{table1} gives some data for Examples 1--5.
+At this stage of the algorithm, we would like to stress the main difference between our approach and that of Tzanakis and de Weger \cite{TW}. When dealing with
+\[(a_0 X- \theta Y)\OO_K=\fa \cdot \fp_1^{n_1}\cdots \fp_s^{n_s},\]
+they write each exponent $n_i$ as $n_i=k_i h_i + m_i$, where $h_i$ is the order of $\fp_i$ in the class group of $\OO_K$ and $0 \le m_i \le h_i-1$. Now $\fp_i^{h_i}$ is principal and we may write it as
+$(\beta_i) \OO_K$. It follows from \eqref{eqn:TMfactored}
+that $\fa \cdot \fp_1^{m_1} \cdots \cdot \fp_s^{m_s}$ is principal. Clearly $h_i|h$ and there are at most $h^s$ possibilities for this ideal. In the worst case, we expect around
+$h^{s-1}$ ideals to be principal, and so of the form $(\tau) \OO_K$.
+Generally, Tzanakis and de Weger obtain around $h^{s-1}$ equations of the form
+\[
+(a_0 X-\theta Y)\OO_K \; = \; (\tau \cdot \beta_1^{k_1} \cdots \cdot \beta_s^{k_s}) \OO_K,
+\]
+although they test $h^s$ ideals to see if they are principal.
+This results in a huge explosion of cases when $h$ is non-trivial, as it is often the case that $h_i = h$.
+For instance, in our Example 2, the class number is $33$.
+There are $16$ possibilities for $(\fa,S)$ in $\mathcal{Z}$.
+The $16$ possible values for $s=\#S$ are
+\[
+0,~ 0,~ 1,~ 1,~ 1,~ 1,~ 1,~ 1,~ 2,~ 2,~ 2,~ 2,~ 2,~ 2,~ 3,~ 3,
+\]
+where all possible ideals in $S$ have order $33$ in $\OO_K$. Following the method of Tzanakis and de Weger, we needed to
+check $78608$ ideals if they are principal, and this approach
+leads to
+$2382$ equations of the form~\eqref{eqn:TMdelta}.
+With our approach, as we need only test $16$ ideal equations, we expect at most $16$ $S$-unit equations. Indeed, in doing so, we obtain merely $14$ equations of the
+form~\eqref{eqn:TMdelta}.
+
+\begin{table}[h]
+\begin{tabular}{|c|c|c|c|}
+\hline
+& $\#\mathcal{Z}$ & number of $(\tau,\delta_1,\dotsc,\delta_r)$ & rank frequencies\\
+\hline\hline
+Example 1 & $16$ & $16$ & $(1, 2)$, $(2, 6)$, $(3, 6)$, $(4, 2)$\\
+\hline
+Example 2 & $16$ & $14$ & $ (2, 6)$, $(3, 6)$, $(4, 2)$\\
+\hline
+Example 3 & $12$ & $12$ & $(7, 6)$, $(8, 6)$\\
+\hline
+Example 4 & $4096$ & $4096$ & $(10,4096)$\\
+\hline
+Example 5 & $2$ & $2$ & $(9,1)$, $(10,1)$\\
+\hline\hline
+\end{tabular}
+\vspace{0.5em}
+\caption{This table gives the sizes of the set
+$\mathcal{Z}$, the number of resulting $(\tau,\delta_1,\dotsc,\delta_r)$
+for Examples 1--5. The last column is a list of pairs
+$(r,t)$ meaning there are $t$ cases where the $S$-unit
+rank is $r$.}\label{table1}
+\end{table}
+
+%-------------------------------------------------------------------------------------------%
+%-------------------------------------------------------------------------------------------%
+
+\section{Lower Bounds for Linear Forms in Logarithms}\label{sec:lower-bounds}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{The $S$-Unit Equation}\label{sec:sunit}
+
+%--------------------------------------------------------------------------------------------%
+
+\subsection*{Example 5 continued}
+
+We give some further details for Example 5. Here $a_0=5$ and
+the minimal polynomial for $\theta$ is
+\[
+x^{11} + x^{10} + 20x^9 + 25 x^8 + 750 x^7 + 625 x^6 + 18750 x^5 + 468750 x^3 +
+    7812500 x - 19531250.
+  \]
+The field $K=\Q(\theta)$ has degree $11$, and signature $(1,5)$.
+In this case we have $2$ possibilities
+for $(\tau,\delta_1,\dotsc,\delta_r)$; one has $S$-unit
+rank $r=9$ and the other has $S$-unit rank $r=10$.
+We take a closer look at one of these
+$2$ possibilities, with $r=10$: \label{page:taudeltatuple}
+\begin{tiny}
+\begin{align*}
+\tau=\frac{1}{5^8} & (11114\theta^{10} - 156626\theta^9 - 3960\theta^8 + 713050\theta^7 +
+    3733000\theta^6 - 129663750\theta^5 + 175803125\theta^4\\
+	& - 184687500\theta^3
+    + 1457890625\theta^2 - 70168750000\theta + 134298828125),\\
+  \delta_1=\frac{1}{5^9}& (62639\theta^{10} - 748196\theta^9 - 4621980\theta^8 -
+        22207025\theta^7 + 38965000\theta^6 - 34195000\theta^5 -
+        449543750\theta^4\\
+	& - 21271312500\theta^3 - 51765703125\theta^2 -
+        209809765625\theta + 942912109375),\\
+  \delta_2=\frac{1}{5^8}& (-304507\theta^{10} - 1286200\theta^9 - 8286278\theta^8 -
+        14744530\theta^7 - 120138150\theta^6 + 295735000\theta^5\\
+	& +
+        31769375\theta^4 + 19645671875\theta^3 - 1856078125\theta^2 +
+        159741562500\theta - 1543269140625),\\
+  \delta_3=\frac{1}{5^9}& (-506181269733\theta^{10} - 15199081379048\theta^9 +
+        3417039996000\theta^8 + 20631263730850\theta^7\\
+	& - 862101634598875\theta^6
+        - 11248761245089375\theta^5 + 13277953474900000\theta^4 -
+        47969344104562500\theta^3\\
+	& - 481688292060625000\theta^2 -
+        5526042413395703125\theta + 13231499496662109375),\\
+  \delta_4=\frac{1}{5^9}&(375938718\theta^{10} + 1113068513\theta^9 + 9701253830\theta^8 +
+        28420450900\theta^7 + 337680104250\theta^6 + 897075371250\theta^5 \\
+	&+
+        8807817215625\theta^4
+	 + 17270145140625\theta^3 + 210084124843750\theta^2
+        + 411927193359375\theta + 3744720025390625),\\
+  \delta_5=\frac{1}{5^9} & (-44039\theta^{10} - 174484\theta^9 - 2041150\theta^8 -
+        12553050\theta^7 - 48229625\theta^6 - 380426875\theta^5 -
+        367550000\theta^4\\
+	& - 6470828125\theta^3 + 8499687500\theta^2 -
+        60500781250\theta + 157595703125),\\
+  \delta_6=\frac{1}{5^9} & (156\theta^{10} + 1076\theta^9 + 7590\theta^8 + 32475\theta^7 +
+        181375\theta^6 + 466250\theta^5 + 1753125\theta^4
+	 - 4156250\theta^3\\ & -
+        7578125\theta^2 - 133984375\theta + 267578125),\\
+  \delta_7=\frac{1}{5^9} & (3783\theta^{10} - 10047\theta^9 - 20595\theta^8 + 94800\theta^7 +
+        2714750\theta^6 - 9815000\theta^5 + 11365625\theta^4\\
+	& + 6562500\theta^3 +
+        1218125000\theta^2 - 6610156250\theta + 7017578125),\\
+  \delta_8=\frac{1}{5^9} & (21\theta^{10} - 169\theta^9 + 680\theta^8 - 325\theta^7 -
+        2500\theta^6 - 11875\theta^5 + 459375\theta^4\\
+	& - 3640625\theta^3 +
+        20156250\theta^2 - 65625000\theta + 72265625),\\
+  \delta_9=\frac{1}{5^9} & (-2386\theta^{10} - 126366\theta^9 - 363925\theta^8 +
+        2473650\theta^7 - 14427125\theta^6 - 87118750\theta^5 - 55203125\theta^4
+        + 281968750\theta^3\\ & - 4114296875\theta^2 - 68742968750\theta +
+        152501953125),\\
+  \delta_{10}=\frac{1}{5^9} & (-173\theta^{10} - 1528\theta^9 - 4840\theta^8 + 6800\theta^7 +
+        54125\theta^6 - 298750\theta^5 - 4609375\theta^4\\
+	& - 19546875\theta^3 -
+        11953125\theta^2 + 270703125\theta + 1181640625).\\
+\end{align*}
+\end{tiny}
+The set $S$ is composed of the following five primes of ramification
+degree $1$ and inertial degree $1$:
+\begin{multline}\label{eqn:primesS}
+\fp_1=\langle 11, 3+\theta \rangle,
+\quad
+\fp_2=\langle 7, 1+\theta \rangle,
+\quad
+\fp_3=\langle 5, \phi \rangle, \\
+%\quad
+\fp_4=\langle 3, 5+\theta \rangle,
+\quad
+\fp_5=\langle 2, 1+\theta \rangle,
+\end{multline}
+where
+\begin{multline*}
+\phi=
+\frac{1}{5^9}(4\theta^{10} + 9\theta^9 + 185\theta^8 +
+425\theta^7 + 4625\theta^6
+        + 13750\theta^5 + 131250\theta^4\\
+	+ 750000\theta^3 + 3203125\theta^2 +
+        26953125\theta + 5859375).
+\end{multline*}
+The bound for $B$ given by Proposition~\ref{prop:initialBd}
+is
+\[
+B \le 1.57 \times 10^{222}.
+\]
+
+%-------------------------------------------------------------------------------------------%
+%-------------------------------------------------------------------------------------------%
+
+\section{Controlling the Valuations of $a_0 X - \theta Y$}\label{sec:controlling-vals}
+
+%--------------------------------------------------------------------------------------------%
+
+\subsection*{Example 5 continued}\label{page:fpbounds}
+We continue giving details for Example 5,
+and in particular for the specific tuple
+$(\tau,\delta_1,\dotsc,\delta_{10})$
+given on page~\pageref{page:taudeltatuple}.
+ In Section~\ref{sec:sunit}
+we noted that $B \le 1.57 \times 10^{222}$. Thus we take
+\begin{equation}\label{eqn:cB0bd}
+\cB_0=1.57 \times 10^{222}, \qquad
+\cB_2=\sqrt{10} \cdot \cB_0 \approx 4.96 \times 10^{222}.
+\end{equation}
+We let $\fp=\fp_1=\langle 11, 3+\theta \rangle$
+which is a prime above $11$.
+The above heuristic suggests that we choose $k$ to
+be larger than
+\[
+\frac{10 \log{\cB_2}}{(11-2) \cdot \log{11}} \approx 237.60\, .
+\]
+Our program tries $k=238$. It turns out (in the notation
+of Proposition~\ref{prop:valbd}) that
+$\gcd(\fa^k,\theta-\theta_0) = \gcd(\fa^k,\cT_1)=1$,
+thus $\fb=\fa^k$, and moreover $k^\prime=k=238$.
+The map $\phi$ is surjective, and thus $L$
+does indeed have index
+\[
+I=\frac{\# (\OO_K/\fa^k)^\times}{\# (\Z/p^k\Z)^\times}
+=2^7 \times 3^2 \times 5 \times 11^{2133} \times 61 \times 7321
+\approx 5.02 \times 10^{2230}.
+\]
+We do not give $L$ as its basis vectors are naturally huge.
+However, we find that
+\[
+D(L,\ww) \approx 1.14 \times 10^{223}.
+\]
+This is much larger than $\cB_2$ and we therefore
+we know from Proposition~\ref{prop:valbd} that
+$\ord_\fp(a_0 X-\theta Y) \le k-1=237$.
+
+It is interesting to note that $I^{1/10} \approx 1.18 \times 10^{223}$
+which is rather close to $D(L,\ww)$. If instead we take $k=237$,
+we find that $I^{1/10} \approx 1.36 \times 10^{222}$ and
+${D(L,\ww) \approx 9.55 \times 10^{221}}$ which is somewhat less
+than $\cB_2$. We have generally found the above heuristic to
+be remarkably accurate in predicting a good choice for $k$.
+We are unable to reduce our bound for $\ord_{\fp}(a_0 X-\theta Y)$
+without first reducing our initial bound for $B$.
+
+Now let $\fp_1,\dotsc,\fp_5$ be the primes of $S$
+as in \eqref{eqn:primesS} (where $\fp_1=\fp$ above).
+Proposition~\ref{prop:valbd} give upper bounds
+$237$, $292$, $355$, $518$, $821$ for $\ord_{\fp_j}(a_0 X- \theta Y)$
+with $j=1,\dotsc,5$ respectively.
+
+%-------------------------------------------------------------------------------------------%
+%-------------------------------------------------------------------------------------------%
+
+\section{Linear Forms in Real Logarithms}\label{sec:LFRL}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Reduction of Bounds} \label{sec:red}
+
+%--------------------------------------------------------------------------------------------%
+
+\subsection*{Example 5 continued}
+We continue giving details for
+the tuple
+$(\tau,\delta_1,\dotsc,\delta_{10})$
+given on page~\pageref{page:taudeltatuple}.
+The values of $\cB_0$ and $\cB_2$ are given
+in \eqref{eqn:cB0bd}. The set $S$
+consists of five primes
+$\fp_1,\dotsc,\fp_5$
+given by \eqref{eqn:primesS}.
+By applying Proposition~\ref{prop:valbd} we
+had
+(page~\pageref{page:fpbounds})
+obtained bounds
+$237$, $292$, $355$, $518$, $821$ for $\ord_{\fp_j}(a_0 X- \theta Y)$
+with $i=1,\dotsc,5$ respectively; these are the values
+denoted $k_j-1$ in \eqref{eqn:kjminus1}.
+Now $\ord_{\fp_j}(\tau)=0,0,1,0,0$ respectively for
+$j=1,\dotsc,5$. Letting $\varepsilon$ be as in \eqref{eqn:varepsilondef},
+we may take $(-k_j^\prime,k_j^{\prime\prime})$ in \eqref{eqn:valbds}
+to be $(0,237)$, $(0,292)$, $(-1,354)$, $(0,518)$, $(0,821)$
+respectively.
+This allows us to compute the constant $c_{21}$ defined in Lemma~\ref{lem:c21}.
+We find that $c_{21} \approx 2842.79$.
+The field $K$ has signature $(u,v)=(1,5)$
+and thus there is only one possibility for $\sigma \in \cE_K^{\R}$.
+We therefore take $\sigma_1=\sigma$ to be the unique real embedding.
+For illustration, we give the values of constants appearing
+in Section~\ref{sec:LFRL}:
+\begin{gather*}
+c_{22}\approx 30.31, \quad
+c_{23}=1, \quad
+c_{24} \approx 2873.10, \quad
+c_{25} \approx 5.91 \times 10^{1247}, \quad
+c_{26} \approx 0.35, \\
+c_{27} \approx 5.91 \times 10^{1247}, \quad
+c_{28} \approx 1.40 \times 10^{1246}, \quad
+c_{29}(2) \approx 1.25 \times 10^{1246}, \\
+c_{29}(3) \approx 8.30 \times 10^{1245}, \quad
+c_{29}(4) \approx 7.83 \times 10^{1245}, \quad
+c_{29}(5) \approx 9.21 \times 10^{1245}, \\
+c_{29}(6) \approx 1.40 \times 10^{1246}, \quad
+c_{30} \approx 8290.02,
+\end{gather*}
+Lemma~\ref{lem:linformreal} gives $w=u+v-2=4$ approximate relations
+and Lemma~\ref{lem:linformimag} gives another $v=5$ relations.
+Therefore we have $d-2=9$ relations altogether,
+and $n=\#S+d-2=15$. Therefore the matrix $M$ is $15 \times 15$
+and the lattice $L$ belongs to $\Z^{15}$.
+We found that
+\begin{gather*}
+\cB_1\approx 7.85 \times 10^{222},\quad
+\cA_1 \approx 3.92 \time 10^{222}, \quad
+\cA_2 \approx 7.85 \times 10^{222},\quad
+\cB_3 \approx 2.59 \times 10^{2493},\\
+\cB_4 \approx 7.57 \times 10^{1469},\quad
+\cB_5 \approx 1.93 \times 10^{223}.
+\end{gather*}
+In accordance with the above heuristic, our program
+chose
+\edit{this still needs to be checked:}
+\[
+C=\left[\cB_5^{n/(d-2)} \right] \approx 1.39 \times 10^{372}.
+\]
+The matrix $M$ and the lattice $L$ are too huge to reproduce here,
+but we point out that
+\[
+[\Z^{15} : L] \approx 7.08 \times 10^{6714}; %6.48 \times 10^{3360},
+\qquad D(L,\ww) \approx 1.22 \times 10^{441}. % 7.763 \times 10^{225}.
+\]
+Hence the hypothesis $D(L,\ww)> \cB_5$ of Proposition~\ref{prop:boundImprove}
+is satisfied. We also find (rather unsurprisingly) that $\ww \notin L$.
+We may therefore apply Proposition~\ref{prop:boundImprove}
+to obtain a new bound for $B$ given by \eqref{eqn:Bfinal}:
+\[
+B \le 9346.61.
+\]
+We now start again with $\cB_0=9346$ and repeat the previous
+steps, first for obtaining bounds for $\ord_{\fp_j}(a_0 X- \theta Y)$
+and then for writing down the lattice $L$ and applying
+Proposition~\ref{prop:boundImprove}. The following table
+illustrates the results.
+
+\begin{table}[h]
+\begin{tabular}{|c||c||c|c|c|c|c||}
+\hline\hline
+Iteration & $\cB_0$ &
+\multicolumn{5}{c||}{bounds for $\ord_{\fp_j}(a_0 X- \theta Y)$}\\
+& & \multicolumn{5}{c||}{with $1 \le j \le 5$}\\
+\hline\hline
+0 & $1.57 \times 10^{222}$ &
+237 & 292 & 355 & 518 & 821\\
+\hline
+1 & 9346 & 4 & 5 & 8 & 10 & 16\\
+\hline
+2 & 327 & 3 & 3 & 5 & 7 & 11 \\
+\hline
+3 & 265 & 3 & 3 & 5 & 7 & 10 \\
+\hline
+4 & 263 & 3 & 3 & 5 &  7 & 10\\
+\hline
+5 & 263 & 3 & 3 & 5 &  7 & 10\\
+\hline
+\end{tabular}
+\caption{We successively reduce the bounds both for
+$B$ and for $\ord_{{\fp_j}}(a_0 X- \theta Y)$
+where $j=1,\dotsc,5$.}\label{table:bounds}
+\end{table}
+
+Note that at the fifth iteration we fail to obtain any improvement
+in the bounds and so we stop here. Recall that $r=10$
+and that $B=\max(\lvert b_1\rvert,\dotsc,\lvert b_{10}\rvert)$ where
+$b_1,\dotsc,b_{10}$ are the exponents in \eqref{eqn:TMdelta}.
+Our final bound is $B \le 263$. The set of possible
+integer tuples $(b_1,\dotsc,b_{10})$ satisfying this bound
+has size
+\[
+(2 \times 263+1)^{10} \; =\; 527^{10} \approx 1.65 \times 10^{27}.
+\]
+The huge size of the region does not allow
+brute force enumeration of the solutions. One can reduce
+the number of tuples to consider by using the bounds
+we have obtained for $\ord_{\fp_j}(a_0 X-\theta Y)$.
+We let $\kappa_j=3$, $3$, $5$, $7$, $10$ for $j=1,\dotsc,5$
+respectively. We know that $0 \le \ord_{\fp_j}(a_0 X-\theta Y) \le \kappa_j$,
+and so there are $\kappa_j+1$ possibilities for the
+$\ord_{\fp_j}(a_0 X-\theta Y)$. Imposing
+Let $(k_1,\dotsc,k_5)$ be some tuple of integers
+satisfying $0 \le k_j \le \kappa_j$. The condition
+$\ord_{\fp_j}(a_0 X-\theta Y)=k_j$
+simply defines a hyperplane of codimension $1$
+in the space of possible $(b_1,\dotsc,b_{10})$.
+Imposing all five conditions
+$\ord_{\fp_j}(a_0 X-\theta Y)=k_j$
+with $j=1,\dotsc,5$ cuts down the dimension form $10$ to $5$.
+Thus we expect that search region should (very roughly) have size
+\[
+(\kappa_1+1) \cdot \cdots \cdot (\kappa_{5}+1) \cdot 527^{5}
+\approx 3.43 \times 10^{17}.
+\]
+This is still way beyond brute force enumeration
+and motivates our next section.
+
+
+
+
+
+\end{document}

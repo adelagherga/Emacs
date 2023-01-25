@@ -1,0 +1,30 @@
+/*
+ * 2.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  2 January 2021
+ *
+ * Description: Display float variables as in formats described in Exercise 2 of Chapter 3
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h?>
+
+int main(void)
+{
+  float x = 8.124f;
+
+  printf("%-8.1e\n", x);
+  printf("%10.6e\n", x);
+  printf("%-8.3f\n", x);
+  printf("%6f\n",x);
+
+  return 0;
+}

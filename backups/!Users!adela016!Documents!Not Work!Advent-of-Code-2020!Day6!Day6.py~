@@ -1,0 +1,39 @@
+#!/usr/bin/python
+# Day6.py
+
+# Author: Adela Gherga <adelagherga@gmail.com>
+# Copyright © 2021, Adela Gherga, all rights reserved.
+# Created: 21 May 2021
+#
+# Description: Day 6 of Advent of Code 2020
+#
+# Commentary:
+#
+# To do list:
+#
+# Example:
+#
+
+# Test Data
+Qs = ["abc\n", "a\n b\n c\n", "ab\n ac\n", "a\n a\n a\n a\n", "b\n"]
+
+# Part 1 - find the sum of counts of the number of questions to which anyone answered "yes"
+
+def get_Qs(file):
+    Qs = open(file,'r');
+
+    groups = [[]]
+    for line in Qs:
+        if line != "\n":
+            path = line.split('\n')[0]
+            groups[-1].append(path)
+        else:
+            groups[-1] = " ".join(groups[-1])
+            groups.append([])
+
+    groups[-1] = " ".join(groups[-1])
+    return groups;
+
+#Qs = get_Qs('./Day4/Day-6-Data.txt')
+
+Qs = get_Qs(Qs)

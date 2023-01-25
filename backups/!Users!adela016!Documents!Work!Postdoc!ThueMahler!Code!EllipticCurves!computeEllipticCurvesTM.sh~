@@ -1,0 +1,31 @@
+#!/bin/bash
+# computeEllipticCurvesTM.sh
+
+# Author: Adela Gherga <adelagherga@gmail.com>
+# Copyright © 2022, Adela Gherga, all rights reserved.
+# Created: 24 August 2022
+#
+# Description:
+#
+# Commentary:
+#
+# To do list:
+#
+# Example:
+#
+
+for filename in /Data/*.txt; do
+    for ((i=0; i<=3; i++)); do
+        ./MyProgram.exe "$filename" "Logs/$(basename "$filename" .txt)_Log$i.txt"
+    done
+done
+
+END=500010
+START=500000
+for ((N=START;N<=END;N++)); do
+    echo $N
+    touch Data/EllipticCurves/$N.csv
+done
+
+for F in Data/TMOutfiles/*; do
+    N=$(echo $F | grep -o -E '[0-9]+' | head -1 | sed -e 's/^0\+//')

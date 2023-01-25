@@ -1,0 +1,19 @@
+#!/bin/bash
+# GatherSUnitXYZ2.sh
+
+# INPUT:
+#    N/A
+#
+# OUTPUT:
+#     S_i.out:= the file containing the set of all solutions X + Y = Z^2 with good redeuction outside the set of primes S_i, where
+#        S_i:= [2,p_1,...,p_{n_i}], as listed in the file nSets.out
+#
+# COMMENTS:
+#    This algorithm is a bash function. It runs through all sets S.out where S:= [ p_1, p_2, ..., p_n ] as printed in nSets.out and output by SUnitXYZ2.m
+#    This alrogithm sorts through the files S.out and amalgamates all corresponding solutions into one file, S=[p_1,...,p_n]
+#    If errors exist in any of the files, an error is printed, along with the filename S.out
+#    To run in the background, enter the following in a terminal window:
+#        $ nohup $ABSOLUTE_PATH/ThesisCode/XYZ2Code/BashXYZ2Code/RunSUnitXYZ2.sh $ABSOLUTE_PATH &
+#
+# EXAMPLE:
+#    N/A

@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: function
+# key: function_
+# --
+
+$1:= function($2 : $3:=$4)
+
+    /*
+     Description: $5
+     Input: $6
+     Output: $7
+     Example: $8
+    */
+
+     $0
+
+
+
+end function;

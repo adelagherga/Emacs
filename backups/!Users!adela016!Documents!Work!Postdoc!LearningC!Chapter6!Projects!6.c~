@@ -1,0 +1,31 @@
+/*
+ * 6.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  6 January 2021
+ *
+ * Description: Prints all even squares between 1 and a user-input integer n
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+int main(void)
+{
+  int i, n;
+
+  printf("Enter an integer" );
+  scanf("%d", &n);
+
+  for (i = 2; i * i < n, i * i % 2 == 0, i++)
+    printf("%d", i * i);
+
+  return 0;
+}

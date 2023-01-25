@@ -1,0 +1,130 @@
+\documentclass[11pt]{article}
+
+% relevant packages
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs }
+\usepackage{amsthm}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[all]{xy}
+\usepackage[english]{babel}
+\usepackage{setspace}
+% begin paragraphs with an empty line rather than an indent.
+\usepackage[parfill]{parskip}
+
+% stylistic environment
+\definecolor{grau}{rgb}{0.3,0.3,0.3}
+\usepackage[colorlinks, linkcolor=grau, citecolor=grau, urlcolor=grau]{hyperref}
+\urlstyle{same}
+\usepackage[top=1.3in, bottom=1.6in, left=1.3in, right=1.3in]{geometry}
+\frenchspacing
+\sloppy
+\usepackage{booktabs}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{enumerate}
+\onehalfspacing
+
+% relevant environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{properties}[theorem]{Properties}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{question}[theorem]{Question}
+\theoremstyle{definition}
+\newtheorem{Algorithm}[theorem]{Algorithm}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+% math operators
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Gal}{Gal}
+
+% new commands
+\newcommand{\eps}{\varepsilon}
+
+% draft edit commands
+\usepackage{soul}
+\newcommand{\edit}[1]{\textcolor{red}{#1}}
+\newcommand{\strike}[1]{\textcolor{blue}{\st{#1}}}
+
+
+%-----------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------%
+
+\title{Barcelona}
+
+\author{Adela}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+%-----------------------------------------------------------------------------%
+%-----------------------------------------------------------------------------%
+
+\section{The setup}
+\label{sec:setup}
+
+
+In this chapter, we give some of the primary algorithms needed to solve an arbitrary Thue-Mahler equation. The methods presented here follow somewhat \cite{Ham} and \cite{TW3}, with new results and modifications from \cite{GhKaMaSi}.
+
+%--------------------------------------------------------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------------------------------------------------------%
+
+\section{First steps}
+\label{sec:FirstSteps}
+
+Fix a nonzero integer $c$ and let $S=\{p_1,\dotsc,p_v\}$ be a set of rational primes. Let
+\[F(X,Y) = c_0 X^n + c_1 X^{n-1}Y + \cdots + c_{n-1}XY^{n-1} + c_nY^n\]
+be an irreducible binary form over $\mathbb{Z}$ of degree $n \geq 3$. We want to solve the Thue--Mahler equation
+\begin{equation} \label{eq:ThueMahler}
+F(X,Y) = c p_1^{Z_1}\cdots p_v^{Z_v}
+\end{equation}
+for unknowns $X,Y, Z_1, \dots, Z_v$ with $\gcd(X,Y) = 1$ and $Z_i \geq 0$ for $i = 1,\dots, v$. To do so, we first reduce \eqref{eq:ThueMahler} to the special case where $c_0 = 1$ and $\gcd(c,p_i) = 1$ for $i = 1, \dots, v$, loosely following \cite{Ham}.
+
+As $F$ is irreducible by assumption, at least one of the coefficients $c_0$ and $c_n$ is nonzero. Hence, we may transform the given Thue--Mahler equation to one with $c_0 \neq 0$ by interchanging $X$ and $Y$ and by renaming the coefficients $c_i$ appropriately. In particular, solving \eqref{eq:ThueMahler} is equivalent to solving
+\[ c_0' \overline{X}^n + c_1' \overline{X}^{n-1}\overline{Y} + \cdots + c_{n-1}'\overline{X}\overline{Y}^{n-1} + c_n'\overline{Y}^n = c p_1^{Z_1}\cdots p_v^{Z_v},\]
+where $c_i' = c_{n-1}$ for $i = 0, \dots, n$, $\overline{X} = Y$, and $\overline{Y} = X$.
+
+Let $\mathcal{D}$ be the set of all positive integers $m$ dividing $c_0$ such that ${\ord_p(m)\leq \ord_p(c)}$ for each rational prime $p\notin S$. Equivalently, $\mathcal{D}$ is precisely the set of all possible integers $d$ such that $d = \gcd(c_0,Y)$. To see this, let $q_1, \dots, q_{w}$ denote the distinct prime divisors of $a$ not contained in $S$. Then
+\[c = \prod_{i=1}^w q_i^{b_i}\cdot \prod_{i=1}^v p_i^{\ord_{p_i}(c)}\]
+for some integers $b_i >0$. If $(X,Y,Z_1, \dots, Z_v)$ is a solution of the Thue-Mahler equation in question, it follows that
+\[F(X,Y) = cp_1^{Z_1}\dots p_v^{Z_v} =  \prod_{i=1}^w q_i^{b_i}\cdot \prod_{i=1}^v p_i^{\ord_{p_i}(c) + Z_i}.\]
+Suppose $\gcd(c_0,Y) = d$. Since $d$ divides $F(X,Y)$, it necessarily divides
+\[{\prod_{i=1}^w q_i^{b_i}\cdot \prod_{i=1}^v p_i^{\ord_{p_i}(c) + Z_i}}.\]
+In particular,
+\[d = \prod_{i=1}^w q_i^{s_i}\cdot \prod_{i=1}^v p_i^{t_i}\]
+for some non-negative integers $s_1, \dots, s_w, t_1, \dots, t_v$ such that
+\[s_i \leq \min\{\ord_{q_i}(c), \ord_{q_i}(c_0)\} \quad \text{ and } \quad
+	t_i \leq \min\{\ord_{p_i}(c) + Z_i, \ord_{p_i}(c_0)\}.\]
+From here, it is easy to see that ${\ord_p(d)\leq \ord_p(c)}$ for each rational prime $p\notin S$ so that $d \in \mathcal{D}$.
+
+Conversely, suppose $d \in \mathcal{D}$ so that $\ord_{p}(d) \leq \ord_{p}(c)$ for all $p \notin S$. That is, the right-hand side of
+\[\ord_{p}(d) \leq \ord_{p}(c) =
+\ord_p\left(\prod_{i=1}^w q_i^{b_i}\cdot \prod_{i=1}^v p_i^{\ord_{p_i}(c)}\right)\]
+is non-trivial only at the primes $\{q_1, \dots, q_w\}$. In particular,
+\[d = \prod_{i=1}^w q_i^{s_i}\cdot \prod_{i=1}^v p_i^{t_i}\]
+for non-negative integers $s_1, \dots, s_w, t_1, \dots, t_v$ such that
+\[s_i \leq \min\{\ord_{q_i}(c), \ord_{q_i}(c_0)\} \quad \text{ and } \quad
+	t_i \leq \ord_{p_i}(c_0).\]
+It follows that $d = \gcd(c_0,Y)$ for some solution $(X,Y,Z_1, \dots, Z_v)$ of equation~\eqref{eq:ThueMahler}.
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,17 @@
+#!/bin/bash
+# GatherKilledFormsCheck.sh
+
+# Author: Adela Gherga <adelagherga@gmail.com>
+# Copyright © 2021, Adela Gherga, all rights reserved.
+# Created: 22 January 2021
+#
+# Description: Verify all killed jobs in GNU parallel generated from GenerateSUnitEq.m output
+#
+# Commentary:  N/A
+#
+# To do list:  N/A
+#
+# Example:     N/A
+#
+
+cd /home/adela/ThueMahler/Data/SUnitEqData

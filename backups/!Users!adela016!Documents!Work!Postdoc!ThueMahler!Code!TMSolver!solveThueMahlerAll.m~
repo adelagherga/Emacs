@@ -1,0 +1,428 @@
+/*
+solveThueMahlerAll.m
+
+This solves a_0 X^d + ... + a_d Y^d = a * p_1^{z_1} ... p_v^{z_v} subject to
+the assumptions that X, Y are integers and gcd(X,Y) = 1. Note that we do not
+assume a_0, Y are coprime here.
+
+Authors
+    Adela Gherga <adelagherga@gmail.com>
+    Samir Siksek <samir.siksek@gmail.com>
+Created
+    22 August 2022
+*/
+
+load "./solveThueMahler.m";
+
+makeMonic:=function(alist,a,primelist)
+    /*
+      Determine all possible values of b = gcd(Y,a_0) and apply the
+      corresponding linear change of variables to the the Thue--Mahler form
+      a_0 X^d + ... + a_d Y^d = a p_1^{z_1} ... p_v^{z_v}, ensuring a_0 = 1.
+      This is necessary in order to compute all solutions subject to the
+      assumptions that X, Y are coprime integers and Y, a_0 are not necessarily
+      coprime.
+
+      Parameters
+          alist: SeqEnum
+              A list of coefficients a_0, a_1,...,a_d.
+          a: RngIntElt
+          primelist: SeqEnum
+              A list of rational primes p_1, p_2,...,p_v.
+      Returns
+          newablist: SeqEnum
+	      A list of sets (new_a,blist) where
+	      X^d + ... + a_d Y^d = new_a p_1^{z_1} ... p_v^{z_v} under the
+	      change of variables arising from b = gcd(a_0,Y), where b is an
+	      integer element of blist.
+   */
+    assert &and[IsPrime(p) : p in primelist];
+    assert &and[a_i in Integers() : a_i in alist];
+    a0:=Integers()!alist[1];
+    assert a0 ne 0;
+    d:=#alist-1;
+    assert d ge 3;
+    v:=#primelist;
+    qlist:=[f[1] : f in Factorization(a)];
+    ordpa:=[[0..Valuation(a0,primelist[i])] : i in [1..v]];
+    ordqa:=[[0..Min(Valuation(a,qlist[i]),Valuation(a0,qlist[i]))]
+	    : i in [1..#qlist]];
+
+    prod1:={1};
+    prod2:={1};
+    expCombos1:=CartesianProduct(ordpa);
+    for c in expCombos1 do
+        prod1:=prod1 join {&*{primelist[i]^c[i] : i in [1..v]}};
+    end for;
+    if (a ne 1) then
+        expCombos2:=CartesianProduct(ordqa);
+        for c in expCombos2 do
+            prod2:=prod2 join {&*{qlist[i]^c[i] : i in [1..#qlist]}};
+        end for;
+    end if;
+    cD:=[];
+    for p1 in prod1 do
+        for p2 in prod2 do
+            Append(~cD,p1*p2);
+        end for;
+    end for;
+    Sort(~cD);
+
+    newAs:=[];
+    for i in [1..#cD] do
+        b:=cD[i];
+        new_a:=(a*a0^(d-1))/b^d;
+        for j in [1..v] do
+	    // Divide out factors of p_i from a; ensure gcd(a,p_1,...,p_v) = 1.
+            new_a:=new_a/(primelist[j]^Valuation(new_a,primelist[j]));
+        end for;
+        newAs[i]:=new_a;
+    end for;
+    newAs2:=[];
+    for i in [1..#cD] do
+        if newAs[i] notin newAs2 then
+            Append(~newAs2,newAs[i]);
+        end if;
+    end for;
+    Sort(~newAs2);
+
+    newablist:=[];
+    for i in [1..#newAs2] do
+        newablist[i]:=[* [newAs2[i]] *];
+        newablist[i][2]:=[];
+        for j in [1..#cD] do
+            if newAs[j] eq newAs2[i] then
+                Append(~newablist[i][2],cD[j]);
+            end if;
+        end for;
+    end for;
+    return newablist;
+end function;
+
+recoverXY:=function(alist,a,primelist,x,y,b)
+    /*
+      Given a_0 X^d + ... + a_d Y^d = a * p_1^{z_1} ... p_v^{z_v} and a solution
+      (x,y) to this equation under a linear change of variables associated to
+      b = gcd(a_0,Y), recover the solution X, Y, where possible.
+
+      Parameters
+          alist: SeqEnum
+              A list of integer coefficients a_0, a_1,...,a_d.
+          a: RngIntElt
+          primelist: SeqEnum
+              A list of rational primes p_1, p_2,...,p_v.
+          x: RngIntElt
+          y: RngIntElt
+          b: RngIntElt
+      Returns
+          sol: SetEnum
+              A list of solutions [X,Y,z_1,...,z_v].
+   */
+    d:=#alist-1;
+    ZUV<U,V>:=PolynomialRing(Integers(),2);
+    F:=&+[alist[i+1]*U^(d-i)*V^i : i in [0..d]];
+    a0:=alist[1];
+
+    if (IsDivisibleBy(b*x,a0) eq false) then
+	return {};
+    end if;
+    sol:=[Integers()!(b*x/a0),Integers()!(b*y)];
+    if (GCD(sol[1],sol[2]) ne 1) then
+	return {};
+    end if;
+    Fsol:=Evaluate(F,sol);
+    if (Fsol eq 0) then
+	return {};
+    end if;
+    if (IsDivisibleBy(Fsol,a) eq false) then
+	return {};
+    end if;
+    Fsol:=Fsol div a;
+    zlist:=[];
+    for p in primelist do
+	z:=Valuation(Fsol,p);
+	Append(~zlist,z);
+	Fsol:=Fsol div p^z;
+    end for;
+    if Fsol eq 1 then
+	if IsEven(d) then
+	    return {sol cat zlist,[-sol[1],-sol[2]] cat zlist};
+	else
+	    return {sol cat zlist};
+	end if;
+    elif Fsol eq -1 then
+	if IsOdd(d) then
+	    return {[-sol[1],-sol[2]] cat zlist};
+	end if;
+    end if;
+end function;
+
+solveThueMahlerAll:=function(alist,a,primelist : verb:=false)
+    /*
+      Solves a_0 X^d + ... + a_d Y^d = a p_1^{z_1} ... p_v^{z_v}
+      subject to the assumptions that X, Y are integers and
+      gcd(X,Y) = 1, with a_0, Y not necessarily coprime.
+
+      Parameters
+          alist: SeqEnum
+              A list of coefficients a_0, a_1,...,a_d.
+          a: RngIntElt
+          primelist: SeqEnum
+              A list of rational primes p_1, p_2,...,p_v.
+          verb: BoolElt
+              A true/false value. If set to true, this function returns status
+	      updates as it proceeds.
+      Returns
+          sols: SetEnum
+              A list of solutions [X,Y,z_1,...,z_v] to the Thue-Mahler
+	      equation.
+   */
+    assert &and[IsPrime(p) : p in primelist];
+    assert &and[a_i in Integers() : a_i in alist];
+    a0:=Integers()!alist[1];
+    assert a0 ne 0;
+    d:=#alist-1;
+    assert d ge 3;
+    QUV<U,V>:=PolynomialRing(Rationals(),2);
+    Qx<x>:=PolynomialRing(Rationals());
+    F:=&+[alist[i+1]*U^(d-i)*V^i : i in [0..d]];
+    assert IsHomogeneous(F);
+    f:=a0^(d-1)*Evaluate(F,[x/a0,1]);
+    assert IsMonic(f);
+    assert Degree(f) eq d;
+    assert IsIrreducible(f);
+    falist:=Reverse(Coefficients(f));
+    assert &and[a_i in Integers() : a_i in falist];
+    newablist:=makeMonic(alist,a,primelist);
+
+    allSols:={};
+    for i in [1..#newablist] do
+        newa:=Integers()!newablist[i][1][1];
+        blist:=newablist[i][2];
+	assert &and[Valuation(new_a,p) eq 0 : p in primelist];
+	time sols:=solveThueMahler(falist,new_a,primelist : verb:=verb);
+        for b in blist do
+            for sol in sols do
+                x:=sols[1];
+		y:=sols[2];
+		allSols:=allSols join recoverXY(alist,a,primelist,x,y,b);
+	    end for;
+	end for;
+    end for;
+    return allSols;
+end function;
+
+function ConvertTMToEllipticCurves(N,clist,sols)
+    // INPUT: N, clist, sols
+    // Here N is the conductor corresponding to the
+    // Thue-Mahler form given by clist with solutions sols
+    // OUTPUT: Elliptic curves with no nontrivial 2-torsion points
+    d:=#clist-1;
+    assert d eq 3;
+    a,b,c,d:= Explode(clist);
+    Q<x,y>:= PolynomialRing(Integers(),2);
+    H:= (b^2-3*a*c)*x^2 + (b*c-9*a*d)*x*y + (c^2-3*b*d)*y^2;
+    G:= (-27*a^2*d + 9*a*b*c-2*b^3)*x^3 + (-3*b^2*c - 27*a*b*d + 18*a*c^2)*x^2*y +
+	(3*b*c^2 - 18*b^2*d + 27*a*c*d)*x*y^2 + (-9*b*c*d + 2*c^3 + 27*a*d^2)*y^3;
+    F:= a*x^3 + b*x^2*y + c*x*y^2 + d*y^3;
+    DF:= -27*a^2*d^2 + b^2*c^2 + 18*a*b*c*d - 4*a*c^3 - 4*b^3*d;
+
+    a0:= Integers()!Valuation(DF,2);
+    b0:= Integers()!Valuation(DF,3);
+    N1:= Integers()! (Abs(DF)/(2^a0*3^b0));
+    assert (a0 eq 3) or (a0 eq 4);
+    assert (b0 eq 0) or (b0 eq 1);
+    assert N1 in Divisors(7^2*41);
+
+    Divs6N:= [D : D in Divisors(6*N) |  IsSquarefree(D)];
+    assert 1 in Divs6N;
+
+    ECs:= [];
+    for s in sols do
+        u:= s[1];
+        v:= s[2];
+	Fuv:= Integers()!Evaluate(F,[u,v]);
+	a1:= Integers()!Valuation(Fuv,2);
+	b1:= Integers()!Valuation(Fuv,3);
+	if (a1 eq 0) and (b1 ge 0) and
+	   (&and[Valuation(Fuv,p) in [0,1] : p in [7,41] | IsDivisibleBy(N1,p^2)]) then
+
+	    a_4:= -27*(Evaluate(H,[u,v]));
+	    a_6:= 27*(Evaluate(G,[u,v]));
+            E:= [0,0,0, a_4, a_6];
+
+            MinE:= MinimalModel(EllipticCurve(E));
+            CondE:= Conductor(MinE);
+            Append(~ECs, < CondE, aInvariants(MinE), [u,v] > );
+
+	    for D in Divs6N do
+		MinE2:= MinimalModel(QuadraticTwist(MinE,D));
+		CondE2:= Conductor(MinE2);
+		Append(~ECs, < CondE2, aInvariants(MinE2), [u,v] > );
+
+		TwistMinE2:= MinimalModel(QuadraticTwist(MinE2,-1));
+		TwistCondE2:= Conductor(TwistMinE2);
+		Append(~ECs, < TwistCondE2, aInvariants(TwistMinE2), [u,v] > );
+	    end for;
+	end if;
+    end for;
+
+    Sort(~ECs);
+    RelECs:= {};
+    for E in ECs do
+	if E[1] eq N then
+	    RelECs:= RelECs join {E};
+	end if;
+    end for;
+
+    printf "Elliptic curves corresponding to conductor N = %o and form clist:=%o :\n ",
+	   N, clist;
+    print RelECs;
+    printf
+	"============================================================================== \n";
+
+    return RelECs;
+end function;
+
+
+
+
+CommaSplit:=Split(set,","); // Split bash input by ",".
+RBracketSplit:=Split(set,"()"); // Split bash input by "(" and ")".
+// Delimiter for form.
+assert CommaSplit[2][2] eq "(" and CommaSplit[5][#CommaSplit[5]-1] eq ")";
+// Delimiter for optimal form.
+assert CommaSplit[6][2] eq "(" and CommaSplit[9][#CommaSplit[9]-1] eq ")";
+// Delimiter for min poly.
+assert CommaSplit[10][2] eq "(" and CommaSplit[13][#CommaSplit[13]-1] eq ")";
+assert (#RBracketSplit eq 11) or (#RBracketSplit eq 13);
+N:=StringToInteger(CommaSplit[1]); // Convert bash input N into an integer.
+// Convert bash input for optimal form, min poly into a sequence of integers.
+alist:=[StringToInteger(i) : i in Split(RBracketSplit[4],",")];
+if (#RBracketSplit eq 11) then
+    assert CommaSplit[14] eq "None";
+    allAs:=[StringToInteger(i) : i in Split(RBracketSplit[8],",")];
+    primelist:=[StringToInteger(i) : i in Split(RBracketSplit[10],",")];
+else
+    allAs:=[StringToInteger(i) : i in Split(RBracketSplit[10],",")];
+    primelist:=[StringToInteger(i) : i in Split(RBracketSplit[12],",")];
+end if;
+t1:=Cputime();
+
+
+f,remainingCase,partialObstruction,localObstruction:=
+    prep0(N,clist,fclist,partialObstruction,avalues,primelist);
+Append(~timings,<Cputime(t1),"local obstructions">);
+
+if (IsEmpty(localObstruction)) then
+
+    // generate a record to store relevant info of the field K = Q(th)
+    FieldInfo:= recformat<field,gen,ringofintegers,minpoly,zeta,fundamentalunits>;
+    K<th>:=NumberField(f);
+    OK:=MaximalOrder(K);
+    th:=OK!th;
+    fieldKinfo:= rec<FieldInfo | field:= K,gen:= th,ringofintegers:= OK,minpoly:= f>;
+
+    n:= Degree(f);
+    assert (n eq #clist-1);
+    s,t:= Signature(K);
+    assert r eq (s+t-1);
+    assert (s+2*t) eq n;
+    assert (r eq 1) or (r eq 2);
+
+    afplist:= prep1(fieldKinfo,clist,remainingCase); // generate all ideal equations
+    ThueToSolve:= [];
+
+    // general setup and assertions
+    Qx<x>:= PolynomialRing(Rationals());
+    c0:=Integers()!clist[1];
+    assert c0 ne 0;
+    n:=#clist-1;
+    assert n eq 3;
+    assert fclist eq ([1] cat [clist[i+1]*c0^(i-1) : i in [1..n]]);
+    assert f eq &+[fclist[i+1]*x^(n-i) : i in [0..n]];
+    assert classnumber eq Integers()! ClassNumber(K);
+
+    // remove ideal equations which have exponent 0 on all prime ideals by generating
+    // corresponding Thue equations to be solved
+    toRemove:= [];
+    for i in [1..#afplist] do
+	fplist:= afplist[i][4];
+	if IsEmpty(fplist) then
+	    a:= afplist[i][1]`newa;
+	    aduset:= afplist[i][1]`adu;
+	    primelist:= afplist[i][2];
+	    ideal_a:= afplist[i][3];
+	    v:= #primelist;
+	    tt:= [Valuation(Norm(ideal_a), primelist[i]) : i in [1..v]];
+	    assert Norm(ideal_a) eq Abs(a)*&*[primelist[i]^tt[i] : i in [1..v]];
+	    tf,alpha:=IsPrincipal(ideal_a); // verify ideal_a is principal
+	    if tf then
+		for adu in aduset do
+		    zz:= [tt[i] - Valuation(adu[3]*adu[1],primelist[i]) : i in [1..v]];
+		    rhs:= Integers()! adu[1]*&*[primelist[i]^zz[i] : i in [1..v]];
+		    assert adu[3]*rhs eq Integers()!a*&*[primelist[i]^tt[i] : i in [1..v]];
+		    // store Thue equations to be solved
+		    if (rhs in Integers()) and (rhs notin ThueToSolve) then
+			Append(~ThueToSolve, rhs);
+		    end if;
+		end for;
+	    end if;
+	    Append(~toRemove,i);
+	end if;
+    end for;
+    Sort(~ThueToSolve);
+
+    // remove cases covered by Thue solver
+    afplistNew:= [afplist[i] : i in [1..#afplist] | i notin toRemove];
+    afplist:= afplistNew;
+    assert #afplist eq NoIdealEq;
+    assert IsEmpty(afplist) eq false;
+    assert #ThueToSolve eq NoThueEq;
+
+    // export Thue data into .csv file
+    hash:= hash cat ",\"(" cat RBracketSplit[4] cat ")\"";
+    assert hash eq &cat[set[i] : i in [1..#hash]];
+
+    if (ThueToSolve ne []) then
+	strRHS:= SeqEnumToString(Sort(ThueToSolve));
+	fprintf ThueEqToSolve, hash cat "," cat strRHS cat "\n";
+    end if;
+
+    // export SUnit data into .csv file
+    strFclist:= SeqEnumToString(fclist);
+    if IsEmpty(partialObstruction) then
+	strPartialObs:= "None";
+    else
+	strPartialObs:= SeqEnumToString(partialObstruction);
+    end if;
+    strAvalues:= SeqEnumToString(remainingCase`avalues);
+    strPrimelist:= SeqEnumToString(remainingCase`primelist);
+
+    hash:= hash cat "," cat strFclist cat "," cat strPartialObs cat ","
+	   cat IntegerToString(classnumber) cat "," cat IntegerToString(r) cat
+	   "," cat IntegerToString(#afplist) cat "," cat IntegerToString(#ThueToSolve)
+	   cat "," cat strAvalues cat "," cat strPrimelist cat "\n";
+
+    fprintf SUnitEq, hash;
+else
+    Append(~timings,<Cputime(t0),"total time">);
+    assert (#timings eq 2) and (timings[1][2] eq "local obstructions");
+
+    // export local obstruciotn into .csv file
+    hash:= hash cat "," cat Sprint(localObstruction[1]) cat ",None";
+
+    strTimings:= Sprint([t[1] : t in timings]);
+    toRemove:= [];
+    for i in [1..#strTimings] do
+	j:= strTimings[i];
+	if (j eq "[") or (j eq " ") or (j eq "]") then
+	    Append(~toRemove, i);
+	end if;
+    end for;
+    strTimings:= "," cat &cat[strTimings[i] : i in [1..#strTimings] | i notin toRemove];
+    fprintf NoSUnitEqPossible, hash cat strTimings cat "\n";
+
+end if;
+
+UnsetLogFile();

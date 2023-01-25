@@ -1,0 +1,25 @@
++++
+date = "2015-08-22T06:42:21-07:00"
+draft = false
+title = "PUBLICATIONS"
+avatar = "img/profile7.jpg"
++++
+
+### 
+<li>M.A. Bennett, A. Gherga, A. Rechnitzer,
+*Computing elliptic curves over $\require{color}\color{black}\mathbb{Q}            $.*    
+Math. Comp. 88 (2019), no. 317, 1341-1390, [The pdf](BeGhRe3.pdf). [The associated data and code](https://www.nt.math.ubc.ca/BeGhRe/).
+</li>
+
+### SUBMITTED FOR PUBLICATION
+<li>M.A. Bennett, A. Gherga, D. Kreso,
+*An old and new approach to Goormaghtigh's equation.*
+</li>
+
+### IN PROGRESS
+<li>A. Gherga, R. von K&auml;nel, B. Matschke, S. Siksek, 
+*Efficient resolution of Thue-Mahler equations.*
+</li>
+<li>M.A. Bennett, A. Gherga, 
+*On the sum of two S-units being a square and associated elliptic curves.*
+</li>

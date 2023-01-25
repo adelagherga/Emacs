@@ -1,0 +1,363 @@
+/*
+ThueSolver.m
+
+Author: Adela Gherga <adelagherga@gmail.com>
+Copyright © 2021, Adela Gherga, all rights reserved.
+Created:  3 July 2021
+
+Description:
+
+Commentary:
+
+To do list:
+
+Example:
+
+*/
+
+
+SeqEnumToString:= function(X : Quotations:=true)
+
+    /*
+     Description: convert a SeqEnum into a string without whitespace, enclosed by "( )" for
+     		  .csv input
+     Input: X:= [x_1, _2, \dots, x_n] where Type(X):= SeqEnum
+            Quotiations:= boolean value determining whether to enclose the output in quotations
+                          default is set to true
+     Output: stX:= "\"(x_1, \dots ,x_n)\"", where Type(strX):= MonStgElt
+     Example:
+   */
+
+    strX:= "(";
+    for i in [1..#X] do
+	if X[i] in Integers() then
+	    strX:= strX cat IntegerToString(Integers()!X[i]);
+	elif X[i] in Rationals() then
+	    strX:= strX cat IntegerToString(Numerator(X[i])) cat "/" cat
+		   IntegerToString(Denominator(X[i]));
+	end if;
+	if (i ne #X) then
+	    strX:= strX cat ",";
+	end if;
+    end for;
+    strX:= strX cat ")";
+
+    if Quotations then
+	strX:= "\"" cat strX cat "\"";
+    end if;
+
+    return strX;
+end function;
+
+ModpCheckDivRHS:= function(F,q)
+
+    /*
+     Description: determine whether F(X,Y) = 0 mod q has a non-trivial solution;
+                  ie. when q divides the RHS
+     Input: F:= polynomial F(X,Y) in question
+            q:= rational integer under which the local test is performed
+                that is, we search for solutions of the TM equations mod q
+     Output: hasSolutions:= boolean value determining whether F(X,Y) = 0 mod q has a
+     	     		    nontrivial solution
+             F_qs:= all possible values of F(u,v) mod q where u,v ranges through [0..q-1]
+                    NB. this set is empty if F(X,Y) = 0 mod q has a nontrivial solution
+     Example:
+   */
+
+    hasSolutions:= false;
+    F_qs:= [];
+    if IsPrime(q) then
+	Zmodq:= FiniteField(q,1);
+    else
+	Zmodq:= ResidueClassRing(q);
+    end if;
+
+    // set hasSolutions to true if F(X,Y) = 0 has a solution (u,v) != (0,0) mod q
+    for u,v in [0..q-1] do
+	if [u,v] ne [0,0] then
+	    F_q:= Zmodq! (Evaluate(F,[u,v]));
+	    if F_q notin F_qs then
+		Append(~F_qs, F_q);
+	    end if;
+
+	    if (F_q eq 0) then
+		hasSolutions:= true;
+		return [], hasSolutions;
+	    end if;
+	end if;
+    end for;
+
+    // local, partial local obstructions are only possible where hasSolutions returns false
+    // return all F(u,v) mod q values if false; will be used for further local
+    // obstruction tests
+    // NB. F_qs does not contain 0 in this case
+    Sort(~F_qs);
+    assert (IsEmpty(F_qs) eq false);
+    assert IsSubsequence(F_qs,[1..q-1]: Kind:="Setwise");
+
+    return F_qs, hasSolutions;
+end function;
+
+ModpCheck:= function(F_qs,RHSprimes,avalues,q)
+
+    /*
+     Description: determine whether F(X,Y) has a non-trivial solution
+     		  ie. when q does not divide the RHS
+     Input: F_qs:= all possible values F(u,v) mod p, where u,v ranges through [0..q-1]
+            RHSprimes:= primes appearing on RHS of TM equation in local test
+            avalues:= [a_1, \dots, a_m], fixed coefficients on RHS of F(X,Y)
+            q:= rational prime under which the local test is performed
+                that is, we search for solutions of the TM equations mod q
+     Output: hasSolutions:= boolean values determining whether TM equation has nontrivial
+                            local solutions mod q at the corresponding a value
+     Example:
+   */
+
+    assert (IsEmpty(F_qs) eq false);
+    hasSolutions:= [false : a in avalues];
+    Zmodq:= FiniteField(q,1);
+    avalues_q:= [Zmodq! a : a in avalues];
+
+    // set hasSolutions to true if, for all (u,v) != (0,0), F(X,Y) moq q
+    // can take on all values in [1..q-1]
+    if (F_qs eq [1..q-1]) then
+	hasSolutions:= [true : a in avalues];
+    else
+	if IsEmpty(RHSprimes) then
+	    // when q is the only prime on the RHS; ie. a is the only possible RHS value
+
+	    // set hasSolutions to true if F(X,Y) = a has a solution (u,v) != (0,0) moq q
+	    for i in [1..#avalues] do
+		if (avalues_q[i] in F_qs) then
+		    hasSolutions[i]:= true;
+		end if;
+	    end for;
+	else
+	    // when q is not the only prime on the RHS
+
+	    RHSprimesModq:= [];
+	    // determine all possibilites of p^i mod q
+	    for p in RHSprimes do
+		pModq:= Zmodq! p;
+		Append(~RHSprimesModq, [Zmodq! (p^i) : i in [0..Order(pModq)-1]]);
+	    end for;
+	    RHSprod:= CartesianProduct(RHSprimesModq);
+
+	    // set hasSolutions to true if F(X,Y) has a solution (u,v) != (0,0) moq q
+	    for i in [1..#avalues] do
+		for prod in RHSprod do
+		    prod_q:= Zmodq! (avalues_q[i]*&*prod);
+		    if (prod_q in F_qs) then
+			hasSolutions[i]:= true;
+			break prod;
+		    end if;
+		end for;
+	    end for;
+	end if;
+    end if;
+
+    return hasSolutions;
+end function;
+
+localtest:= function(N,F,DiscF,testPrimes,avalues)
+
+    /*
+     Description: determines whether the TM equation has local or partial local obstructions
+     Input: N:= conductor of corresponding elliptic curves in question
+     	    F:= polynomial F(X,Y) in question
+            DiscF:= discriminant of F(X,Y)
+	    testPrimes:= [p_1, \dots, p_v], rational primes on RHS of F(X,Y) along with the
+	    		 incomplete list of partial obstructions
+            avalues:= [a_1, \dots, a_m], fixed coefficients on RHS of F(X,Y)
+     Output: avaluesNew:= updated list of possible a values generated after discarding
+                          those which are not possible
+	     partialObstruction:= set of primes p for which solutions can only be possible
+     	     			  with p having exponent 0 on RHS of the TM equation
+             localobstruction:= set of primes p presenting obstructions for the TM equation
+	                        that is, an obstruction exists at p as per Theorem 1 of BeGhRe
+                                or no solution of the TM equation exists mod p
+     Example:
+   */
+
+    // verify all a values divide the RHS
+    for a in avalues do
+	if (a ne 1) then
+	    _, hasSol:= ModpCheckDivRHS(F,a);
+	    assert hasSol;
+	end if;
+    end for;
+
+    localObstruction:= [];
+    partialObstruction:= [];
+    for p in testPrimes do
+	// search for solutions (u,v) of F(u,v) mod p
+	// under the assumption that the exponent on p is > 0
+	F_ps, posExpSol:= ModpCheckDivRHS(F,p);
+
+	if (posExpSol eq false) then
+	    if (p ge 3) and (Valuation(N,p) eq 1) and (DiscF mod p ne 0) then
+		// verify local obstructions as per Theorem 1 of BeGhRe
+		// ie. if Valuation(N,p) = 1 for p >= 3, then p | DiscF*F(u,v)
+		// thus if DiscF != 0 mod p, then F(u,v) = 0 mod p for some (u,v)
+		// if u = v = 0 mod p is the only solution, gcd(u,v) != 1
+		// hence local obstruction at p
+		Append(~localObstruction, p);
+		return avalues, partialObstruction, localObstruction;
+	    else
+		// verify local obstructions for primes possible on RHS
+
+		// search for solutions (u,v) of F(u,v) mod p across all a values
+		// under the assumption that the exponent on p is 0
+		zeroExpSol:= ModpCheck(F_ps,Exclude(testPrimes,p),avalues,p);
+
+		// discard a value where u = v = 0 mod p is the only solution in both cases
+		// gcd(u,v) != 1, hence no solutions possible at this a value
+		toRemove:= [];
+		for i in [1..#avalues] do
+		    if (zeroExpSol[i] eq false) then
+			Append(~toRemove, i);
+		    end if;
+		end for;
+		avaluesNew:= [avalues[i] : i in [1..#avalues] | i notin toRemove];
+		assert (#avaluesNew le #avalues);
+		avalues:= avaluesNew;
+
+		if (IsEmpty(avalues)) then
+		    // if u = v = 0 mod p is the only solution in both cases for all a values
+		    // gcd(u,v) != 1, hence local obstruction at p
+	    	    Append(~localObstruction, p);
+		    return avalues, partialObstruction, localObstruction;
+		else
+		    // if, for all a values, a solution (u,v) != (0,0) mod p exists
+		    // when the exponent on p is 0
+		    // but u = v = 0 mod p is the only solution
+		    // when the exponent on p is > 0
+		    // partial obstruction at p; can remove p from primelist
+		    Append(~partialObstruction, p);
+		end if;
+	    end if;
+	end if;
+    end for;
+
+    Sort(~partialObstruction);
+    assert (IsEmpty(avalues) eq false);
+
+   return avalues, partialObstruction, localObstruction;
+end function;
+
+prep0:= function(N,clist,fclist,partialObstruction,avalues,primelist)
+
+    /*
+     Description: verify conditions of Theorem 1 of BeGhRe for clist, N
+     Input: N:= conductor of corresponding elliptic curves in question
+     	    clist:= [c_0, \dots, c_n], the coefficients of F(X,Y)
+	    fclist:= [1,c_1, \dots, c_n], the coefficients of monic polynomial defining
+                     the number field K = Q(th)
+            partialObstruction:= set of primes p for which solutions can only be possible
+     	    			 with p having exponent 0 on RHS of the TM equation
+            avalues:= [a_1, \dots, a_m], fixed coefficients on RHS of F(X,Y)
+            primelist:= [p_1, \dots, p_v], rational primes on RHS of F(X,Y)
+     Output: f:= monic polynomial defining the number field K = Q(th)
+             remainingCase:= list of primelist and all corresponding a values
+             		     comprising the RHS of F(x,y)
+	     partialObstruction:= set of primes p for which solutions can only be possible
+     	     			  with p having exponent 0 on RHS of the TM equation
+             localobstruction:= set of primes p presenting obstructions for the TM equation
+	                        that is, an obstruction exists at p as per Theorem 1 of BeGhRe
+                                or no solution of the TM equation exists mod p
+     Example:
+   */
+
+    QUV<U,V>:=PolynomialRing(Rationals(),2);
+    Qx<x>:= PolynomialRing(Rationals());
+
+    // general setup for Thue-Mahler solver
+    assert &and[c in Integers() : c in clist];
+    c0:=Integers()!clist[1];
+    assert c0 ne 0;
+    assert &and[IsPrime(p) : p in primelist];
+    assert &and[a ne 0 : a in avalues];
+    assert &and[GCD(a,p) eq 1 : a in avalues, p in primelist];
+    n:=#clist-1;
+    assert n eq 3;
+
+    // generate the relevant Thue-Mahler polynomial
+    F:=&+[clist[i+1]*U^(n-i)*V^i : i in [0..n]];
+    assert IsHomogeneous(F);
+    DiscF:= -27*clist[1]^2*clist[4]^2 + clist[2]^2*clist[3]^2;
+    DiscF:= DiscF + 18*clist[1]*clist[2]*clist[3]*clist[4];
+    DiscF:= DiscF - 4*clist[1]*clist[3]^3 - 4*clist[2]^3*clist[4];
+    assert DiscF eq Discriminant(Evaluate(F,[x,1]));
+
+    assert fclist eq ([1] cat [clist[i+1]*c0^(i-1) : i in [1..n]]);
+    f:=&+[fclist[i+1]*x^(n-i) : i in [0..n]];
+    c0:= Integers()!fclist[1]; // update c0
+    assert c0 eq 1;
+    assert IsMonic(f);
+    assert Coefficients(f) eq
+	   Coefficients(clist[1]^(n-1)*Evaluate(F,[x/clist[1],1]));
+    assert Degree(f) eq n;
+    assert IsIrreducible(f);
+    assert &and[c in Integers() : c in Coefficients(f)];
+
+    testPrimes:= primelist;
+    for p in partialObstruction do
+	if p notin testPrimes then
+	    Append(~testPrimes, p);
+	end if;
+    end for;
+    Sort(~testPrimes);
+
+    // verify local and partial local obstructions
+    avaluesNew,partialObstructionNew,localObstruction:=
+	localtest(N,F,DiscF,testPrimes,avalues);
+
+    assert &and[p in partialObstructionNew : p in partialObstruction];
+    partialObstruction:= partialObstructionNew;
+
+    if (IsEmpty(localObstruction) eq false) then
+	// local obstructions present; do not enter TM solver
+	return f,[],partialObstruction,localObstruction;
+    end if;
+
+    assert (IsEmpty(avaluesNew) eq false);
+    avalues:= avaluesNew;
+
+    // remove superflous cases where a partial obstruction at p exists
+    toRemove:= [];
+    for i in [1..#primelist] do
+	if primelist[i] in partialObstruction then
+	    Append(~toRemove, i);
+	end if;
+    end for;
+    primelistNew:= [primelist[i] : i in [1..#primelist] | i notin toRemove];
+    assert (#primelistNew le #primelist);
+    assert IsSubsequence(primelistNew,primelist: Kind:="Setwise");
+    primelist:= primelistNew;
+
+    // ensure there are remaining cases not resolvable via Thue equations
+    assert (IsEmpty(primelist) eq false);
+
+    /*
+    // if all cases are resolved via Thue equations
+    // store corresponding Thue equations to be solved, if any
+    if IsEmpty(primelist) then // no unbounded primes
+	ThueToSolve:= avalues;
+
+	enterTM:=false;
+	exitline:= ",None," cat IntegerToString(#ThueToSolve);
+	exitfile:= "NoSUnitEqNeeded";
+	return f,enterTM,remainingCase,partialObstruction,ThueToSolve,exitline,exitfile;
+    end if;
+   */
+
+    // if there are Thue-Mahler equations yet to be solved, not resolvable via Thue equations
+    // generate the corresponding S-unit equations
+    CaseInfoAllAs:= recformat<avalues,primelist>;
+    remainingCase:= rec<CaseInfoAllAs | avalues:=avalues, primelist:= primelist>;
+
+    // if the code has made it this far, the following must hold
+    assert IsEmpty(localObstruction);
+    return f,remainingCase,partialObstruction,localObstruction;
+
+end function;

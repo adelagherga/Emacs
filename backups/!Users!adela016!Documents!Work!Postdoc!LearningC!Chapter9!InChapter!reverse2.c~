@@ -1,0 +1,40 @@
+/*
+ * reverse2.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created: 18 January 2021
+ *
+ * Description: Reverses a series of numbers using a variable-length array - C99 only!
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+int main(void)
+{
+  int i, n;
+
+  printf("How many numbers do you want to reverse? ");
+  scanf("%d", &n);
+
+  int a[n];
+
+  printf("Enter %d numbers: ", n);
+  for (i = 0; i < n ; i++)
+    scanf("%d", &a[i]);
+
+  printf("In reverse order: ");
+  for (i = n - 1; i >= 0; i--)
+    printf(" %d", a[i]);
+
+  printf("\n");
+
+  return 0;
+}

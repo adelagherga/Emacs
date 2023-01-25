@@ -1,0 +1,213 @@
+\documentclass[10pt]{beamer}
+
+\usetheme[progressbar=frametitle]{metropolis}
+
+\definecolor{ubcBlue}{RGB}{12,35,68}
+\definecolor{ubcBlue1}{RGB}{0,85,183}
+\definecolor{ubcBlue2}{RGB}{0,167,225}
+\definecolor{ubcBlue3}{RGB}{64,180,229}
+\definecolor{ubcBlue4}{RGB}{110,196,232}
+\definecolor{ubcBlue5}{RGB}{151,212,223}
+
+% \setbeamercolor{normal text}{bg=ubcBlue1}
+\setbeamercolor{alerted text}{bg=ubcBlue1, fg = ubcBlue}
+\setbeamercolor{example text}{fg=ubcBlue1, bg=ubcBlue1}
+\setbeamercolor{title separator}{fg = ubcBlue, bg=ubcBlue}
+\setbeamercolor{progress bar}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{progress bar in head/foot}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{progress bar in section page}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{frametitle}{bg=ubcBlue}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{color}
+\usepackage{soul}
+\usepackage{tikz}
+\usepackage{tabulary}
+
+\usepackage{animate}
+
+
+\usetikzlibrary{positioning,arrows,calc}
+
+\tikzset{onslide/.code args={<#1>#2}{%
+  \only<#1>{\pgfkeysalso{#2}} % \pgfkeysalso doesn't change the path
+}}
+\tikzset{alt/.code args={<#1>#2#3}{%
+  \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+}}
+\tikzset{temporal/.code args={<#1>#2#3#4}{%
+  \temporal<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}{\pgfkeysalso{#4}} % \pgfkeysalso doesn't change the path
+}}
+
+\tikzset{
+    invisible/.style={opacity=0},
+    visible on/.style={alt={#1{}{invisible}}},
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },
+  }
+
+\DeclareMathOperator{\ord}{ord}
+
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\makeatletter
+\newsavebox{\mybox}
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+  \savebox{\mybox}{%
+      \begin{beamercolorbox}[%
+          wd=\paperwidth,%
+          sep=0pt,%
+          leftskip=\metropolis@frametitle@padding,%
+          rightskip=\metropolis@frametitle@padding,%
+        ]{frametitle}%
+      \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
+      \end{beamercolorbox}%
+    }
+  \begin{beamercolorbox}[%
+      wd=\paperwidth,%
+      sep=0pt,%
+      leftskip=\metropolis@frametitle@padding,%
+      rightskip=\metropolis@frametitle@padding,%
+    ]{frametitle}%
+  \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
+  \hfill%
+  \raisebox{-\metropolis@frametitle@padding}{}%{\includegraphics[height=\dimexpr\ht\mybox+\metropolis@frametitle@padding\relax]{2_2016_UBCNarrow_Signature_ReverseCMYK}}%
+    \hspace*{-\metropolis@frametitle@padding}
+  \end{beamercolorbox}%
+}
+\makeatother
+
+\pgfdeclarelayer{bg}
+\pgfdeclarelayer{fg}
+\pgfsetlayers{bg,main,fg}
+
+%---------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------%
+
+\begin{document}
+
+%---------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------%
+
+\title{Computing elliptic curves over $\mathbb{Q}$}
+\subtitle{}
+% \date{\today}
+\date{}
+\author{Adela Gherga}
+\institute{The University of Warwick}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+\maketitle
+
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+  \frametitle{Points on an elliptic curve}
+  \pause
+  \begin{columns}
+    \column{0.38\linewidth}
+    Given points $P$, $Q$ on $E$, define $P+Q$
+    \column{0.58\linewidth}
+    \begin{center}
+      \pgfplotsset{ticks=none}
+      \begin{tikzpicture}
+        \begin{axis}[
+          xmin=-4,
+          xmax=4,
+          ymin=-4,
+          ymax=4,
+          xlabel={$x$},
+          ylabel={$y$},
+          axis lines=middle,
+          scale only axis,
+          small,
+          xtick={},
+          samples=201,
+          smooth,
+          font=\small,
+          clip=false,
+          % use same unit vectors on the axis
+          axis equal image=true,
+          ]
+          \addplot[ubcBlue, domain=-2.382975:2.5, visible on=<3->]
+          {sqrt(x^3-4*x+4)};
+          \addplot[ubcBlue, domain=-2.382975:2.5, visible on=<3->]
+          {-sqrt(x^3-4*x+4)};
+
+          \draw [draw=ubcBlue1, fill=ubcBlue1, visible on=<4->] (axis cs:-2, 2) circle (2pt);
+          \draw [color=ubcBlue, visible on=<4->] (axis cs:-2,2.3) node [left]{$P$};
+
+          \draw [draw=ubcBlue1, fill=ubcBlue1, visible on=<5->] (axis cs:0.5, 1.4577) circle
+          (2pt);
+          \draw [color=ubcBlue, visible on=<5->] (axis cs:0.6,1.6) node [right]{$Q$};
+
+          \begin{pgfonlayer}{bg}
+            \addplot[red, domain=-3:3, visible on=<6-12>] {-0.21690*x + 1.55619};
+          \end{pgfonlayer}
+
+          \draw [draw=ubcBlue2, fill=ubcBlue2, visible on=<7-12>] (axis cs:1.54,1.222) circle
+          (2pt);
+          \draw [color=ubcBlue, visible on=<7-12>] (axis cs:1.6,0.9) node [right]{$R$};
+          \draw [draw=ubcBlue1, fill=ubcBlue1, visible on=<8-12>] (axis cs:1.54,1.222) circle
+          (2pt);
+
+          \begin{pgfonlayer}{bg}
+            \draw [red, dashed, visible on=<9-12>] (axis cs: 1.54, 3) -- (axis cs: 1.54, -3);
+          \end{pgfonlayer}
+
+          \draw [draw=ubcBlue2, fill=ubcBlue2, visible on=<10->] (axis cs:1.54,-1.222) circle
+          (2pt);
+          \draw [draw=ubcBlue1, fill=ubcBlue1, visible on=<11->] (axis cs:1.54,-1.222) circle
+          (2pt);
+          \draw [color=ubcBlue, visible on=<12-13>] (axis cs:1.6,-0.9) node [right]{$P+Q$};
+
+        \end{axis}
+      \end{tikzpicture}
+    \end{center}
+  \end{columns}
+
+
+  [Adding 2 points, animation]
+
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+% convert -density 300 -delay 34 -loop 0 TEST2.pdf animate.gif
+% convert -coalesce animate.gif something.png
+
+  \begin{frame}{Embedded Animation}
+  \animategraphics[loop,controls,width=\linewidth]{10}{something-}{0}{20}
+\end{frame}
+
+
+%---------------------------------------------------------------------------------------------%
+
+
+
+
+\begin{frame}
+  Doubling point, point at infinity
+\end{frame}
+
+
+\end{document}

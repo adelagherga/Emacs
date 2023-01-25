@@ -1,0 +1,140 @@
+%basic cover letter template
+\documentclass{letter}
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+
+
+\usepackage{xcolor}
+\definecolor{linkcolor}{HTML}{005075}
+\definecolor{oldcolor}{HTML}{AA9999}
+\definecolor{newcolor}{HTML}{339900}
+
+\newcommand{\edit}[1]{\textcolor{orange}{#1}}
+\newcommand{\new}[1]{\textcolor{newcolor}{#1}}
+\newcommand{\old}[1]{\textcolor{oldcolor}{#1}}
+
+\oddsidemargin=.2in
+\evensidemargin=.2in
+\textwidth=5.9in
+\topmargin=-.5in
+\textheight=9in
+
+%\address{Mathematics Department\\University of Illinois\\
+%1409 W. Green St\\Urbana, Illinois 61801}
+
+%\newcommand {\qed}{\mbox{$\Box$}}
+\renewcommand {\iff}{\Longleftrightarrow}
+\newcommand {\R}{\mathbb{R}}
+\newcommand {\N}{\mathbb{N}}
+\newcommand {\Q}{\mathbb{Q}}
+\newcommand {\Z}{\mathbb{Z}}
+
+\newcommand {\sub}{\mbox{SB}}
+
+
+\begin{document}
+\begin{letter}{}
+
+\begin{proof}
+\opening{Dear Hiring Manager,}
+
+%
+I am writing to you because I am interested in becoming your next Cryptography
+Engineer Intern. \old{I have a Ph.D. in mathematics, earned in May 2020, with my
+  dissertation} \new{In May 2020 I received my Ph.D.\ in Mathematics with my
+  dissertation} on \old{generating} \edit{(designing? creating?)} and
+implementing algorithms to compute elliptic curves using lattice-based reduction
+techniques. \new{Presently, I hold a postdoctoral fellowship in algebraic number
+  theory at the University of Warwick, and am seeking industry experience in
+  complement of my research posting.} I have over 10 years of experience \old{in
+  mathematics research in collaborative environments} \new{doing research
+  mathematics in collaborative environments}, merging algebraic number theory
+with programming. I have the academic background, programming experience, and
+enthusiasm for cryptography that I believe QEDIT is looking for.
+
+\old{As a computational and algebraic number theorist, my Ph.D. and research}
+\new{My doctoral} work \new{in computational and algebraic number theory}
+focused on computing elliptic curves over the rational integers via solutions of
+certain equations called Thue-Mahler forms. To solve these equations, my
+collaborators and I developed new mathematical techniques and \old{refined}
+\new{created/designed} algorithms, which I implemented as software packages in
+\new{the} programming languages \old{called} Magma and SageMath. This work
+involved solving nearly $10^8$ Thue-Mahler forms and subsequently storing and
+\old{appropriately} categorizing \edit{(categorizing reads like an
+  administrative task. Do you mean this, or do you mean a technical task? If
+  latter: characterizing? analyzing?)} their solutions. To speed up this process
+\edit{(Reads like it's for your own convenience, rather than a literal necessity
+  for having been able to complete the work. Consider re-phrasing.)}, I taught
+myself how to code in Unix bash to \old{setup} \edit{(setup is a noun; set up a
+  verb)} \new{write/design/create} a parallel-computing algorithm, as well as
+how to work with large data structures \edit{(There's no such thing as a large
+  data structure, to my knowledge. Do you mean one for working with large data?
+  If so, perhaps suggest which kind. I'd get useful information out of knowing
+  if it was e.g. \texttt{dask} dataframes for distributed and OOM computing or
+  e.g. Bloom filters or bucketed hash tables)} to parse the results using
+Python. This experience not only prepared me with the necessary academic
+background to work as a Cryptography Engineer Intern \edit{(Is that why you did
+  all this? To be a CEI? ;-)}, but it also developed my proficiency in learning
+new coding languages and gave me valuable experience collaboratively developing
+and maintaining code through GitHub \new{The computational challenges of this
+  work have cultivated my proficiency in\ldots My experience as a research
+  mathematician gives Adela whatever analytical tools she thinks she needs for
+  this post}.
+
+My strong communication skills are \old{attributed to my} \new{enabled by} many
+years of teaching and community outreach experience. As a Ph.D.\ student, I held
+the role of course instructor for several undergraduate calculus courses, as
+well as Teaching Assistant for many other undergraduate courses. In particular,
+I was Teaching Assistant to 6 undergraduate number theory courses, wherein I
+implemented affine and RSA encryption algorithms for students to download and
+experiment with during the Cryptography portion of the course \edit{(As stated,
+  this highlights only higher level pedagogical ability, but should also
+  highlight the communication expertise required to effectively curate learning
+  resources for undergrads)}. \old{Alongside} \new{In partnership with} the
+instructor, I \old{helped write and develop} \new{wrote and developed} an
+open-source elementary number theory textbook\new{,} which is still in use by
+the mathematics department \old{today}. In addition to teaching, \old{for 3
+  years} I \new{was a member of the TA Training team for three years,}
+\new{during which I facilitated the development and on-boarding of incoming
+  graduate students} \old{helped train incoming graduate and undergraduate
+  students in their roles as Teaching Assistants}. Outside of the university, I
+have spent 4 years volunteering with Future Science Leaders, an after-school
+program for high-school students interested in science and mathematics. I helped
+organize and facilitate lectures on mathematics, and developed and delivered a
+\old{course} \new{module} introducing cryptography through affine and shift
+ciphers. This experience has not only improved my general communication skills,
+but also my ability to break down complex mathematical topics into simple terms
+understandable to a non-expert.
+
+\old{Though I currently hold a Postdoctoral Fellowship at Warwick University,}
+\edit{(its name is University of Warwick)} I am eager \old{for an opportunity}
+to gain industry experience\old{, especially} in a setting \old{which}
+\new{that} combines cryptography, mathematics, and programming. The majority of
+my experience with cryptography has been to demonstrate how certain encryption
+algorithms work and why\new{.}\old{, but I have rarely had} \new{I am excited
+  by} the opportunity to \old{use} \new{develop} algorithms in \old{real-life}
+\new{practical} settings, and \old{I am excited} \new{all the more} by the
+prospect of doing so in \old{and} \new{an} industry setting at QEDIT.\@ Of
+course, I also know what Q.E.D. means \edit{but would appreciate learning the
+  meaning of its neighbouring two letter suffix I.T.}. \qed
+
+
+Thank you for your consideration.
+
+
+\closing{Sincerely,
+%\includegraphics[width=6cm]{signature.pdf}
+}
+%I made a pdf file of my signature using the scanner, so that all the cover letters I sent
+%electronically were "signed."  
+
+Adela Gherga\\
+{(416)-268-8289} \hfill 2155 East 33rd Ave. \\
+\verb+adelagherga@gmail.com+ \hfill Vancouver BC\\
+\verb+https://www.adelagherga.ca+ \hfill  V5N 3E9, Canada\\
+\end{proof}
+\end{letter}
+
+\end{document}
+

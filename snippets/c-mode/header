@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: header
+# key: header_
+# --
+
+/*
+ * `(file-name-base)`.c
+ * $1
+ * Author: `user-full-name` <`user-mail-address`>
+ * Copyright © `(format-time-string "%Y")`, `user-full-name`, all rights reserved.
+ * Created: `(format-time-string "%e %B %Y")`
+ *
+ * Description: $2
+ *
+ * Commentary:  N/A$3
+ *
+ * To do list:  N/A$4
+ *
+ * Example:     N/A$5
+ *
+ */
+
+#include <stdio.h>
+$0

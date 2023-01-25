@@ -1,0 +1,68 @@
+\documentclass[11pt]{article}
+
+% relevant packages
+\usepackage[parfill]{parskip} % begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs }
+\usepackage{amsthm}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[all]{xy}
+\usepackage[english]{babel}
+\usepackage{setspace}
+\usepackage{soul}
+
+%---------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------%
+
+\title{Sublease Agreement\vspace{-3em}}
+
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+%---------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------%
+
+This sublease agreement is made between
+\begin{center} $\underset{\text{TENANT}}{\text{\underline{Adela Gherga}}}$ \\ and \\ $\underset{\text{SUBTENANT}}{\text{\underline{Alexander Reedy}}}$
+\end{center}
+The Tenant wishes to sublet the premises at
+\begin{center} $\underset{\text{ADDRESS}}{\text{\underline{59 Alderney Road, E1 4EG, London, United Kingdom }}}$
+\end{center}
+
+\textbf{The parties agree as follows}
+\begin{enumerate}[1.]
+\item The Subtenant agrees to pay the Tenant to rent this premise on a month-to-month basis the sum of \underline{\textsterling686} per month, payable on the \underline{1st} day of each month. The Tenant may direct the Subtenant to pay the aforementioned rent directly to \underline{Emily Barrett}.
+\item The Subtenant will take possession of the premises on \underline{August 29, 2020}.
+\item The Subtenant shall pay the Tenant \underline{\textsterling686} in security/cleaning deposit fees. This fee is refundable to the Subtenant within \underline{21} days of the termination of Subtenant's tenancy if the premise is reasonably clean and undamaged, at the discretion of the Tenant. The security deposit may not be used as last month's rent.
+\item The Tenant will give \underline{30} days written notice to the Subtenant should the Tenant wish to re-take possession of the premise. The Subtenant's tenancy will terminate on the date specified on this notice, unless another written agreement is signed by both parties.
+\item The Subtenant will give \underline{30} days move-out notice in writing to the Tenant, and will be responsible for paying rent through the end of this notice period. The Subtenant is not responsible for finding a replacement upon termination of their tenancy.
+\item The Subtenant is one of \underline{3} total tenants occupying the premises. The Subtenant may not share the leased bedroom with any additional parties.
+\item The Subtenant agrees to pay \underline{one third} of all utility, internet, and council tax charges, as well as \underline{one third} of all communal bills accrued during the Subtenant's tenancy.
+\item Smoking and vaping is not allowed inside the premises. Vaping is permitted in the backyard of the premises at the discretion of \underline{Emily Barrett} and \underline{Beliza Buzollo}.
+\item The Subtenant shall abide by all the terms and conditions in the Tenancy Agreement or Lease, dated \underline{February 10, 2020}. The Subtenant is in possession of a copy of said lease.
+\item The Subtenant acknowledges that they have examined the premises and that they are in good condition. Upon termination of this Sublease Agreement for any cause, the Subtenant will leave the premises in their original condition.
+\item The Subtenant agrees to pay for repairs of all damage they or any of their guests have caused. Any damage to the premises shall be reported to the Tenant. At the discretion of the Tenant, considerable damage will be deducted from the security/cleaning deposit at the end of the Subtenant's tenancy.
+\item The Subtenant shall remove all of their personal belongings from the premises upon termination of the tenancy.
+\item The Subtenant may not lease, sublease or assign the premises without prior written consent of the Tenant.
+\item The Subtenant may not remove, relocate, or modify any furniture or walls in the premises without written agreement from the Tenant.
+\item This Sublease Agreement will not be enforceable until signed by both the Subtenant and Tenant. Any modifications to this Agreement must be in writing, signed by both the Subtenant and Tenant.\\
+\end{enumerate}
+
+We, the undersigned, hereby acknowledge that we have read this Agreement, understand it, agree to it, and have been given a copy. \\
+
+Tenant signature: \hspace{15em} Date: August 23, 2020 \\
+
+Subtenant signature: \hspace{13.5em} Date:
+
+
+\end{document}

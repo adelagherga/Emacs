@@ -1,0 +1,1744 @@
+\documentclass[10pt]{beamer}
+
+\usetheme[progressbar=frametitle]{metropolis}
+
+\definecolor{ubcBlue}{RGB}{12,35,68}
+\definecolor{ubcBlue1}{RGB}{0,85,183}
+\definecolor{ubcBlue2}{RGB}{0,167,225}
+\definecolor{ubcBlue3}{RGB}{64,180,229}
+\definecolor{ubcBlue4}{RGB}{110,196,232}
+\definecolor{ubcBlue5}{RGB}{151,212,223}
+
+% \setbeamercolor{normal text}{bg=ubcBlue1}
+\setbeamercolor{alerted text}{bg=ubcBlue1, fg = ubcBlue}
+\setbeamercolor{example text}{fg=ubcBlue1, bg=ubcBlue1}
+\setbeamercolor{title separator}{fg = ubcBlue, bg=ubcBlue}
+\setbeamercolor{progress bar}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{progress bar in head/foot}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{progress bar in section page}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{frametitle}{bg=ubcBlue}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{color}
+\usepackage{soul}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows,calc}
+
+\tikzset{onslide/.code args={<#1>#2}{%
+  \only<#1>{\pgfkeysalso{#2}} % \pgfkeysalso doesn't change the path
+}}
+\tikzset{alt/.code args={<#1>#2#3}{%
+  \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+}}
+\tikzset{temporal/.code args={<#1>#2#3#4}{%
+  \temporal<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}{\pgfkeysalso{#4}} % \pgfkeysalso doesn't change the path
+}}
+
+\DeclareMathOperator{\ord}{ord}
+
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+
+\makeatletter
+\newsavebox{\mybox}
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+  \savebox{\mybox}{%
+      \begin{beamercolorbox}[%
+          wd=\paperwidth,%
+          sep=0pt,%
+          leftskip=\metropolis@frametitle@padding,%
+          rightskip=\metropolis@frametitle@padding,%
+        ]{frametitle}%
+      \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
+      \end{beamercolorbox}%
+    }
+  \begin{beamercolorbox}[%
+      wd=\paperwidth,%
+      sep=0pt,%
+      leftskip=\metropolis@frametitle@padding,%
+      rightskip=\metropolis@frametitle@padding,%
+    ]{frametitle}%
+  \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
+  \hfill%
+  \raisebox{-\metropolis@frametitle@padding}{}%{\includegraphics[height=\dimexpr\ht\mybox+\metropolis@frametitle@padding\relax]{2_2016_UBCNarrow_Signature_ReverseCMYK}}%
+    \hspace*{-\metropolis@frametitle@padding}
+  \end{beamercolorbox}%
+}
+\makeatother
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{document}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\title{Implementing algorithms to compute elliptic curves over $\mathbb{Q}$}
+\subtitle{}
+% \date{\today}
+\date{}
+\author{Adela Gherga}
+\institute{The University of Warwick}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+\maketitle
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\section{Background}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Shafarevich's theorem}
+
+\begin{theorem}[Shafarevich]
+Let $K$ be a number field and let $S$ be a finite set of primes of $K$. Then
+\begin{equation*}
+\resizebox{.9\hsize}{!}{$\varepsilon_{K,S} := \{ \text{elliptic curves $E/K$ with good reduction at all primes $\mathfrak{p} \notin S$ } \} /\cong$}
+\end{equation*}
+is finite.
+\end{theorem}
+\end{frame}
+
+% Let $K$ be a number field and let $S$ be a finite set of places of $K$ containing the infinite places.
+
+% In $1963$ Shafarevich proved that there are at most finitely many $K$-isomorphism classes of elliptic curves defined over $K$ having good reduction outside $S$.
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Our objective}
+
+\centering
+Given $K$ and $S$, find $\varepsilon_{K, S}$ explicitly!
+
+% Before we go into the details of how this is to be done, look at some historical data
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{A brief history}
+
+\begin{itemize}
+\item <1-> Taniyama, Weil (1950s, 1960's): Are all $E/\mathbb{Q}$ of a given conductor $N$ related to modular functions?
+
+% in the 1950Õs and 1960Õs, Taniyama and Weil asked whether all elliptic curves over Q of a given conductor N are related to modular functions.
+
+% While this conjecture is now known as the Modularity Theorem, until its proof in 2001, attempts to verify it sparked a large effort to tabulate all elliptic curves over Q of given conductor N.
+
+\begin{itemize}
+\item <2->$\varepsilon_{\mathbb{Q},\{2\}}$: Ogg ($1966$)
+%determined all elliptic curves defined over $\mathbb{Q}$ with conductor of the form $2^a$.
+
+\item <2->$\varepsilon_{\mathbb{Q},\{2,3\}}$: Coghlan ($1967$)
+%in his dissertation \cite{Coghlan}, studied the curves of conductor $2^a3^b$ independently of Ogg,
+
+\item <2->$\varepsilon_{\mathbb{Q},\{p\}}$ for certain small primes $p$: Setzer ($1975$)
+%while Setzer \cite{Setzer} computed all $\mathbb{Q}$-isomorphism classes of elliptic curves of conductor $p$ for certain small primes $p$.
+
+\item <2->$\varepsilon_{\mathbb{Q},\{11\}}$: Agrawal, Coates, Hunt, and van der Poorten ($1980$)
+%determined all elliptic curves of conductor $11$ defined over $\mathbb{Q}$ to verify the (then) conjecture of Taniyama-Weil for $N= 11$.
+
+\end{itemize}
+\end{itemize}
+
+% All of these early attempts have much in common in that they often reduce the problem to one of solving a number of certain integral binary forms called Thue-Mahler equations.
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The modern approach}
+
+% There are very few, if any, subsequent attempts in the literature to find elliptic curves of given conductor via Thue-Mahler equations.
+
+% Instead, many of the approaches involve a completely different method to the problem, using modular forms.
+
+% This method relies upon the Modularity Theorem, which was still a conjecture (under various guises) when these ideas were first implemented. Much of the success of this approach can be attributed to Cremona and his collaborators, who have devoted decades of work to it. In fact, using this method, all elliptic curves over $\mathbb{Q}$ of conductor $N$ have been determined for values of $N$ as follows
+
+% Cremona between 1988 - 2017
+
+\begin{itemize}
+\item<2-> Subsequent methods rely on the Modularity Theorem
+\item<3-> All $E/\mathbb{Q}$ of conductor $N$ have been determined for
+
+\begin{itemize} \itemsep0em
+\item<4-> Antwerp IV ($1972$): $N \leq 200$
+\item<4-> Tingley ($1975$): $N \leq 320$
+\item<4-> Cremona ($2019$): $N \leq 500000$
+\end{itemize}
+\end{itemize}
+
+% In our present work, we will instead return to techniques based upon solving Thue-Mahler equations.
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The Thue-Mahler approach}
+
+
+\begin{itemize}
+% More precisely, fix K and S
+\item<1-> Let $K = \mathbb{Q}$ and $S = \{p_1, \dots, p_v\}$ be a set of rational primes
+
+% In the 1970's, Coates provided the first effective proof of ShafaravichÕs Theorem, for the the special case K = Q and S = {2, 3}
+
+% We note that early attempts to compute ECs with good reduction outside S have much in common with the approach used by Coates
+
+% in that they often reduce the problem to one of solving a number of Thue-Mahler equations.
+
+\item<2-> Reduce problem to solving a number of \textit{Thue-Mahler equations}
+\begin{itemize}
+\item<3-> ie. Diophantine equations of the form
+\[F(x,y) = w_0x^3 + w_1x^2y + w_2xy^2 + w_3y^3 = u,\]
+where $u$ is an \textit{$S$-unit}
+
+% where F is a given binary form of degree at least $3$ and $u$ is an \textit{$S$-unit}
+% that is, an integer whose prime factors all lie in S
+
+% degree 3 not necessary, but for out purposes, we only need degree 3
+
+\item <4> Associated to $F$ is the Hessian,
+\[H_F(x,y) = -\frac{1}{4}\left( \frac{\partial^2F}{\partial x^2} \frac{\partial^2F}{\partial y^2} - \left(\frac{\partial^2F}{\partial x \partial y}\right)^2\right), \]
+and the Jacobian discriminant,
+\[G_F(x,y) = \frac{\partial F}{\partial x} \frac{\partial H}{\partial y} - \frac{\partial F}{\partial y} \frac{\partial H}{\partial x} \]
+
+% Here, two such forms $F_1$ and $F_2$ are called \textit{equivalent} if they are equivalent under the $GL_{2}(\mathbb{Z})$-action.
+% In which case, $F_1$ and $F_2$, have the same discriminant
+
+\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\section{Objectives}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Current work}
+
+\begin{itemize}
+\item<1-> Let $K = \mathbb{Q}$ and $S = \{p_1, \dots, p_v\}$ be a set of rational primes
+% going to stop saying this
+\item<2-> Find $\varepsilon_{\mathbb{Q}, S}$ explicitly via Thue-Mahler equations
+\begin{itemize}
+\item<3-> Implementation of a TM equation solver based on Tzanakis, de Weger
+\end{itemize}
+
+\item<4> Goal: compute all curves over $\mathbb{Q}$ having conductor $N \leq 10^6$
+\item<5-> Lofty dreams and aspirations: $N \leq 10^8$
+
+\end{itemize}
+
+% In our research, we have implemented a computer program which generates all elliptic curves over $K$ having good reduction outside $S$ and bounded conductor.
+% This algorithm is based on the work of de Weger, Tzanakis, following the work of BeRe
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\section{The main algorithm}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{An overview}
+
+% a theorem by Bennett and Rechnitzer (who has asked to not be mentioned) illustrates the connection between elliptic curves over Q and cubic forms,
+% and leads us to the algorithm for determining all elliptic curves over Q of conductor N
+
+% this theorem is technical;
+
+\begin{itemize}
+\item<1-> Let $K = \mathbb{Q}$ and $S = \{p_1, \dots, p_v\}$ be a set of rational primes \\
+% suppose we want to find an EC with conductor N
+
+\item<2-> Compute $\varepsilon_{\mathbb{Q},S} \Leftrightarrow$ find $E/\mathbb{Q}$ with conductor $N = p_1^{a_1}\cdots p_v^{a_v}$, $a_i \in \mathbb{N}$\\
+% there exists an integral binary cubic form F with discriminant $N_0$ "dividing" $N$ and relatively prime integers u,v with
+
+\item<3-> For $N_0 \mid 12 N$, there exists
+\[F(u,v) = w_0u^3 + w_1u^2v + w_2uv^2 + w_3v^3 = 2^{\alpha_1}3^{\beta_1}\prod_{p|N_0}p^{\kappa_p}\]
+with discriminant $N_0$
+
+\item <4-> Then $E \cong_{\mathbb{Q}} E_{\mathcal{D}}$, where $E_{\mathcal{D}}$ is determined by the form $F$ and $(u,v)$
+\end{itemize}
+\end{frame}
+
+% prime database has 400bilion/trillion? a lot
+
+% algorithmically can write down forms in linear time
+
+%We note that there might exist such a form $F$ and corresponding $E_{\mathcal{D}}$, but it may be the case that conductor $N_{E_{\mathcal{D}}} \neq N$. This can occur if certain local conditions at $2$ are not satisfied.
+
+% Additionally, if the curve $E$ has at least one rational $2$-torsion point, the cubic forms arising from this theorem will necessarily be reducible.
+
+% easier if has 2 torsion, or if prime case (thue)
+
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The theorem}
+
+% More precisely
+
+\begin{theorem}[Bennett, G., Rechnitzer] \label{BeRe}
+Let $E/\mathbb{Q}$ be an elliptic curve of conductor $N = 2^{\alpha}3^{\beta}N_0$ where $N_0$ is coprime to $6$.
+% and suppose $j_E \neq 0$
+\pause
+Then there exists an integral binary cubic form $F$ of discriminant
+\[D_F = \text{sign}(\Delta_E)2^{\alpha_0}3^{\beta_0}N_1,\]
+and relatively prime integers $u$ and $v$ with
+\[F(u,v) = w_0u^3 + w_1u^2v + w_2uv^2 + w_3v^3 = 2^{\alpha_1}3^{\beta_1}\prod_{p|N_0}p^{\kappa_p}\]
+\pause
+such that $E$ is isomorphic over $\mathbb{Q}$ to $E_{\mathcal{D}}$, where
+\[E_{\mathcal{D}} : 3^{[\beta_0/3]} y^2 = x^3 - 27\mathcal{D}^2 H_F(u,v)x + 27\mathcal{D}^3G_F(u,v).\]
+\end{theorem}
+\end{frame}
+% $0 \leq \alpha \leq 8$, $0 \leq \beta \leq 5$. S
+% square brackets [r] mean that its the greatest integer not exceeding the real number r
+
+\begin{frame}
+\begin{theorem}[Bennett, G., Rechnitzer]
+%\vspace*{-\baselineskip}\setlength\belowdisplayshortskip{0pt}
+Here, $N_1\mid N_0$,
+\[ (\alpha_0, \alpha_1) =
+\begin{cases}
+	(2,0) \text{ or } (2,3)  & \text{ if } \alpha = 0 \\
+	(3,\geq 3) \text{ or } (2,\geq 4)  & \text{ if } \alpha = 1 \\
+	(2,1), (4,0) \text{ or } (4,1)  & \text{ if } \alpha = 2 \\
+	(2,1), (2,2), (3,2), (4,0) \text{ or } (4,1)  & \text{ if } \alpha = 3 \\
+	(2,\geq 0), (3,\geq 2), (4,0) \text{ or } (4,1)  & \text{ if } \alpha = 4 \\
+	(2,0) \text{ or } (3,1)  & \text{ if } \alpha = 5 \\
+	(2,\geq 0), (3,\geq 1), (4,0) \text{ or } (4,1)  & \text{ if } \alpha = 6 \\
+	(3,0) \text{ or } (4,0)  & \text{ if } \alpha = 7 \\
+	(3,1) & \text{ if } \alpha = 8,
+\end{cases} \]
+% non-negative integers, where $alpha \in [0,8]$ and $\beta \in [0,5]
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\begin{theorem}[Bennett, G., Rechnitzer]
+\[ (\beta_0, \beta_1) =
+\begin{cases}
+	(0,0) & \text{ if } \beta = 0 \\
+	(0,\geq 1) \text{ or } (1,\geq 0) & \text{ if } \beta = 1 \\
+	(3,0), (0,\geq 0), \text{ or } (1,\geq 0)  & \text{ if } \beta = 2 \\
+	(\beta,0) \text{ or } (\beta,1)  & \text{ if } \beta \geq 3,
+\end{cases} \]
+\[\mathcal{D} = \prod_{p|\gcd(c_4(E),c_6(E))} p^{\min\{ [\nu_p(c_4(E))/2], [\nu_p(c_6(E))/3] \}},\]
+and $\kappa_p \in \mathbb{Z}_{>0}$
+with $\kappa_p \in \{0,1\}$ whenever $p^2|N_{1}$.
+% excluding some additional details that we know about kappas here
+%\[\text{ and } \kappa_p \in \mathbb{Z}_{>0} \text{ with } \nu_p(\Delta_E) =
+%\begin{cases}
+%	\nu_p(D_F) + 2\kappa_p & \text{ if } p \nmid \mathcal{D} \\
+%	\nu_p(D_F) + 2\kappa_p + 6 & \text{ if } p \mid \mathcal{D},
+%\end{cases}\]
+%and
+%\[\kappa_p \in \{0,1\} \text{ whenever } p^2|N_{1}.\]
+\pause Further,
+\[\text{ if } \beta_0 \geq 3, \text{ then } 3|w_1 \text{ and } 3|w_2\]
+and
+\[\text{ if } \nu_p(N) = 1, \text{ for } p \geq 3, \text{ then } p \mid D_FF(u,v).\]
+\end{theorem}
+
+\end{frame}
+
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The main algorithm}
+
+%Using this theorem, we may compute all $E/\mathbb{Q}$ of conductor $N$ via the following algorithm:
+\begin{enumerate}
+\item<2-4> Compute $GL_2({\mathbb{Z}})$-representatives for every binary form $F$ with discriminant
+\[D_F = \pm 2^{\alpha_0}3^{\beta_0}N_1\]
+for each divisor $N_1$ of $N_0$, and each possible pair $(\alpha_0,\beta_0)$ given in the statement of the Theorem  \\
+\item<3-5> Solve the corresponding Thue-Mahler equations \\
+\item<4> Check ``local" conditions and output the elliptic curves that arise
+\end{enumerate}
+
+
+% the first and the third of these steps are straightforward.
+
+% Indeed, in  Bennett and Rechnitzer describe an efficient algorithm for carrying out Step 1,
+% and Step 3 is essentially trivial.
+
+% The bulk of the work is concentrated in Step 2. This is the main focus of this report and in fact one of the main objective of this research. The remaining chapters of this report are devoted to carrying out this step.
+
+% We carried out a one-time computation of all irreducible cubic forms that can arise in Theorem 1, of abso- lute discriminant bounded by 10^10. There are ?? such forms; storing them takes ?? space.
+
+% 120 gigs to store, big computation, took couple of days, (forms conductor up to 10^10)
+% but now have the forms - one time computation
+% simply storing it, past this
+% been done! hence, trivial, just a matter of table look-up
+% can happen that there are no forms (happens quite a lot; a positive proportion of the time)
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\section{Solving a TM equation: Setup}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Thue-Mahler equations}
+
+\begin{itemize}
+\item<1-2> Fix $a \in \mathbb{Z}$ and a set of distinct rational primes $S = \{p_1, \dots, p_v\}$
+% fix a non-zero integer a and a set of distinct rational primes
+\item<2> Reduce problem to solving a number of \textit{Thue-Mahler equations},
+\only<2> {
+\[F(x,y) = w_0x^3 + w_1x^2y + w_2xy^2 + w_3y^3 = a p_1^{z_1} \cdots p_v^{z_v}\]}
+% for unknown integers $x,y,z_1, \dots, z_v$ with $z_i \geq 0$
+% irreducible binary form over Z
+\end{itemize}
+
+% this is fine in our case, f_0 = 1
+%\end{itemize}
+% explanation of coefficient business here
+
+% based on work by Tzanakis, de Weger
+% GL2Z ISSUES MENTIONED HERE
+% timing example
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}<1>[label=overview1]
+\frametitle{Overview}
+
+\begin{figure}
+\centering
+
+\tikzstyle{block} = [rectangle, fill=ubcBlue,
+    text=structure.bg, text centered, rounded corners, minimum height=1.5em, minimum width=5em ]
+\tikzstyle{line} = [line width=0.5pt, -triangle 45, color=ubcBlue]
+\tikzstyle{linealert} = [line width=0.5pt, -triangle 45, color=ubcBlue1]
+\tikzstyle{linedim} = [line width=0.5pt, -triangle 45, color=ubcBlue!30]
+\tikzstyle{alert} = [text=structure.bg, fill=ubcBlue1]
+\tikzstyle{dim} = [text=structure.bg, fill=ubcBlue!30]
+
+\begin{tikzpicture}[node distance=1.5cm, auto]
+\usebeamercolor{frametitle}
+    % Place nodes
+    \node [block,onslide=<2>{dim},onslide=<3-4>{alert}] (S) {\small Set of Primes};
+    \node []				             (F1m) [right of =S, node distance=2cm] { $\quad \vdots$};
+    \node [] 				     (Filler1) [above of =F1m, node distance=0.4cm] {};
+    \node [] 				     (Filler2) [below of =F1m, node distance=0.4cm] {};
+    \node [block,onslide=<2-3>{dim},onslide=<4>{alert}] (F1)[above of =Filler1, node distance = 0.9cm] {\small TM Eq $m$};
+    \node [block,onslide=<2-3>{dim},onslide=<4-6>{alert}] (Fm) [below of =Filler2,node distance = 0.9cm ] {\small TM Eq $1$};
+    \node [] 				     (F12m) [right of =Fm, node distance=2cm] { $\vdots$};
+    \node [] 				     (Filler3) [above of =F12m, node distance=0.4cm] {};
+    \node [] 				     (Filler4) [below of =F12m, node distance=0.4cm] {};
+    \node [block,onslide=<2-5>{dim},onslide=<6>{alert}] (F21)[above of =Filler3, node distance = 0.9cm] {\small Monic Eq $M$};
+    \node [block,onslide=<2-5>{dim},onslide=<6-8>{alert}] (F2m) [below of =Filler4, node distance = 0.9cm] {\small Monic Eq $1$};
+    \node [] 				     (ideal1m) [right of =F2m, node distance=2cm] { $\vdots$};
+    \node [] 				     (Filler5) [above of =ideal1m, node distance=0.4cm] {};
+    \node [] 				     (Filler6) [below of =ideal1m, node distance=0.4cm] {};
+    \node [] 				     (Filler7) [above of =Filler5, node distance=0.4cm] {};
+    \node [] 				     (Filler8) [below of =Filler6, node distance=0.4cm] {};
+    \node [block,onslide=<2-7>{dim},onslide=<8>{alert}] (ideal1)[above of =Filler7, node distance = 0.9cm] {\small Ideal Eq $\mu'$};
+    \node [block,onslide=<2-7>{dim}, onslide=<8-10>{alert}] (idealm) [below of =Filler8, node distance = 0.9cm] {\small Ideal Eq $1$};
+    \node [] 				     (S1m) [right of =idealm, node distance=2cm] { $\vdots$};
+    \node [] 				     (Filler9) [above of =S1m, node distance=0.4cm] {};
+    \node [] 				     (Filler10) [below of =S1m, node distance=0.4cm] {};
+    \node [block,onslide=<2-9>{dim}, onslide=<10>{alert}] (S1)[above of =Filler9, node distance = 0.9cm] {\small $S$-unit Eq $\mathcal{M}$};
+    \node [block,onslide=<2->{dim},onslide=<10-11>{alert}] (Sm) [below of =Filler10, node distance = 0.9cm] {\small $S$-unit Eq 1};
+
+    \draw [line,onslide=<2-3>{linedim},onslide=<4>{linealert}] (S) -> (F1);
+    \draw [line,onslide=<2-3>{linedim},onslide=<4>{linealert}] (S) -> (Fm);
+    \draw [line,onslide=<2-3>{linedim},onslide=<4>{linealert}] (S) -> (F1m);
+    \draw [line,onslide=<2-3>{linedim},onslide=<4>{linealert}] (S) -> (Filler1);
+    \draw [line,onslide=<2-3>{linedim},onslide=<4>{linealert}] (S) -> (Filler2);
+    \draw [line,onslide=<2-5>{linedim},onslide=<6>{linealert}] (Fm) -> (F21);
+    \draw [line,onslide=<2-5>{linedim},onslide=<6>{linealert}] (Fm) -> (F2m);
+    \draw [line,onslide=<2-5>{linedim},onslide=<6>{linealert}] (Fm) -> (F12m);
+    \draw [line,onslide=<2-5>{linedim},onslide=<6>{linealert}] (Fm) -> (Filler3);
+    \draw [line,onslide=<2-5>{linedim},onslide=<6>{linealert}] (Fm) -> (Filler4);
+    \draw [line,onslide=<2-7>{linedim}, onslide=<8>{linealert}] (F2m) -> (ideal1);
+    \draw [line,onslide=<2-7>{linedim},onslide=<8>{linealert}] (F2m) -> (idealm);
+    \draw [line,onslide=<2-7>{linedim},onslide=<8>{linealert}] (F2m) -> (ideal1m);
+    \draw [line,onslide=<2-7>{linedim},onslide=<8>{linealert}] (F2m) -> (Filler5);
+    \draw [line,onslide=<2-7>{linedim},onslide=<8>{linealert}] (F2m) -> (Filler6);
+    \draw [line,onslide=<2-7>{linedim},onslide=<8>{linealert}] (F2m) -> (Filler7);
+    \draw [line,onslide=<2-7>{linedim},onslide=<8>{linealert}] (F2m) -> (Filler8);
+    \draw [line,onslide=<2-9>{linedim}, onslide=<10>{linealert}] (idealm) -> (S1);
+    \draw [line, onslide=<2-9>{linedim}, onslide=<10>{linealert}] (idealm) -> (Sm);
+    \draw [line,onslide=<2-9>{linedim}, onslide=<10>{linealert}] (idealm) -> (S1m);
+    \draw [line,onslide=<2-9>{linedim}, onslide=<10>{linealert}] (idealm) -> (Filler9);
+    \draw [line,onslide=<2-9>{linedim}, onslide=<10>{linealert}] (idealm) -> (Filler10);
+
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\againframe<2>{overview1}
+
+\againframe<3>{overview1}
+
+\againframe<4>{overview1}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}
+\frametitle{Representative forms: an example}
+
+\begin{itemize}
+\item<2-> Let $S = \{2,3,5,7,11,13\}$
+\item<3-> There are 7893 corresponding forms which need to be solved
+\begin{itemize}
+\item<4->$F(x,y) = 19x^3 + 69x^2y + 76xy^2 + 126y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$
+\item<4-> $F(x,y) = 22x^3 + 22x^2y + 55xy^2 + 100y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$
+\item<4-> $F(x,y) = 46x^3 + 24x^2y + 85xy^2 + 7y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$
+\item<4-> $F(x,y) = 13x^3 + 3x^2y + 18xy^2 + 14y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$
+\item<4-> $F(x,y) = 17x^3 + 36x^2y + 39xy^2 + 26y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$
+\item<4-> $F(x,y) = 2x^3 + 18x^2y + 21xy^2 + 65y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$
+\item<4-> $F(x,y) = x^3 + 12x^2y + 18xy^2 + 149y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 7^{z_4}\cdot 11^{z_5}\cdot 13^{z_6}$ \\
+\[\vdots\]
+\end{itemize}
+
+\end{itemize}
+
+% one-time computation
+% split into irreducible, reducible
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}
+\frametitle{Representative forms: an example}
+
+\pause
+For $N \leq 10^6$
+\begin{itemize}
+\item<3-> There are $6,078,277$ corresponding forms which need to be solved
+\item<4-> At $5$ seconds per form, this requires 11.55 months on a single core
+  % or a out 5.5 days on 64 cores
+\end{itemize}
+
+% one-time computation
+% split into irreducible, reducible
+
+\end{frame}
+
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\againframe<4>{overview1}
+
+\againframe<5>{overview1}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{First steps}
+
+%practical method for solving a Thue-Mahler equation over Z
+% \item Large upper bound for the solutions is derived via the theory of linear forms in logs
+% \item The upper bound is considerably reduced by diophantine approximation computations, based on applying the LLL algorithm to approximation lattices related to the linear forms, both in the real/complex and $p$-adic case
+%\ item The solutions below the reduced bound can be found by several methods: Fincke-Pohst, a sieving process, and enumeration of the possibilities. (Main bottleneck)
+
+\begin{itemize}
+\item<1-3> Fix $a \in \mathbb{Z}$ and a set of distinct rational primes $S = \{p_1, \dots, p_v\}$
+% fix a non-zero integer a and a set of distinct rational primes
+\item<1-> Reduce problem to solving a number of \textit{Thue-Mahler equations},
+\only<1-2> {
+\[F(x,y) = w_0x^3 + w_1x^2y + w_2xy^2 + w_3y^3 = a p_1^{z_1} \cdots p_v^{z_v}\]}
+% for unknown integers $x,y,z_1, \dots, z_v$ with $z_i \geq 0$
+% irreducible binary form over Z
+\only<3> {
+\[F(x,y) = x^3 + w_1x^2y + w_2xy^2 + w_3y^3  = a p_1^{z_1} \cdots p_v^{z_v}\]}
+%for unknown integers $x,y,z_1, \dots, z_v$ with $z_i \geq 0$
+\item<2-3> Without loss of generality, we may assume
+\only<2>
+{\[(x,y) = (y,w_0) = 1 \quad \text{ and } \quad (a, p_1, \dots, p_v) = 1\]}
+\only<3>
+{\[(x,y) = 1 \quad \text{ and } \quad (a, p_1, \dots, p_v) = 1\]}
+
+\end{itemize}
+
+% this is fine in our case, f_0 = 1
+%\end{itemize}
+% explanation of coefficient business here
+
+% based on work by Tzanakis, de Weger
+% GL2Z ISSUES MENTIONED HERE
+% timing example
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\againframe<5>{overview1}
+
+\againframe<6>{overview1}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}
+\frametitle{Representative forms: an example}
+
+For $N \leq 10^6$
+\begin{itemize}
+\item There are $6,078,277$ corresponding forms which need to be solved
+\item At $5$ seconds per form, this requires 11.55 months on a single core
+  % or a out 5.5 days on 64 cores
+\end{itemize}
+
+% one-time computation
+% split into irreducible, reducible
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}
+\frametitle{Representative forms: an example}
+
+For $N \leq 10^6$
+\begin{itemize}
+\item There are $12,723,586$ corresponding \textbf{monic} forms which need to be solved
+\item At $5$ seconds per form, this requires 24.2 months on a single core
+  % or a out 11.5 days on 64 cores
+\end{itemize}
+
+% one-time computation
+% split into irreducible, reducible
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Some timing examples}
+
+\begin{itemize}
+\item<1-> A nice example
+\[x^3 + 3xy^2 + 44xy^2 + 66y^3 = 3^{z_1}\cdot 11^{z_2}\cdot17^{z_3}\cdot23^{z_4}\cdot31^{z_5}\]
+\only<2->{Total time: 247.580} % 4 minutes
+
+\item<1-> A less nice example
+\[x^3 - 23xy^2 + 5xy^2 + 24y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot7^{z_4}\]
+\only<2->{Total time: 1231.269} \\ % 20 minutes \\
+
+\end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+%\begin{frame}[fragile]{Some slightly weirder timing examples}
+%
+%\begin{itemize}
+%\item<1-> A nice example
+%\[37x^3 + 72xy^2 + 55xy^2 + 52y^3 = 8\cdot 37^{z_1}\cdot333667^{z_2}\]
+%\only<2->{Total time: 161.030}
+%
+%\item<1-> Essentially the ``same'' example
+%\[52x^3 + 55xy^2 + 72xy^2 + 37y^3 = 8\cdot 37^{z_1}\cdot333667^{z_2}\]
+%\only<2->{Total time: 834.390}
+%
+%\end{itemize}
+%
+%\end{frame}
+
+
+
+% GL2Z:
+
+%Solutions For All Cases:
+%[
+%    [ -5, 3, 5, 0 ],
+%    [ 5, -3, 5, 0 ]
+%]
+%Time: 161.030
+%>
+%>
+%> C:= [52, 55, 72, 37]; p:= [37,333667]; A:= 8;
+%> time    TMAllCases(C,p,A,LogFile,OutFile,FindAll);
+%C:=[ 52, 55, 72, 37 ]; p:=[ 37, 333667 ]; A:=8;
+%StartCase:=1; EndCase:=700;
+%Number of cases: 24
+%Removing cases where no solutions are possible because the ideal is not principle.
+%Number of cases: 24
+%Number of cases: 120
+%Removing cases where no solutions are possible because the ideal is not principle.
+%Number of cases: 120
+%Number of cases: 288
+%Removing cases where no solutions are possible because the ideal is not principle.
+%Number of cases: 288
+%StartCase:=701; EndCase:=1400;
+%Number of cases: 24
+%Removing cases where no solutions are possible because the ideal is not principle.
+%Number of cases: 24
+%No more cases to consider. Total number of cases = 24.
+%Solutions For All Cases:
+%[
+%    [ -3, 5, 1, 0 ],
+%    [ 3, -5, 1, 0 ]
+%]
+%Time: 834.390
+
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\againframe<6>{overview1}
+
+\againframe<7>{overview1}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The setup}
+
+\begin{itemize}
+% practical method for solving a Thue-Mahler equation over Z
+\item<1 -> Put $g(t) = F(t,1) = t^3 + w_1 t^{2} + w_2 t + w_3$
+%and note that $g(t)$ is irreducible in $\mathbb{Z}[t]$.
+\item<2 - > Let $K = \mathbb{Q}(\theta)$ with $g(\theta) = 0$
+\item<3 - > Solving $F(x,y) = a p_1^{z_1} \cdots p_v^{z_v}$ is equivalent to solving
+\[N_{K/\mathbb{Q}}(x-y\theta) = ap_1^{z_1}\cdots p_v^{z_v}\]
+\end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Prime ideals}
+
+\begin{itemize}
+\item Let $p_i \in \{p_1, \dots, p_v\}$ and let
+\[(p_i)\mathcal{O}_K = \prod_{j = 1}^{m_i} \mathfrak{p}_{ij}^{e(\mathfrak{p}_{ij}|p_i)},\]
+where
+\begin{itemize}
+\item $f(\mathfrak{p}_{ij}|p_i)$ is the residue degree of $\mathfrak{p}_{ij}$ over $p_i$
+\item $e(\mathfrak{p}_{ij}|p_i)$ is the ramification index of $\mathfrak{p}_{ij}$ over $p_i$
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{An equivalent problem}
+
+\begin{itemize}
+\item Solving $F(x,y) = a p_1^{z_1} \cdots p_v^{z_v}$ \only<1-2>{is equivalent to solving
+\[N_{K/\mathbb{Q}}(x-y\theta) = ap_1^{z_1}\cdots p_v^{z_v}\]}
+\only<2-> {is equivalent to solving
+\[(x-y\theta)\mathcal{O}_K = \mathfrak{a} \prod_{j = 1}^{m_1} \mathfrak{p}_{1j}^{z_{1j}}\cdots \prod_{j = 1}^{m_v} \mathfrak{p}_{vj}^{z_{vj}},\]}
+\only<3->{where}
+\begin{itemize}
+\item <3->$\mathfrak{a}$ is an ideal with norm $|a|$
+\item <4->$z_{ij}$ are unknown non-negative integers such that
+\[z_i = \sum_{j=1}^{m_i}f(\mathfrak{p}_{ij}|p_i)z_{ij}\]
+\end{itemize}
+\end{itemize}
+ %can reduce the number of variables appearing here: ie. anything with e_if_i > 1 has an upper bound
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The Prime Ideal Removing Lemma}
+
+\[(x-y\theta)\mathcal{O}_K = \mathfrak{a} \prod_{j = 1}^{m_1} \mathfrak{p}_{1j}^{z_{1j}}\cdots \prod_{j = 1}^{m_v} \mathfrak{p}_{vj}^{z_{vj}}\]
+
+\begin{itemize}
+\item<2-> PIRL: For each $\mathfrak{p}_{ij}$ above $p_i \in S$, where possible, determine upper bounds on $\ord_{\mathfrak{p}_{ij}}(x-y\theta)$
+\end{itemize}
+
+\begin{itemize}
+\item<3-> Original PIRL: compare $\mathfrak{p}_{ij}, \mathfrak{p}_{ik}$
+\item<4-> New PIRL: compare $\mathfrak{p}_{i1}, \dots, \mathfrak{p}_{i m_i}$
+\end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The ideal equation}
+
+\begin{itemize}
+\item Applying the PIRL, we are left with a set of equations of the form
+\[(x-y\theta)\mathcal{O}_K = \mathfrak{a}\mathfrak{p}_{1}^{u_{1}}\cdots \mathfrak{p}_{\nu}^{u_{\nu}}\]
+\only<2->{where}
+% in integer variables $X,u_1, \dots, u_v$ with $u_i \geq 0$ for $i = 1, \dots, v$. Here
+% basterdizing notation hard here
+\begin{itemize}
+\item<2-> $\mathfrak{p}_i$ is a prime ideal above $p_i \in S$ with $e(\mathfrak{p}_i|p_i)f(\mathfrak{p}_i|p_i) = 1$ \\
+
+\item<3-> $u_i = 0$ for all $i \in \{\nu+1, \dots, v\}$ \\
+\item<4-> $\mathfrak{a}$ is an ideal of $\mathcal{O}_K$ of norm $p_1^{t_1} \cdots p_v^{t_v}$ such that
+$u_i + t_i =  z_i$
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+% There are further refinements here so that we can reduce some of these equations further
+%ADD MORE DETAIL HERE
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\againframe<7>{overview1}
+
+\againframe<8>{overview1}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Old vs new PIRL: an example}
+
+\begin{itemize}
+\item<1-> A nice example
+\[x^3 + 20xy^2 + 24xy^2 + 15y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 17^{z_3}\cdot 37^{z_4}\cdot53^{z_5}\]
+\only<2->{\textbf{Number of Ideal Equations:} 32} \\ % 1.6hrs
+\only<3->{\textcolor{red}{\textbf{Now:} 12}}
+
+\item<1-> A less nice example
+\[7x^3 + xy^2 + 29xy^2 - 25y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 17^{z_3}\]
+\only<2->{\textbf{Number of Ideal Equations:} 26,136} \\
+\only<3->{\textcolor{red}{\textbf{Now:} 1296}}
+\end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\againframe<8>{overview1}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}<1>[label=overview2]
+\frametitle{Overview}
+
+\begin{figure}
+\centering
+
+\tikzstyle{block} = [rectangle, fill=ubcBlue,
+    text=structure.bg, text centered, rounded corners, minimum height=1.5em, minimum width=5em ]
+\tikzstyle{line} = [line width=0.5pt, -triangle 45, color=ubcBlue]
+\tikzstyle{linealert} = [line width=0.5pt, -triangle 45, color=ubcBlue1]
+\tikzstyle{linedim} = [line width=0.5pt, -triangle 45, color=ubcBlue!30]
+\tikzstyle{alert} = [text=structure.bg, fill=ubcBlue1]
+\tikzstyle{dim} = [text=structure.bg, fill=ubcBlue!30]
+
+\begin{tikzpicture}[node distance=1.5cm, auto]
+\usebeamercolor{frametitle}
+    % Place nodes
+    \node [block] (S) {\small Set of Primes};
+    \node []				             (F1m) [right of =S, node distance=2cm] { $\quad \vdots$};
+    \node [] 				     (Filler1) [above of =F1m, node distance=0.4cm] {};
+    \node [] 				     (Filler2) [below of =F1m, node distance=0.4cm] {};
+    \node [block] (F1)[above of =Filler1, node distance = 0.9cm] {\small TM Eq $m$};
+    \node [block] (Fm) [below of =Filler2,node distance = 0.9cm ] {\small TM Eq $1$};
+    \node [] 				     (F12m) [right of =Fm, node distance=2cm] { $\vdots$};
+    \node [] 				     (Filler3) [above of =F12m, node distance=0.4cm] {};
+    \node [] 				     (Filler4) [below of =F12m, node distance=0.4cm] {};
+    \node [block] (F21)[above of =Filler3, node distance = 0.9cm] {\small Monic Eq $M$};
+    \node [block,onslide=<1>{alert}] (F2m) [below of =Filler4, node distance = 0.9cm] {\small Monic Eq $1$};
+    \node [] 				     (ideal1m) [right of =F2m, node distance=2cm] { $\vdots$};
+    \node [] 				     (Filler5) [above of =ideal1m, node distance=0.4cm] {};
+    \node [] 				     (Filler6) [below of =ideal1m, node distance=0.4cm] {};
+    \node [block,onslide=<1>{alert}] (ideal1)[above of =Filler5, node distance = 0.9cm] {\small Ideal Eq $\mu$};
+    \node [block,onslide=<1->{alert}] (idealm) [below of =Filler6, node distance = 0.9cm] {\small Ideal Eq $1$};
+    \node [] 				     (S1m) [right of =idealm, node distance=2cm] { $\vdots$};
+    \node [] 				     (Filler7) [above of =S1m, node distance=0.4cm] {};
+    \node [] 				     (Filler8) [below of =S1m, node distance=0.4cm] {};
+    \node [block,onslide=<1-2>{dim}, onslide=<3>{alert}] (S1)[above of =Filler7, node distance = 0.9cm] {\small $S$-unit Eq $\mathcal{M}$};
+    \node [block,onslide=<1-2>{dim},onslide=<3>{alert}] (Sm) [below of =Filler8, node distance = 0.9cm] {\small $S$-unit Eq 1};
+
+    \draw [line] (S) -> (F1);
+    \draw [line] (S) -> (Fm);
+    \draw [line] (S) -> (F1m);
+    \draw [line] (S) -> (Filler1);
+    \draw [line] (S) -> (Filler2);
+    \draw [line] (Fm) -> (F21);
+    \draw [line] (Fm) -> (F2m);
+    \draw [line] (Fm) -> (F12m);
+    \draw [line] (Fm) -> (Filler3);
+    \draw [line] (Fm) -> (Filler4);
+    \draw [line,onslide=<1>{linealert}] (F2m) -> (ideal1);
+    \draw [line,onslide=<1>{linealert}] (F2m) -> (idealm);
+    \draw [line,onslide=<1>{linealert}] (F2m) -> (ideal1m);
+    \draw [line,onslide=<1>{linealert}] (F2m) -> (Filler5);
+    \draw [line,onslide=<1>{linealert}] (F2m) -> (Filler6);
+    \draw [line,onslide=<1-2>{linedim}, onslide=<3>{linealert}] (idealm) -> (S1);
+    \draw [line,onslide=<1-2>{linedim}, onslide=<3>{linealert}] (idealm) -> (Sm);
+    \draw [line,onslide=<1-2>{linedim}, onslide=<3>{linealert}] (idealm) -> (S1m);
+    \draw [line,onslide=<1-2>{linedim}, onslide=<3>{linealert}] (idealm) -> (Filler7);
+    \draw [line,onslide=<1-2>{linedim}, onslide=<3>{linealert}] (idealm) -> (Filler8);
+
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\section{Solving a TM equation: Principalization}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\againframe<1>{overview2}
+
+\againframe<2>{overview2}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The original principalization test}
+
+\begin{itemize}
+\item<1-> Let $\mathbf{u} = (u_1, \dots, u_{\nu})$ be a solution to
+\[(x-y\theta)\mathcal{O}_K = \mathfrak{a}\mathfrak{p}_{1}^{u_{1}}\cdots \mathfrak{p}_{\nu}^{u_{\nu}}\]
+
+\item<2-> For $i = 1, \dots, \nu$ let $h_i$ be the smallest positive integer such that
+\[\mathfrak{p}_i^{h_i} = \gamma_i\mathcal{O}_K\]
+\only<3->{with $r_i, n_i$ non-negative integers such that
+\[u_i = h_in_i + r_i, \quad n_i \geq 0, \quad 0 \leq r_i < h_i\]}
+
+
+% Let
+%\[\mathbf{a}_i = (a_{1i}, \dots, a_{vi}).\]
+%where $a_{ii} = h_i$ and $a_{ji} = 0$ for $j \neq i$. We let $A$ be the matrix with columns $\mathbf{a}_1, \dots, \mathbf{a}_v$. Hence $A$ is a diagonal matrix with $h_i$ along the diagonal. For every possible combination of the $s_i$, we set $\mathbf{r} = (s_1, \dots, s_v)$. Now, if \eqref{Eq:TMfactored} has a solution $\mathbf{u} = (u_1, \dots, u_v)$, it necessarily must be of the form $\mathbf{u} = \mathbf{n}A + \mathbf{r}$, where $\mathbf{n} = (n_1, \dots, n_v)$.
+%
+%Using the above notation, we write
+%\[\mathfrak{c}_i = \tilde{\mathfrak{p}}^{\mathbf{a}_i}=\mathfrak{p}_1^{a_{1i}}\cdot \mathfrak{p}_2^{a_{2i}} \cdots \mathfrak{p}_v^{a_{vi}} = \mathfrak{p}_i^{h_i}.\]
+%Thus, we can write \eqref{Eq:TMfactored} as
+%\begin{align}
+%((x-1) X-\theta) \mathcal{O}_K
+%	& = \mathfrak{a} \tilde{\mathfrak{p}}^{\mathbf{u}}\\
+%	& = \mathfrak{a} \cdot \tilde{\mathfrak{p}}^{\mathbf{r} + n_1 \mathbf{a}_1 + \cdots + n_v \mathbf{a}_v}\\
+%	& = (\mathfrak{a} \cdot \tilde{\mathfrak{p}}^\mathbf{r}) \cdot \mathfrak{c}_1^{n_1}\cdots \mathfrak{c}_v^{n_v}.
+%\end{align}
+%Now, by definition of $h_j$, there exist $\gamma_j \in K^*$ such that
+%\[[\mathfrak{c}_j] = [\tilde{\mathfrak{p}}^{\mathbf{a}_j}] = \mathfrak{p}_j^{h_j} = \gamma_j \mathcal{O}_K.\]
+%for all $j \in \{1, \dots, v\}$.
+%
+%Now, for each choice of $\mathbf{r}$, if $\mathbf{u}$ is a solution, we must necessarily have
+%\[\mathfrak{a} \cdot \tilde{\mathfrak{p}}^\mathbf{r}=\alpha \cdot \mathcal{O}_K.\]
+%Hence, we iterate through every possible $\mathbf{r}$, and store those cases for which this occurs.
+%
+
+\end{itemize}
+% annoying details about the computation
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The original principalization test}
+
+\begin{itemize}
+\item<1-> Consider the set of all tuples
+\[ \left\{(r_1, \dots, r_{\nu}) \ | \ 0 \leq r_i < h_i \text{ for } i = 1, \dots, \nu\right\}\]
+\item<2-> For each tuple $(r_1, \dots, r_{\nu})$,
+\begin{align*}
+\only<3->{(x-y\theta) \mathcal{O}_K
+	& = \mathfrak{a}\mathfrak{p}_{1}^{u_{1}}\cdots \mathfrak{p}_{\nu}^{u_{\nu}}}\\
+	&\\
+	& \only<3->{= \left(\mathfrak{a}\mathfrak{p}_{1}^{r_{1}}\cdots \mathfrak{p}_{\nu}^{r_{\nu}}\right) \cdot
+	\mathfrak{p}_{1}^{h_1n_1} \cdots \mathfrak{p}_{\nu}^{h_{\nu}n_{\nu}}}\\
+	&\\
+	& \only<4->{= \alpha \gamma_1^{n_1} \cdots \gamma_{\nu}^{n_{\nu}}\mathcal{O}_K}
+\end{align*}
+
+%
+% Let $\mathbf{u} = (u_1, \dots, u_{\nu})$ be a solution to
+%\[(x-y\theta)\mathcal{O}_K = \mathfrak{a}\mathfrak{p}_{1}^{u_{1}}\cdots \mathfrak{p}_{\nu}^{u_{\nu}}\]
+%
+%\item<2-> For $i = 1, \dots, \nu$ let $h_i$ be the smallest positive integer such that
+%\[\mathfrak{p}_i^{h_i} = \gamma_i\mathcal{O}_K\]
+%\only<3->{with $s_i, n_i$ non-negative integers such that
+%\[u_i = h_in_i + s_i, \quad n_i \geq 0, \quad 0 \leq s_i < h_i\]}
+
+
+% Let
+%\[\mathbf{a}_i = (a_{1i}, \dots, a_{vi}).\]
+%where $a_{ii} = h_i$ and $a_{ji} = 0$ for $j \neq i$. We let $A$ be the matrix with columns $\mathbf{a}_1, \dots, \mathbf{a}_v$. Hence $A$ is a diagonal matrix with $h_i$ along the diagonal. For every possible combination of the $s_i$, we set $\mathbf{r} = (s_1, \dots, s_v)$. Now, if \eqref{Eq:TMfactored} has a solution $\mathbf{u} = (u_1, \dots, u_v)$, it necessarily must be of the form $\mathbf{u} = \mathbf{n}A + \mathbf{r}$, where $\mathbf{n} = (n_1, \dots, n_v)$.
+%
+%Using the above notation, we write
+%\[\mathfrak{c}_i = \tilde{\mathfrak{p}}^{\mathbf{a}_i}=\mathfrak{p}_1^{a_{1i}}\cdot \mathfrak{p}_2^{a_{2i}} \cdots \mathfrak{p}_v^{a_{vi}} = \mathfrak{p}_i^{h_i}.\]
+%Thus, we can write \eqref{Eq:TMfactored} as
+%\begin{align}
+%((x-1) X-\theta) \mathcal{O}_K
+%	& = \mathfrak{a} \tilde{\mathfrak{p}}^{\mathbf{u}}\\
+%	& = \mathfrak{a} \cdot \tilde{\mathfrak{p}}^{\mathbf{r} + n_1 \mathbf{a}_1 + \cdots + n_v \mathbf{a}_v}\\
+%	& = (\mathfrak{a} \cdot \tilde{\mathfrak{p}}^\mathbf{r}) \cdot \mathfrak{c}_1^{n_1}\cdots \mathfrak{c}_v^{n_v}.
+%\end{align}
+%Now, by definition of $h_j$, there exist $\gamma_j \in K^*$ such that
+%\[[\mathfrak{c}_j] = [\tilde{\mathfrak{p}}^{\mathbf{a}_j}] = \mathfrak{p}_j^{h_j} = \gamma_j \mathcal{O}_K.\]
+%for all $j \in \{1, \dots, v\}$.
+%
+%Now, for each choice of $\mathbf{r}$, if $\mathbf{u}$ is a solution, we must necessarily have
+%\[\mathfrak{a} \cdot \tilde{\mathfrak{p}}^\mathbf{r}=\alpha \cdot \mathcal{O}_K.\]
+%Hence, we iterate through every possible $\mathbf{r}$, and store those cases for which this occurs.
+%
+
+\end{itemize}
+% annoying details about the computation
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\againframe<2>{overview2}
+
+\againframe<3>{overview2}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Principalization: an example}
+
+\begin{itemize}
+\item A nice example
+\[7x^3 + 12xy^2 +14y^3 = 7^{z_1}\cdot 11^{z_2}\cdot 37^{z_3}\]
+\only<2->{\textbf{Number of ideal equations}: 16}
+
+\only<2->{\textbf{Class number}: 9}
+
+\only<2->{\textbf{Number of principalization tests}: 11,664}
+
+\only<2->{\textbf{Number of $S$-unit equations}: 1296} % 1second
+
+\only<2->{\textbf{Total time}: 21.5 seconds}
+
+\end{itemize}
+\end{frame}
+% worst case scenario of h^v cases, and h_i = 9 for all 3 prime ideals
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Principalization: an example}
+
+\begin{itemize}
+\item A less nice example
+\[444x^3 + 444x^2y + 444xy^2 + 445y^3 = 37^{z_1}\cdot 211^{z_2} \cdot 5011^{z_3}\]
+\only<2->{\textbf{Number of ideal equations}: 28}
+
+\only<2->{\textbf{Class number}: 3528}
+
+\only<2->{\textbf{Number of principalization tests}: 201,684}
+
+\only<2->{\textbf{Number of $S$-unit equations}: 196} % 1second
+
+\only<2->{\textbf{Total time}: 2 hours}
+
+\end{itemize}
+\end{frame}
+% class number 3528
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Principalization: an example}
+
+\begin{itemize}
+\item A bad example
+\[2x^3 + 20x^2y - 14xy^2 + 37y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 11^{z_4} \cdot 13^{z_5} \cdot
+17^{z_6}\]
+\only<2->{\textbf{Number of ideal equations}: 448}
+
+\only<2->{\textbf{Class number}: 15}
+
+\only<2->{\textbf{Number of principalization tests}: 7,560,000}
+
+\only<2->{\textbf{Number of $S$-unit equations}: 139,264} % 1second
+
+\only<2->{\textbf{Total time}: 4 hours}
+
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Principalization: an example}
+
+\begin{itemize}
+\item A really, really bad example
+\[14x^3 + 20x^2y + 24xy^2 + 15y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 17^{z_3}\cdot 37^{z_4} \cdot 53^{z_5}\]
+\only<2->{\textbf{Number of ideal equations}: 64}
+
+\only<2->{\textbf{Class number}: 33}
+
+\only<2->{\textbf{Number of principalization tests}: 113,848,416}
+
+\only<2->{\textbf{Number of $S$-unit equations}: ????} % 1second
+
+\only<2->{\textbf{Total time}: ????}
+
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\againframe<3>{overview2}
+
+\againframe<2>{overview2}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The new principalization test}
+
+\begin{itemize}
+\item<1-> Let $\displaystyle \phi : \mathbb{Z}^{\nu} \rightarrow \text{Cl}(K)$, where $\displaystyle (n_1,\dots ,n_{\nu}) \mapsto [\mathfrak{p}_1]^{n_1}\cdots [\mathfrak{p}_{\nu}]^{n_{\nu}}$
+
+\item<2-> If $\mathbf{u} = (u_1, \dots, u_{\nu})$ is a solution to
+\[(x-y\theta)\mathcal{O}_K = \mathfrak{a}\mathfrak{p}_{1}^{u_{1}}\cdots \mathfrak{p}_{\nu}^{u_{\nu}}\]
+then $\phi(\mathbf{u}) = [\mathfrak{a}]^{-1}$
+
+\item<3-> $[\mathfrak{a}]^{-1} \in \text{Im}(\phi) \implies \phi(\mathbf{r}) = [\mathfrak{a}]^{-1}$
+\item<4-> Let $A$ be a matrix whose columns $\mathbf{a}_1, \dots, \mathbf{a}_{\nu}$ form a basis of $\ker(\phi)$
+
+\item<5-> Since $\mathbf{u} - \mathbf{r} \in \ker(\phi)$,
+\[\mathbf{u} = \mathbf{n}A + \mathbf{r}, \quad \quad \mathbf{n} \in \mathbb{Z}^{\nu}\]
+
+%\item Let $\phi^{-1}([\mathfrak{a}]^{-1}) = \mathbf{r}=(r_1,\dotsc,r_{\nu})$
+
+%\item If $\mathbf{u} = (u_1, \dots, u_{\nu})$ is a solution to [??] then $\mathbf{u}= \mathbf{n}A+\mathbf{r}$ where $\mathbf{n} = (n_1,\dots,n_{\nu}) \in \mathbb{Z}^{\nu}$
+%The important thing for us is that $A$ is invertible. In fact its determinant is (up to sign) equal to $\#\img(\phi)$ and so divides the class number. As $A$ is invertible, there are positive constants $C_1$, $C_2$ such that
+%\[
+% H(\mathbf{n}) \le C_1 H(\mm), \qquad H(\mm) \le C_2 H(\mathbf{n}).
+%\]
+
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The new principalization test}
+
+\begin{itemize}
+
+\item<1-> Let $\displaystyle \mathbf{r} = (r_1, \dots, r_{\nu}), \ \mathbf{n} = (n_1, \dots, n_{\nu})$, and $\displaystyle \mathbf{a}_i=(a_{1i},\dotsc,a_{\nu i})$
+\item<2-> Now,
+\begin{align*}
+(x-y\theta) \mathcal{O}_K
+	& = \mathfrak{a}\mathfrak{p}_{1}^{u_{1}}\cdots \mathfrak{p}_{\nu}^{u_{\nu}}\\
+	&\\
+	& \only<3->{= \left(\mathfrak{a}\mathfrak{p}_{1}^{r_{1}}\cdots \mathfrak{p}_{\nu}^{r_{\nu}}\right) \cdot
+	(\mathfrak{p}_{1}^{a_{11}}\cdots \mathfrak{p}_{\nu}^{a_{\nu 1}})^{n_1} \cdots (\mathfrak{p}_{1}^{a_1 \nu}\cdots \mathfrak{p}_{\nu}^{a_{\nu \nu}})^{n_{\nu}}}\\
+	&\\
+	& \only<4->{= \alpha \gamma_1^{n_1} \cdots \gamma_{\nu}^{n_{\nu}}\mathcal{O}_K}
+\end{align*}
+
+
+%
+%Now
+%\[[\mathfrak{a} \cdot \tilde{\mathfrak{p}}^\mathbf{r}]
+%	= [\mathfrak{a}] \cdot [\mathfrak{p}_1]^{r_1}\cdots [\mathfrak{p}_v]^{r_v}
+%	= [\mathfrak{a}]\cdot \phi(r_1,\dotsc,r_v)=[1]\]
+%as $\phi(r_1,\dotsc,r_v)=[\mathfrak{a}]^{-1}$ by construction. Thus
+%\[\mathfrak{a} \cdot \tilde{\mathfrak{p}}^\mathbf{r}=\alpha \cdot \mathcal{O}_K\]
+%for some $\alpha \in K^*$. We note that some of the $r_i$ might be negative so we don't expect $\alpha$ to be an algebraic integer in general. This can be problematic later in the algorithm when we compute the embedding of $\alpha$ into our $p$-adic fields. In those instances, the precision on our $\theta^{(i)}$ may not be high enough, and as a result, $\alpha$ may be mapped to $0$. Increasing the precision is not ideal at this point, as it would require us to recompute a fair amount of data and so is computationally inefficient. Instead, we force the $r_i$ to be positive by adding sufficiently many multiples of the class number. (Having already computed the class group, computing the class number is not costly.)
+%
+%Now,
+%\[[\mathfrak{c}_j] = [\tilde{\mathfrak{p}}^{\mathbf{a}_j}] = \phi(\mathbf{a}_j) = [1]\]
+%as the $\mathbf{a}_j$ are a basis for the kernel of $\phi$. Thus for all $j \in \{1, \dots, v\}$, there are $\gamma_j \in K^*$ such that $\mathfrak{c}_j=\gamma_j \mathcal{O}_K$.
+%
+%Thus we have rewritten \eqref{Eq:TMfactored} as
+%\begin{equation}\label{Eq:TMprincipal}
+%((x-1) X- \theta) \mathcal{O}_K=\alpha \cdot \gamma_1^{n_1} \cdots \gamma_v^{n_v} \mathcal{O}_K
+%\end{equation}
+%for unknown integers $(n_1, \dots, n_v)$.
+%Note that the number of cases has not increased. If $[\mathbf{a}]^{-1}$ is not in the image of $\phi$ then we have a contradiction. If $[\mathbf{a}]^{-1}$ is in the image of $\phi$ then we obtain one corresponding equation \eqref{Eq:TMprincipal}.
+%
+
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\againframe<2>{overview2}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}<1>[label=overview3]
+\frametitle{Overview}
+
+\begin{figure}
+\centering
+
+\tikzstyle{block} = [rectangle, fill=ubcBlue,
+    text=structure.bg, text centered, rounded corners, minimum height=1.5em, minimum width=5em ]
+\tikzstyle{line} = [line width=0.5pt, -triangle 45, color=ubcBlue]
+\tikzstyle{linealert} = [line width=0.5pt, -triangle 45, color=ubcBlue1]
+\tikzstyle{linedim} = [line width=0.5pt, -triangle 45, color=ubcBlue!30]
+\tikzstyle{alert} = [text=structure.bg, fill=ubcBlue1]
+\tikzstyle{dim} = [text=structure.bg, fill=ubcBlue!30]
+
+\begin{tikzpicture}[node distance=1.5cm, auto]
+\usebeamercolor{frametitle}
+    % Place nodes
+    \node [block] (S) {\small Set of Primes};
+    \node []				             (F1m) [right of =S, node distance=2cm] { $\quad \vdots$};
+    \node [] 				     (Filler1) [above of =F1m, node distance=0.4cm] {};
+    \node [] 				     (Filler2) [below of =F1m, node distance=0.4cm] {};
+    \node [block] (F1)[above of =Filler1, node distance = 0.9cm] {\small TM Eq $m$};
+    \node [block] (Fm) [below of =Filler2,node distance = 0.9cm ] {\small TM Eq $1$};
+    \node [] 				     (F12m) [right of =Fm, node distance=2cm] { $\vdots$};
+    \node [] 				     (Filler3) [above of =F12m, node distance=0.4cm] {};
+    \node [] 				     (Filler4) [below of =F12m, node distance=0.4cm] {};
+    \node [block] (F21)[above of =Filler3, node distance = 0.9cm] {\small Monic Eq $M$};
+    \node [block] (F2m) [below of =Filler4, node distance = 0.9cm] {\small Monic Eq $1$};
+    \node [] 				     (ideal1m) [right of =F2m, node distance=2cm] { $\vdots$};
+    \node [] 				     (Filler5) [above of =ideal1m, node distance=0.4cm] {};
+    \node [] 				     (Filler6) [below of =ideal1m, node distance=0.4cm] {};
+    \node [block] (ideal1)[above of =Filler5, node distance = 0.9cm] {\small Ideal Eq $\mu$};
+    \node [block,onslide=<1>{alert}] (idealm) [below of =Filler6, node distance = 0.9cm] {\small Ideal Eq $1$};
+    \node [block,onslide=<1->{alert}] (S1m) [right of =idealm, node distance=3cm] {\small $S$-unit Eq 1};
+
+    \draw [line] (S) -> (F1);
+    \draw [line] (S) -> (Fm);
+    \draw [line] (S) -> (F1m);
+    \draw [line] (S) -> (Filler1);
+    \draw [line] (S) -> (Filler2);
+    \draw [line] (Fm) -> (F21);
+    \draw [line] (Fm) -> (F2m);
+    \draw [line] (Fm) -> (F12m);
+    \draw [line] (Fm) -> (Filler3);
+    \draw [line] (Fm) -> (Filler4);
+    \draw [line] (F2m) -> (ideal1);
+    \draw [line] (F2m) -> (idealm);
+    \draw [line] (F2m) -> (ideal1m);
+    \draw [line] (F2m) -> (Filler5);
+    \draw [line] (F2m) -> (Filler6);
+    \draw [line,onslide=<1>{linealert}] (idealm) -> (S1m);
+
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Old vs new principalization: an example}
+
+\begin{itemize}
+\item A nice example
+\[7x^3 + 12xy^2 +14y^3 = 7^{z_1}\cdot 11^{z_2}\cdot 37^{z_3}\]
+\only<1->{\textbf{Number of ideal equations}: 16}
+
+\only<2->{{\color{red}\textbf{Now}: 8}}
+
+\only<1->{\textbf{Number of principalization tests}: 11,664}
+
+\only<2->{{\color{red}\textbf{Now}: 8}}
+
+\only<1->{\textbf{Number of $S$-unit equations}: 1296} % 1second
+
+\only<2->{{\color{red}\textbf{Now}: 8}}
+
+\only<1->{\textbf{Total time}: 21.5 seconds}
+
+\only<2->{{\color{red}\textbf{Now}: 0.12 seconds}}
+\end{itemize}
+\end{frame}
+% worst case scenario of h^v cases, and h_i = 9 for all 3 prime ideals
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Old vs new principalization: an example}
+
+\begin{itemize}
+\item A less nice example
+\[444x^3 + 444x^2y + 444xy^2 + 445y^3 = 37^{z_1}\cdot 211^{z_2} \cdot 5011^{z_3}\]
+\only<1->{\textbf{Number of ideal equations}: 28}
+
+\only<2->{{\color{red}\textbf{Now}: 9}}
+
+\only<1->{\textbf{Number of principalization tests}:  201,684}
+
+\only<2->{{\color{red}\textbf{Now}: 9}}
+
+\only<1->{\textbf{Number of $S$-unit equations}: 196} % 1second
+
+\only<2->{{\color{red}\textbf{Now}: 4}}
+
+\only<1->{\textbf{Total time}: 2 hours}
+
+\only<2->{{\color{red}\textbf{Now}: 3.19 seconds}}
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Old vs new principalization: an example}
+
+\begin{itemize}
+\item A bad example
+\[2x^3 + 20x^2y - 14xy^2 + 37y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 5^{z_3}\cdot 11^{z_4} \cdot 13^{z_5} \cdot 17^{z_6}\]
+\only<1->{\textbf{Number of ideal equations}: 448}
+
+\only<2->{{\color{red}\textbf{Now}: 162}}
+
+\only<1->{\textbf{Number of principalization tests}:  7,560,000}
+
+\only<2->{{\color{red}\textbf{Now}: 162}}
+
+\only<1->{\textbf{Number of $S$-unit equations}: 139,264} % 1second
+
+\only<2->{{\color{red}\textbf{Now}: 122}}
+
+\only<1->{\textbf{Total time}: 4 hours}
+
+\only<2->{{\color{red}\textbf{Now}: 0.85 seconds}}
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Old vs new principalization: an example}
+
+\begin{itemize}
+\item This god-forsaken example
+\[14x^3 + 20x^2y + 24xy^2 + 15y^3 = 2^{z_1}\cdot 3^{z_2}\cdot 17^{z_3}\cdot 37^{z_4} \cdot 53^{z_5}\]
+
+\only<1->{\textbf{Number of ideal equations}: 64}
+
+\only<2->{{\color{red}\textbf{Now}: 64}}
+
+\only<1->{\textbf{Number of principalization tests}:  113,848,416}
+
+\only<2->{{\color{red}\textbf{Now}: 64}}
+
+\only<1->{\textbf{Number of $S$-unit equations}: ????} % 1second
+
+\only<2->{{\color{red}\textbf{Now}: 60}}
+
+\only<1->{\textbf{Total time}: ????}
+
+\only<2->{{\color{red}\textbf{Now}: 0.5 seconds}}
+\end{itemize}
+\end{frame}
+
+
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Recall}
+
+  \pause
+So far
+  \begin{itemize}
+    \item<3-> Reduced from solving
+      \[F(x,y) = w_0x^3 + w_1x^2y + w_2xy^2 + w_3y^3 = a p_1^{z_1} \cdots p_v^{z_v}\]
+      in $(x,y,z_1,\dots, z_v)$
+      \onslide<4->{to solving \textit{several} ideal equations
+\[(x-y\theta) \mathcal{O}_K =\alpha \gamma_1^{n_1} \cdots \gamma_{\nu}^{n_{\nu}}\mathcal{O}_K\]
+in $(x,y,n_1, \dots, n_{\nu})$}
+    \item<5-> But we haven't actually solved anything yet!
+    \end{itemize}
+
+\end{frame}
+
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\section{Solving a TM equation: The~$S$-unit~equation}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\againframe<1>{overview3}
+
+\againframe<2>{overview3}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{An equation in $K$}
+
+\begin{itemize}
+\item<1-> Let $ \varepsilon_1, \dots, \varepsilon_r$ denote a complete set of fundamental units of $\mathcal{O}_K$\\
+
+\item<2- >\only<2->{$(x-y\theta) \mathcal{O}_K = \alpha \gamma_1^{n_1} \cdots \gamma_{\nu}^{n_{\nu}}\mathcal{O}_K$} \only<3->{implies
+\[x-y\theta = \alpha \varepsilon_1^{a_1} \cdots \varepsilon_r^{a_r}\gamma_1^{n_1}\cdots \gamma_{\nu}^{n_{\nu}} \quad \quad a_i, n_i \in \mathbb{Z}\]}
+\end{itemize}
+\end{frame}
+%To summarize, our original problem of solving \eqref{Eq:main} has been reduced to the problem of solving finitely many equations of the form \eqref{Eq:main3} for the variables
+%\[X, a_1, n_1, \dots, n_v.\]
+%
+%From here, we deduce a so-called $S$-unit equation. In doing so, we eliminate the variable $X$ and set ourselves up to bound the exponents $a_1, n_1, \dots, n_v$. We note here that generating the class group can be a timely computation. However, if we follow the method of Tzanakis-de Weger, we may be left with $h^v$ $S$-unit equations, all of which we would need to apply the principal ideal test to. That is to say, computing the class group is a faster operation than the alternative provided by Tzanakis-de Weger.
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+%\begin{frame}[fragile]{Recall}
+
+%So far
+%  \begin{itemize}
+%    \item<2-> Reduced from solving
+%      \[F(x,y) = w_0x^3 + w_1x^2y + w_2xy^2 + w_3y^3 = a p_1^{z_1} \cdots p_v^{z_v}\]
+%      in $(x,y,z_1,\dots, z_v)$
+%      \onslide<3-4>{to solving several equations of the form
+%        \[x-y\theta = \alpha \varepsilon_1^{a_1} \cdots \varepsilon_r^{a_r}\gamma_1^{n_1}\cdots \gamma_{\nu}^{n_{\nu}} \quad \quad a_i, n_i \in \mathbb{Z}\]
+%      in $(x,y,a_1,\dots, a_r,n_1, \dots, n_{\nu})$}
+%    \item<4-> But we haven't actually solved anything yet!
+%    \end{itemize}
+
+%\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The `$S$'-unit equation}
+
+\begin{itemize}
+\item<1-> Let $p \in \{p_1, \dots, p_{\nu}, \infty\}$
+
+\item<2-> Denote the roots of $g(t)$ in $\overline{\mathbb{Q}_p}$ by $\theta^{(1)}, \theta^{(2)}, \theta^{(3)}$
+
+\item<3-> For $i \in \{1,2,3\}$, let
+\[\sigma_i: K \to \overline{\mathbb{Q}_p}, \quad \quad \theta \mapsto \theta^{(i)}\]
+and let $z^{(i)}$ denote $\sigma_i(z)$
+
+\end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The `$S$'-unit equation}
+
+\begin{itemize}
+\item<1-> Applying $\sigma_1, \sigma_2, \sigma_3$ to $x - y\theta$ yields
+\only<2->{
+\[\delta_1 \prod_{i=1}^r \left(\frac{\varepsilon_i^{(2)}}{\varepsilon_i^{(3)}}\right)^{a_i}\prod_{i = 1}^{\nu} \left( \frac{\gamma_i^{(2)}}{\gamma_i^{(3)}}\right)^{n_i} - 1 = \delta_2 \prod_{i=1}^r \left( \frac{\varepsilon_i^{(1)}}{\varepsilon_i^{(3)}}\right)^{a_i} \prod_{i = 1}^{\nu} \left( \frac{\gamma_i^{(1)}}{\gamma_i^{(3)}}\right)^{n_i},\]}
+\only<3->{where
+\[\delta_1 = \frac{\theta^{(1)} - \theta^{(3)}}{\theta^{(1)} - \theta^{(2)}}\cdot\frac{\alpha^{(2)}}{\alpha^{(3)}}, \quad \delta_2 = \frac{\theta^{(3)} - \theta^{(2)}}{\theta^{(2)} - \theta^{(1)}}\cdot \frac{\alpha^{(1)}}{\alpha^{(3)}}\]
+are constants}
+
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Next steps}
+
+\begin{itemize}
+\item Generate a very large upper bound on the solutions using the theory of linear forms in logarithms
+\item Reduce this bound via Diophantine approximation computations
+\item Search below this reduced bound
+
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\section{Solving a TM equation: Bound~reduction}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Linear forms in logarithms}
+
+\[\delta_1 \prod_{i=1}^r \left(\frac{\varepsilon_i^{(2)}}{\varepsilon_i^{(3)}}\right)^{a_i}\prod_{i = 1}^{\nu} \left( \frac{\gamma_i^{(2)}}{\gamma_i^{(3)}}\right)^{n_i} - 1 = \delta_2 \prod_{i=1}^r \left( \frac{\varepsilon_i^{(1)}}{\varepsilon_i^{(3)}}\right)^{a_i} \prod_{i = 1}^{\nu} \left( \frac{\gamma_i^{(1)}}{\gamma_i^{(3)}}\right)^{n_i},\]
+
+\begin{itemize}
+\item<2-> Let $p \in \{p_1, \dots, p_{\nu}\}$
+\item<3-> Define
+\[\Lambda_{p} = \log_{p}(\delta_1) + \sum_{i=1}^r a_i\log_{p}\left(\frac{\varepsilon_i^{(2)}}{\varepsilon_i^{(3)}} \right) +  \sum_{i=1}^{\nu} n_i\log_{p}\left(\frac{\gamma_i^{(2)}}{\gamma_i^{(3)}} \right)\]
+
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Upper bounds}
+
+\begin{itemize}
+\item<1-> Let $N = \max\{ n_1, \dots, n_{\nu}\}$, $A = \max\{ |a_1|, \dots, |a_{r}|\}$ and
+\[H = \max\{N,A\}\]
+
+\item<2-> Bound $N$, $A$ separately by linear functions of $\log{H}$
+
+\item<3-> Main Strategy:
+\[H \leq a + b\log{H} \implies H < 2(a+b\log{b})\]
+
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{The reduction strategy}
+
+\begin{itemize}
+\item<1-> In each reductive step, let
+\[\begin{cases}
+N_l: \text{ the best current upper bound for } n_l \text{ for } l \in \{1, \dots, \nu\} &\\
+A_0: \text{ the best current upper bound for } A &\\
+H_0: \text{ the best known upper bound for } H &
+\end{cases}\]
+
+\item <2-> For each $l \in \{1,\dots, \nu\}$ use LLL to reduce $N_l$ to the size of $\log{H_0}$
+\item<3-> Apply a similar procedure to reduce $A_0$ to the size of $\log{H_0}$
+\item<4-> Repeat the above reduction procedures until no further reduction is possible
+\item<5-> Reduce these bounds further using Fincke-Pohst
+\item<6-> Search below these bounds using congruence sieves and brute force
+
+\end{itemize}
+\end{frame}
+% inital bounds are huge, can expect them to be the size 10^40
+% enumeration at this point is impossible
+% instead do a reductive process, and at each step, ...
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+%
+%\begin{frame}[fragile]{Basic $p$-adic reduction}
+%
+%\begin{itemize}
+%\item<1-> Let $l \in \{1, \dots, \nu\}$
+%\item<2-> Consider the associated linear form in $p$-adic logarithms given by
+%\[\Lambda_{p_l} = \log_{p_l}(\delta_1) + \sum_{i=1}^r a_i\log_{p_l}\left(\frac{\varepsilon_i^{(2)}}{\varepsilon_i^{(3)}} \right) +  \sum_{i=1}^{\nu} n_i\log_{p_l}\left(\frac{\gamma_i^{(2)}}{\gamma_i^{(3)}} \right)\]
+%
+%% divide out by a term to put the elements in Qp, but ignoring that here
+%\item<3-> Pick $\mu \in \mathbb{N}$ such that $\mu < N_l$
+%\item<4-> Associate to $\Lambda_{p_l}$ the $p_i$-adic approximation lattice $\Gamma_{\mu}$
+%\[\Gamma_{\mu} = \left\{ (x_1, \dots, x_{1 + \nu + r})^{\text{T}} \in \mathbb{Z}^{1+\nu+r} \ : \ ||\Lambda_{p_l}||_{p_l} \leq p_l^{-\mu}\right\}\]
+%
+%\end{itemize}
+%%
+%%\only<3->{
+%%\begin{Lemma} \label{Lem:19.1}
+%%Suppose
+%%\[\sum_{i = 1}^{\nu} n_{i}a_{li} > \frac{1}{p_l-1} - \ord_{p_l}(\delta_2).\]
+%%Then
+%%\[\ord_{p_l}(\Lambda_l') = \sum_{i = 1}^{\nu} n_{i}a_{li} + \ord_{p_l}(\delta_2) - \ord_{p_l}(\alpha_{\hat{i}}).\]
+%%\end{Lemma}}
+%
+%\end{frame}
+%
+%% assume n_l > mu (big)
+%% then get associated lattice
+%% assume x is a soln satisfying n_l > mu
+%% then x in lattice
+%% L(x) < sum b_i^2 < bound^2
+%% compute lattice, use LLL basis to find that L(x) > Bound^2
+%% hence no such soln, hence n_l < mu
+%
+%%---------------------------------------------------------------------------------------------------------------------------------------------%
+%
+%\begin{frame}[fragile]{Basic $p$-adic reduction}
+%
+%\begin{itemize}
+%\item<1-> Suppose $\mathbf{x} = (1, n_1, \dots, n_{\nu}, a_1, \dots, a_r)$ is a solution to our $S$-unit equation
+%\[\delta_1 \prod_{i=1}^r \left(\frac{\varepsilon_i^{(2)}}{\varepsilon_i^{(3)}}\right)^{a_i}\prod_{i = 1}^{\nu} \left( \frac{\gamma_i^{(2)}}{\gamma_i^{(3)}}\right)^{n_i} - 1 = \delta_2 \prod_{i=1}^r \left( \frac{\varepsilon_i^{(1)}}{\varepsilon_i^{(3)}}\right)^{a_i} \prod_{i = 1}^{\nu} \left( \frac{\gamma_i^{(1)}}{\gamma_i^{(3)}}\right)^{n_i},\]
+%such that
+%\[n_l > \mu\]
+%\item<2-> Then $\mathbf{x} \in \Gamma_{\mu}$
+%\item<3-> Hence
+%\[ ||\mathbf{x}||^2 \leq 1+ \sum_{i = 1}^{{\nu}} N_i^2 + \sum_{i = 1}^{r} A_0^2\]
+%
+%\end{itemize}
+%
+%% use LLL to find lower bound on l(Gamm)
+%% if bigger than q, then we know that
+%\end{frame}
+%
+%%---------------------------------------------------------------------------------------------------------------------------------------------%
+%
+%\begin{frame}[fragile]{Basic $p$-adic reduction}
+%
+%\begin{itemize}
+%
+%\item <1-> Apply the LLL Algorithm to $\Gamma_{\mu}$ to compute a lower bound for $\ell(\Gamma_{\mu})$, where
+%\[\ell(\Gamma_{\mu}) = \min_{\mathbf{0} \neq \mathbf{x} \in \Gamma_{\mu}} ||\mathbf{x}||\]
+%\item<2-> Put
+%\[Q = 1+ \sum_{i = 1}^{{\nu}} N_i^2 + \sum_{i = 1}^{r} A_0^2\]
+%\end{itemize}
+%
+%\only<3->{
+%\begin{Lemma} \label{lem:LLL}
+%If $\ell(\Gamma_{\mu}) > Q^{1/2}$ then $n_l \leq \mu.$
+%\end{Lemma}}
+%
+%\end{frame}
+%
+%%---------------------------------------------------------------------------------------------------------------------------------------------%
+%
+%\begin{frame}[fragile]{Basic $p$-adic reduction}
+%\begin{itemize}
+%\item Repeat this procedure for every $l \in \{1, \dots, \nu\}$ until no further improvement is made
+%\end{itemize}
+%
+%\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Basic $p$-adic reduction}
+
+\begin{itemize}
+\item<1-> Let $l \in \{1, \dots, \nu\}$
+\item<2-> Consider the associated linear form in $p$-adic logarithms given by
+\[\Lambda_{p_l} = \log_{p_l}(\delta_1) + \sum_{i=1}^r a_i\log_{p_l}\left(\frac{\varepsilon_i^{(2)}}{\varepsilon_i^{(3)}} \right) +  \sum_{i=1}^{\nu} n_i\log_{p_l}\left(\frac{\gamma_i^{(2)}}{\gamma_i^{(3)}} \right)\]
+
+% divide out by a term to put the elements in Qp, but ignoring that here
+\item<3-> Pick $\mu \in \mathbb{N}$ such that $\mu < N_l$
+\item<4-> Associate to $\Lambda_{p_l}$ the $p$-adic approximation lattice $\Gamma_{\mu}$
+\[\Gamma_{\mu} = \left\{ (x_1, \dots, x_{1 + \nu + r})^{\text{T}} \in \mathbb{Z}^{1+\nu+r} \ : \ ||\Lambda_{p_l}||_{p_l} \leq p_l^{-\mu}\right\}\]
+
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Basic $p$-adic reduction}
+
+\begin{itemize}
+\item<1-> Suppose $\mathbf{x} = (1, n_1, \dots, n_{\nu}, a_1, \dots, a_r)$ is a solution to our $S$-unit equation
+\[\delta_1 \prod_{i=1}^r \left(\frac{\varepsilon_i^{(2)}}{\varepsilon_i^{(3)}}\right)^{a_i}\prod_{i = 1}^{\nu} \left( \frac{\gamma_i^{(2)}}{\gamma_i^{(3)}}\right)^{n_i} - 1 = \delta_2 \prod_{i=1}^r \left( \frac{\varepsilon_i^{(1)}}{\varepsilon_i^{(3)}}\right)^{a_i} \prod_{i = 1}^{\nu} \left( \frac{\gamma_i^{(1)}}{\gamma_i^{(3)}}\right)^{n_i},\]
+such that
+\[n_l > \mu\]
+\item<2-> Then $\mathbf{x} \in \Gamma_{\mu}$
+\item<3-> Hence
+\[ ||\mathbf{x}||^2 \leq 1+ \sum_{i = 1}^{{\nu}} N_i^2 + \sum_{i = 1}^{r} A_0^2\]
+\end{itemize}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+
+\begin{frame}[fragile]{Basic $p$-adic reduction}
+
+\begin{itemize}
+
+\item <1-> Apply the LLL Algorithm to $\Gamma_{\mu}$ to compute a lower bound for $\ell(\Gamma_{\mu})$, where
+\[\ell(\Gamma_{\mu}) = \min_{\mathbf{0} \neq \mathbf{x} \in \Gamma_{\mu}} ||\mathbf{x}||\]
+\item<2-> Put
+\[Q = 1+ \sum_{i = 1}^{{\nu}} N_i^2 + \sum_{i = 1}^{r} A_0^2\]
+\end{itemize}
+
+\only<3->{
+\begin{Lemma} \label{lem:LLL}
+If $\ell(\Gamma_{\mu}) > Q^{1/2}$ then $n_l < \mu.$
+\end{Lemma}}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+
+\begin{frame}[fragile]{Basic $p$-Adic Reduction}
+  \begin{itemize}
+    \item<1-> If the Lemma holds, replace $N_l$ by $\mu - 1$
+    \item<2-> Repeat this procedure for every $l \in \{1, \dots, \nu\}$ until no further improvement is made
+\end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Refined $p$-adic reduction}
+
+\begin{itemize}
+\item<1-> Let $l \in \{1, \dots, \nu\}$
+\item<2-> Consider the associated linear form in $p$-adic logarithms given by
+\[\Lambda_{p_l} = \log_{p_l}(\delta_1) + \sum_{i=1}^r a_i\log_{p_l}\left(\frac{\varepsilon_i^{(2)}}{\varepsilon_i^{(3)}} \right) +  \sum_{i=1}^{\nu} n_i\log_{p_l}\left(\frac{\gamma_i^{(2)}}{\gamma_i^{(3)}} \right)\]
+
+% divide out by a term to put the elements in Qp, but ignoring that here
+\item<3-> Pick $\mu \in \mathbb{N}$ such that $\mu < N_l$
+\item<4-> Associate to $\Lambda_{p_l}$ the $p$-adic approximation lattice $\Gamma_{\mu}$
+\[\Gamma_{\mu} = \left\{ (x_1, \dots, x_{1 + \nu + r})^{\text{T}} \in \mathbb{Z}^{1+\nu+r} \ : \ ||\Lambda_{p_l}||_{p_l} \leq p_l^{-\mu}\right\}\]
+
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Refined $p$-adic reduction}
+
+\begin{itemize}
+\item<1-> Suppose $\mathbf{x} = (1, n_1, \dots, n_{\nu}, a_1, \dots, a_r)$ is a solution to our $S$-unit equation
+\[\delta_1 \prod_{i=1}^r \left(\frac{\varepsilon_i^{(2)}}{\varepsilon_i^{(3)}}\right)^{a_i}\prod_{i = 1}^{\nu} \left( \frac{\gamma_i^{(2)}}{\gamma_i^{(3)}}\right)^{n_i} - 1 = \delta_2 \prod_{i=1}^r \left( \frac{\varepsilon_i^{(1)}}{\varepsilon_i^{(3)}}\right)^{a_i} \prod_{i = 1}^{\nu} \left( \frac{\gamma_i^{(1)}}{\gamma_i^{(3)}}\right)^{n_i},\]
+such that
+\[n_l > \mu\]
+\item<2-> Then $\mathbf{x} \in \Gamma_{\mu}$
+\item<3-> Hence
+\[ ||\mathbf{x}||^2 \leq 1+ \sum_{i = 1}^{{\nu}} N_i^2 + \sum_{i = 1}^{r} A_0^2\]
+\end{itemize}
+
+\end{frame}
+
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Refined $p$-adic reduction}
+
+\begin{itemize}
+
+\item <1-> Apply the Fincke-Pohst Algorithm to $\Gamma_{\mu}$ to find all vectors $\mathbf{y}$ in $\Gamma_{\mu}$ such that
+\[||\mathbf{y}||^2 \leq 1+ \sum_{i = 1}^{{\nu}} N_i^2 + \sum_{i = 1}^{r} A_0^2\]
+
+\item<2-> Test whether each such vector $\mathbf{y} \in \Gamma_{\mu}$ is a solution to
+\[\delta_1 \prod_{i=1}^r \left(\frac{\varepsilon_i^{(2)}}{\varepsilon_i^{(3)}}\right)^{a_i}\prod_{i = 1}^{\nu} \left( \frac{\gamma_i^{(2)}}{\gamma_i^{(3)}}\right)^{n_i} - 1 = \delta_2 \prod_{i=1}^r \left( \frac{\varepsilon_i^{(1)}}{\varepsilon_i^{(3)}}\right)^{a_i} \prod_{i = 1}^{\nu} \left( \frac{\gamma_i^{(1)}}{\gamma_i^{(3)}}\right)^{n_i}\]
+
+\item <3-> Discard non-solutions, replace $N_l$ by $\mu - 1$, and repeat the procedure for a new choice of $p_l, \mu$
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Final search}
+
+\begin{itemize}
+\item Apply analogous arguments to decrease the bound $A_0$
+\item Once the bounds $N_l, A_0$ are sufficiently small, apply a brute force search below these bounds
+\end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\section{Elliptic Curves}
+
+%---------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Elliptic curves: an example}
+
+\begin{itemize}
+\item<1-> Consider the conductor $N = 10^9 -1 = 3^4 \cdot 37\cdot333667$
+\item<2-> Applying the theorem of Bennett-G.-Rechnitzer, there are 8 Thue-Mahler equations to solve
+\item<3-> Solving these equations, the only cases which satisfy the conditions of the theorem are
+\begin{align*}
+4x^3 + 35x^2y+14xy^2 + 216y^3 & \quad \text{ at } \quad (x,y) = (-8,1), (-2,1)\\
+27x^3 + 7x^2y+70xy^2 + 32y^3 &\quad \text{ at } \quad (x,y) = (1,-2), (2,-1)\\
+52x^3 + 55x^2y+72xy^2 + 37y^3 &\quad \text{ at } \quad (x,y) = (0,1), (-3,5)
+\end{align*}
+\item<4-> In each case, all resulting curves have bad reduction at $2$
+\item<5-> Hence there are no elliptic curves over $\mathbb{Q}$ of conductor $10^9 - 1$
+% conductor 10^9 - 1 form paper
+
+
+% choose one case
+
+
+\end{itemize}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+
+\begin{frame}
+\frametitle{}
+
+\centering Thank You
+
+\end{frame}
+
+
+\end{document}

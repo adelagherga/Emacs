@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# name: header
+# key: header_
+# --
+
+/*
+`(file-name-base)`.m
+$1
+Author: `user-full-name` <`user-mail-address`>
+Copyright © `(format-time-string "%Y")`, `user-full-name`, all rights reserved.
+Created: `(format-time-string "%e %B %Y")`
+
+Description: $2
+
+Commentary:  $3
+
+To do list:  $4
+
+Example:     $5
+
+*/
+
+$0

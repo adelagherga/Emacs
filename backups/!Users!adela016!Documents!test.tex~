@@ -1,0 +1,14 @@
+% attempting again
+
+
+\documentclass{article}
+
+\title{test}
+\author{meeee}
+
+\begin{document}
+
+\section{A section}
+Just a test
+
+\end{document}

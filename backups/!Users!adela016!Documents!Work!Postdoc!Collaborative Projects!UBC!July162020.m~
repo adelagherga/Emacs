@@ -1,0 +1,158 @@
+/*
+Y.m
+
+Author: Adela Gherga <adelagherga@gmail.com>
+Copyright © 2020, Adela Gherga, all rights reserved.
+Created: 16 July 2020
+
+Description:
+
+Commentary:
+
+To do list:
+
+Example:
+
+*/
+
+
+
+ModpCheck:= function(F,q : qDividesRHS:=false)
+
+    /*
+     Description: default to where z = 0 nad p does not divide RHS
+     Input: F:= polynomial F(X,Y) in question
+            RHSprimes:= primes appearing on RHS of TM equation in local test
+            q:= rational prime under which the local test is performed
+                that is, we search for solutions of the TM equations mod q
+            qDividesRHS:= boolean value determining whether q | RHS
+                          default value is false
+     Output: hasSolutions:= boolean value determining whether TM equation has nontrivial local
+                            solutions mod q
+     Example:
+   */
+
+    hasSolutions:= false;
+
+    if (qDividesRHS eq true) then
+	// set hasSolutions to true if F(X,Y) has a solution (u,v) != (0,0) mod q when q | RHS
+	for u,v in [0..q-1] do
+	    if [u,v] ne [0,0] then
+		F_q:= Integers()! (Evaluate(F,[u,v]));
+		if (F_q mod q eq 0) then
+		    hasSolutions:= true;
+		    break u;
+		end if;
+	    end if;
+	end for;
+    else
+
+	// set hasSolutions to true if F(X,Y) has a solution (u,v) != (0,0) moq q
+	// when q does not divide RHS
+	for u,v in [0..q-1] do
+	    if [u,v] ne [0,0] then
+		F_q:= Integers()! (Evaluate(F,[u,v]));
+		if (F_q mod q eq 1) then
+		    hasSolutions:= true;
+		    break u;
+		end if;
+	    end if;
+	end for;
+    end if;
+    return hasSolutions;
+end function;
+
+
+clist:= [-1,6,-5,1];
+
+QUV<U,V>:=PolynomialRing(Rationals(),2);
+Zx<x>:= PolynomialRing(Integers());
+
+// general setup for Thue-Mahler solver
+assert &and[c in Integers() : c in clist];
+c0:=Integers()!clist[1];
+assert c0 ne 0;
+n:=#clist-1;
+assert n eq 3;
+
+// generate the relevant Thue Mahler polynomial
+F:=&+[clist[i+1]*U^(n-i)*V^i : i in [0..n]];
+assert IsHomogeneous(F);
+DiscF:= -27*clist[1]^2*clist[4]^2 + clist[2]^2*clist[3]^2;
+DiscF:= DiscF + 18*clist[1]*clist[2]*clist[3]*clist[4];
+DiscF:= DiscF - 4*clist[1]*clist[3]^3 - 4*clist[2]^3*clist[4];
+assert DiscF eq Discriminant(Evaluate(F,[x,1]));
+
+fclist:= [1] cat [clist[i+1]*c0^(i-1) : i in [1..n]];
+f:=&+[fclist[i+1]*x^(n-i) : i in [0..n]];
+c0:= Integers()!fclist[1]; // update c0
+assert c0 eq 1;
+assert IsMonic(f);
+assert Coefficients(f) eq
+       Coefficients(clist[1]^(n-1)*Evaluate(F,[x/clist[1],1]));
+assert Degree(f) eq n;
+assert IsIrreducible(f);
+assert &and[c in Integers() : c in Coefficients(f)];
+
+localObstruction:= [];
+partialObstruction:= [];
+
+for p in PrimesInInterval(500,1000) do
+    // search for solutions (u,v) of F(u,v) mod p
+    // under the assumption that the exponent on p is > 0
+
+    // the bounds 13,151 are arbitrary, but serve to decrease search time
+
+    posExpSol:= ModpCheck(F,p : qDividesRHS:= true);
+    // verify local obstructions for primes possible on RHS
+    // this includes divisors of N, and 2,3
+
+    // search for solutions (u,v) of F(u,v) mod p
+    // under the assumption that the exponent on p is 0
+    zeroExpSol:= ModpCheck(F,p :
+			   qDividesRHS:=false);
+    if (zeroExpSol eq false) and (posExpSol eq false) then
+	// if u = v = 0 mod p is the only solution in both cases
+	// gcd(u,v) != 1, hence local obstruction at p
+	Append(~localObstruction, p);
+    elif (zeroExpSol eq true) and (posExpSol eq false) then
+	// if a solution (u,v) != (0,0) mod p exists
+	// when the exponent on p is 0
+	// but u = v = 0 mod p is the only solution
+	// when the exponent on p is > 0
+	// partial obstruction at p; can remove p from primelist
+	Append(~partialObstruction, p);
+    end if;
+    print p;
+
+end for;
+
+ThueF:= Thue(Evaluate(F,[x,1]));
+Solutions(ThueF,1);
+
+
+
+partialObstruction;
+[ 2, 3, 5, 11, 17, 19, 23, 31, 37, 47, 53, 59, 61, 67, 73, 79, 89, 101, 103,
+107, 109, 131, 137, 149, 151, 157, 163, 173, 179, 191, 193, 199, 227, 229, 233,
+241, 257, 263, 269, 271, 277, 283, 311, 313, 317, 331, 347, 353, 359, 367, 373,
+383, 389, 397, 401, 409, 431, 439, 443, 457, 467, 479, 487, 499 ,509, 521, 523, 541, 557, 563, 569, 571, 577, 593, 599, 607, 613, 619, 641,
+647, 653, 661, 677, 683, 691, 709, 719, 733, 739, 751, 761, 773, 787, 809, 821,
+823, 829, 857, 859, 863, 877, 887, 907, 919, 929, 941, 947, 971, 977, 983, 991,
+997 ];
+
+
+sol:=[
+    [ -9, -14 ],
+    [ -1, -3 ],
+    [ -1, -2 ],
+    [ -1, 0 ],
+    [ 0, 1 ],
+    [ 1, 1 ],
+    [ 2, 3 ],
+    [ 4, 13 ],
+    [ 5, 1 ]
+];
+
+
+clist:= [1,-10,15,-7,1];

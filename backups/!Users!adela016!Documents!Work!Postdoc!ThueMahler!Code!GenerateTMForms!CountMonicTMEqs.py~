@@ -1,0 +1,58 @@
+#!/usr/bin/python
+# CountMonicTMEqs.py
+
+# Author: Adela Gherga <adelagherga@gmail.com>
+# Copyright © 2020, Adela Gherga, all rights reserved.
+# Created: 8 November 2020
+#
+# Description: This program iterates through each line of the file FormsCond10To6.txt.
+#              It takes as input [N,[discF, c_1, ... ,c_4] and outputs
+#              the total number of monic TM equations
+#
+# Commentary: This program only needs to be applied once.
+#             Run with
+#             python3 /Users/adela016/Documents/Work/Postdoc/ThueMahler/Code/GenerateTMForms/CountMonicTMEqs.py > /Users/adela016/Documents/Work/Postdoc/ThueMahler/Data/FormsCond10To6/NoMonicEqs.txt
+#
+# To do list: N/A
+#
+# Example: N/A
+#
+
+
+
+from itertools import compress
+
+def primes(n):
+    """ Returns  a list of primes < n for n > 2 """
+    sieve = bytearray([True]) * (n//2)
+    for i in range(3,int(n**0.5)+1,2):
+        if sieve[i//2]:
+            sieve[i*i//2::i] = bytearray((n-i*i-1)//(2*i)+1)
+    return [2,*compress(range(3,n,2), sieve[1:])]
+
+def factorization(n):
+    """ Returns a list of the prime factorization of n """
+    pf = []
+    for p in primeslist:
+      if p*p > n : break
+      count = 0
+      while not n % p:
+        n //= p
+        count += 1
+      if count > 0: pf.append((p, count))
+    if n > 1: pf.append((n, 1))
+    return pf
+
+def divisors(n):
+    """ Returns an unsorted list of the divisors of n """
+    divs = [1]
+    for p, e in factorization(n):
+        divs += [x*p**k for k in range(1,e+1) for x in divs]
+    return divs
+
+
+count = 0
+for line in open("/Users/adela016/Documents/Work/Postdoc/ThueMahler/Data/FormsCond10To6/FormsCond10To6.txt"):
+    a0 = int(line[1][1])
+    divs = divisors(a0)
+    count = count + len(divisors)

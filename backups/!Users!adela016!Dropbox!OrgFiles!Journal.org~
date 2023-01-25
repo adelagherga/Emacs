@@ -1,0 +1,2879 @@
+* 2021
+
+** 2021-03 March
+
+*** 03:41 PM - TMCode
+:LOGBOOK:
+CLOCK: [2021-03-03 Wed 15:41]--[2021-03-03 Wed 15:51] =>  0:10
+:END:
+
+-- DONE: WAITING ON
+ * Currently running IncompleteGenerateSUnitEqJobs (jobs which terminated early because of a Magma internal error when running GenerateSUnitEquations.m) using GenerateSUnitEquations_RemainingGL2Z.m. There are about 5000 such jobs, and the error seems to occur (in all cases, I believe, though this is untested) whenever we try to run the Thue Solver to generate GL2Zactions. This new code circumvents this issue by using bounds on the possible a,b,c,d in the GL2(Z) matrix. Very basic, but it works.
+
+-- DONE: TASK
+ * Once this code is finished, I will need to go through IncompleteGenerateSUnitEqJobs to make sure that the files were indeed finished and that no new errors were obtained.
+
+-- DONE: TASK
+ * Now that that's done, I should re-sort the finished TMFormData.csv to sort by original form to see about removing redundancy. In doing so, I will need to recalculate the Thue forms to be solved, the a values, and the rhs primes.
+
+*** 11:03 PM - Women in Math talk
+:LOGBOOK:
+CLOCK: [2021-03-04 Thu 23:03]--[2021-03-05 Fri 00:13] =>  1:10
+:END:
+
+Background:
+ * elliptic curve: basic definition + picture
+ * definition of non-singular; ie no cusps or self-intersections
+   * disc here
+   * picture of non-elliptic curves
+   * picture of elliptic curves (why don't we want cusps/self intersections?)
+ * why do we care about them? FLT, ECC, integer factorization
+   * but what makes them special?
+ * adding points on an elliptic curve
+   * point at infinity
+   * group structure
+ * reduction over Q, Fp; diagram
+   * good/bad reduction
+   * conductor
+ * isogeny (vs isomorphism)
+ * Shafarevich's theorem
+ * simple recap of terms/defns
+ * count ECs by conductor; so far made it to N = 500,000
+ * us: trying something new
+
+ * isogeny vs isomorphism:
+   * cool diagram https://medium.com/asecuritysite-when-bob-met-alice/supersingular-isogeny-diffie-hellman-for-key-generation-4047f9bff486
+   * explanation https://www.johndcook.com/blog/2019/04/21/what-is-an-isogeny/
+ * cool diagrams: https://blog.cloudflare.com/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/
+ * kind of want to talk about RSA...
+ * slides:
+   * https://www.slideserve.com/arnaldo/an-introduction-to-elliptic-curves
+   * https://slideplayer.com/slide/3293885/
+ * usefuleness of ECs:
+   * https://math.stackexchange.com/questions/2299604/why-are-elliptic-curves-important-for-elementary-number-theory
+   * https://www.physicsforums.com/threads/what-is-so-special-about-elliptic-curves.708746/
+
+*** 03:05 PM - Sum of two squares + Hilbert symbol
+:LOGBOOK:
+CLOCK: [2021-03-11 Thu 15:05]
+:END:
+
+**** Meeting with Samir (March 3, 2020)
+ * Has a student, Diana, currently working on converting the Fermat equation $x^p + y^p = z^2$ to an $S$-unit equation.
+ * Will need a method to solve these equations, in particular, $x + y = z^2$
+ * Apply Baker's theory on equation $G$ in de Weger's paper, should get a bound which translates to the original equation
+ * Want to be able to solve the equation at the level of $x + y = z^2$ without going to
+   $\mathbb{Q}(\sqrt{D})$
+ * Suggests using Hilbert symbols
+ * If the equation has a solution, Hilbert symbol should be 1 at all primes
+ * Hilbert symbol will give us info on the exponents of the primes (even/odd)
+ * Probably all we need in order to cut down the number of cases** 2021-15 May
+
+*** 09:43 PM - Luis Chan's Thesis
+
+P1
+ * (de)centralization definition from Mariam-Websters - relevance?
+ * why is decentralizing in italics so many times?
+P2
+ * Proposition 0.6 proof seems unedited (repeated statements)
+ * Punctuation in sttatement of Proposition 0.6 (missing full stop)
+ * strange footnote (wikipedia referenced)
+ * _what is FIPS? Federal Information Processing Standards but not listed_
+P3
+ * Terminology before Introduction?
+ * (bibliography in order of appearance vs alphabetical - strange)
+P4
+ * Don't know how to feel about "Charlie and David" being added to the usual "Alice and Bob" party
+P5
+ * FOOTNOTES! SO MANY FOOTNOTES! Some of these should not even be footnotes
+P6
+ * typo in 2nd paragraph (though instead of through)
+ * _what does "made harder" mean in terms of the nonce?_
+ * _what does "hashed with the block" mean?_
+ * nonce - vague and hard to understand
+ * block is used before defined
+ * why is block in italics so many times?
+ * _prevent fraudulent chains from being broadcast - including the hash from the previous block; as in the function?_
+ * immutable in bold but not defined
+P7
+ * _rest of the "miners"? what is a miner?_ used frequently but not defined
+ * why can transactions be maliciously deleted? what does this mean?
+ * weird things in italics again
+ * a bit repetative in the summary and discussion
+ * again, footnote that should not be a footnote; but also makes no sense?
+P8
+ * better to just cite the whole section rather than per definition; weird choice
+ * corollary to a definition?
+   * _definition of "smooth?"_
+ * why is elliptic curves, affine plane, point at infinity in italics??
+ * this paragraph about the point at infinity is weird
+ * definitions don't need citations like this; can just cite the source at the beginning of the section
+ * _Definition 2.5 - F(*x*); why is *x* a vector here?_ What kind of polynomial is F (not defined)
+P9
+ * capitalize the polynomial, but then also change the variable names? why not relabel the variables properly?
+P10
+ * _Definition 2.9 seems weird_; what about [0:0:1]?
+ * _why can't we form a group law without the point at infinity? What goes wrong?_
+ * _what is the purpose/idea behind the points at infinity?_
+ * completely irrelevant details about Weierstrass
+ * _are these "elliptic curve forms" related?_
+ * what is happening in Definition 2.10 - why is an EC defined again?
+ * Definition 2.11 - where do the coefficients live?
+P11
+ * image caption - _do ECs not in short Weierstrass form look different_?
+ * Proposition 2.13 does not need a proof or proposition...
+ * italicized elliptic curves again...
+ * "are" the edwards form; typo which should be "is"
+ * _what does "regular" mean_? Used but not defined
+ * Edwards form seems weird... and not needed for this? but now we are proving that they are isomorphic. Seems like we are going off on a tangent for no reason
+ * _Edwards forms are isomorphic over what field to Weierstrass form?_
+P12
+ * why is the point at infinity defined now? Why not after the projective plane?
+P13
+ * this first paragraph is just one long sentance
+ * the footnotes are back, but this time more useless
+ * typo in definition of F(K) in Poincare theorem
+ * what is this paragraph about after the proof of pointcare's theorem?
+   * _demand for faster methods of point addition? what does this have to do with the number of internet users?_
+ * ok, relevance of Edward's curve finally making a bit more sense here
+P14
+ * typo in last sentence of proof
+ * _does not prove addition of points; how do you prove addition of points_?
+ * benefits of Edward points - reduced number of additions and multiplications to be made - but has not written down the addition law for Weierstrass form, so we have nothing to compare it to
+   * would have been good to actually write down addition law for Weierstrass form first
+ * I'm guessing we're using C(K) as defined in Poincare's theorem?
+ * _why do we need to emphasize the K in C(K)? Why can't we use the notation at the start and just say C?_
+ * footnotes - probably go do without any of these altogether
+ * use of contraction in first blurb under Section 3 ("it's")
+ * "DSA" used before acronym defined (this is indeed the first time it appears and is then defined in the paragraph below
+ * "as any maths student who has attended an introductory talk on number theory is likely aware" - no
+ * might be helpful to actually show RSA here
+ * "our method is to raise the message to the power of the secret key"
+   * describing math...
+P15
+ * very clunky first paragraph
+ * _what is a message? how do you convert a message into digits?_
+ * conjecture is ill-stated (and actually maybe not in the book also? have not found it)
+   * probably not computationally infeasable for small primes...
+ * _what do you mean by "proof of the discrete log problem?_
+ * _why does q need to be p-1 or a large prime factor of p-1?_
+ * message is some m in {1,...,n} - what is n?
+   * _how do we get a message? what is the process by which we turn a sentence into a number_?
+ * this algorithm is very hard to read... _what is actually sent to the other person after signing?_
+ * _g is not a primitive root; how does this affect the signature scheme?_ (may greatly reduce your signature space if q is not the smallest element for which g^q = 1 mod p)
+P16
+ * "proof is left to the reader"; kind of inappropriate for a thesis
+ * digital signatures is in italics all over the page now; reasons unknown
+ * now comparing to DSA to RSA signature scheme (though we haven't explained what RSA is or how it works)
+ * would be helpful if the chart was explained a bit more in detail
+   * what exactly are we comparing here? _what does the speed of the sign/verify time indicate about either algorithm and why does it matter_?
+ * the footnote about key-length should definitely not be a footnote here. This should have been explained alongside the chart
+ * footnote about the citation also should not have been a footnote and should have been in the text itself
+ P17
+ * ok, performance now mentioned - this should have been said before we compared DSA to RSA signature schemes
+ * references to Wiki article; inappropriate
+ * elliptic curves in italics...
+ * "elliptic curves are not cyclic in general"; hopefully this will be explained
+ * F_{2^m} seems vulnerable to Weil descent attacks, but I don't actually know too much about that
+ * _what about F_{p^k}_?
+ * _how do these elliptic curve groups relate to the group of all points on an EC?_
+P18
+ * "This may be difficult to wrap ones head around initially"; inappropriate
+ * we are now using "one" instead of "you" or "me" used previously
+ * "if one were to imagine a group with prime order, we can imagine just trying out the options, right?" - _what does this mean? What is our goal and what are we trying?_
+ * "more on them soon"
+ * we haven't really explained the encryption scheme with ECs, so talking about brute force and "finding k" doesn't really make sense
+P19
+ * "didn't" - inappropriate wording for an essay/thesis
+ * typo in first paragraph, "espcial"
+ * "If one is interested, I recommend"; again, weird wording for an essay
+ * footnotes...
+ * we are now defining an algorithm; but what is the scheme?
+ * typo in footnoes
+ * algorithm generates "domain parameters" - to send a message? to sign? a tad unclear; as is the actual algorithm (ie FR and seedE)
+ * Algorithm 3.9 did not need to have a newtheorem environment
+P20
+ * explains signature message here finally for ECDSA
+P21
+ * "generated by A"? Alice? Looks to be a typo
+ * typo in proof (u should be u_1)
+ * "reader is encouraged to..." and typo in following paragraphy "kowleageable"
+ * "strength per key bit is greater" - _what does this mean_?
+ * comparison of ECDSA and RSA - again could use more explanation; what are we actually looking at? what does this data mean?
+ * typo in last paragraph, "timed"
+ * "I highly recommend the reader takes a look at the ..."
+P22
+ * typo in first paragraph, "how are methods" probably means to be "how our methods"
+ * "can't"
+ * footnote; another recommendation
+ * "won't", "hasn't"
+ * intro paragraph to backdoor stuff is a bit weird; what are we about to do? does not feel quite like an intro
+ * "another interesting attack" - what was the first?
+ * bottom paragraph, past tense mixed with present tense
+ * this bottom paragraph is weird - what does generating a new random k have to do with the playstation bit or incorrect implementation?
+   * _is keeping k constant the error that playstation made?_
+P23
+ * "overview of most of the attack methods I could find"
+ * condition to avoid - _do we want to avoid choosing large N? or is that the fix?_
+ * typo in first paragraph after chart - "give an a short"
+P24
+ * Weil descent paragraph - "aren't", wrong "effects"
+ * the descriptions of attacks are a bit hard to read because they are describing math operations, almost
+P25
+ * Discussion part is nice
+ * "aren't"
+ * _record for factorization of 7 - not sure I understand?_
+ * wiki reference; not appropriate
+P26
+ * italics again
+ * "I hope this has helped you develop a well-balanced..."; weird
+ * nice conclusion; very essay-esque
+
+Questions
+ * Answered in presentation: _rest of the "miners"? what is a miner?_ used frequently but not defined
+ * _why can't we form a group law without the point at infinity? What goes wrong?_
+ * _addition of points_?
+ * _how do you convert a message into digits_?
+ * _why does q need to be p-1 or a large prime factor of p-1?_ (ie. ElGamal)
+ * _g is not a primitive root; how does this affect the signature scheme?_ (may greatly reduce your signature space if q is not the smallest element for which g^q = 1 mod p)
+
+ * have you invested in any cryptocurrency?
+ * nonce - explain again?
+ * DSA what is sent to the other person - breakdown of signature
+ * Edwards curve - advantage is addition of points?
+
+** 2021-18 May
+
+*** 10:03 AM - Women in Maths/Stats Panel discussion
+Email
+ * Dear all, just a reminder that the Women in Maths/Stats Panel Discussion will be taking place tomorrow, Wednesday May 19, at 13-14h. The event can be accessed <here> and is open to everyone!
+
+Intro
+ * Thank you all very much for attending;
+   * we hope this will be a productive and honest discussion,
+   * we hope that you all find something useful to take away from this meeting
+   * Thank you to the panelists for volunteering their time and being open to sharing their experiences
+ * This meeting will not be recorded
+   * so that both the panelists and audience can feel a bit more comfortable should any sensitive topics come up.
+   * we would like to ask that any personal experiences/thoughts/ideas/etc shared in this discussion stay among all of us here
+   * can share general ideas
+   * don't share personal stories or identifying details
+ * Also want to note that we will talk a bit about sexual harassment
+   * if this is a sensitive topic for you, please feel free to tune out, etc
+   * emphasize that no one in this room should feel pressured to contribute to this topic, especially our panelists
+   * it is not the main focus of this meeting
+ * Questions and comments are very welcome from the audience
+   * if you feel like you can contribute your answer to one of the questions, please put your hand up or type your answer in the chat
+   * moderator will do the best she can to get to it (but also bear in mind that we may not get to all of your comments/questions
+
+Outro
+ * feedback form
+
+Notes
+ * clash with MathSys - make sure to avoid next time
+ * update Women in Math page for resources
+   * from Vandita - women in academia facebook group;
+   * assault reporting
+ * follow-up on feedback
+
+** 2021-06 June
+
+*** 12:09 PM - TMCode
+:LOGBOOK:
+CLOCK: [2021-06-07 Mon 12:10]--[2021-06-07 Mon 12:22] =>  0:12
+:END:
+
+ * Trying to recall what I've been doing last. Seems that jobs which terminated early because of a Magma internal error and jobs which I killed because they ran for too long while running GenerateSUnitEquations.m have both finished. It seems I also sorted jobs without N, but I'm not sure why
+ * Files we have
+   * GenerateTMForms
+     * RemoveRedundancy.py: obsolete/incomplete python code to GenerateSUnitEqs without redundancy. Not applied and not needed; moved to ObsoleteCode folder.
+     * SeperateFormsList.py: code by me to restructure irred_pos.txt, irred_neg.txt as computed by Andrew to output only the forms per line; with no conductor. Have applied this only locally
+     * SortRawForms.sh: code by me to restructure FormsCond10To6.txt to place 1 form per line; output file renamed as FormsCond10To6.txt (though originally output as SortedFormsCond10To6.txt). Already applied, not needed again.
+
+     Andrew's Code
+     * conductorForms.py: code by Andrew to generate FormsCond10To6.txt
+     * doStuff.sh: code by Andrew to generate required forms later used to generate FormsCond10To6.txt
+     * factorCheck.sage: code by Andrew to double-check irreducibility; ultimately used to generate FormsCond10To6.txt
+     * neg_forms.cpp: code by Andrew to generate required forms
+     * pos_forms.cpp: code by Andrew to generate required forms
+
+   * GenerateSUnitEquations
+     * GatherIncompleteForms.sh: Already applied, not needed again.
+     * GatherKilledForms.sh: Already applied, not needed again.
+     * GenerateSUnitEquations.m: Already applied, not needed again.
+     * GenerateSUnitEquationsErrors.m: Already applied, not needed again.
+     * GenerateSUnitEquations_Alpha.m
+     * GenerateSUnitEquations_RemainingGL2Z.m: Already applied, not needed again.
+     * IncompleteJobThueAssessment.m: Already applied, not needed again.
+     * ObsoleteCode
+     * RegenerateThueEqToSolve.m
+
+-- DONE: WAITING ON
+ * Iterating through all forms to ensure that they live somewhere; ie. reapplying GatherIncompleteForms.sh; if the file "IncompleteJobs" does not appear once terminated, we have all forms needed.
+
+-- DONE: TASK
+ * Recalculate Thue forms to be solved from NoSUnitEqNeeded.csv once GatherIncompleteForms.sh terminates.
+   * these are generated from prep0, if afplist is empty, or if alphgamlist is empty
+   * can we do this from RegenerateThueEqToSolve.m all at once?
+
+-- DONE: TASK
+ * Run RegenerateThueEqToSolve.m, taking TMFormData.csv as input;
+
+-- OBSOLETE: TASK
+ * Sort through (new)TMFormData to remove redundancy. Check SeperateFormsList.py to generate just the forms (without N)
+   * setup redundancy as
+     form 1
+     conductor 1a, form 1, optimal form, etc
+     conductor 1b, form 1, optimal form, etc
+
+     form 2
+     conductor 2a, form 2, etc
+     conductor 2b, form 2, etc
+
+-- DONE: TASK
+ * Need to update PIRL to use new Samir method for faster sorting through Mp, Lp
+
+-- DONE: TASK
+ * First. Recalculate Thue forms to be solved, the a values, and the RHS primes. Check RegenerateThueEqToSolve.m; will probably have to edit this file. Need to output, for TMForms to solve:
+   * form, optimal form, min poly, partial obstructions, alist, primelist, h, r
+     * NB. cannot have multiple primelists, so just need a list of a values and a list of primes
+
+-- DONE: TASK
+ * Something weird happening with clist:=[1,2,-3,-2]; seems to have partial obstruction at [3],[3,5],[3,7] or some combination of, but gives local obstruction if combined
+   * DiscF = 2^2 * 79; so DiscF mod p != 0 for 3,5,7 and none have Valuation(N,p) = 1
+   * N:= 379358,(7,3); factorization = 2 * 7^4 * 79
+   * N:= 377225,(5,3); factorization = 5^2 * 79 * 191
+   * N:= 375803,(3); factorization = 67 * 71 * 79
+   * false alarm; seems fine
+
+ * Trying ssh -o "ServerAliveInterval 60" adela@lehner.warwick.ac.uk to keep the server from disconnecting after inactivity:
+
+   "The simplest fix is to enable ssh client keepalives; this example will send an ssh keepalive every 60 seconds:
+
+   ssh -o "ServerAliveInterval 60" <SERVER_ADDRESS>
+   If you want to enable this on all your sessions, put this in your /etc/ssh/ssh_config or ~/.ssh/config:
+
+   ServerAliveInterval 60"
+
+ * in RegenerateThueEqToSolve.m, we are using the optimal form as the main Thue Mahler form. Should I change this? No, as that is what we use to generate the forms to begin with (ie. in GenerateSUnitEquations.m). Does the discriminant change under an action of GL2Z? No.
+   * prep0 is unaffected for Thue forms to solve
+
+** 2021-09 June
+
+*** 10:01 AM - TMCode
+
+ * Still waiting on GatherIncompleteForms.sh to terminate
+ * Finished editing RegenerateThueEqToSolve.m yesterday for TMForms.csv, and renamed the file RegenerateThueEqToSolve_TMFormData.m, but now need to do it for NoSUnitEqNeeded.csv
+
+-- DONE: TASK
+ * Regenerate Thue forms from NoSUnitEqNeeded.csv
+   * where the format is:
+     N,form,optimal form,no Thue eq,local obstruction time,GL2Z action time,
+     class group time,unit group time,ideal eq time,Thue eq time,S-unit time,total time
+   * need to iterate through and only consider those for which "no Thue eq" is not 0
+     * should I do this in the same code for RegenerateThueEqToSolve.m?
+     * maybe make a bash script to pull out all the necessary jobs; no, doesn't look like any of them have 0 Thue equations actually
+     * NB. it's possible that "no Thue eq" is actually 0 in NoSUnitEqNeeded;
+       * ie. N:= 2313, clist:= [6,3,6,-4], all ideals are non-principal
+
+-- DONE: TASK
+ * Verify and test RegenerateThueEqToSolve codes
+
+-- DONE: TASK
+ * Update github repo for code
+
+** 2021-10 June
+
+*** 05:25 PM - TMCode
+
+-- DONE: WAITING ON
+ * still waiting on GatherIncompleteForms.sh; though this will likely take at least 10 days
+   * update on July 8, 2021; it took about a month
+
+-- DONE: WAITING ON
+ * waiting for RegenerateThueEqToSolve_NoSUnitEqNeeded.m to terminate
+
+-- DONE: TASK
+ * launch RegenerateThueEqToSolve_TMFormData.m
+
+** 2021-11 June
+
+*** 02:19 PM - TMCode
+
+-- DONE: WAITING ON
+ * waiting for RegenerateThueEqToSolve_TMFormData.m
+
+** 2021-14 June
+
+*** 09:07 AM - TMCode
+
+ * While waiting on codes to finish, I'm going to write the code to sort out the Thue forms first, then do the same with the TMForm data, now that it has the a values and primeslist
+   * probably I will do this in Python
+   * format is
+     N,"form","optimal form","RHSlist"
+   * idea: iterate through "form", if RHSlist is contained in another, amalgamate and add N to the list
+   * or maybe, I should gather all of the unique forms first in a dictionary
+ * Actually, I restructured SeperateFormsList.py to output just the (original) forms without the conductor, and sorted them in numerical order in Python, named FormsCond10To6_NoN.txt
+ * To sort, iterate through forms in FormsCond10To6_NoN.txt, grep them from Thue forms list and group them
+ * Ignore "optimal form" in Thue eq to solve data; this is only optimal in regards to the number of S-unit equations
+ * Currently I have the forms set to print as
+   (original) "form",rhs-value,"list of conductors"
+   * not sure this is the best idea because it means opening and closing magma to re-initialize the same form over and over again for each rhs-value
+   * might be better to just print
+     "form",rhs-values"
+     otherwise the data is basically the same as the currently existing RegeneratedThueEqToSolve.csv file which has
+     N,"form","optimal form","RHSlist"
+     but maybe it's helpful to have this printed anyway so that we can dick around with the data?
+
+** 2021-15 June
+
+*** 11:39 AM - TMCode
+
+ * Code is written for gathering redundancy in the Thue equations! Just need to clean it up a bit and set up the 2 output files; can then use this for removing redundancy in the TM data files
+
+-- DONE: WAITING ON
+ * Waiting on RegenerateThueEqToSolve_TMFormData.m to finish so that we can run GatherRedundancy_ThueEq.py
+
+-- ONSOLETE: TASK
+ * Run GatherRedundancy_ThueEq.py once all Thue forms have been regenerated
+
+-- OBSOLETE: TASK
+ * Write and run code to solve all Thue equations as output by GatherRedundancy_ThueEq.py
+
+-- OBSOLETE: TASK
+ * Write code to gather redundancy from TM equations
+
+ * Started writing code to gather redundancy from TM equations
+   * idea here is to follow the same pattern as for Thue equations, though need to take into consideration the a values
+
+ * Resorting the TM jobs, we should use the optimal form here; though maybe I can start by sorting by original form first
+   * need to think about this one a bit more
+
+** 2021-17 June
+
+*** 10:00 AM - General
+
+-- GOAL
+ * Aim to get TM code running before 2nd vaccine at the end of July
+
+-- GOAL
+ * Also aim to get ideas figured out for x + y = z^2 bound done before 2nd vaccine
+
+*** 10:02 AM -TMCode
+
+-- DONE: TASK
+ * Find out what is happening in this line from RegeneratedTMFormData.csv:
+    477400,"(1,2,4,4)","(1,2,4,4)","(1,2,4,4)","(3,5)",1,1,4,0,"(1,2)","(5,7,11,31)"
+    There is a partial obstruction at 5, but 5 also appears in the primeslist
+   * NB. this seems to be happening a lot
+ * It seems we remove partial obstructions as superfluous cases only when they appear in primeBounds (ie. when p is 2,3 or divides N with valuation 1)
+   * so if p appears in the factorization of a; it cannot also appear in the partialObstructions since this was checked for
+   * but if p appears in the primelist, it's possible that p is also in partialObstructions since this was not checked
+ * partialObstructions come from prime factors of N, assuming they are smaller than 13 or (are between 13 and 151 and there are less than or equal to 3 prime factors in total)
+
+-- DONE: TASK
+ * Iterate through RegeneratedTMFormData.csv (as determined up until now) and see how often primes in partialObstruction appear in the primeslist - a lot
+ * Issue: not all of the primes in testPrimes are checked, and as a result, the example above actually have a local obstruction at 31 and should not exist at all
+   * we have to go back and run the local test on ALL primes in the primeslist
+
+ * In Python, there are about 96,000 forms which have partial obstructions
+   * these partial obstructions may appear in the primeslist; or the same form will appear with a different primeslist and a-value, but will not have the same partial obstruction listed - not all primes on the RHS are tested
+
+-- DONE: TASK
+ * test all primes appearing in the primeslist for partial/local obstructions; including those which show up as having no partial obstructions
+
+ * in the above example, there is a local obstruction at 31 - does this happen because it fits the local obstruction parameters as in the EC-TM theorem? Or because the only solution that exists is congruent to 0 mod p?
+ * current plan:
+   * let the RegenerateThueEqToSolve_TMEq.m finish running
+   * in the meantime, write magma code to iterate through all TM and Thue equations to perform local test on all primes on the RHS
+     * remove primes in the primeslist which are in the partial obstructions
+     * add any new/missing partial obstructions
+     * redirect any forms which have a local obstruction or new Thue equations to the appropriate output file (ie. NoSUnitEqNeeded.csv or NoSUnitEqPossible.csv)
+   * write Python code to amalgamate all TM equations from this output which have the same form, (ignoring optimal form at this point), partial obstruction, a value and RHS
+ * working on a magma code to re-do the local test; it seems like a lot of the TM forms from the RegeneratedTMFormData.csv database have a local obstruction...
+   * REALLY GOOD NEWS!
+   * local test will take longer though since we are now going to check all primes on the RHS (but ultimately this has to be faster than solving the TM equation)
+
+** 2021-18 June
+
+*** 12:04 PM - TMCode
+
+ * Editing ModpCheck in TM_LocalTest.m to be faster when q does not divide the RHS (so F(X,y) mod q is not 0)
+   * previously: for all primes p appearing on the RHS (except q), we determined all possibilities for p^i mod q, i in [0..Order(p)-1] where Order(p) is the order of p mod q
+     * ie. we determined all possibilities for p^i mod q up until these values repeated themselves
+     * then we generated the cartesian product of all of these sets across all p appearing on the RHS
+     * we then iterated through each possibility in this cartesian product, multiplied it together (as integers, not mod q), and stored it in the list rhs
+       * _very_ slow if there are many primes and q is large
+     * iterated through all u,v in [0..q-1], where [u,v] != [0,0], and evaluated F(u,v) (as an integer
+     * then we checked if F(u,v) mod q is in the rhs list
+     * NB. the rhs list is not as a set of elements mod q - it's possible that if we only stored rhs as elements mod q we would get a match that we otherwise would not have found
+     * if yes, hasSolutions is set to true and we exit
+   * new idea: determine all possibilities for F(X,Y) for all possible u,v in [0..q-1] first
+     * ie. iterate through all u,v in [0..q-1], where [u,v] != [0,0], and evaluate F(u,v) mod q
+     * if F(u,v) mod q takes on all values in [0..q-1], the TM equation has a nontrivial local solution mod q
+       * any possible product of primes mod q will live in [0..q-1]
+     * if not, determine all possibilities for p^i mod q up until these values repeat themselves
+     * generate the cartesian product of all of these sets across all p appearing on the RHS
+
+-- DONE: TASK
+ * verify new ModpCheck
+
+ * NB. the old ModpCheck always had at least [2,3] in RHSprimes
+   * now this set may be empty or have just 1 prime, in which case it might be faster to check it old way
+   * we can actually do a quick computation to find out which method is faster before just running it
+     * old way: for p in RHSprimes, compute Ord(pModq); because we then run a Cartesian product, compute the product of Ord(pModq) across all primes
+       * this is the number of rhs elements we will have (even if not unique, will have to iterate through this numer)
+     * new way: u,v both run through [0..q-1], so there are at most q^2 possible elements to iterate through
+ * edited localtest as well; should verify both
+
+** 2021-21 June
+
+*** 11:17 AM - TMCode
+
+-- DONE: TASK
+ * Add a values to ModpCheck
+   * so far only checking F(X,Y) = {product of primes} but neglecting the a-values
+
+ * in GenerateSUnitEquations.m, in the localtest, our test primes were all prime factors of N, together with 2 and 3
+   * only small primes were tested (so larger primes may present local or partial local obstructions)
+   * all primes that were tested were tested against the primes of N and 2,3
+   * though it's possible that if a solution existed, it did not appear at the primes which now make up our a values
+   * so we technically should test whether F(X,Y) = a
+
+ * possible things that can happen for the p we haven't yet tested:
+   * ModpCheckDivRHS is false: ie. F(X,Y) = 0 mod p has not solutions (ie. p cannot appear on the RHS with positive exponent); this is independant of the a value
+     * local obstruction as per Theorem 1 of BeGhRe
+       * no solutions possible for this TM equation (for any a value)
+     * else, solutions are possible for all a values mod p when p does not appear on the RHS
+       * partial obstruction at p for all a values
+     * else, solutions are not possible for 1 value of a mod p when p does not appear on the RHS
+       * remove a value
+       * if no remaining a values, then local obstruction at p
+ * do we need to regenerate the Thue equations list after this? ie. after removing the extra TM equations?
+   * we can, and output the results in a new folder, then merge them together in bash after;
+
+ * if no primes left after removing partial obstructions, make sure to push to Thue equations
+
+ * computing and storing all F_q values from ModpCheckDivRHS
+   * if F_q = 0 mod q, then posExpSol is true and the local test is done
+     * thus not all F_q's are computed
+   * if posExpSol is false, then u,v iterated through all [0..q-1] and did not find a value such that F_q = 0 mod q; hence we have computed all possible F_q values
+     * thus we can use this for the next test
+
+-- DONE: TASK
+ * test prep0
+
+** 2021-28 June
+
+*** 09:55 AM - TMCode
+
+ * don't bother re-computing Thue equations when running TM_LocalTest.m; just do local test and write a similar code to iterate through the Thue equations; ie run a local test
+ * might produce new Thue equations from TM_LocalTest.m
+   * ie. if removing primes from primelist that are also a partial obstruction, we might be left with an empty set for primelist; ie F(X,Y) = a for all a values, a
+ * NB. partial vs BeGhRe never happens in output data from GenerateSUnitEquations.m
+ * left off at editing prep0
+ * should re-compute other Thue equations from prep1
+ * it seems unlikely that we will find a case where the set of partial obstructions will yield an empty set (ie. will lead to new Thue equations F(X,Y) = a for all a values)
+   * but this is just from testing one clist set
+
+** 2021-30 June
+
+*** 10:46 AM - TMCode
+
+ * RegeneratedSUnitErr.txt now has a whole series of errors in it, but only because in my testing, I accidentally set the log file and was printing to the file. These are not errors with the code, everything seems fine there
+   * can remove some of the lines starting with ">" using
+     sed '/>/d' RegeneratedSUnitErr.txt
+   * will need to remove the other lines after as well though; ie
+     962360,"(1,1,5,13)","(1,1,5,13)"
+     []
+     962360,"(2,7,36,80)","(19,48,11,2)"
+     962360,"(1,6,5,8)","(1,6,5,8)"
+     962360,"(4,7,18,20)","(5,-16,-5,-4)"
+     962360,"(2,2,3,5)","(5,-3,2,-2)"
+     962355,"(5,32,35,60)","(5,32,35,60)"
+     962360,"(10,3,22,-3)","(3,22,-3,10)"
+     962361,"(1,3,-18,-12)","(1,3,-18,-12)"
+     962360,"(2,11,12,131)","(2,11,12,131)"
+     962360,"(2,11,40,180)","(5,-80,-19,-2)"
+     962344,"(4,10,32,85)","(59,-24,-2,-4)"
+     NoSUnitEqPossible
+     962360,"(5,3,44,-12)","(5,3,44,-12)"
+     962360,"(4,11,20,45)","(17,-24,-13,-4)"
+
+-- DONE: TASK
+ * Remove extra text I accidentally output to ReeneratedSUnitErr.txt after RegenerateThueEqToSolve_TMFormData.m finishes
+
+ * I suspect that removing the primes from the primelist doesn't really affect the actual ideal equations. It seems that in the examples I checked, the PIRL already bounds the primes which appear in the partial obstructions list if they are not already removed from the primelist
+ * So going by this, we should verify that afplist is nonempty and has the same number of ideal equations as the original set; and thus don't need to enter prep2
+   * should check this though; this might be a bit risky
+ * Maybe we should just do a test run on the existing RegeneratedTMFormData.csv
+ * I think also NoSUnitEqNeeded does not happen; ie. we are never in the situation where the entire primelist disappears because of partial obstructions
+ * if it's a local obstruction, then we don't care about the possible Thue equations, and, based on the assumption that we cannot have empty primelist set, we can assume that prep0 does not yield any new Thue equations
+   * is it possible that prep1 will lead to new Thue equations that we do not already have, after removing the partial obstruction prime?
+   * so far it seems that the partial obstruction is taken into account in the PIRL; ie it detects that it cannot have exponent bigger than 0 (but not necessarily that the TM equation fails the local obstruction test)
+
+ * output from GenerateSUnitEquations.m looks like
+   logfile tracking any errors
+   _SUnitErr_:= "/home/adela/ThueMahler/Data/SUnitEqData/SUnitErr.txt";
+
+   .csv format is
+   N,"form",local obstruction,partial vs BeGhRe,local obstructions time,total time
+   local obstruction, partial vs BeGhRe may be output as p or None
+   _NoSUnitEqPossible_:= "/home/adela/ThueMahler/Data/SUnitEqData/NoSUnitEqPossible.csv";
+
+   .csv format is
+   N,"form","optimal form",no Thue eq,local obstruction time,GL2Z action time,
+   class group time,unit group time,ideal eq time,Thue eq time,total time
+   timings may be output as time or None
+   "optimal form" may be output as form or None
+   _NoSUnitEqNeeded_:= "/home/adela/ThueMahler/Data/SUnitEqData/NoSUnitEqNeeded.csv";
+
+   .csv format is
+   N,"form","Thue eq","RHSlist"
+   _ThueEqToSolve_:= "/home/adela/ThueMahler/Data/SUnitEqData/ThueEqToSolve.csv";
+
+   .csv format is
+   N,"form","optimal form","min poly","partial obstructions",class number,r,no ideal eq,
+   no Thue eq,"S-unit ranks",local obstruction time,GL2Z action time,class group time,
+   unit group time,ideal eq time,Thue eq time,S-unit time,bound time,total time
+   _SUnitEq_:= "/home/adela/ThueMahler/Data/SUnitEqData/TMFormData.csv";
+
+   * here, the hash in SUnitErr.txt is just N,"form"
+   * have to add timinigs for NoSUnitEqPossible, NoSUnitEqNeeded
+
+ * finished writing up TM_LocalTest.m and doing some prelim tests. Just now need to edit the comments and then we can launch it tomorrow to start removing redundancy
+
+-- DONE: TASK
+ * final edit of TM_LocalTest.m
+
+** 2021-02 July
+
+*** 12:21 PM - TMCode
+
+-- OBSOLETE: WAITING ON
+ * running TM_LocalTest.m to generate new partial and local obstructions. Output split between several files, all named "Obs..."
+
+-- OBSOLETE: TASK
+ * Merge "ObsNoSUnitEqPossible.csv" with "NoSUnitEqPossible.csv"
+ * Merge "ObsRegeneratedThueToSolve.csv" with "RegeneratedThueToSolve.csv"
+
+ * now that we're removing all the partial obstructions and BS from RegeneratedTMFormsData.csv, our next step should be
+   * remove the redundancy from the Thue forms (once the above code finishes) via python
+   * solve the corresponding Thue forms (and maybe apply the same local test to the Thue equations as for TM equations; no need to run a Thue solver on something that doesn't have solutions)
+   * maybe consider adding code to solve single prime TM equations (see BeGhRe)
+     * probably don't need this actually; except for large primes
+     * most single prime TM equations are contained in other TM equations and will be removed when we do a sweep for redundancy;
+     * there's about 7000 primes in the interval 9*10^5 and 10^6, so at most we have 7000 TM equations in this category which will not be contained in any other
+   * code to solve TM equations;
+     * when FP no longer possible, convert to original form and apply sieves
+       * can we do some more clever tricks here? Something stupid but also fast?
+
+** 2021-03 July
+
+*** 03:29 PM - ThueCode
+
+ * Working on Thue code and adding local tests
+ * Consider this example:
+   "(5,13,14,10)","[1667,3334,13336,26672,106688,213376]"
+   * with conductor 123358, this appears in ObsNoSUnitEqPossible.csv as it has a local obstruction at 37 coming from the BeGhRe local test
+ * for us, the new local test should be with each rhs value (ModpCheckDivRHS) and for primes not dividing the rhs values, ModpCheck with each rhs value
+   * ie. first check each F(X,Y) = 0 mod rhs for each rhs value
+   * then check F(X,Y) = rhs mod p for each rhs value for p in some range
+     * maybe this isn't worth it tbh
+
+ * in the future, should just do the proper local obstruction test from the beginning for each form
+
+ * simplified the ThueSolver.m file; it's not worthwhile to check modulo p; it's a lot faster to just run the Thue solver
+   * have to figure out some way to output the results
+   * probably the best way is just
+     "clist","[rhs,(sol_1,sol_2,..,sol_n),...]"
+     but this may lead to some very long strings
+   * now just need to clean up the output info for this file
+   * and then move on and start working on the actual ThueMahler solver again
+
+** 2021-05 July
+
+*** 02:10 PM - ThueCode
+
+ * have mostly finished code but just need to decide how to organize the solutions
+   * don't need to do this just now though. I can wait and do this after some of the other code finishes
+
+-- DONE: TASK
+ * Figure out how to output ThueSolver.m (and ultimately TMSolver.m) solutions
+
+-- DONE: TASK
+ * Edit and comment out ThueSolver.m code; and eventually run. (Will also need to amalgamate the solutions in the end)
+
+*** 02:14 PM - TMCode
+
+ * oh god where did I leave off? Let's start by looking over the TM code pdf.
+
+** 2021-08 July
+
+*** 09:57 AM - Personal
+
+ * spoke to Aaron last night, and I can't figure out what happened. I feel like I have an entirely different personality around them and I really don't like it. I don't like who I am around them. I'm just sad and angry and difficult. Is it just stress? Is it Vancouver? Am I just reacting to how they reacted? I want to be more logical with my reactions and not have other people's reactions affect mine. Why am I constantly introspecting and second-guessing myself whenever I'm around Aaron though? Why can't I just be me?
+
+*** 10:08 AM - TMCode
+
+-- DONE: TASK
+ * read through TM document to determine upper bound to see where we left off; edit code as we edit and work through the document
+
+** 2021-12 July
+
+*** 09:49 AM - TMCode
+
+-- OBSOLETE: WAITING ON
+ * TM_LocalTest.m is still running, and actually quite slowly. It might take a full month for it to finish, but that's fine since we have already eliminated about 140,000 TM forms and are now primed to remove redundancy as well
+
+** 2021-14 July
+
+*** 09:06 AM -TMCode
+
+ * it would be great if we had a way to reduce the number of possible ideals, a
+   * ie consider "267421,\"(14,12,23,17)\",\"(17,-23,12,-14)\",\"(1,-23,204,-4046)\",None,1,1,150,2,\"(1,8)\",\"(7,11,23,151)\""
+     * afplist coming from the prime ideals is only 16 possibilities, but because of the first coefficient (17), we end up with c_d = 17^2, 8*17^2, which leads to 2,8 possible ideals (c_d), respectively, and thus 2*16 + 8*16 = 160 possible ideal equations (removing Thue equations leaves us with 150 ideal equations to solve)
+   * can we put this through the PIRL?
+   * in the example above, if we did this, we could remove 6 of the possibilities in the 8*17^2 case - which means that we would have 2*16 + 2*16 = 64 cases only to consider!
+   * UPDATE - yes! and in fact we have only 60 cases to consider!
+   * consider also the case "947135,\"(24,1,16,15)\",\"(24,1,16,15)\",\"(1,1,384,8640)\",None,2,1,3948,2,\"(1,8)\",\"(5,7,27061)\""
+
+-- DONE: TASK
+ * verify theoretical implications of running alist (in the function monic) through algs1and2 for each prime in the factorization; ie for each possible ideal in normInv
+ * add details to writeup
+
+ * also started rearranging the order of the functions so that they are listed in order of appearance (ie. SeqEnumToString should be last)
+
+-- DONE: TASK
+ * would be faster to remove possible invs in normInv as it is computed rather than after in generateInvs; see second example above. Amalgamate these 2 codes
+
+-- DONE: TASK
+ * using the new generateInvs algorithm, it turns out that the example "947135,\"(24,1,16,15)\",\"(24,1,16,15)\",\"(1,1,384,8640)\",None,2,1,3948,2,\"(1,8)\",\"(5,7,27061)\""
+   has no ideal equations at all
+   * is this correct? Double-check generateInvs algorithm and check tmpackallCases with this to be sure there are no solutions
+   * is it possible that this case will be removed in ObsRegeneratedTMFormData.csv? (ie via a local obstruction?) No; goes through
+   * in which case we can move this into NoSUnitEqNeeded.csv
+   * this is incorrect; there is an error in the generateInvs algorithm which removes many cases it should not; this is fixed in the new normInv algorithm which does not have this problem
+
+** 2021-19 July
+
+*** 11:05 AM - TMCode
+
+ * seems the improvements in the PIRL and in using it for the a-values are huge
+   * ie consider "298685,\"(1,7,16,106)\",\"(1,7,16,106)\",\"(1,7,16,106)\",None,8,1,40,0,\"(1,8)\",\"(5,31,41,47)\""
+   * with just the PIRL, this has 40 ideal equations; with the PIRL applied to the a-values (ie 8), we have only 16 ideal equations; the original form with a = 8, there are 512 ideal/S-unit equations
+ * I want to verify that the solutions all correspond to the remaining cases by comparing this to the results from the Hambrook solver
+
+-- DONE: WAITING ON
+ * running Hambrook solver right now to find all solutions to the above form so that we may compare the solutions to determine that we have the correct ideal equations
+   * Output for C:=[ 1, 7, 16, 106 ]; p:=[ 5, 31, 41, 47 ]; A:=8; (ie. above case)
+     Solutions For All Cases:
+     [
+     [ 65, -9, 0, 0, 1, 1 ],
+     [ -65, 9, 0, 0, 1, 1 ],
+     [ -9, 1, 2, 0, 0, 0 ],
+     [ 9, -1, 2, 0, 0, 0 ]]
+     * 512 cases to iterate through
+   * these cases are accounted for in the new PIRL, a-values reduction as afplist[10], afplist[16]! Woo!
+   * Output for C:=[ 1, 7, 16, 106 ]; p:=[ 5, 31, 41, 47 ]; A:=1; (ie. above case)
+     Solutions For All Cases:
+     [
+     [ 41, -6, 0, 2, 0, 0 ],
+     [ -41, 6, 0, 2, 0, 0 ],
+     [ -83, 12, 2, 0, 0, 1 ],
+     [ 83, -12, 2, 0, 0, 1 ]]
+     * 128 cases to iterate through
+   * Total of 640 cases to iterate through for the above case; now down to 16 using out a-values PIRL and PIRL
+
+-- DONE: TASK
+ * compare ideal equations from Hambrook code output to the new PIRL a-values ideal equations; ensure no solutions are missing. None are missing!
+
+-- DONE: TASK
+ * add minimal values for fp as well from PIRL
+
+** 2021-20 July
+
+*** 12:18 PM - TMCode
+
+-- DONE: TASK
+ * verify new normInv algorithm
+
+-- DONE: TASK
+ * print out updated a-values as they are eliminated using the new PIRL on a-values.
+
+-- DONE: TASK
+ * it's possible that with the update, we have no ideal equations at all; should accound for this!
+   * check that afplist is non-empty, and check the new a values from the new afplist; update a-values if needed
+
+ * this giant set "947135,\"(24,1,16,15)\",\"(24,1,16,15)\",\"(1,1,384,8640)\",None,2,1,3948,2,\"(1,8)\",\"(5,7,27061)\""
+   with the PIRL on a-values is now down to only 98 cases from 3948!
+
+-- DONE: WAITING ON
+ * running the giant set "947135,\"(24,1,16,15)\",\"(24,1,16,15)\",\"(1,1,384,8640)\",None,2,1,3948,2,\"(1,8)\",\"(5,7,27061)\""
+   on the Hambrook solver to make sure that there are solutions and that they correspond to the ideal equations we are storing
+
+ * is there a way to reduce the number of cases even more?!
+
+ * order of algorithms applied to "FormsCond10To6.txt"
+| GenerateSUnitEquations.m | RegenerateThueEqToSolve_TMFormData.m      | TM_LocalTest.m      |
+|                          | RegenerateThueEqToSolve_NoSUnitEqNeeded.m |                     |
+|--------------------------+-------------------------------------------+---------------------|
+| SUnitErr.txt             | Regenerated-.txt                          | ObsRegenerated-.csv |
+| NoSUnitEqPossible.csv    |                                           | Obs-.csv            |
+| NoSUnitEqNeeded.csv      |                                           |                     |
+| ThueEqToSolve.csv        | Regenerated-.csv                          | ObsRegenerated-.csv |
+| TMFormData.csv           | Regenerated-.csv                          | ObsRegenerated-.csv |
+
+ * I don't think it's possible that the added PIRL a-values would result in an empty afplist; almost all of the avalues include a = 1, which would be unchanged by the PIRL applied to them. Those which do not have a = 1 are those which are either avalues = (2) or avalues = (4)
+   * by this logic, it seems like it might be possible that we end up with an empty afplist for avalues (2),(4), respectively
+   * but surely then we would have no solutions mod 2, 4?
+
+ * is it possible that with the refinements to avalues (via the PIRL) that the "optimal" GL2Zaction is now meaningless? That is, does every GL2Zaction now lead to the same number of ideal equations?
+   * thankfully, no. Take for example 308280,"(3,11,-7,-5)","(7,-49,-25,-3)","(1,-49,-175,-147)",None,1,2,16,0,"(2,4)","(3,5,7,367)"
+     which has 8 cases with the avalues PIRL on the optimal clist, and 15 cases with the same avalues PIRL on the original clist (3,11,-7,-5)
+
+** 2021-22 July
+
+*** 08:40 AM - TMCode
+
+ * should we run through the a-values reduction as its own program before amalgamating everything? It would reduce our avalues output and maybe make the amalgamation process easier
+   * yes, maybe let's do that; obviously in the future, it would have been easier to just do this in one algorithm instead of in waves like this, although having data to work with like this is also nice.
+   * in this case, we should keep the empty afplist as a possibility and output the result to NoSUnitEqPossible
+   * or maybe this is silly?
+
+ * let's assume for now that it never happens that removing a-value ideals via the PIRL removes all cases
+   * instead we will deal with this later or just run a bunch of tests and see what happens; in any case it's listed as a task, so we can just come back to it
+
+-- DONE: TASK
+ * in the new reduced alist format, we may have no afplist equations and also we may have no alphgamlist equations... though this seems very unlikely. Should address this regardless
+
+ * this giant set "947135,\"(24,1,16,15)\",\"(24,1,16,15)\",\"(1,1,384,8640)\",None,2,1,3948,2,\"(1,8)\",\"(5,7,27061)\""
+   with the avalues PIRL and principalization, goes from having 1976 S-unit equations to only 50. Huge improvement!
+ * this set 831855,"(16,10,33,21)","(16,10,33,21)","(1,10,528,5376)",None,2,1,1050,2,"(1,8)","(3,5,55457)"
+   goes down from 1050 ideal equations to only 56, and subsequently only 27 S-unit equations
+
+** 2021-01 August
+
+*** 09:39 PM - TMCode
+
+ * in Lemma 3.3.4 of Gh (part 2 of algs1and2 in TMSolver.m), we have
+    ord_P(x-y*th) >= min(ord_P(x), ord_P(y) + ord_P(th)) for some prime ideal P|p
+   * when p|y, p does not divide x, so ord_P(x) = 0; meaning
+     ord_P(x-y*th) >= min(0, ord_P(y) + ord_P(th)), where ord_P(y) >= 0
+     * but we don't know which prime ideal P lies over y...
+     * if ord_P(th) > 0, then ord_P(x-y*th) = 0, but this isn't much info
+     * actually I think this is valid - see Kyle's note about this in his PIRL proof
+
+-- DONE: TASK
+ * verify p|y case - indeed this cannot happen!
+
+-- DONE: TASK
+ * verify what ord_p(th^(i0) - th^(j)) is via Magma
+   * seems the minus sign is screwing us up in trying to figure out ord_p(delta_1)
+
+-- OBSOLETE: TASK
+ * computer shut down before I was able to save changes, so I need to go back and edit Delta1Test.m to be able to test the changes I made to VecRtest.m
+
+** 2021-01 September
+
+*** 05:04 PM -TMCode
+
+ * manageed to prove the ord_p(delta_1) = 0 all the time. Feel like I already edited this part, but it doesn't seem to be in the journal...
+ * so close to another idea again using that ord_p(alpha_1) >= min(ord_p(Lambda_p),ord_p(sum)), but we can't seem to be able to get very much out of the case that ord_p(alpha_1) = ord_p(sum). In the case that sum = b*alpha_i, (1 element, ie. when matrix A is a triangle matrix), we get that ord_p(alpha_1) = ord_p(b) + ord_p(alpha_i), so we get info on the p-adic order of the exponent, but that isn't enough information without testing all primes...
+ * maybe we can come up with some faster techniques for when A is a triangular matrix? Let's check that next time...
+
+** 2021-15 September
+
+*** 03:11 PM - TMCode
+
+ * no luck on the previous ideas
+ * even tried to see what the relationship is for using LLL, and still no luck. However, it does seem that we can drastically reduce the number of times LLL is run, simply by pretendind that we do not know that certain gamma's have exponent 0. Essentially, we just need to run the biggest gammalist sets, and ensure that ihat, matA are the same (if we enlarge), and pretend that all of our cases fall into this category
+   * for   "947135,\"(24,1,16,15)\",\"(24,1,16,15)\",\"(1,1,384,8640)\",None,2,1,3948,2,\"(1,8)\",\"(5,7,27061)\""
+     for instance, this would take us from having 50 S-unit equations, to running only 1 of them
+   * need only to keep track of the different alpha values and where they come from, as those values determine which lower bound on LLL is used
+ * in any case, this removes the issues of having to remove redundancy across computing information about each gamma, prime, etc.
+ * there's a good possiblity that the above idea will also work for Fincke-Pohst
+ * do we need to still check that Lemma 3.3.5 holds? I guess we could, but it seems fairly meaningless now
+ * it's possible in this case that the original principalization technique (not using the class group) is a better choice - all the gammas are the same (guaranteed) and we only have 1 reduction to do (except if a prime splits completely)
+
+-- OBSOLETE: TASK
+ * gather up gammalists according to containment
+   * maybe we should do this at the level of afplist? See, for example "417921,\"(5,17,-12,30)\",\"(5,17,-12,30)\",\"(1,17,-60,750)\",None,135,1,180,0,\"(1,7,8,56)\",\"(3,2843)\""
+     which yields 1 set for LLL if added at the afplist list, vs 2 at alphgamlist level
+   * does this mean that it might still be easier to do the old school principalization?
+
+-- TASK
+ * verify that this idea does indeed work and type it up (also add LLL section to the document)
+
+-- TASK
+ * verify if it's faster to use the old principalization technique with this new reduction
+
+-- TASK
+ * fix pAdicLog; r is not actually changed here; the function just breaks at r and still uses r = 1; verify this does indeed equal the sum definition of the log (see Kyle, top of page 20)
+
+-- DONE: TASK
+ * something happening here "627486,\"(7,32,29,28)\",\"(7,32,29,28)\",\"(1,32,203,1372)\",None,1,1,144,0,\"(1)\",\"(2,3,23,4547)\""
+   for alphgamlist[9], ie, at p:= 2, we have Ordp(delta1L^2 - 1) > 0, where Ordp(delta1L^2 - 1) = 4 > 1/(p-1) = 1, hence Ordp(logp(delta1L)) = Ordp(delta1L^2 - 1) = 4, but instead we have that Ordp(logp(delta1L)) = 3, even using the definition of the log (ie. the sum)
+   * so it seems that Ordp(delta1L-1) = 1 > 0, hence we can define logp(delta1L) the usual way (via the sum), and this gives Ordp(logp(delta1L)) = 3
+   * but we note that Ordp(delta1L-1) !> 1/(p-1) = 1, hence property 3 does not hold, ie.
+     Ordp(logp(delta1L)) != Ordp(delta1L - 1)
+   * additionally, since Ordp(delta1L - 1) > 0, by property 2,
+     logp(delta1L^2) = 2*logp(delta1L)
+   * and since, Ordp(delta1L^2 - 1) > 0, by property 3,
+     Ordp(logp(delta1L^2)) = Ordp(delta1L^2 - 1) = Ordp(2*logp(delta1L))
+
+** 2021-24 September
+
+*** 06:14 PM -TMCode
+
+ * There are a few cases which give Log_p(delta1L) = 0:
+   * "99,\"(1,3,3,3)\",\"(1,3,3,3)\",\"(1,3,3,3)\",None,1,1,2,0,\"(1,8)\",\"(11)\""
+   * 90,"(1,3,3,3)","(1,3,3,3)","(1,3,3,3)",None,1,1,2,0,"(1)","(2,5)"
+   * 45,"(1,3,3,3)","(1,3,3,3)","(1,3,3,3)",None,1,1,2,0,"(1,8)","(5)"
+     * why does this happen?
+
+ * using the Ordp(logp(delta1L)) Lemma as inspiration, can we apply this idea for delta2L? ie. must it be that Ordp(logp(delta2L)) >= min Ordp(alpha_i)?
+
+-- DONE: TASK
+ * update code to remove p|y case from algs1and2
+ * does this really work for c as well? Can we also claim that p|y does not affect c?
+
+** 2021-27 September
+
+*** 05:51 PM - TMCode
+
+ * currently running Delta1Test.m to test whether Lemma 3.5.5 holds and how often;
+   * it does and reasonably frequently
+   * still do not know exactly why it happens, but it seems to be the first time in the algorithm that we test when 2 primes occur as a solution together; ie. we take the log of elements not divisible by p, but use the p-aic order at the log of those elements to determine a bound on the exponent at p
+
+-- OBSOLETE: TASK
+ * give up on this idea? Can we use this idea with Ordp(logp(delta2L))? ie. the above uses Ordp(logp(delta1L)) for this
+   * so far, no, it doesn't seem to give us anything since it relies quite heavily on the relationship between Ordp and Logp
+
+-- OBSOLETE: TASK
+ * however, consider the following
+   y*(theta^(j) - theta^(i0))/(x-y*theta^j) = alpha^(i0)*.../alpha^(j)*... - 1
+   * Ordp(LHS) = Ordp(theta^(j) - theta^(i0)) since Ordp(y) = 0 and Ordp(x-y*theta^(j)) = 0
+   * Hence Ordp(LHS + 1) >= min(Ordp(LHS),0)
+   * if Ordp(theta(j) - theta(i0)) = Ord_Pj(ideal_a)/e(Pj|p) != 0, then
+     0 = Ordp(RHS + 1) = Ordp(alpha^(i0)/alpha^(j)) + Sum n_i a_li
+   * this can also be done with k in place of j and seems to be an analogue of Lemma 3.5.2
+   * Does it actually hold though?
+   * Seems that it should hold at "245882,\"(6,10,39,29)\",\"(6,10,39,29)\",\"(1,10,234,1044)\",None,141,1,84,1,\"(1,7)\",\"(2,13,193)\""
+     and "3914,\"(2,5,-6,-5)\",\"(19,-38,17,-2)\",\"(1,-38,323,-722)\",\"(3)\",2,2,7,1,\"(1)\",\"(2,19,103)\""
+     * interestingly, both cases seem to be very slow using Kyle's method...
+     * but this seems to happen when principalization is not so nice, ie. when matA != Id
+     * is it possible that this happens also when Lemma 3.5.5 holds?
+
+ * solutions for "3914,\"(2,5,-6,-5)\",\"(19,-38,17,-2)\",\"(1,-38,323,-722)\",\"(3)\",2,2,7,1,\"(1)\",\"(2,19,103)\""
+   in "PIRLtest3out.txt"
+   * solutions come from cases 1, 3, 4, and 5; none from case 2
+   * breakdown of solutions
+     Case | Bound
+     --------------------------
+     1    | n_2 = 2 for all sol
+     2    | no solutions
+     3    | n_2 = 0 or 6 / n_19 = 0 or 1
+     4    | n_19 = 1,2, or 3 / n_103 = 0,1, or 3
+     5    | n_2 = 0,2,4, or 6 / n_19 = 1,2,3, or 4 / n_103 = 0,1, or 2
+ * according to the above idea, we have Ordp(theta^(j) - theta^(i0)) != 0 at cases
+   * Case 2, p:= 19 - yields that 0 = -1/2 + Sum n_i a_li
+     * together with t_i, r_i values, this yields that z_i = 1/2 + 1; I think this should be 2 though, and we should verify that indeed the Ordp function works the way we want it to...
+   * Case 4, p:= 19
+   * Case 5, p:= 19
+ * not sure what's happening with this, it doesn't seem to add up to the solutions...
+
+-- DONE: TASK
+ * we have, as a solution with primelist:= [2,19,103], x = 73, y = 10, so that indeed p|y is possible, BUT ord_P(x-yth) = 0 as predicted
+   * update TM document/code to include this - p|y is possible, but yields a 0 exponent on the respective prime ideals
+
+-- TASK
+ * verify Ordp function when it returns fractions; ie see example above for Case 2, p:= 19
+
+** 2021-04 October
+
+*** 11:33 AM - Cybersecurity technical interview
+
+_What type of attack it was/how did it happen_
+
+1. Overview: University Hospital Düsseldorf Ransomware Attack
+
+   * September 11, 2020; paramedics respond to 78 year old woman suffering from an aortic aneurysm
+   * paramedics told that local university hospital A&E departments are closed and cannot accept patient
+   * patient redirected to Helios University Hospital in Wuppertal, 32km away
+   * delayed patient's treatment by an hour; died shortly after
+
+   * ransomware attack forced the hospital to turn ambulance away
+   * attack compromised digital infrastructure required to coordinate doctors, beds, and treatment
+     * forced the cancellation of hundreds of operations/procedures
+   * attack also limited hospital’s capacity drastically
+     * normally treats more than 1000 patients/day; could only attend to 500 during/after the attack
+   * stopping new admissions was necessary to protect those already inside
+
+   * potentially first instance of death by malware; detailed investigation suggests that the victim would have died regardless of which hospital she would have been admitted to
+     * hackers could not be prosecuted for negligent homicide
+
+   * ransomware attack first spotted on Sept 10, but could have started earlier
+     * hospital's internal networks are expansive; could have gone days without noticing the encrypted file
+   * ransomware introduced to hospital network through well-known vulnerability in a Citrix application (VPN)
+     * hospital patched the vulnerability in January, when the patch was released, indicating that the ransomware loader was installed in December, when news of the vulnerability surfaced
+
+   * 30 servers encrypted with a message addressed to Heinrich Hein University - not the hospital - to contact the attackers and discuss terms of ransom
+   * The police contacted attackers, informing them they had hit the ‘wrong’ target and that lives were in danger
+   * ransom demand was withdrawn and decryption keys were provided
+
+   * once the hackers gave up the encryption key, damage was already done;
+     * decryption started on Sept 11, but was slow; even by Sept 20, no data could be fed into/retrieved from hospital IT systems, not even email was working
+     * 30 servers corrputed
+
+2. Citrix Vulnerability; CVE-2019-19781
+
+   * purpose of product is to straddle multiple networks to provide load balancing, secure gateways, etc
+
+   * Citrix first disclosed this vulnerability in an Advisory on 17 December 2019
+   * Initially no patch was available although Citrix provided mitigation advice
+   * On 19 January 2020, Citrix began to release fixes, which were available for all affected builds by 24 January
+
+   * Citrix Application Delivery Controler and Citrix Gateway are prone to a vulnerability which can allow remote unauthenticated attackers to execute code on vulnerable gateways
+     * arbitrary code execution on a network
+   * roughly 80,000 firms exposed to hacking
+   * Citrix has not released a fix for this issue but has rather published just mitigation steps that can help guard against the possibility of attacks
+     * left many admins wondering if they are actually affected and unsure of how to forensically identify attacks
+
+   * directory traversal vulnerability caused by improper handling of the pathname
+   * when vulnerable system receives a request containing a path like
+     / vpn/../vpns/services.html
+     the Apache server running in the Citrix products transforms the path from
+     / vpn/../vpns/ into simply /vpns /
+   * / vpns/ path is home to some Perl content including a directory without an authorization requirement
+     * easy to access using HTTPS request; access sensitive files without the need for user authentication
+   * initially appeared that the impact of this vuln was limited due to the specific file extension (.xml) that could be written to disk
+   * Further investigation revealed that when combined with the Perl Templating Toolkit, this vulnerability would allow for remote code execution on the host
+
+3. Ransomware
+
+   * evidence suggests that so-called “DoppelPaymer” ransomware was used; ties to Russia
+
+_What can organisations/individuals do to defend from these types of attacks_
+
+ * faster reaction time from Citrix; more transparency
+ * mitigation processes were released, but Citrix was quiet on the extent of the vulnerability, leaving individuals to sort it out themselves
+ * many simple solutions for ransomware - patching systems, improving awareness, and having good back-ups
+   * but patching systems in large organizations such as health care networks is not as simple as updating a few PCs
+   * have to deal with organizational size, system downtime, etc.
+ * in this case the hospital was up to date on patching and security measures, including external penetration tests undertaken in the summer
+   * best efforts are sometimes not enough
+
+ * cybersecurity here must be shaped by the hospitals' needs and processes and not copied from other industries or brought in as an afterthought
+
+ * in this case, the malware lay dormant for a month, but given the recent vulnerability, it would have been good to scan for potential compromises
+
+ * most effective way to prevent file path traversal vulnerabilities is to avoid passing user-supplied input to filesystem APIs (Application Program Interface) altogether
+   * many application functions that do this can be rewritten to deliver the same behavior in a safer way
+
+ * if unavoidable to pass user-supplied input to filesystem APSi, 2 layers of defense should be used to prevent attacks:
+   * application should validate the user input before processing it. Ideally, the validation should compare against a whitelist of permitted values. If that isn't possible for the required functionality, then the validation should verify that the input contains only permitted content, such as purely alphanumeric characters.
+   * after validating the supplied input, the application should append the input to the base directory and use a platform filesystem API to canonicalize the path. It should verify that the canonicalized path starts with the expected base directory.
+
+_What can organisations/individuals look out for as flags that would indicate there is a problem_
+
+ * in this case, email systems went down first, and then the problem spread
+ * software that the hospital was using had open vulnerability for a month
+
+
+** 2021-07 October
+
+*** 03:13 PM - Meeting with Samir
+
+ * projects to work on:
+   * bound on x + y = z^2 a la Beaugeud-Gyory
+     * this is different from de Weger's approach because it does not assume that you know the units; just uses the field discriminant, degree, and relevant primes
+   * TM paper
+     * edit first half, find bottlenecks, etc
+
+ * if you know a solution x,y, can determine the exponents on the fundamental unit using
+   U,phi:= UnitGroup(K);
+   #+begin_src magma
+     U,phi:= UnitGroup(K);
+     Eltseq(a@@phi);
+   #+end_src
+
+   * here, a is an element of the unit group of K, and the output is [t,s_1, ..., s_r]
+     where t is the exponent on the unit of finite order (zeta) and s_1, .., s_r are the exponents on the eps_1, ..., eps_r of the torsion-free part of the unit group
+   * so we can just compute x-yth and divide out by all the non-units, then apply the above to get the exponents on the units
+
+** 2021-12 October
+
+*** 12:46 PM - Samir's TMCode
+
+ * looking for slow parts; seems slow at "Getting the small sieve information." in smallSieveInfo function
+   * ended with a segmentation fault... emailing the error
+   * Segmentation fault
+     Magma: Fatal Error: Magma: Irrecoverable error; exiting
+     * on pr:= tauDeltaList[4] for
+       clist:=[3,2,7,2];
+       a:=1;
+       primelist:=[2,3,7,41];
+       verb:=false;
+     * error seems to be in the function sift
+     * hmm, when prompted to print depth in sift, there was no error, however there then was an error at tauDeltaList[2] when performing bigSieveInfo, the function before sift
+     * should try and just remove "vecs cat" function next...
+ * segmentation fault seems to be coming from sift function; deleted half of the code and it seems to be working now...
+   * works fine if you don't re-enter function on k loop
+   * problem seems to be only when you re-enter the 2nd time
+   * exact same issues as when using a procedure in place of a function
+
+ * smallSieveInfo still slow though, seems to be a seperate issue from Segmentation fault
+   * seems slow across all examples; probably computing too many vectors?
+   * hmm, maybe not; maybe it is just large primes being slow in the SqShifted/toBq function
+     * this seems to generate a lot of cases
+     * mapping into the unit group is slow and there are many cases
+
+
+ * in Samir's paper:
+   * do not need to do alg1 for p|Y (in this case, M' = 0 and L' is just 1)
+   * feed all prime ideals coming from a (coprime to p1, ..., pv) through PIRL
+     * already have algorithm for this
+   * (bottom of pg 7, P1, P2 should be switched in first mention)
+   * can we apply a "PIRL" analogue to reduce the number of units in eq (12)?
+     * via Galois conjugation (from Benjamin's notes)
+
+   * Prop 8.2, does not use GCD in practice for (i) - should update paper?
+   * might be easier to just use Rafael's/Benjamin's bound (faster anyway)
+
+** 2021-25 October
+
+*** 10:56 AM - Samir's TMCode
+
+ * testing out different versions of Magma to see where there is no Seg Fault on Samir's TMCode
+   * V2.26-6: Segmentation fault
+   * V2.26-3: Segmentation fault
+   * V2.26-1: Segmentation fault
+   * V2.25-7: works, but quite slow for a degree 3 equation (smallSieveInfo is very slow)
+   * V2.25-3: works and a bit faster than V2.25-7, but still slow on smallSieveInfo
+     * slows down at around the q = 700 mark for smallSieveInfo
+
+ * Mickey Mouse recursion depth error - seems to be about 26180 depth for all versions
+   * error still says "Segmentation fault", though it seems to be different than the above
+
+ * smallSieveInfo: the slow function is SqShifted
+   * Rq is just a list of [0..(q-1)], which is obviously slower as q gets larger
+   * hmm, but bigSieveInfo also has to iterate through SqShifted and this is not at all slow...
+     * might be the pre-image (@@) function?
+
+* 2022
+
+** 2022-04 January
+
+*** 13:25 - Samir's TMCode
+
+ * new version of Magma released and uploaded to Lehner, V2.26-10; does not suffer from Segmentation fault!!!
+
+** 2022-22 May
+
+*** 17:48 - GhSi Paper Code
+
+ * Samir wants to add elliptic curve examples to the paper, but I can't remember how we convert from the TM code to the elliptic curve... Ok, I've just looked at the BeGhRe on how to compute the elliptic curves and it looks like it checks out.
+ * I'm going to create a masterfile that computes the solutions for all the necessary forms and prints them with the timings, and then in the same program outputs the elliptic curves
+
+** 2022-17 June
+
+*** 12:00 - TMCode
+
+ * Had to kill TM_LocalTest.m because the memory was nearly maxed out on lehner. Will need to pick this up (and more efficiently in a week...)
+ * Should start running TMCode after BIRS...
+
+** 2022-05 August
+
+*** 15:41 - TMCode
+
+-- DONE: TASK
+ * Refactoring ThueMahlerSolver.m
+ * Function list:
+   SolveThueMahler [not yet done]
+       prep2                                    -> equationsInK                            +
+           prep1                                -> idealEquations                          +
+               alg2                             -> adequateLMRefined                       +
+                   alg1                         -> adequateLM                              +
+                       reduce                   -> residueClassImage                       +
+               normInv                          -> normInv                                 +
+                   AdequateLM                   --                                         r+
+           principalize                         -> principalize                            ++
+       smallSieveInfo                           -> smallSieveInfo                          +
+           ResidueClassImage                    --                                         r+
+       reducedBound                             -> reducedBound                            +
+           initialBound                         -> initialBound                            +
+               degL                             -> degL                                    +
+               ResidueClassImage                --                                         r+
+           constants                            -> boundConstants                          +
+           TotallyComplexRed                    -> totallyComplexRed                       +
+               nonunitExps                      -> nonUnitExps                             +
+               c21Func                          -> c21Func                                 +
+                   valuationBound               -> valuationBound                          +
+                       multGroup                -> multGroup                               +
+                           multGroupPrimePower  -> multGroupPrimePower                     +
+                               multQuo          -> multQuo                                 +
+           reducedBoundFixedEmbeddings2         -> fixedRealEmbeddingRed                   +
+               constantsDivc25                  -> boundConstantsDivc25                    +
+               NonUnitExps                      --                                         r+
+               c21Func                          --                                         r+
+               approxLattice                    -> approxLattice                           +
+               distanceLBsq                     -> distanceLBsq                            +
+               distanceLBsq2                    -> distanceLBsq2                           +
+       bigSieveInfo                             -> bigSieveInfo                            +
+       sift                                     -> sift                                    +
+           detSVP                               -> detSVP                                  +
+           vectorsInCoset                       -> vectorsInCoset                          +
+               cvp                              -> cVP                                     +
+           deeperSift                           -> deeperSift                              +
+               DetSVP                           --                                         r+
+               VectorsInCoset                   --                                         r+
+               cosetIntersect                   -> cosetIntersect                          +
+           cosetIntersect                       --                                         r+
+           multGroup                            --                                         r+
+       solutionVectors                          --
+       vectorTests                              --
+ * equationsInK (formerly prep2) and all it's children are now it's own file called EquationsInK.m. This contains:
+       (ResidueClassImage) - loaded before
+       AdequateLM
+       AdequateLMRefined
+       NormInv
+       IdealEquations
+       Principalize
+       EquationsInK
+ * smallSieveInfo now outputs only the necessary groups called later. Should also be a separate function with
+       (ResidueClassImage)
+       bigSieveInfo
+ * reducedBound and all it's children are now it's own file called
+   ReducedBound.m This contains:
+       DegL
+       InitialBound
+       BoundConstants
+       NonUnitExps
+       ValuationBound
+       c21Func
+       TotallyComplexRed
+       BoundConstantsDivc25
+       ApproxLattice
+       DistanceLBsq
+       DistanceLBsq2
+       FixedRealEmbeddingRed
+       ReducedBound
+ * Used in many functions throughout program:
+       ResidueClassImage
+       MultGroup
+       MultGroupPrimePower
+
+-- DONE: TASK
+ * Changing the names of the functions to match Magma's convention is maybe a bad idea; may accidentally overwrite internal functions, which is very much possible.
+   * should change this back...
+ * Finished going through most of it - just need to do multgroup stuff and SolveThueMahler.m and test
+
+
+** 2022-18 August
+
+*** 15:47 - TMCode
+
+ * file refactoring:
+   * multGroup.m
+   * equationsInK.m
+   * reducedBound.m
+   * sieveInfo.m
+   * sift.m
+   * solutionVectors.m
+   * solveThueMahler.m
+ * Finished the code refactor! Yay!
+
+-- TASK
+ * Relevant comments/errors from solveThueMahler.m:
+
+Example 1
+something strange is happening in pr:= tauDeltaList[1]; the closest vector is bigger than the lower bound for the closest vector
+// solved: the lower bound for the shortest vector in dimension 2 is just ||b_1||, not a multiple of, and THERE WAS A FUCKING TYPO IN THE BOOK WE USED TO COMPUTE THE LOWER BOUND!!
+alist:=[3,2,7,2];
+a:=1;
+primelist:=[2,3,7,41];
+time sols:=solveThueMahler(alist,a,primelist : verb:=true);
+//sols;
+
+alist:=[1,2,4,6];
+a:=1;
+primelist:=[2,3,7,41,1109];
+time sols:=solveThueMahler(alist,a,primelist : verb:=true);
+//sols;
+
+// Example 2
+alist:=[7,1,29,-25];
+a:=1;
+primelist:=[2,3,7,37,53];
+time sols:=solveThueMahler(alist,a,primelist);
+//sols;
+
+// Example 3a (improvement on Soydan and Tzanakis)
+alist:=[3,65,-290,-2110,975,3149];
+a:= -(2^5)*(3^4);
+primelist:=[5,11];
+time sols:=solveThueMahler(alist,a,primelist : verb:=true);
+sols;
+
+// Example 3b (improvement on Soydan and Tzanakis)
+alist:=[3,65,-290,-2110,975,3149];
+a:= -1;
+primelist:=[2,3,5,7,11,13,17];
+time sols:=solveThueMahler(alist,a,primelist : verb:=true);
+//sols;
+
+// Example 4
+//alist:=[1,0,0,0,-2];
+//primelist:=[2, 7, 23, 31, 47, 71, 73, 79, 89];
+//time sols1:=solveThueMahler(alist,primelist,1);
+//time sols2:=solveThueMahler(alist,primelist,-1);
+//sols1;
+//sols2;
+
+// Example 5
+SetClassGroupBounds("GRH");
+alist:=[ 5,  1,  4,  1,  6,  1,  6,  0,  6,  0,  4, -2];
+a:=1;
+primelist:=[2,3,5,7,11];
+time sols:=solveThueMahler(alist,a,primelist : verb:=true);
+sols;
+
+// Example 6 (de Weger--Tzanakis)
+//alist:=[1,-23,5,24];
+//primelist:=[2,3,5,7];
+//time sols:=solveThueMahler(alist,primelist,1) join solveThueMahler(alist,primelist,-1);
+//sols;
+
+// Example 7 (no real places)
+alist:=[ 1, 0, 0, 0, 3 ];
+a:= 1;
+primelist:= [ 2, 7, 23, 31 ];
+time sols:=solveThueMahler(alist,primelist,1) join solveThueMahler(alist,primelist,-1);
+
+// Mike's Example
+SetClassGroupBounds("GRH");
+alist:= [ 486, 2673, 8910, 13365, 17820, 12474, 8316, 2970, 990, 165, 22, 1 ];
+a:= 1;
+primelist:= [3];
+time sols:=solveThueMahler(alist,a,primelist : verb:=false); sols;
+
+// Goormaghtigh's Example
+// 2 hours... any way to speed this up? Why is it so slow? Fund. unit is huge
+//alist:= [718,718,718,718,719];
+//a:=1;
+//primelist:= [719];
+//SetClassGroupBounds("GRH");
+//time solveThueMahler(alist,a,primelist : verb:=true);
+
+// Goormaghtigh's Example
+//alist:= [189,189,189,189,190];
+//a:=1;
+//primelist:= [2,5,19]; //[190];
+//SetClassGroupBounds("GRH");
+//time solveThueMahler(alist,a,primelist : verb:=true);
+
+alist:=[14,20,24,15];
+a:=1;
+primelist:= [2,3,17,37,53];
+time sols:= solveThueMahler(alist,a,primelist : verb:=false); sols;
+
+// very very slow at large prime
+/ alist:=[ 1, 65, -870, -18990, 26325, 255069 ]; primelist:=[ 61315456967 ]; a:=27;
+// issue is in multGroup function
+// issue is in multGroupPrimePower when computing
+//     xList := [(modfp(x))@@phi1 : x in xList];
+// struggles on even the first element of xList
+// stuggling on computing the preimage under phi1
+
+// ww in LL in initial reduction at pr:= tauDeltaList[4] - not always!
+alist:= [1,4,−18,−12];
+primelist:= [2,3,17,37,53];
+a:= 1;
+//time sols:= solveThueMahler(alist,a,primelist : verb:=true); sols;
+
+** 2022-21 August
+
+*** 22:16 - LMFDB
+
+-- DONE: WAITING ON
+ * Gathering up all TMforms for 500000-500999 for Cremona's test case
+   * in bash, ran
+#+NAME: ECTest-TM
+#+BEGIN_SRC eshell
+  for i in {1..999}
+  do
+      grep "$((500000+$i))," RegeneratedTMFormData.csv >> ECTest.txt
+  done
+#+END_SRC
+   * this was done in /home/adela/data/from_lehner/ThueMahler/Data/SUnitEqData
+   * there are 5132 lines in the output file
+
+ * Should we instead have done this for ObsRegeneratedTMFormData?
+   * ran this for this case as well, data stored in EC2Test.txt
+     * 4249 lines in this output file
+ * file name changes:
+    * ECTest is now ObsRegeneratedTestTMForm.csv
+    * EC2Test is now RegeneratedTestTMForm.csv
+
+** 2022-22 August
+
+*** 13:23 - LMFDB
+
+-- DONE: WAITING ON
+ * Consolidating all the ThueToSolve as well in the range 500000-500999.
+   * did this for both RegeneratedThueEqToSolve.csv and ObsRegeneratedThueEqToSolve.csv
+#+NAME: ECTest-Thue
+#+BEGIN_SRC eshell
+  for i in {1..999}
+  do
+      grep "$((500000+$i))," ObsRegeneratedThueEqToSolve.csv >> ECTest/ObsRegeneratedTestThue.csv
+  done
+#+END_SRC
+
+-- DONE: TASK
+ * Move all these tests into their own folder, ECTest
+ * Hoping to use ObsRegenerated... files, and updated TM_LocalTest so that it doesn't spend ages on those sets with large primes
+
+-- DONE: TASK
+ * RegeneratedTestThue.csv is also collecting forms with N not in the range - should test for this
+
+ * NB. continuing work on lehner
+
+-- DONE: WAITING ON
+ * Should go through the logfile to see if any of the test range cases were terminated early from TM_LocalTest
+   * running GatherKilledForms.sh
+   * so far, looks like the killed jobs all lie well past the test range
+
+-- DONE: TASK
+ * Remove redundancy in test case
+
+** 2022-23 August
+
+*** 15:02 - LMFDB
+
+ * Want something like
+#+NAME: ECTest-Thue
+#+BEGIN_SRC magma
+  SetLogFile("somehash.txt");
+  sols:=solveThueMahlerAll(alist,a,primelist);
+  ECs:=convertTMToEllipticCurves(N,alist,sols);
+  for E in ECs do
+      fprintf "curvesfile.txt", "N,aInvariants(E),alist,a,primelist,[u,v]\n";
+  end for;
+#+END_SRC
+
+ * Now we have a file ECTest1TM.m which iterates through the lines of ObsRegeneratedTMFormData.csv, solves the corresponding TM forms, logs the output, and prints all the corresponding elliptic curves in a file.
+
+#+NAME: ECTest-ThueSort
+#+BEGIN_SRC python
+all_forms=[]
+for line in open("/home/adela/ThueMahler/Data/SUnitEqData/ECTest/ObsRegeneratedTestThue.csv"):
+    N=int(line.split("\"")[0].split(",")[0])
+    if (N >=500000) and (N<501000):
+        if not line in all_forms:
+            all_forms.append(line)
+temp=open("/home/adela/ThueMahler/Data/SUnitEqData/ECTest/temp.csv","w")
+for form in all_forms:
+    temp.write(form)
+#+END_SRC
+ * removed redundancy and N outside of test range in Thue forms; renamed temp.csv as ObsRegeneratedTestThue.csv after deleting the original file
+
+ * Now we have a file ECTest1Thue.m which iterates through the lines of ObsRegeneratedThueEqToSolve.csv, solves the corresponding Thue forms, logs the output, and prints all the corresponding elliptic curves in a file.
+
+-- DONE: TASK
+ * The easiest thing to do is to create a folder called LMFDB with subfolders for Code, Data (Input Data) and put only the relevant things there to send to Drew
+ * Need to have each job output to it's own folder with a hash, otherwise the files will overwrite each other (or write out of order) when running in parallel
+ * Need to make the LogFiles, Outfiles folders for magma otherwise it will return an error
+ * Now have a dropbox file (LMFDB) with bash-to-magma script to solve each Thue and Thue--Mahler line, respectively, and output data into each file.
+
+-- DONE: TASK
+ * bash script to run each job, and append the logfiles and ECs to the folder corresponding to that N; same for Thue jobs
+   * one script controlling these that runs nohup parallel for both
+
+ * Renamed ECTest1TM.m and ECTest1Thue.m as computeEllipticCurvesTM.m and computeEllipticCurvesThue.m accordingly
+
+#+NAME: ECTest-Running
+#+BEGIN_SRC eshell
+cd LMFDB
+# Run ThueMahler code.
+nohup cat Data/Forms/TMTestForms.csv | parallel -j20 --joblog Data/TMTest1Log magma set:={} Code/computeEllipticCurvesTM.m 2>&1 &
+
+# Run Thue code.
+nohup cat Data/Forms/ThueTestForms.csv | parallel -j20 --joblog Data/ThueTest1Log magma set:={} Code/computeEllipticCurvesThue.m 2>&1 &
+#+END_SRC
+
+ * for some reason, a test case on parallelization with nohup stopped feeding in new forms after I was logged out...
+ * so far so good, though some TM forms seem to be running slowly for some reason
+
+ * useful snipped of code for testing (to remove contents of directory)
+#+NAME: Testing
+#+BEGIN_SRC eshell
+# rm -rfv DontDeleteMe/*
+#+END_SRC
+
+** 2022-25 August
+
+*** 01:36 - LMFDB
+
+-- DONE: WAITING ON
+ * Everything is in a Dropbox folder called LMFDB (and locally in the PostDoc directory), and sent off to Drew for testing
+
+-- DONE: WAITING ON
+ * Running all of LMFDB for the test range locally on lehner for sanity checking
+
+-- DONE: TASK
+ * Sort through and add SUnitCode to the Dropbox
+
+-- DONE: TASK
+ * Compare test output with Cremona
+
+-- OBSOLETE: TASK
+ * Resume TM_LocalTest, but with a better control on large primes (ie. avoid long-running code)
+
+-- TASK
+ * Verify slow Thue--Mahler code from LMFDB dataset
+
+*** 9:47 - LMFDB
+
+-- DONE: TASK
+ * set:="500038,\"(1,5,-30,-4)\",\"(1,5,-30,-4)\",\"(1,5,-30,-4)\",None,1,2,16,0,\"(1)\",\"(2,7,11,17,191)\"";
+   alist:=[1,5,-30,-4];
+   a:=1;
+   primelist:=[2,7,11,17,191];
+   is stuck in a loop at pr:=tauDeltaList[4] when reducing the bound (increases C forever)
+   * There seems to always be a vector in the reduction of Norm 1, so that Prop 9.1 is never met
+ * N:=500050; alist:=[ 4, 10, -17, -7 ]; a:=1; primelist:=[ 2, 5, 73, 137 ];
+   alist:=[ 1, 10, -68, -112 ]; a:=1; primelist:=[ 2, 5, 73, 137 ];
+   might be experiencing the same problem, at pr:=tauDeltaList[4];
+   * it is
+ * N:=500066; alist:=[ 11, 15, -8, -6 ]; a:=1; primelist:=[ 2, 7, 23, 1553 ];
+   alist:=[ 1, 15, -88, -726 ]; a:=121; primelist:=[ 2, 7, 23, 1553 ];
+   * same problem...
+ * In fact all of these jobs probably are...
+set:=500102,"(4,25,-14,-10)","(4,25,-14,-10)","(1,25,-56,-160)","(3)",1,2,5,6,"(1)","(2,250051)"
+set:=500112,"(1,3,-6,-4)","(1,3,-6,-4)","(1,3,-6,-4)",None,1,2,12,0,"(1)","(2,23,151)"
+set:=500130,"(8,21,-30,-18)","(19,36,-45,8)","(1,36,-855,2888)",None,1,2,14,1,"(1)","(2,5,5557
+set:=500134,"(1,9,-4,-10)","(1,9,-4,-10)","(1,9,-4,-10)","(3)",1,2,4,0,"(1)","(2,29,8623)"
+set:=500138,"(1,6,-5,-6)","(1,6,-5,-6)","(1,6,-5,-6)",None,1,2,4,0,"(1)","(2,113,2213)"
+set:=500222,"(8,3,-32,3)","(8,3,-32,3)","(1,3,-256,192)",None,1,2,16,10,"(1)","(2,67,3733)"
+set:=500262,"(3,3,-22,-4)","(3,3,-22,-4)","(1,3,-66,-36)",None,1,2,16,0,"(1)","(2,3,7,43,277)"
+set:=500278,"(3,1,-14,-4)","(31,-366,-239,-38)","(1,-366,-7409,-36518)",None,4,2,12,0,"(1)","(2,31,8069)"
+set:=500286,"(4,18,-11,-8)","(4,18,-11,-8)","(1,18,-44,-128)",None,1,2,8,0,"(1)","(2,3,199,419)"
+set:=500290,"(4,3,-20,-5)","(5,-20,-3,4)","(1,-20,-15,100)",None,1,2,15,1,"(1)","(2,5,7,1021)"
+set:=500294,"(2,1,-50,1)","(1,50,1,-2)","(1,50,1,-2)","(3)",1,2,3,1,"(1)","(2,250147)"
+set:=500310,"(5,21,-24,-6)","(5,21,-24,-6)","(1,21,-120,-150)",None,1,2,44,8,"(1,3)","(2,5,17,109)"
+set:=500394,"(1,11,-24,-22)","(1,11,-24,-22)","(1,11,-24,-22)",None,1,2,4,0,"(1)","(2,3,83399)
+ * see Remarks on page 37 of TMV4 - this might be exactly what's happening
+ * we are not in the 2nd case; this seems to be happening only when there are no complex embeddings
+ * this does not happen when using distanceLBsq, but this bound is technically incorrect...
+   * not true; this also happens with distanceLBsq
+
+** 2022-29 August
+
+*** 15:28 - LMFDB
+
+ * Fixed ShortVectorsProcess, CloseVectorsProcess error from Drew:
+   Runtime error in 'ShortVectorsProcess': Argument 2 must be positive
+
+-- DONE: TASK
+ * code to gather terminated/errored out sets
+
+ * For the sets running forever and stuck on Increasing C error:
+   * It seems that in one case, beta_j = -delta_{3,3}/delta_{3,2}, and in another case,
+     beta_j = -delta_{3,2}/delta_{3,3}, but since we are taking log|delta_{3,3}/delta_{3,2}|, it doesn't matter that one is the reciprocal of the other. In the first case, the prime factorization is exactly the same in the splitting field L. In the 2nd case, the prime factorization of betaj is the reciprocal of the prime factorization of delta_{3,3}/delta{3,2} in L.
+     * These primes show up in the factorization of theta1-theta2 because the discriminant is the difference of the thetai, and it's clear that these primes would should up in tau.
+     * But does this mean that there are solutions from these cases?
+     * Same problem with Samir's version of M, ww
+     * This seems to be delta_3 because delta_1,delta_2 are units (and there are 2 because
+       u = 3, v = 0 and r = u + v - 1 = 2).
+     * Why is disc(f(t)) made up of these primes?
+       * disc(1,theta,theta^2) = disc(K) = disc(f(t)) = det(A)^2 disc(OK), where A is the change of basis matrix from {1,theta,theta^2} to the integral basis (say) {1, theta/2, theta^2/4} of OK (and thus also a basis of K)
+
+   * It's also important to note that Ordp(delta1L) = 0, as proven in my TM notes. That said, we do not choose i0,j,k the same way as we did in Tzanakis-de Weger, and in fact, we actually end up with delta2L with our choice of "sigma1, sigma2" (in their notation)
+   * All of these casese seem to be when u = 3, v = 0, and it ends up happening that because of the way the matrix M is set up, ww is almost in the lattice L, but off by the coordinate, and so we end up with vv in L such that vv+ww = (1,0,0,0) or something like that. If we changed M, we could force ww in L, but then our bounds would change, and also, what are the odds that beta_j should be so close to the delta_{i,k}?!
+
+** 2022-31 August
+
+*** 11:31 - LMFDB
+
+ * Cases where ww in L (ie. where we end up using ShortVectorsProcess:
+
+alist:=[ 1, 3, 153, 153 ]; a:=18; primelist:=[ 17, 19, 43 ];
+// u = 1 here
+alist:=[ 1, -49, -330, -484 ]; a:=484; primelist:=[ 62501 ];
+ pr:=tauDeltalist[8]; u:=3; when bounds on S are 0 (coincides with alpha_{1,1}, coincidence)
+// pr:=tauDeltalist[5]; u;=3
+
+alist:=[ 1, -2, -361, 2166 ]; a:=1444; primelist:=[ 62501 ];
+// when this shows up in every reduction iteration (tauDeltaList[1]), it happens that
+ beta_j = 1, and so ww = (0, 0), so of course its in L
+alist:=[ 1, 377, 320, 68 ]; a:=8; primelist:=[ 62501 ];
+alist:=[ 1, 377, 320, 68 ]; a:=1; primelist:=[ 62501 ];
+alist:=[ 1, -62, 45, -6 ]; a:=1; primelist:=[ 3, 13, 12821 ];
+// u = 1; happens when S = []
+alist:=[ 1, 12, -39, -38 ]; a:=3; primelist:=[ 5, 463 ];
+// happens when bounds on S are 1 or 0, when u:=3;
+alist:=[ 1, 87, -660, 1210 ]; a:=484; primelist:=[ 5, 463 ];
+alist:=[ 1, 3, 60, 156 ]; a:=2; primelist:=[ 5, 463 ];
+alist:=[ 1, -377, -1131, -845 ]; a:=1; primelist:=[ 13, 601 ];
+// u:= 1 here, and it happens that beta is really small (close to 0), so when ww lands in L, it's only because C is small and so rounds to 0 (also happens when bounds on S are close to 0)
+alist:=[ 1, 30, -105, 50 ]; a:=6; primelist:=[ 5, 463 ];
+alist:=[ 1, 6, -1147, 13690 ]; a:=2738; primelist:=[ 41, 3049 ];
+alist:=[ 1, 7, -45, -33 ]; a:=1; primelist:=[ 3, 7, 7937 ];
+// happens when bounds on S are basically 0
+alist:=[ 1, 0, 119, 392 ]; a:=8; primelist:=[ 7, 7937 ];
+
+ * It seems in all of the above cases, ww lands in L is kind of coincidental. Either the bounds on S are close to 0, and so ww is the zero vector, or a multiple of one of fundamental unit elements, or the elemends of ww are very small and round to 0 when C is small.
+ * The infinite cases that we have found seem to be strange cases where beta_j has the same(ish) prime factorization as one of the delta_{i,3}/delta_{i,2}
+
+ * alist:=[ 1, -18, -28, 96 ]; a:=1; primelist:=[ 2, 5, 50053 ];
+   * This example falls into an infinite loop at tauDeltaList[3], but in tauDeltaList[1], it always has ww in L. Why?
+     * ww is the zero vector because beta_j = 0 (ie. ((theta2-theta1)*tau3)/((theta3-theta1)*tau2) = 0)
+   * Does not happen in the OG version from Samir
+     * yields only the solution (1,0,0,0,0)
+
+ * Is our LLL calculation wrong? Seems that way. We should just plug in the matrix M into LLL rather than doing Lattice(M) first. But it also might be the case that our transposes are all over the place.
+
+** 2022-02 September
+
+*** 10:29 - LMFDB
+
+ * Magma's Lattice() function LLL-reduces M, so there's no need to apply LLL a second time, but perhaps Lattice() isn't doing what we want it to do with M.
+   * No, it's none of those things. There's just a fucking typo in Smart's book. It turns out that {sigma_{i0}} should be squared in Theorem V.10.
+
+** 2022-05 September
+
+*** 08:42 - LMFDB
+
+ * Have a solution to reducedBound to solve "Increasing C" problem:
+   * Iterate until find at least one short vector longer than cB5^2 (say, at length mult*cB5^2)
+   * Compute all vectors below mult*cB5^2
+   * remove vectors shorter than cB5^2, and take DLwsq to be the shortest vector aftre cB5^2
+ * When we do this though, we also find all the vectors less than mult*cB5^2 - why not save those and take DLwsq:=Max([vv : vv in vecs])? We could get an even tighter bound
+ * This is going to be different than if ww in LL though
+   * In this case, we want Min_{v in L} Norm(v+w) = Min_{x in L} Norm(x)
+   * Find all vectors x such that Norm(x) <= mult*cB5^2
+   * remove vectors shorter than cB5^2, and take DLwsq as above
+   * for those vectors x, recover v by taking v = x - w, and
+   * Since this only holds for x != 0, include also x = 0 = v+w. That is, v = -w.
+ * In both cases, multiply v by M^(-1) to recover the vector b
+ * It's quite possible that what we were doing before with distanceLBsq2 was much better; gave us a better bound - maybe we don't need to iterate over C? Maybe we can just directly do distanceLBsq3 (now 2, obvs).
+ * Changed to iter == 5; didn't change in TMSolver though... should I?
+
+*** 22:45 - LMFDB
+
+ * Some of the slower cases are slowing down in the c21Func
+   * 37 seconds for pr:=tauDeltaList[29] for
+     alist:=[2,4,-50,5]; a:=1; primelist:=[2,3,5,7,2381];
+   * is it because of the large prime ideal?
+
+-- DONE: TASK
+ * another fucking error:
+   alist:=[ 1, 62, -186, 144 ]; a:=9; primelist:=[ 17, 3677 ];
+       in pr:=tauDeltaList[1];
+   alist:=[ 1, 4, 10, 56 ]; a:=1; primelist:=[ 2, 23, 83, 131 ];
+       in pr:=tauDeltaList[14];
+   alist:=[ 1, -16, -84, -180 ]; a:=1; primelist:=[ 2, 3, 37, 751 ];
+   Runtime error in '^': Exponent must be small when product representation won't be used
+   * should be using u,mu,base:=SUnitGroup(S), but in this case, #S eq 0, so we actually use UnitGroup(K) to generate deltaList... which doesn't have a product representation option
+ * Fixed by setting iter == 20 to exit LLL and compute short vectors in fixedEmbedding code
+
+** 2022-06 September
+
+*** 09:48 - LMFDB
+
+-- DONE: TASK
+ * new error at
+   alist:=[ 1, 9, -176, -352 ]; a:=1; primelist:=[ 2, 11, 22751 ];
+   in pr:=tauDeltaList[1];
+   assert n eq Degree(LL); // Assertion failed
+   * fixed! Entry in the matrix M in approxLattice was being rounded down to 0, making the matrix M have rank 1 but dimension 2. Added extra while loop in fixedRealEmbeddingRed to increase C if this happens; seems good
+
+-- DONE: TASK
+ * run comparison with John's data
+
+** 2022-07 September
+
+*** 11:02 - LMFDB
+
+-- DONE: TASK
+ * Need python or bash code to find error-ed out jobs from test1 (N in 500000-500999)
+
+#+NAME: TM - Finding errored out code
+#+BEGIN_SRC eshell
+cd LMFDB
+for F in Data/TMLogfiles/*; do
+    if grep -q "error" "$F"; then
+        N=$(echo $F | grep -o -E '[0-9]+' | head -1 | sed -e 's/^0\+//')
+        alist=$(echo "$F" | cut -d '[' -f2 | cut -d ']' -f1)
+        set=$(grep "$N," Data/Forms/TMTestForms.csv | grep "($alist)")
+        echo $set >> Data/Forms/TMTestErrors.csv
+    fi
+done
+#+END_SRC
+
+#+NAME: Thue - Finding errored out code
+#+BEGIN_SRC eshell
+cd LMFDB
+for F in Data/ThueLogfiles/*; do
+    if grep -q "error" "$F"; then
+        echo $F >> Data/Forms/ThueTestErrors.csv
+    fi
+done
+#+END_SRC
+ * no errors in Thue code
+
+ * for errors in TMLogfiles:
+#+NAME: TM - Run errored out code
+#+BEGIN_SRC eshell
+nohup cat Data/Forms/TMTestErrors.csv | parallel -j20 --joblog Data/TMTest1ErrorLog magma set:={} Code/computeEllipticCurvesTM.m 2>&1 &
+#+END_SRC
+ * will have to re-amalgamate elliptic curves though
+   * lots found so far in these sets!
+
+-- OBSOLETE: TASK
+ * some errored out files are still returning an internal error.... will have to repeat this process
+   * might have helped to overwrite the logfiles...
+   * will have to look for files which contain "error" twice
+#+NAME: TM - Finding twice errored out code
+#+BEGIN_SRC eshell
+cd LMFDB
+grep -o -c "error" * | awk -F: '{if ($2 > 1){print $1}}' > tmp.txt
+#+END_SRC
+
+-- DONE: TASK
+
+Email to drew
+
+noticed this about this one particular set as well. I think up to conductor 1 million, the largest cardinality of the set of primes we should see is 6, and in this case, every one of the 6 primes splits completely, making this one of the (hopefully few) harder cases that we will see. There might be other things going on as well, but I will have to look into it.
+
+>In situations where there are multiple S-unit equations to solve, is it
+>possible to work on them in parallel?  I looked at the code and it isn't
+>immediately obvious to me whether this is the case or not (the loop in
+>coprimeThueMahler potentially updates the smallInfs data in each
+>iteration).
+
+I completely agree about running each case in parallel. I actually did this for the algorithm for elliptic curves with rational 2-torsion, but that was long before Magma was able to do parallel computing. Somehow it didn't occur to me to do this for the Thue-Mahler solver, so thank you for pointing that out. It will be very straightforward to set this up - the smallInfs data updating in each iteration is not that big of a deal - and I won't have to parallelize it in bash, so it should be much easier. The only thing you might want to know is that at the Banff meeting, Avi pointed out that there is a huge security issue with Magma's parallelization algorithm. If I remember correctly, it seems that you can connect to the same port that another user is on and do some code injection without too much work. I don't know whether this has been fixed or if this will be something we want to avoid.
+
+>The other question I have is about the computations to generate the
+>input files in the Data/Forms directory. I don't know how much work is
+>involved in these, but I think it would be ideal to have the code that
+>generates these files something that we could also run in the cloud (and
+>in any event, it would be nice to be able to generate these on demand
+>when needed, e.g. if someone has a particular conductor they care
+>about).
+
+Ahh, yes, again I agree. This is on the to-do list. I have most of the code set up for this, but it desperately needs to be cleaned up.
+
+** 2022-13 September
+
+*** 12:34 - LMFDB
+
+ * Drew uploaded all the EC Data for the test run (no rational 2-torsion) 500000-500999 to dropbox
+ * I amalgamated all the elliptic curves via bash into one file OddCurves.500000-500999
+#+NAME: TM - Amalgamate all curves
+#+BEGIN_SRC eshell
+cd LMFDB
+touch Data/EllipticCurves/OddCurves.500000-500999
+
+# Amalgamate all elliptic curves from Thue--Mahler output.
+for F in Data/TMOutfiles/*; do
+    N=$(echo $F | grep -o -E '[0-9]+' | head -1 | sed -e 's/^0\+//')
+    cat "$F" >> "Data/EllipticCurves/OddCurves.500000-500999"
+done
+# Amalgamate all elliptic curves from Thue output.
+for F in Data/ThueOutfiles/*; do
+    N=$(echo $F | grep -o -E '[0-9]+' | head -1 | sed -e 's/^0\+//')
+    cat "$F" >> "Data/EllipticCurves/OddCurves.500000-500999"
+done
+#+END_SRC
+ * This naming convention matches John' Cremonas (oddcurves.500000-5009999)
+ * Now have to compare these 2 files and hope that they match!!
+
+#+NAME: TM - Compare to LMFDB
+#+BEGIN_SRC python
+def fargle(X):
+    Y = []
+    X = X.lstrip("[").rstrip("]")
+    for char in X.split(","):
+        Y.append(int(char))
+    return tuple(Y)
+
+TMEC=defaultdict(set)
+for line in open("/home/adela/LMFDB/Data/EllipticCurves/OddCurves.500000-500999"):
+    line=line.replace(", ", ":")
+    N=int(line.split(":")[0])
+    if N in TMEC:
+        TMEC[N].add(fargle(line.split(":")[1]))
+    else:
+        TMEC[N]= {fargle(line.split(":")[1])}
+
+LMFDB={}
+for line in open("/home/jec/oddcurves.500000-500999"):
+    N=int(line.split(" ")[0])
+    if N in LMFDB:
+        LMFDB[N].add(fargle(line.split(" ")[3]))
+    else:
+        LMFDB[N] = {fargle(line.split(" ")[3])}
+
+for N in sorted(LMFDB):
+    if N not in sorted(TMEC):
+        for ainv in LMFDB[N]:
+            print("Missing curve: " + str(ainv) + " of conductor " + str(N))
+    else:
+        for ainv in LMFDB[N]:
+            if ainv not in TMEC[N]:
+                print("Missing curve: " + str(ainv) + " of conductor " + str(N))
+#+END_SRC
+
+-- DONE: TASK
+ * missing elliptic curves!!
+Missing curve: (0, 0, 0, -10725723, 13520351547) of conductor 500040
+Missing curve: (0, 0, 0, -5643, -165537) of conductor 500040
+Missing curve: (0, 0, 0, -627, 6131) of conductor 500040
+Missing curve: (0, 0, 0, -1191747, -500753761) of conductor 500040
+Missing curve: (0, 1, 0, -7521253, -7941824944) of conductor 500052
+Missing curve: (0, -1, 0, -106, 1177) of conductor 500052
+Missing curve: (0, -1, 0, -217, -998) of conductor 500052
+Missing curve: (0, 1, 0, -112453, -5999956) of conductor 500052
+Missing curve: (0, -1, 0, -165369, 25938918) of conductor 500052
+Missing curve: (0, -1, 0, -12922, 569761) of conductor 500052
+Missing curve: (0, -1, 0, -533, 4698) of conductor 500052
+Missing curve: (0, 0, 0, -1983324, -1076008039) of conductor 500076
+Missing curve: (0, 0, 0, -84, 1861) of conductor 500076
+Missing curve: (0, 0, 0, -1497, 210125) of conductor 500076
+Missing curve: (0, 1, 0, 324, 4039) of conductor 500080
+Missing curve: (0, 0, 0, -10673, 2691747) of conductor 500080
+Missing curve: (0, 1, 0, -56, -185) of conductor 500080
+Missing curve: (0, -1, 0, -94886, -12060649) of conductor 500080
+Missing curve: (0, -1, 0, -966, 16415) of conductor 500080
+Missing curve: (0, -1, 0, -1426, -61449) of conductor 500080
+Missing curve: (0, -1, 0, -86506, 9821931) of conductor 500080
+Missing curve: (0, 0, 0, 43, 131) of conductor 500080
+Missing curve: (0, 0, 0, -112817, -14742649) of conductor 500080
+Missing curve: (0, 0, 0, -14083943, -20344357367) of conductor 500080
+Missing curve: (0, 1, 0, -65786, 6475735) of conductor 500080
+Missing curve: (0, -1, 0, -180, -29725) of conductor 500080
+Missing curve: (0, -1, 0, -80833, -19939838) of conductor 500100
+Missing curve: (0, -1, 0, 87, -198) of conductor 500100
+Missing curve: (0, 1, 0, 2167, -20412) of conductor 500100
+Missing curve: (0, 1, 0, -3233, -160812) of conductor 500100
+Missing curve: (0, -1, 0, -79108, 230076925) of conductor 500136
+Missing curve: (0, 0, 0, -201, 1289) of conductor 500148
+Missing curve: (0, 0, 0, -1809, -34803) of conductor 500148
+Missing curve: (0, 1, 0, -12, -55) of conductor 500152
+Missing curve: (0, 0, 0, 25, -1) of conductor 500216
+Missing curve: (0, 0, 0, -83, 295) of conductor 500216
+Missing curve: (0, 1, 0, -208, 1089) of conductor 500216
+Missing curve: (1, -1, 1, -1386, 20201) of conductor 500218
+Missing curve: (0, 1, 0, -198, -1139) of conductor 500228
+Missing curve: (0, -1, 0, -5241, -144538) of conductor 500236
+Missing curve: (0, 0, 0, -26724, 1686089) of conductor 500292
+Missing curve: (0, 0, 0, 348, 28537) of conductor 500292
+Missing curve: (0, -1, 0, -246, -1743) of conductor 500316
+Missing curve: (0, 0, 0, 321, 407) of conductor 500328
+Missing curve: (0, 0, 0, -6987, 224795) of conductor 500328
+Missing curve: (0, 0, 0, -7472, 297505) of conductor 500332
+Missing curve: (0, -1, 0, 7, -70) of conductor 500332
+Missing curve: (0, 0, 0, 11, 31) of conductor 500336
+Missing curve: (0, -1, 0, 16, 19) of conductor 500336
+Missing curve: (0, -1, 0, -132, 631) of conductor 500336
+Missing curve: (0, 0, 0, -151, -715) of conductor 500336
+Missing curve: (0, 1, 0, -182, -1009) of conductor 500336
+Missing curve: (0, -1, 0, 20, -1) of conductor 500336
+Missing curve: (0, 1, 0, -121305, 16226928) of conductor 500340
+Missing curve: (0, -1, 0, 599, 526) of conductor 500340
+Missing curve: (0, 1, 0, -34481, 2452980) of conductor 500340
+Missing curve: (0, 0, 0, -86616, -9831483) of conductor 500364
+Missing curve: (0, 0, 0, -9624, 364129) of conductor 500364
+Missing curve: (0, 0, 0, -432, -6507) of conductor 500364
+Missing curve: (0, 0, 0, 216, 2509) of conductor 500364
+Missing curve: (0, 0, 0, 1944, -67743) of conductor 500364
+Missing curve: (0, 0, 0, -48, 241) of conductor 500364
+Missing curve: (0, -1, 0, -4186, -39535) of conductor 500380
+Missing curve: (0, 0, 0, 1125, -84375) of conductor 500400
+Missing curve: (0, 0, 0, -2278875, 1324178125) of conductor 500400
+Missing curve: (0, 0, 0, 77325, 6785125) of conductor 500400
+Missing curve: (0, 0, 0, -91155, 10593425) of conductor 500400
+Missing curve: (0, 0, 0, -2325, 95875) of conductor 500400
+Missing curve: (0, 0, 0, -5925, 176375) of conductor 500400
+Missing curve: (0, 0, 0, -75, 17125) of conductor 500400
+Missing curve: (0, 0, 0, 20175, -2109125) of conductor 500400
+Missing curve: (0, 0, 0, 45, -675) of conductor 500400
+Missing curve: (0, 1, 0, -230, 1225) of conductor 500420
+Missing curve: (0, 0, 0, -77, -251) of conductor 500420
+Missing curve: (0, -1, 0, -3212, -69963) of conductor 500424
+Missing curve: (0, 0, 0, 6539, 150785) of conductor 500444
+Missing curve: (0, -1, 0, -1, 3722) of conductor 500444
+Missing curve: (0, -1, 0, -5654, 165589) of conductor 500444
+Missing curve: (0, 1, 0, 133951, -373495372) of conductor 500444
+Missing curve: (0, 1, 0, -14889, 13860728) of conductor 500444
+Missing curve: (0, -1, 0, -1348974906, 19079769292425) of conductor 500460
+Missing curve: (0, -1, 0, -20330, 1268697) of conductor 500460
+Missing curve: (0, 1, 0, 2310, 149913) of conductor 500460
+Missing curve: (0, -1, 0, 6990, 125217) of conductor 500460
+Missing curve: (0, 1, 0, 1454, -4171) of conductor 500460
+Missing curve: (0, 1, 0, -936946, -1157554171) of conductor 500460
+Missing curve: (0, -1, 0, -1293186, -2396626335) of conductor 500460
+Missing curve: (0, -1, 0, -3250, 77977) of conductor 500460
+Missing curve: (0, -1, 0, -38286, 2896965) of conductor 500460
+Missing curve: (0, 1, 0, -46, -1171) of conductor 500460
+Missing curve: (0, 1, 0, 250, 5625) of conductor 500460
+Missing curve: (0, 1, 0, 14154, 4143105) of conductor 500460
+Missing curve: (0, 1, 0, -670, 86225) of conductor 500460
+Missing curve: (0, -1, 0, -446, 6945) of conductor 500460
+Missing curve: (0, -1, 0, -712685226, -7322859183015) of conductor 500460
+Missing curve: (0, -1, 0, -47090, 4013937) of conductor 500460
+Missing curve: (0, -1, 0, -6590, 208125) of conductor 500460
+Missing curve: (0, -1, 0, 70, -1081) of conductor 500464
+Missing curve: (0, 0, 0, 9, 47) of conductor 500472
+Missing curve: (0, 0, 0, 681, 1811) of conductor 500472
+Missing curve: (0, 0, 0, 6129, -48897) of conductor 500472
+Missing curve: (0, 0, 0, 81, -1269) of conductor 500472
+Missing curve: (0, -1, 0, 134, 20441) of conductor 500540
+Missing curve: (0, 0, 0, -29, -1567) of conductor 500572
+Missing curve: (0, 0, 0, -1512, -32391) of conductor 500580
+Missing curve: (0, 0, 0, 72, -1527) of conductor 500580
+Missing curve: (0, 0, 0, 648, 41229) of conductor 500580
+Missing curve: (0, 0, 0, -13608, 874557) of conductor 500580
+Missing curve: (0, 1, 0, -13718, -623171) of conductor 500588
+Missing curve: (0, -1, 0, -53538, -37737787) of conductor 500588
+Missing curve: (0, 0, 0, -1841, -56467) of conductor 500588
+Missing curve: (0, 0, 0, 8409325, -721591125) of conductor 500600
+Missing curve: (0, -1, 0, -908, 12437) of conductor 500600
+Missing curve: (0, 1, 0, -517, 4352) of conductor 500628
+Missing curve: (0, -1, 0, -170, -807) of conductor 500628
+Missing curve: (0, 1, 0, -205, 884) of conductor 500628
+Missing curve: (0, 0, 0, -689, 6797) of conductor 500636
+Missing curve: (0, -1, 0, -14934, -1278439) of conductor 500684
+Missing curve: (0, -1, 0, -8133, -297738) of conductor 500700
+Missing curve: (0, -1, 0, -161943958, -793189772963) of conductor 500700
+Missing curve: (0, 1, 0, -524702258, -4626301501587) of conductor 500700
+Missing curve: (0, 1, 0, -6477758, -6348109287) of conductor 500700
+Missing curve: (0, 1, 0, -3658, -154687) of conductor 500700
+Missing curve: (0, 1, 0, 42, 1713) of conductor 500700
+Missing curve: (0, 1, 0, 3867, 467988) of conductor 500700
+Missing curve: (0, -1, 0, -13117556458, -578261452585463) of conductor 500700
+Missing curve: (0, 0, 0, 11987, -99937) of conductor 500720
+Missing curve: (0, 0, 0, -37, 191) of conductor 500720
+Missing curve: (0, -1, 0, -100, -505) of conductor 500720
+Missing curve: (0, -1, 0, -296, -1865) of conductor 500720
+Missing curve: (0, -1, 0, -17, -322) of conductor 500756
+Missing curve: (0, 0, 0, -783, 8127) of conductor 500760
+Missing curve: (0, 0, 0, -867, 1159) of conductor 500760
+Missing curve: (0, 0, 0, -19263, -871517) of conductor 500760
+Missing curve: (0, 0, 0, -292707, 55233279) of conductor 500760
+Missing curve: (0, 0, 0, -87, -301) of conductor 500760
+Missing curve: (0, 0, 0, -30423, -374753) of conductor 500760
+Missing curve: (0, 0, 0, -32523, -2045677) of conductor 500760
+Missing curve: (0, 0, 0, -28323, -1682397) of conductor 500760
+Missing curve: (0, 0, 0, -598503, -178198373) of conductor 500760
+Missing curve: (0, 0, 0, -183, 587) of conductor 500760
+Missing curve: (0, 0, 0, -58683, -3784493) of conductor 500760
+Missing curve: (0, 0, 0, -3147, 62311) of conductor 500760
+Missing curve: (0, 0, 0, -10443, 409367) of conductor 500760
+Missing curve: (0, -1, 0, 18, 2577) of conductor 500772
+Missing curve: (0, 0, 0, -57, -263) of conductor 500796
+Missing curve: (0, 0, 0, -513, 7101) of conductor 500796
+Missing curve: (0, 0, 0, -2500, 45000) of conductor 500800
+Missing curve: (0, 0, 0, -100, -360) of conductor 500800
+Missing curve: (0, 0, 0, -100, 360) of conductor 500800
+Missing curve: (0, 0, 0, -2500, -45000) of conductor 500800
+Missing curve: (0, 1, 0, 44, 77) of conductor 500808
+RESOLVED: Missing curve: (0, -1, 0, -10032993666, 386809984374741) of conductor 500820
+RESOLVED: Missing curve: (0, 1, 0, -1650, -34875) of conductor 500820
+RESOLVED: Missing curve: (0, -1, 0, 36330, -953718363) of conductor 500820
+Missing curve: (0, 1, 0, -32838, 5574277) of conductor 500836
+Missing curve: (0, 0, 0, -7369, -234519) of conductor 500836
+Missing curve: (0, 1, 0, -44618, 3612721) of conductor 500836
+Missing curve: (0, 0, 0, 74575, 166206973) of conductor 500836
+Missing curve: (0, 0, 0, -181, -807) of conductor 500836
+Missing curve: (0, 0, 0, 450483, -505019999) of conductor 500940
+Missing curve: (0, 0, 0, 20619852, 225441195617) of conductor 500940
+Missing curve: (0, 0, 0, 170412, -169377307) of conductor 500940
+Missing curve: (0, 0, 0, 132, -187) of conductor 500940
+Missing curve: (0, 0, 0, -11253, 488477) of conductor 500940
+Missing curve: (0, 0, 0, -311817, 67043801) of conductor 500940
+Missing curve: (0, 0, 0, -682077, -546520579) of conductor 500940
+Missing curve: (0, 0, 0, -5446452, 4892568329) of conductor 500940
+Missing curve: (0, 0, 0, 15972, 248897) of conductor 500940
+Missing curve: (0, 0, 0, 782628, -2535513739) of conductor 500940
+Missing curve: (0, 0, 0, -45012, -3675859) of conductor 500940
+Missing curve: (0, 0, 0, -79497, 88153461) of conductor 500940
+Missing curve: (0, 0, 0, -34510773, -82321834903) of conductor 500940
+Missing curve: (0, 0, 0, 6468, 1904969) of conductor 500940
+Missing curve: (0, 0, 0, -50457, 19564369) of conductor 500940
+Missing curve: (0, 0, 0, 13457, -6661491) of conductor 500944
+Missing curve: (0, 0, 0, 31, -15) of conductor 500956
+Missing curve: (0, 0, 0, -1776488, -911365151) of conductor 500956
+Missing curve: (0, 0, 0, -21609, 842751) of conductor 500976
+Missing curve: (0, 0, 0, -108959781, -437771239913) of conductor 500976
+Missing curve: (0, 0, 0, -198597, 34053383) of conductor 500976
+Missing curve: (0, 0, 0, -4053, -99281) of conductor 500976
+Missing curve: (0, 0, 0, -2223669, 1276300991) of conductor 500976
+Missing curve: (0, 0, 0, -441, -2457) of conductor 500976
+Missing curve: (0, -1, 0, -4405, 105650) of conductor 500980
+Missing curve: (0, 1, 0, -27845, -1735900) of conductor 500980
+
+ * Of these, we don't even have /any/ curves from these conductors:
+Missing curve: (0, 1, 0, -12, -55) of conductor 500152
+RESOLVED: Missing curve: (1, -1, 1, -1386, 20201) of conductor 500218
+RESOLVED: Missing curve: (0, 1, 0, -198, -1139) of conductor 500228
+RESOLVED: Missing curve: (0, -1, 0, -5241, -144538) of conductor 500236
+RESOLVED: Missing curve: (0, 0, 0, -7472, 297505) of conductor 500332
+RESOLVED: Missing curve: (0, -1, 0, 7, -70) of conductor 500332
+Missing curve: (0, 1, 0, -230, 1225) of conductor 500420
+Missing curve: (0, 0, 0, -77, -251) of conductor 500420
+Missing curve: (0, -1, 0, 70, -1081) of conductor 500464
+Missing curve: (0, -1, 0, 134, 20441) of conductor 500540
+Missing curve: (0, 0, 0, -29, -1567) of conductor 500572
+Missing curve: (0, 0, 0, -1512, -32391) of conductor 500580
+Missing curve: (0, 0, 0, 72, -1527) of conductor 500580
+Missing curve: (0, 0, 0, 648, 41229) of conductor 500580
+Missing curve: (0, 0, 0, -13608, 874557) of conductor 500580
+Missing curve: (0, 1, 0, -13718, -623171) of conductor 500588
+Missing curve: (0, -1, 0, -53538, -37737787) of conductor 500588
+Missing curve: (0, 0, 0, -1841, -56467) of conductor 500588
+Missing curve: (0, 0, 0, -689, 6797) of conductor 500636
+Missing curve: (0, -1, 0, -14934, -1278439) of conductor 500684
+Missing curve: (0, -1, 0, -17, -322) of conductor 500756
+Missing curve: (0, -1, 0, 18, 2577) of conductor 500772
+Missing curve: (0, 0, 0, -57, -263) of conductor 500796
+Missing curve: (0, 0, 0, -513, 7101) of conductor 500796
+Missing curve: (0, 1, 0, -32838, 5574277) of conductor 500836
+Missing curve: (0, 0, 0, -7369, -234519) of conductor 500836
+Missing curve: (0, 1, 0, -44618, 3612721) of conductor 500836
+Missing curve: (0, 0, 0, 74575, 166206973) of conductor 500836
+Missing curve: (0, 0, 0, -181, -807) of conductor 500836
+RESOLVED: Missing curve: (0, 0, 0, 31, -15) of conductor 500956
+RESOLVED: Missing curve: (0, 0, 0, -1776488, -911365151) of conductor 500956
+RESOLVED: Missing curve: (0, -1, 0, -4405, 105650) of conductor 500980
+RESOLVED: Missing curve: (0, 1, 0, -27845, -1735900) of conductor 500980
+
+ * 500218 for instance, has no solutions at all
+N:=500218; alist:=[ 7, 24, -19, -18 ]; a:=1; primelist:=[ 2, 250109 ];
+ * it seems for the elliptic curves of conductor 500218, there were 2 forms to solve in RegeneratedTMFormData.csv, one of which was removed in ObsRegeneratedTMFormData.csv, meaning that there is a mistake in TM_LocalTest.m
+ * running the missing form
+500218,"(7,24,-19,-18)","(7,24,-19,-18)","(1,24,-133,-882)",None,1,2,6,1,"(1)","(2,250109)"
+500218,"(18,19,26,15)","(811,876,311,36)","(1,876,252221,23677956)",None,2,1,6,0,"(1)","(2,250109)"
+ * we find, from alist [811,876,311,36], the solution
+   [ 4, -15, 6, 0 ], which corresponds to the curve [ 1, -1, 1, -1386, 20201 ] (ie. the missing one)
+ * IMPORTANT: ObsRegeneratedTMFormData.csv is missing relevant forms! Use RegeneratedTMFormData.csv instead
+
+-- DONE: TASK
+ * verify that Thue data is the same in RegeneratedTMFormData.csv as in ObsRegeneratedTMFormData.csv
+ * Need to do this also with ObsThue forms
+
+ * working backwards for 500228, we need the solutions to
+alist:=[ 2, 22657600, 85561139626270, 107700559843233342294 ];a:=2;primelist:=[79,1583];
+ * this gives us the missing curve!! But is this form in our list??
+   * so, our Thue--Mahler solver works, but we're missing this form for some reason
+ * actually, reducing by 2 our alist is really
+alist:=[ 1, 11328800, 42780569813135, 53850279921616671147 ];a:=1;primelist:=[79,1583];
+   * This has discriminant 125057 = 79*1583
+   * This does not appear in the forms database, but this form is also not reduced
+     * Re-ran the forms computation - this form is missing: [3,13,-12,-5];
+     * re-running the solver on this form yields the missing elliptic curve. But this form doesn't live anywhere in the database....
+     * Found this form by running
+#+NAME: TM - Computing positive forms
+#+BEGIN_SRC magma
+K:=125057;
+for a in [1..Ceiling(2*K^(1/4)/(3*Sqrt(3)))] do
+    for b in [0..Ceiling( (3*a)/2 + (Sqrt(K) -27*a^2/4)^(1/2) )] do
+        P2:=Roots(-4*x^3 + (3*a + 2*b)^2*x^2 + 27*a^2*K,RealField())[1][1];
+        for c in [Floor( (b^2 -P2)/(3*a) )..Ceiling(b-3*a)] do
+            for d in [Floor( ((3*a+b)*c - b^2)/(9*a)) .. Ceiling(((3*a-b)*c - b^2)/(9*a))] do
+                clist:=[a,b,c,d];
+                F:=&+[clist[i+1]*U^(3-i)*V^i : i in [0..3]];
+                if Discriminant(Evaluate(F,[x,1])) eq K then
+                    print a,b,c,d;
+                end if;
+             end for;
+        end for;
+    end for;
+end for;
+#+END_SRC
+ * I found some code of Andrew's that computes positive and negative forms, and it seems to give us the missing form only if we remove the IsDivisibleBy(D,4) bit
+   * why is he dividing out 4 from the discriminant? Does this mean that we are missing all forms of having Valuation(Disc,2) = 0? Seems to be the case...
+   * I also found some of my code in the same dropbox folder that generates positive and negative forms...will be useful in a bit!
+
+ * alist:=[ 242, 1906747085312, 5007829817280726454648, 4384143667510812992076982824966 ] ;a:=1; primelist:=[2,11,11369];
+   yields the missing curve of conductor 500236... why is this not in our forms list?
+   * has discriminant -2000944
+     * see note about imprimitive forms... mostly resolved
+
+ * sols:=solveThueMahler([1,4,12,79],1,[2,7,107,167] : coprime:=false); yields all missing curves of conductor 500332
+   * as with the previous example, here again, we needed to be looking for an imprimitive form (for the primitive form, ie. for this alist, we have Valuation(DF,2) = 0, even thourh Valuation(N,2) = 2)
+
+ * seems to be the case with a lot of the missing coductors above that Valuation(N,2)=2
+
+-- DONE: TASK
+ * what happens when gcd(coefficients of TM eq) != 1? ie. what happens with imprimitive forms in the TM solver?
+ * sorted this out by dividing by the gcd on either side
+
+** 2022-17 September
+
+*** 12:02 - LMFDB
+
+ * There are 2 ways we can now compile the forms - either we do this by the set S (ie find all the curves of good reduction outside S), or by conductor, though there is redundancy in the latter.
+ * in the file doStuff.sh, Andrew outlined how the forms are construced. Let's maybe start there?
+ * Let's do it the stupid way - by conductor (for now anyway)
+ * May need to change how we compute elliptic curves for forms with divisibilty by 27... or something
+
+ * actually I don't think there's anything wrong with TM_LocalTest, but probably that set was terminated
+   * Yes, it just seems to never have entered, so TM_LocalTest is correct!
+
+** 2022-19 September
+
+*** 11:57 - LMFDB
+
+ * order of how we applied processing to curves:
+   * GenerateSUnitEquations.m
+   * RegenerateThueEqToSolve_TMFormData.m
+   * RegenerateThueEqToSolve_NoSUnitEqNeeded.m
+   * TM_LocalTest.m
+
+
+** 2022-20 September
+
+*** 08:58 - LMFDB
+
+ * Went through imprimitive forms details; it seems that this only happens when gcd(a,b,c,d) is in [2,3,6], so that it only happens at 2 and 3, forcing the discriminant to be congruent to 0 mod gcd(a,b,c,d)^4
+ * In particular, at 2, this means that alpha0 has to be 4, so that this only happens when alpha is in [2,3,4,6,7]
+ * For 3, this means beta0 is either 4 or 5 and beta is in [4,5]
+ * For both of those cases, the only possibility for alpha1, beta1 is 1 (otherwise p|LHS but cannot divide the RHS), and thus the gcd should only show up in the a value.
+ * In other words, we don't need to care about what the primelist is doing, it will never contain 2,3 in this case, it will only appear in the a-values because all possibilities occur when alpha1 and beta1 are bounded.
+
+ * to fix the long runtimes for TM_LocalTest, I'm conducting the following timing test
+#+NAME: TM - TM_LocalTest timing
+#+BEGIN_SRC magma
+timeTest:=function(q)
+    F_qs:=[];
+    if IsPrime(q) then
+	Zmodq:=FiniteField(q,1);
+    else
+	Zmodq:=ResidueClassRing(q);
+    end if;
+
+    for u,v in [0..q-1] do
+	if [u,v] ne [0,0] then
+	    F_q:=Zmodq!(Evaluate(F,[u,v]));
+	    if F_q notin F_qs then
+		Append(~F_qs,F_q);
+	    end if;
+	end if;
+    end for;
+    return F_qs;
+end function;
+time timeTest(q);
+#+END_SRC
+ * Timing results:
+|-------+--------|
+|     q | Time   |
+|-------+--------|
+|   100 | 0.080s |
+|  1000 | 8.800s |
+|  5000 | 5.3min |
+| 10000 | 31min  |
+|-------+--------|
+ * So clearly, we should only do this for q<5000
+
+-- DONE: TASK
+ * Idea: have a function for a range of conductors to compute the forms to solve - can reuse a lof ot reducedForms.m, but just increase the DFList to inclode multiple conductors, then remove redundancy? Alternatively, go by sets of primes for which E has good reduction outside of...
+
+#+NAME: TM - Compare to LMFDB
+#+BEGIN_SRC python
+def fargle(X):
+    Y = []
+    X = X.lstrip("[").rstrip("]")
+    for char in X.split(","):
+        Y.append(int(char))
+    return tuple(Y)
+
+TMEC={}
+for line in open("/home/adela/LMFDB/Data/EllipticCurves/OddCurves.500000-500999"):
+    line=line.replace(", ", ":")
+    N=int(line.split(":")[0])
+    if N in TMEC:
+        TMEC[N].add(fargle(line.split(":")[1]))
+    else:
+        TMEC[N]={fargle(line.split(":")[1])}
+
+LMFDB={}
+for line in open("/home/jec/oddcurves.500000-500999"):
+    N=int(line.split(" ")[0])
+    if N in LMFDB:
+        LMFDB[N].add(fargle(line.split(" ")[3]))
+    else:
+        LMFDB[N]={fargle(line.split(" ")[3])}
+
+Missing=[]
+for N in sorted(LMFDB):
+    if N not in sorted(TMEC):
+        for ainv in LMFDB[N]:
+            if N not in Missing:
+                Missing.append(N)
+    else:
+        for ainv in LMFDB[N]:
+            if ainv not in TMEC[N]:
+                if N not in Missing:
+                    Missing.append(N)
+#+END_SRC
+ * [500040, 500052, 500076, 500080, 500100, 500136, 500148, 500152, 500216, 500218, 500228, 500236, 500292, 500316, 500328, 500332, 500336, 500340, 500364, 500380, 500400, 500420, 500424, 500444, 500460, 500464, 500472, 500540, 500572, 500580, 500588, 500600, 500628, 500636, 500684, 500700, 500720, 500756, 500760, 500772, 500796, 500800, 500808, 500820, 500836, 500940, 500944, 500956, 500976, 500980]
+   * These are the only conductor we need to re-run, essentially
+ * Need to edit reducedForms to work for a range, it also needs to print out the values
+   * Need a 2nd function to go through that one and find the optimal GL2Z representation and then split then print the output on another document for parallelization across that one form
+
+ * reducedForms for a range:
+   * input: range; output: TMforms
+   * iterate through N, determine DFList for each N
+     * no, this actually isn't faster... Let's just try and use John's list_cubics function instead
+
+-- DONE: TASK
+ * Make a github repo for LMFDB
+ * Now called TMEC because I didn't want to create confusion for anyone actually looking for the LMFDB
+
+** 2022-22 September
+
+*** 15:55 - LMFDB
+
+ * I assume here the input is either a single conductor or a range of conductors Generate a document for each conductor in range:
+   * Generate a document for each conductor in range
+   * Use John's cubic_forms to generate all relevant forms. (Does this need to run in parallel if we're working over a range of conductors? It's probably fast enough that this isn't needed...)
+   * Output all forms to a single document, irreducibleForms.txt or something.
+   * In parallel, run generateTM.m for each form in irreducibleForms.txt (i.e. run local test, generate RHS and optimal GL2(Z)-equivalent form, as well as all S-unit equations for that form). Output all S-unit equations to a single document, TMForms.txt. (May need to output to separate files first, then amalgamate afterwards; sometimes parallelized code will write to a single file at the same time, creating a mess.)
+   * In parallel, run computeEllipticCurvesTM.m for each S-unit equation (i.e. solve the S-unit equation and generate corresponding elliptic curve for any solutions).
+   * Amalgamate output files, logfiles into a single document per form (i.e. corresponding to each entry of irreducibleForms.txt)
+   * Amalgamate all ECs into a single document per conductor, removing repetitions.
+   * If range is within LMFDB, run comparison.
+
+-- TASK
+ * >I don't see what you are doing in a case such as alpha=1 so either
+   >alpha0=3 and alpha1>=3, or alpha0=2 and alpha1>=4.  It looks as if the
+   >lower bound on alpha1 is ignored, so your TM solutions may include
+   >some with RHS values having too low a valuation of 2 (or 3).  Do you
+   >just let that happen, and check later?
+ * Essentially, yes. I suppose I could use that information, but in this way, you end up breaking up the TM equations into more S-unit equations of the same rank, so it only adds to the runtime. The TM solver also finds lower bounds on all of the primes on the RHS, and in some ways, this is also ignored so that we can collapse as many S-unit equations as possible so that everything can happen in one go. You've made me realize that they all collapse into an S-unit equation where we assume the lower bound is 0 though, and it should probably instead have the lower bound as the minimum of the others.
+
+ * reducedForms.m likely to be superceded by John's c++ cubic_forms code. Figure out what's the next step and go through all remaining
+ * NB. LMFDB was changed to TMEC and is now on a git repo
+
+** 2022-26 September
+
+*** 11:37 - LMFDB
+
+ * generating code to go through the workflow from September 22:
+   * DONE: Generate a document for each conductor in range
+   * DONE (but with my code for now):Use John's cubic_forms to generate all relevant forms. (Does this need to run in parallel if we're working over a range of conductors? It's probably fast enough that this isn't needed...)
+   * DONE: Output all forms to a single document, irreducibleForms.txt or something. - DONE
+   * DONE: Remove redundancy (store as N1,N2,...Nn,alist,a,primelist) - still room here to include factorization of a and to see if the prime factors live in a primeset (should be easy to do, but should not rely on python to factor)
+   * DONE: In parallel, run optimalForm.m for each form in irreducibleForms.txt (i.e. run local test, generate RHS and optimal GL2(Z)-equivalent form, as well as all S-unit equations for that form). Output all S-unit equations to a single document, TMForms.txt. (May need to output to separate files first, then amalgamate afterwards; sometimes parallelized code will write to a single file at the same time, creating a mess.)
+   * DONE: In parallel, run computeEllipticCurvesTM.m for each S-unit equation (i.e. solve the S-unit equation and generate corresponding elliptic curve for any solutions).
+   * DONE: Amalgamate output files, logfiles into a single document per form (i.e. corresponding to each entry of irreducibleForms.txt)
+   * DONE: Amalgamate all ECs into a single document per conductor, removing repetitions.
+   * If range is within LMFDB, run comparison.
+
+ * TODO:  add in the option to choose how many cores to use in bash file
+
+** 2022-29 September
+
+*** 18:58 - Aaron's birthday
+
+ * gifts: panier, tofu shirt, cake, dei campi giftcard,
+
+** 2022-03 October
+
+*** 17:31 - LMFDB
+
+ * Some ideas to pull LMFDB directory and compare with our ECs (will only be able to use after generate ALL (inc 2 torsion) curves)
+#+NAME: TM - Compare to LMFDB
+#+BEGIN_SRC eshell
+#wget https://raw.githubusercontent.com/JohnCremona/ecdata/master/allcurves/allcurves.00000-09999 -P "Data/${name}/EllipticCurves"
+#awk -F" " 'BEGIN {FS=" ";OFS=","} {print $1,$4}' allcurves.00000-09999 > ${name}LMFDBCurves.txt
+
+#printf "%s\n" "${list[@]}" > Conductors.txt
+#awk -F, 'FNR==NR {a[$1]; next}; $1 in a' Conductors.txt ${name}LMFDBCurves.txt > allcurves.${name}
+
+sort -t, -k1,1n -k2,2n -k3,3n -k4,4n -k5,5n -k6,6n allcurves.${name} > ${name}LMFDBCurves.txt
+sort -t, -k1,1n -k2,2n -k3,3n -k4,4n -k5,5n -k6,6n ${name}AllCurves.csv > tmp
+#+END_SRC
+
+-- DONE: TASK
+ * header in computeEllipticCurves.sh
+
+-- OBSOLETE: TASK
+ * Should computeEllipticCurves.sh be a python wrapper instead?
+
+** 2022-05 October
+
+*** 10:52 - LMFDB
+
+ * Re-ran 500000-500999 test. Now running the comparison...
+
+#+NAME: TM - Compare to LMFDB
+#+BEGIN_SRC python
+def fargle(X):
+    Y = []
+    X = X.lstrip("[").rstrip("]")
+    for char in X.split(","):
+        Y.append(int(char))
+    return tuple(Y)
+
+TMEC={}
+for line in open("/home/adela/TMEC/Data/[500000..500999]/EllipticCurves/AllCurves.csv"):
+    line=(line.replace(", ", ":")).rstrip()
+    N=int(line.split(",")[0])
+    if N in TMEC:
+        TMEC[N].add(fargle(line.split("[")[1].split("]")[0]))
+    else:
+        TMEC[N]={fargle(line.split("[")[1].split("]")[0])}
+
+LMFDB={}
+for line in open("/home/jec/oddcurves.500000-500999"):
+    N=int(line.split(" ")[0])
+    if N in LMFDB:
+        LMFDB[N].add(fargle(line.split(" ")[3]))
+    else:
+        LMFDB[N] = {fargle(line.split(" ")[3])}
+
+for N in sorted(LMFDB):
+    if N not in sorted(TMEC):
+        for ainv in LMFDB[N]:
+            print("Missing curve: " + str(ainv) + " of conductor " + str(N))
+    else:
+        for ainv in LMFDB[N]:
+            if ainv not in TMEC[N]:
+                print("Missing curve: " + str(ainv) + " of conductor " + str(N))
+#+END_SRC
+
+Missing curve: (0, 1, 0, -240640, -45584012) of conductor 500080
+Missing curve: (0, 1, 0, 105240, -50534092) of conductor 500080
+Missing curve: (0, 0, 0, 42053, -4245526) of conductor 500080
+Missing curve: (0, 1, 0, -97007776, -552786575180) of conductor 500080
+Missing curve: (1, 1, 1, -1974, -34347) of conductor 500262
+Missing curve: (1, 1, 1, -29204396, -60700970035) of conductor 500262
+Missing curve: (1, 0, 1, -187652153, -657660647356) of conductor 500262
+Missing curve: (1, -1, 1, -538498812128, -152098472884262025) of conductor 500346
+Missing curve: (1, -1, 0, -230553981, -9313479504059) of conductor 500346
+Missing curve: (1, -1, 1, 5393272, 4031695883) of conductor 500346
+Missing curve: (1, -1, 0, -395963820, -3759687045936) of conductor 500346
+Missing curve: (1, -1, 0, 560385, 877651789) of conductor 500346
+Missing curve: (1, -1, 1, -850198388, -10004206902825) of conductor 500346
+Missing curve: (1, -1, 1, -126779, -17700321) of conductor 500346
+Missing curve: (1, -1, 1, -39, 143) of conductor 500518
+Missing curve: (1, 0, 1, -81126, 2811448) of conductor 500550
+Missing curve: (1, 1, 1, -2028138, 351431031) of conductor 500550
+Missing curve: (1, 0, 0, -364586763, 2639324643517) of conductor 500650
+Missing curve: (1, 0, 1, -4951, -93702) of conductor 500650
+Missing curve: (1, 1, 0, -14583470, 21108763760) of conductor 500650
+Missing curve: (1, 1, 1, -5722013, 5252908531) of conductor 500650
+Missing curve: (1, 1, 1, -198, -829) of conductor 500650
+Missing curve: (1, 0, 1, -228881, 42023268) of conductor 500650
+Missing curve: (1, 0, 0, -1341, -20364) of conductor 500745
+Missing curve: (1, 0, 0, -4127, -102391) of conductor 500786
+Missing curve: (1, -1, 0, -1441, 21373) of conductor 500786
+Missing curve: (1, 0, 0, -3445202, 65070596) of conductor 500786
+Missing curve: (1, 0, 0, -505, 6177) of conductor 500890
+Missing curve: (1, 0, 0, 4045, -85733) of conductor 500890
+Missing curve: (1, 0, 1, -9178, 383513) of conductor 500955
+Missing curve: (1, 1, 1, 15, -288) of conductor 500955
+Missing curve: (1, -1, 1, 121, 101) of conductor 500994
+
+ * Conductors of missing curves:
+[500080, 500262, 500346,500518, 500550, 500650, 500745, 500786, 500890, _500955_, 500994]
+ * Note that none of these were missing before
+
+ * For N:=500994, we are missing a curve from this alist:
+[ 8, -4604699, 883468870052, -56501503093164510 ]
+   * This corresponds to the form [ 8, 11, 32, 18 ], which we do find, but we solve the equivalent form [11,34,13,8]
+   * Magma failed at the 31st S-unit equation, hence no solutions
+ * Internal errors at:
+./[500010],[1,13,6,40],1,[2,3,5,7,2381]Log.txt
+./[500010],[3,24,-7,-16],1,[2,3,5,7,2381]Log.txt
+./[500010],[59,178,-155,30],1,[2,3,5,7,2381]Log.txt
+./[500038],[7,56,-31,2],1,[2,7,11,17,191]Log.txt
+./[500038],[7,-567,178,-14],1,[2,7,11,17,191]Log.txt
+./[500080],[1,2,1,10],1,[2,5,7,19,47]Log.txt
+./[500110],[4,5,52,26],1,[2,5,13,3847]Log.txt
+./[500158],[1,15,-46,-46],1,[2,23,83,131]Log.txt
+./[500220],[7,14,-20,-12],1,[3,5,7,397]Log.txt
+./[500262],[2,2,-9,-3],1,[2,3,7,43,277]Log.txt
+./[500262],[3,3,-22,-4],1,[2,3,7,43,277]Log.txt
+./[500346],[2,-8,1,-7],1,[2,3,7,11,19]Log.txt
+./[500354],[2053,1569,386,30],1,[2,101,2477]Log.txt
+./[500422],[7,-26,5,-14],1,[2,13,19,1013]Log.txt
+./[500430],[1,4,23,62],1,[2,3,5,7,2383]Log.txt
+./[500505],[3,4,-21,-4],8,[3,5,61,547]Log.txt
+./[500526],[1,3,54,184],1,[2,13,23,31]Log.txt
+./[500550],[3,12,1,-4],5,[2,3,47,71]Log.txt
+./[500610],[1,8,5,16],1,[2,3,5,11,37,41]Log.txt
+./[500610],[3,10,-31,-12],1,[2,3,5,11,37,41]Log.txt
+./[500650],[1,3,-62,-4],1,[2,17,19,31]Log.txt
+./[500710],[5,15,-38,-10],1,[2,5,7,23,311]Log.txt
+./[500745],[7,-10,-11,-6],1,[3,5,7,19,251]Log.txt
+./[500745],[7,-10,-11,-6],8,[3,5,7,19,251]Log.txt
+./[500786],[1,-22,19,-2],1,[2,11,13,17,103]Log.txt
+./[500786],[5,3,4,10],1,[2,11,13,17,103]Log.txt
+./[500830],[10,35,32,33],1,[2,5,11,29,157]Log.txt
+./[500838],[3,6,29,104],1,[2,3,13,6421]Log.txt
+./[500890],[3853,-3853,1282,-142],1,[2,5,13,3853]Log.txt
+./[500922],[17,91,46,6],1,[2,3,17,1637]Log.txt
+./[500990],[17,5,14,-14],1,[2,5,7,17,421]Log.txt
+./[500994],[11,34,13,8],1,[2,3,13,2141]Log.txt
+
+ * So all but 500518, 500955 are accounted for
+   * 500518 doesn't have a logfile... and doesn't appear in the TMForms.csv file
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Nlist:=[ 500518 ]; ij:=[ 0, 0 ];
+alist:=[ 3, 10, 37, 90 ]; a:=1; primelist:=[ 2, 250259 ];
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+solveTMSUnit(
+    alist: [ 3, 10, 37, 90 ],
+    a: 1,
+    primelist: [ 2, 250259 ],
+    ij: [ 0, 0 ]
+)
+In file "./solveThueMahler.m", line 431, column 32:
+>>     new_a:=Integers()!newablist[i][1][1];
+                                  ^
+Runtime error in '[]': Index 1 (0) should be in the range [1 .. 1]
+ * Found the error: it was in optimalForm.m, forgot to compute the S-unit equations when there was only 1 optimal GL2Z-equivalent form. Fixed now.
+ * Same for 500955
+
+ * Rerunning errored out code
+   * Still have some cases that errored out, but now only via Magma internal errors
+   * Let's see if we have everything anyway
+#+NAME: TM - Compare to LMFDB
+#+BEGIN_SRC python
+def fargle(X):
+    Y = []
+    X = X.lstrip("[").rstrip("]")
+    for char in X.split(","):
+        Y.append(int(char))
+    return tuple(Y)
+
+TMEC={}
+for line in open("/home/adela/TMEC/Data/[500000..500999]/EllipticCurves/AllCurves.csv"):
+    line=(line.replace(", ", ":")).rstrip()
+    N=int(line.split(",")[0])
+    if N in TMEC:
+        TMEC[N].add(fargle(line.split("[")[1].split("]")[0]))
+    else:
+        TMEC[N]={fargle(line.split("[")[1].split("]")[0])}
+
+for line in open("/home/adela/TMEC/Data/[500080,500262,500346,500518,500550,500650,500745,500786,500890,500955,500994]/EllipticCurves/AllCurves.csv"):
+    line=(line.replace(", ", ":")).rstrip()
+    N=int(line.split(",")[0])
+    if N in TMEC:
+        TMEC[N].add(fargle(line.split("[")[1].split("]")[0]))
+    else:
+        TMEC[N]={fargle(line.split("[")[1].split("]")[0])}
+
+LMFDB={}
+for line in open("/home/jec/oddcurves.500000-500999"):
+    N=int(line.split(" ")[0])
+    if N in LMFDB:
+        LMFDB[N].add(fargle(line.split(" ")[3]))
+    else:
+        LMFDB[N] = {fargle(line.split(" ")[3])}
+
+for N in sorted(LMFDB):
+    if N not in sorted(TMEC):
+        for ainv in LMFDB[N]:
+            print("Missing curve: " + str(ainv) + " of conductor " + str(N))
+    else:
+        for ainv in LMFDB[N]:
+            if ainv not in TMEC[N]:
+                print("Missing curve: " + str(ainv) + " of conductor " + str(N))
+#+END_SRC
+
+Missing curve: (1, 0, 0, -364586763, 2639324643517) of conductor 500650
+Missing curve: (1, 0, 1, -4951, -93702) of conductor 500650
+Missing curve: (1, 1, 0, -14583470, 21108763760) of conductor 500650
+Missing curve: (1, 1, 1, -5722013, 5252908531) of conductor 500650
+Missing curve: (1, 1, 1, -198, -829) of conductor 500650
+Missing curve: (1, 0, 1, -228881, 42023268) of conductor 500650
+Missing curve: (1, 0, 0, -4127, -102391) of conductor 500786
+Missing curve: (1, -1, 0, -1441, 21373) of conductor 500786
+Missing curve: (1, 0, 0, -3445202, 65070596) of conductor 500786
+
+ * These all seem like the ones that ran into Magma internal errors, so let's re-run just these 2
+ALL ECS ABOVE: [500080],[2,2,-17,3],1,[2,5,7,19,47],[1,16]:computeEllipticCurvesTM.m
+NO ECS: [500650],[1,3,-62,-4],1,[2,17,19,31],[1,13]:computeEllipticCurvesTM.m
+ALL ECS: [500650],[1,3,-62,-4],1,[2,17,19,31],[1,16]:computeEllipticCurvesTM.m
+ALL ECS: [500786],[1,-22,19,-2],1,[2,11,13,17,103],[1,16]:computeEllipticCurvesTM.m
+
+ * No missing curves now!!! Yayyyy!
+
+** 2022-18 October
+
+*** 13:48 - LMFDB
+
+-- TASK
+ * Errors.txt; how to amalgamate solutions from here into the rest of the code?
+
+ * Working on X+Y=Z^2 code now to add to computeEllipticCurves.sh:
+ * Beginning with spec files:
+   { GenerateSCode
+    { GenerateSets.sh
+        { GenerateSetsXYZ2.m
+            { nSets.m
+                { RecursiveSets.m } } } }
+   * RecursiveSets.m should be a c++ code
+
+
+
+- multgroup is slow (which is why initial reduction is slow); solving inverse log problem which is fast in sage but slow in magma
+
+** 2022-26 October
+
+*** 12:04 - LMFDB
+
+ * RecursiveSets.m probably not needed - we should parallelize prime factorization with python, then use gatherRedundancy to remove redundant forms and keep only the maximal sets
+ * Need to restruction GenerateSets.sh completely; should not be doing so much text processing here
+ * So we don't need to look anymore at the folder GenerateSCode
+
+| GenerateSCode                    | FinckePohstCode       | PostProcessing  | XYZ2Code |
+|                                  |                       |                 |          |
+|----------------------------------+-----------------------+-----------------+----------|
+|                                  |                       |                 |          |
+| Supercede with Python code:      | F3Approx              | GatherSUnitXYZ2 |          |
+| - parallel factorization,        | MyCholesky            |                 |          |
+| - clean up with gatherRedundancy | ShortVectors          |                 |          |
+|                                  | FinckePohst           |                 |          |
+|                                  |                       |                 |          |
+|                                  | - probably don't need |                 |          |
+
+-- TASK
+ * Do we need to worry about solutions where (x,y) not squarefree in x+y=z^2 case?
+ * X,Y,Z already integers in BeGhRe, so no need to clear denominators
+
+-- DONE: TASK
+ * Need to deal with the case that s=2 (ie. 2 primes) for D:=1 case in x+y=z^2
+
+-- TASK
+ * Do we need to consider when (x,y,z) != 1 for x+y=z case?
+
+ * Should we use the vKM solver for the D=1 case?
+
+
+** 2022-27 October
+
+*** 11:48 AM - Self
+
+ * Quit facebook/reddit for 30 days - today is day 1 (unless need emacs or product help on reddit, obviously)
+
+*** 12:53 PM - XYZ2 Code
+
+ * generateSets.m, supercede by seq N1 N2 | factor > ${Dir}/XYZ2Forms.csv
+   python Code/gatherFormRedundancy.py "${Dir}/XYZ2Forms.csv" \
+   "${Dir}/tmpXYZ2Forms.csv" "XYZ2"
+
+-- DONE: TASK
+ * changed gatherFormRedundancy to have specific TM functions and will add specific XYZ2Functions - should change the name to gatherRedundancy (then change it in the .sh code too)
+
+ * Sanity test:
+#+NAME: Generate XYZ2Sets
+#+BEGIN_SRC eshell
+seq $N1 $N2 | factor > Data/XYZ2Forms.csv
+cd ..
+python Code/gatherRedundancy.py "Data/XYZ2Forms.csv" "Data/tmpXYZ2Forms.csv" "XYZ2"
+cd Data
+magma LB:=$N1 UB:=$N2
+#+END_SRC
+
+#+NAME: Generate XYZ2Sets via Magma
+#+BEGIN_SRC magma
+  maximalSets:=function(primeSets)
+      /*
+            <description>
+
+            Parameters
+                <param>: <param type>
+                    <param description>
+            Returns
+                <param>: <param type>
+                    <param description>
+     ,*/
+      for s in primeSets do
+          if (&or[s subset t: t in primeSets | (t ne s) and (#t gt #s)]) then
+              Exclude(~primeSets,s);
+          end if;
+      end for;
+      return primeSets;
+  end function;
+
+  seqEnumToString:=function(X : quotes:=false)
+      /*
+        Converts a SeqEnum into a string without whitespace, enclosed by "[ ]" for
+        .csv input
+
+        Parameters
+            X: SeqEnum
+            quotes: BoolElt
+                A true/false vale. If set to true, encloses the output in
+                quotations.
+        Returns
+            stX: MonStgElt
+                The set X as a string without whitespace.
+     ,*/
+      strX:= "[";
+      for i in [1..#X] do
+          if X[i] in Integers() then
+              strX:=strX cat IntegerToString(Integers()!X[i]);
+          elif X[i] in Rationals() then
+              strX:=strX cat IntegerToString(Numerator(X[i])) cat "/" cat
+                    IntegerToString(Denominator(X[i]));
+          end if;
+          if (i ne #X) then
+              strX:=strX cat ",";
+          end if;
+      end for;
+      strX:=strX cat "]";
+      if quotes then
+          strX:="\"" cat strX cat "\"";
+      end if;
+      return strX;
+  end function;
+
+  LB:=StringToInteger(LB);
+  UB:=StringToInteger(UB);
+
+  primeSets:=[];
+  for i in [LB..UB] do
+      S:=PrimeDivisors(i);
+      if 2 notin S then
+          Append(~S,2);
+      end if;
+      Sort(~S);
+      if S notin primeSets then
+          Append(~primeSets,S);
+      end if;
+  end for;
+  Sort(~primeSets);
+  primeSets:=maximalSets(primeSets);
+
+  for s in primeSets do
+      fprintf "compare.txt","%o\n",seqEnumToString(s);
+  end for;
+  exit;
+#+END_SRC
+
+#+NAME: TM - Compare XYZ2 sets to Magma brute force
+#+BEGIN_SRC python
+XYZ2=[]
+for line in open("XYZ2Forms.csv"):
+    primelist=[int(p) for p in ((line.split("],["))[0][1:]).split(",")]
+    XYZ2.append(primelist)
+
+bruteForce=[]
+for line in open("compare.txt"):
+    primelist=[int(p) for p in line.rstrip()[1:-1].split(",")]
+    bruteForce.append(primelist)
+
+Missing=[]
+for primelist in XYZ2:
+    if primelist not in bruteForce:
+        Missing.append(primelist)
+
+len(bruteForce) == len(XYZ2)
+#+END_SRC
+
+** 2022-28 October
+
+*** 10:07 AM - Self
+
+ * Day 2 of quitting reddit. Wonder if I will be missing out on pop culture knowledge without it. In any case, now I don't really have anything to do in between things, maybe I will actually reply to texts instead?
+
+*** 10:09 AM - XYZ2 Code
+
+ * gatherFormRedundancy looks good for the XYZ2 case now! Just gotta change the name and test it again on TM stuff
+
+
+** 2022-09 November
+
+*** 10:18 PM - XYZ2Code
+
+ * Decided to just use Benjamin and Rafael's S-unit solver, but! Need to remove parallelization and
+
+-- TASK
+ * Convert vKMSolver.sage into magma code
+
+** 2022-10 November
+
+*** 02:32 PM - XYZ2Code
+
+ * Made changes to vKMSolver.sage, now testing to compare to my solver because it seems that sage is still slower
+#+NAME: Testing vKMSolver.sage
+#+BEGIN_SRC eshell
+cd XYZ2-old
+nohup cat XYZ2Forms.csv | parallel -j20 --joblog "vKMTest/vKMLog" sage vKMSolver.sage {} > vKMTest/vKMTest.out &
+
+nohup cat XYZ2Forms.csv | parallel -j20 --joblog "dWTest/dWTestLog" magma set:={} XYZ2Code/MagmaXYZFunctions/SUnitXYZTest.m > dWTest/dWTest.out &
+#+END_SRC
+ * So it seems that sage is slower; the average runtime for sage is about 40 times slower than magma, however! The sage solver isn't getting stuck on any slow cases, they are all consistenly in the 40-50second range, whereas magma has predominantly 0.6second cases, with about 10 taking over 20 minutes
+
+** 2022-17 November
+
+*** 02:10 PM -XYZ2Code
+
+ * Finally have a decent S-unit solver for the X+Y=Z case! Uses magma, and is a bit of a hybrid of both the vKM solver and my old de Weger implementation.
+
+#+NAME: Testing solveXYZ.m
+#+BEGIN_SRC eshell
+nohup cat Data/XYZ2Forms.csv | parallel -j20 --joblog "dWTestLog" magma set:={} Code/solveXYZ.m > dWTest.out &
+#+END_SRC
+
+ * Testing the above with XYZ2Forms for 1 to 10^6, because why not
+
+-- DONE: TASK
+ * Change initial bound in solveTM to use vKM bound (or take the min of both)
+   * Not sure which will be smaller
+   * Test when minimal
+#+NAME: Cubic initialBound for solveThueMahler.m
+#+BEGIN_SRC magma
+  assert &and[IsPrime(p) : p in primelist];
+  assert &and[a_i in Integers() : a_i in alist];
+  a0:=Integers()!alist[1];
+  assert a0 eq 1;
+  d:=#alist-1;
+  assert d eq 3;
+  QUV<U,V>:=PolynomialRing(Rationals(),2);
+  Qx<x>:=PolynomialRing(Rationals());
+  F:=&+[alist[i+1]*U^(d-i)*V^i : i in [0..d]];
+  assert IsHomogeneous(F);
+  f:=Evaluate(F,[x,1]);
+
+  discF:=Discriminant(f);
+  NS:=&*primelist;
+  hpoly:=Max([Log(Abs(c)) : c in alist] cat [Log(Abs(a))]);
+  m:=Integers()!(432*discF*a^2);
+  mS:=1728*NS^2*(&*[p^(Min(2,Valuation(m,p))) : p in PrimeDivisors(m) | p notin primelist]);
+  omega:=2*mS*Log(mS)+172*hpoly;
+  htheta:=AbsoluteLogarithmicHeight(theta);
+  htau:=AbsoluteLogarithmicHeight(tau);
+  heightBound:=2*omega + htheta + Log(2) - htau;
+  c20p:=2*d*c17**heightBound;
+#+END_SRC
+
+ * Ok, now to move onto the XYZ2 solver, finally!
+
+-- TASK
+ * Write-up for TMEC: include bound of vKM for x+y=z, and TM solver.
+
+** 2022-23 November
+
+*** 11:01 AM - TMEC
+
+-- DONE: TASK
+ * Seperate folders for TM data and XYZ2 data (just add directories TM,XYZ2)
+ * Need to make sure that all the file paths are ok then
+ * Same for code probably but keeping shared files in Code directory
+   * Didn't so much do this since the code is quite different
+
+-- TASK
+ * Maybe also for seperate code for generating the cubic?
+
+-- DONE: TASK
+ * XYZ2 parallelized per D
+ * Will need to clean up folders
+
+-- TASK
+ * New bound for X+Y=Z^2 (Rafael)
+
+-- TASK
+ * Updates to XYZ2 using Samir's ideas
+
+-- DONE: TASK
+ * Need to edit runXYZ2EC.m
+
+-- DONE: TASK
+ * Need analog of convertTMToEllipticCurves.m
+
+-- DONE: TASK
+ * add to computeEllipticCurves.sh
+
+-- TASK
+ * generate seperate code for generating the cubic if eclib is not available/installed
+
+-- DONE: TASK
+ * how to run code in parallel (S-unit and TM things)?
+   * split up main into mainTM and mainXYZ2, and then run with final function main wherein we call both functions but using nohup mainXYZ2 & and nohup mainTM &
+
+** 2022-26 November
+
+*** 09:01 PM - TMEC
+
+ * Need to run sortCurves, but don't want to do this in parallel since they write to files
+ * but if the program exits early because there are no forms, this part of the code shouldn't be entered...
+   * Solution:
+     if [ -s "Data/[1..7]/XYZ2/XYZ2Forms.csv" ]; then
+         echo "yep"
+     fi
+   * Test that the file exists and is NOT empty!
+ * so the plan is to do this in main, but first test if the files exist and do this sequentially (ie not in parallel)
+ * Do I need 2 seperate Error files? Yes
+
+-- DONE: TASK
+ * compare final AllCurves with LMFBD
+
+-- TASK
+ * Add option to change number of cores used
+ * Test to see if we can use eclib, otherwise use magma code
+
+-- DONE: TASK
+ * Clean up computeEllipticCurves.sh (maybe break up into 2 files, and set runTM and runXYZ into 1 single function, also run XYZ2 and TM simultaneously)
+   * Didn't bother breaking up the file. Seems simpler to just leave it as is
+
+-- DONE: TASK
+ * Edit joblog description for each parallel function
+
+-- TASK
+ * Run git pull on lehner once done current cremona comparison and delete tmp.sh
+
+** 2022-29 November
+
+*** 11:15 AM - Jobs
+
+ * Posting:
+   * Simons Collaboration on Arithmetic Geometry, Number Theory, and Computation. Join an MIT-based team working under the direction of principal investigators Bjorn Poonen and Andrew Sutherland as part of a collaboration with PIs at Boston University, Harvard, Dartmouth, and Brown. _Will be engaged in a combination of mathematical research and software development._
+   * Responsibilities include
+     * _designing and implementing algorithms in arithmetic geometry and number theory_ and _facilitating the integration of these algorithms into existing and future computer algebra systems_;
+     * _compiling and analyzing number-theoretic research datasets and integrating the results into existing and future platforms such as the L-functions and Modular Forms Database_;
+     * _coordinating with researchers across multiple institutions, both internal and external to the collaboration_
+   * The Simons Collaboration aims to accelerate research through the development of computational tools that realize recent theoretical advances in arithmetic geometry and number theory, and to exploit these tools to advance the research frontier in these fields.
+   * REQUIRED: Ph.D. in mathematics with a research background in number theory or arithmetic geometry; computer programming experience; familiarity with a computer algebra package, e.g., Magma, SageMath, or PARI/GP; and ability to work independently and as part of a team and to travel and present research results. Fluency in one or more programming languages (Python, Julia, C/C++) a plus.
+
+
+
+-- TASK
+ * future ideas: ML for TM code, ECs over number fields, inverse log problem (why is better in sage?), units in TM code
+ * goormaghtigh
+ * Does our solver work for Ramanujan-Nagell equations? Ie can we turn them into X+Y=Z^2?
+
+
+
+
+Position ID: 347-PDASIMONS [#20427]
+Position Title: Postdoctoral Associate
+Position Type: Postdoctoral
+Position Location: Boston, Massachusetts 02215, United States [map] sort by distance
+Subject Areas: Arithmetic Geometry, Number Theory, and Computation
+
+
+The Department of Mathematics and Statistics at Boston University invites applications for a postdoctoral associate appointment with a start date before September 1, 2023.
+Applications will be reviewed on a rolling basis, and applicants are encouraged to apply before December 15, 2022.
+
+This position will be under the direction of principal investigator Jennifer Balakrishnan, as part of the Simons Collaboration on Arithmetic Geometry, Number Theory, and Computation (http://icerm.brown.edu/simonscollaboration/), together with PIs at Brown, Dartmouth, Harvard, and MIT. (The collaboration website will announce job openings at the other participating institutions as they become available.) _The Simons Collaboration aims to accelerate research through the development of computational tools that realize recent theoretical advances in arithmetic geometry and number theory and seeks to exploit these tools to advance the research frontier in these fields. The postdoctoral associate will engage in a combination of mathematical research and the development of algorithms, software, and datasets._
+
+Responsibilities for the position include the following: designing and implementing algorithms in arithmetic geometry and number theory and facilitating the integration of these algorithms into existing and future computer algebra systems; compiling and analyzing number-theoretic research datasets and integrating the results into existing and future platforms such as the L-functions and Modular Forms DataBase; coordinating with researchers across multiple institutions, both internal and external to the collaboration, working in areas relevant to the research agenda of the collaboration; assisting with training and development, e.g., running workshops or giving presentations on topics relevant to the collaboration and supervising student researchers; participating in monthly meetings and annual workshops run by the collaboration, and contributing to proceedings volumes to be published by the collaboration and disseminating research results through conference presentations and journal articles.
+
+Required: Ph.D. in mathematics with a research background in number theory or arithmetic geometry; computer programming experience; familiarity with a computer algebra package, e.g., SageMath, Magma, PARI/GP, Nemo/Hecke; and ability to work independently and as part of a team. Fluency in one or more programming languages (Python, Julia, C/C++) a plus.
+
+This is a one-year position, which may be renewable for an additional year, subject to performance and budgetary availability.
+
+Please apply with your cover letter, research statement, CV, and three reference letters.
+
+Boston University is an equal opportunity employer and all qualified applicants will receive consideration for employment without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, disability status, protected veteran status, or any other characteristic protected by law. We are a VEVRAA Federal Contractor.

@@ -1,0 +1,31 @@
+/*
+ * 2.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  1 January 2021
+ *
+ * Description: Computes the volume of a sphere with a 10-meter radius
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stido.h>
+
+#define PI 3.14f
+
+int main(void)
+{
+  int radius = 10;
+
+  volume = (4.0f/ 3.0f) * PI * radius * radius * radius;
+
+  printf("The volume is: %d\n", volume);
+
+  return 0;
+}

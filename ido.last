@@ -1,0 +1,89 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/Users/adela016/.emacs.d/elpa/" . "magma-mode-20181205.1708/")
+ ("/Users/adela016/.emacs.d/" . "elpa/")
+ ("/" . "Users/")
+ ("/Users/adela016/Documents/Magma/" . "ThueMahler/")
+ ("/Users/adela016/Documents/" . "Magma/")
+ ("/Users/adela016/" . ".emacs.d/")
+ ("/Users/" . "adela016/")
+ ("/ssh:ghergaa@l16xl1-bennett1.math.ubc.ca:" . "Documents/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/Users/adela016/.emacs.d/"
+ "/Users/adela016/"
+ "/Users/adela016/Documents/Magma/"
+ "/Users/adela016/Documents/Magma/ThueMahler/"
+ "/ssh:ghergaa@l16xl1-bennett1.math.ubc.ca:"
+ "/ssh:ghergaa@l16xl1-bennett1.math.ubc.ca:/zfs/users/ghergaa/ghergaa/"
+ "/ssh:ghergaa@l16xl1-bennett1.math.ubc.ca:Documents/"
+ "/Users/adela016/.ssh/"
+ "/Users/adela016/Documents/"
+ "/Users/adela016/.emacs.d/elpa/magma-mode-20181205.1708/"
+ "/"
+ "/ssh:ghergaa@l16xl1-bennett1.math.ubc.ca:/zfs/users/ghergaa/ghergaa/~Documents/Magma/"
+ "/Users/adela016/ThueMahler/"
+ "/../Users/adela016/"
+ "/Users/adela016/ghergaa@l16xk1-bennett1.math.ubc.ca:/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "custom-file.el"
+ "init.el"
+ "test.tex"
+ "Barcelona.m"
+ "TMSolver.m"
+ "anothertest.m"
+ "TestingBKBG60.m"
+ "known_hosts"
+ "new.tex"
+ "newtest.m"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/Users/adela016/.emacs.d/" (24068 57833 399598 208000) "backups/" ".cache/" ".git/" "elpa/" "custom-file.el" ".gitignore" ".emacs.desktop.lock" "init.el" ".emacs.desktop" "auto-save-list/" "tramp" "ido.last~" "init.el~" "ido.last" "../" "./")
+
+ ("/Users/adela016/" (24068 555 675771 534000) ".serverauth.4266" ".conda/" ".appletviewer" ".viminfo" ".bash_history" "test.tex" ".gitconfig" ".cache/" ".python_history" "Downloads/" ".Xauthority" ".serverauth.741" ".dvdcss/" ".bash_profile" ".spacemacs" "Documents/" ".jupyter/" ".ipynb_checkpoints/" ".Trash/" "Dropbox/" ".emacs~" ".jnlp-applet/" ".parallel/" ".serverauth.1414" "Applications/" "Movies/" ".ssh/" ".anaconda/" ".cisco/" ".flutter" ".bash_profile-anaconda3.bak" ".dropbox/" "Public/" ".mplayer/" ".matlab/" ".scan-test.txt.el" ".sage/" ".bash_sessions/" "Sites/" ".cups/" ".android/" ".emacs.d/" ".serverauth.4836" ".tcshrc." ".oracle_jre_usage/" ".lesshst" "Library/" "Desktop/" ".ipython/" ".rnd" ".texlive2008/" ".fontconfig/" ".serverauth.2413" "Pictures/" ".subversion/" "_region_.tex" ".CFUserTextEncoding" ".ccache/" ".serverauth.2233" ".DS_Store" ".org.eclipse.epp.usagedata.recording.userId" ".anyconnect" ".condarc" "Music/" "../" "./")
+
+ ("/Users/adela016/Documents/Magma/" (24051 54797 474206 485000) "startup.m" "Barcelona.m" "spec.m~" ".scan-Barcelona.m.el" ".scan-spec.m.el" "ThueMahler/" "spec.m" "../" "./")
+
+ ("/Users/adela016/.ssh/" (23394 5841 662205 982000) "known_hosts" "id_rsa.pub" "id_rsa" ".DS_Store" "../" "./")
+
+ ("/Users/adela016/Documents/" (24044 61581 343160 160000) "Not Work/" "Magma/" ".scan-newtest.m.el" "Work/" ".evernote/" ".Cloud/" ".localized" ".DS_Store" "../" "./")
+
+ ("/../Users/adela016/" (24022 9452 245261 146000) ".serverauth.4266" ".conda/" ".appletviewer" ".viminfo" ".bash_history" ".gitconfig" ".cache/" ".python_history" "Downloads/" ".Xauthority" ".serverauth.741" ".dvdcss/" ".bash_profile" ".spacemacs" "Documents/" ".jupyter/" ".ipynb_checkpoints/" ".Trash/" "Dropbox/" ".emacs~" ".jnlp-applet/" ".parallel/" ".serverauth.1414" "Applications/" "Movies/" ".ssh/" ".anaconda/" ".cisco/" ".flutter" ".bash_profile-anaconda3.bak" ".dropbox/" "Public/" ".mplayer/" ".matlab/" ".scan-test.txt.el" ".sage/" ".bash_sessions/" "Sites/" ".cups/" ".android/" ".emacs.d/" ".serverauth.4836" ".tcshrc." ".oracle_jre_usage/" ".lesshst" "Library/" "Desktop/" ".ipython/" ".rnd" ".texlive2008/" ".fontconfig/" ".serverauth.2413" "Pictures/" ".subversion/" ".CFUserTextEncoding" ".ccache/" ".serverauth.2233" ".DS_Store" ".org.eclipse.epp.usagedata.recording.userId" ".anyconnect" ".condarc" "Music/" "../" "./")
+
+ ("/Users/adela016/.emacs.d/elpa/magma-mode-20181205.1708/" (24020 63971 365838 270000) "magma-completion.elc" "magma-extra.el" "magma-smie.elc" "magma-q.elc" "magma-smie.el" "magma-font-lock.elc" "magma-interactive.el" "magma-q.el" "magma-snippets.el" "magma-mode.elc" "magma-snippets.elc" "magma-scan.el" "magma-completion.el" "magma-mode-pkg.el" "magma-mode.el" "magma-extra.elc" "magma-scan.elc" "magma-interactive.elc" "magma-font-lock.el" "bin/" "magma-vars.el" "snippets/" "magma-vars.elc" "magma-mode-autoloads.el" "../" "./")
+
+ ("/Applications/Emacs.app/Contents/Resources/info/" (23729 2593 0 0) "ido.info.gz" "htmlfontify.info.gz" "emacs-gnutls.info.gz" "ede.info.gz" "mairix-el.info.gz" "bovine.info.gz" "erc.info.gz" "ccmode.info.gz" "eintr.info.gz" "ediff.info.gz" "gnus.info.gz" "rcirc.info.gz" "cl.info.gz" "ada-mode.info.gz" "smtpmail.info.gz" "tramp.info.gz" "vip.info.gz" "pcl-cvs.info.gz" "ert.info.gz" "forms.info.gz" "remember.info.gz" "ebrowse.info.gz" "newsticker.info.gz" "dir" "mh-e.info.gz" "elisp.info.gz" "semantic.info.gz" "url.info.gz" "sc.info.gz" "srecode.info.gz" "ses.info.gz" "dired-x.info.gz" "dbus.info.gz" "woman.info.gz" "nxml-mode.info.gz" "org.info.gz" "info.info.gz" "emacs.info.gz" "calc.info.gz" "eieio.info.gz" "todo-mode.info.gz" "speedbar.info.gz" "eshell.info.gz" "eudc.info.gz" "octave-mode.info.gz" "wisent.info.gz" "auth.info.gz" "vhdl-mode.info.gz" "idlwave.info.gz" "widget.info.gz" "efaq.info.gz" "sieve.info.gz" "eww.info.gz" "pgg.info.gz" "emacs-mime.info.gz" "flymake.info.gz" "viper.info.gz" "edt.info.gz" "sasl.info.gz" "autotype.info.gz" "epa.info.gz" "message.info.gz" "reftex.info.gz" "../" "./")
+
+ ("/usr/" (23649 47058 838402 309000) "share/" "X11/" "lib/" "local/" "sbin/" "libexec/" "standalone/" "bin/" "../" "./")
+
+ ("/usr/share/" (23649 46954 145040 762000) "thermald.bundle/" "uucp/" "icu/" "cups/" "dict/" "zsh/" "zoneinfo.default/" "texinfo/" "doc/" "germantok/" "screen/" "examples/" "sandbox/" "kdrl.bundle/" "httpd/" "mecabra/" "terminfo/" "info/" "gutenprint/" "emacs/" "langid/" "php/" "kpep/" "ri/" "java/" "tabset/" "ucupdate/" "tokenizer/" "hiutil/" "CoreDuetDaemonConfig.bundle/" "cracklib/" "file/" "pmenergy/" "snmp/" "locale/" "calendar/" "CSI/" "skel/" "firmware/" "zoneinfo/" "groff/" "misc/" "vim/" "man/" "com.apple.languageassetd/" "../" "./")
+
+ ("/usr/share/info/" (23974 33397 331498 484000) "speedbar" "eintr-1" "woman" "bash.info" "mh-e-2" "gnus-2" "uucp.info-5" "uucp.info-2" "gnus-5" "ccmode-1" "reftex" "ediff" "cl" "flymake" "texinfo" "ses" "screen.info-1" "groff-1" "uucp.info-3" "gnus-4" "erc" "gnus-3" "uucp.info-4" "autotype" "smtpmail" "org-1" "texinfo-3" "elisp-10" "emacs-3" "emacs-4" "calc-6" "calc-1" "viper" "dir" "texinfo-2" "ada-mode" "sieve" "info.info" "emacs-5" "emacs-2" "idlwave" "elisp-3" "elisp" "elisp-4" "ccmode" "info" "calc" "elisp-5" "elisp-2" "emacs" "url" "mh-e" "efaq" "eintr-2" "dired-x" "mh-e-1" "message" "emacs-mime" "eintr-3" "pgg" "pcl-cvs" "uucp.info-1" "groff-3" "gnus-1" "uucp.info-6" "tramp" "screen.info-3" "uucp.info-8" "screen.info-4" "ebrowse" "org" "screen.info-5" "screen.info-2" "uucp.info-7" "groff-2" "emacs-7" "screen.info" "calc-2" "calc-5" "org-2" "uucp.info" "calc-4" "widget" "emacs-8" "calc-3" "bc.info" "emacs-1" "forms" "emacs-6" "eshell" "texinfo-1" "elisp-7" "gnus" "vip" "elisp-9" "eintr" "rcirc" "newsticker" "sc" "eudc" "dc.info" "info-stnd.info" "groff" "elisp-8" "elisp-1" "diff.info" "elisp-6" "../" "./")
+
+ ("/Users/adela016/Documents/Magma/ThueMahler/" (24019 7339 92447 680000) "TMSolverInit.m" ".git/" ".scan-TMSolverInit.m.el" ".scan-TMSolver.m.el" ".#TMSolver.m" "README.md" "TMSolver.m" "#TMSolver.m#" ".DS_Store" "TMSolverInit.m~" "../" "./")
+
+ ("/Users/adela016/.emacs.d/elpa/" (24013 59992 462651 391000) "s-20180406.808/" "dash-20191109.1327/" "magma-mode-20181205.1708/" "magnatune-readme.txt" "f-20191110.1357/" "archives/" "../" "./")
+
+ ("/Users/adela016/ThueMahler/" (24017 50325 996170 338000) "OldDirichletSieve.m" ".git/" ".scan-TMSolver.m.el" ".#TMSolver.m" "README.md" "TMSolver.m" "#TMSolver.m#" ".DS_Store" "../" "./")
+
+ ("/Users/adela016/Desktop/" (24011 38010 538209 390000) ".bash_history" "Screen Shot 2019-11-12 at 10.28.20 AM.png" ".Trash/" ".parallel/" ".ssh/" ".cshrc" ".sage/" ".bash_sessions/" ".lesshst" "Desktop/" ".bashrc" "tmpackComparisonTest.m" "ubc_2020_may_gherga_adela.pdf" ".localized" ".CFUserTextEncoding" "NewReductionProcedure.m" ".DS_Store" "thesis_dissertation_cover_sheet.pdf" "../" "./")
+
+ ("/../" (23974 34933 27448 581000) "cores/" ".dbfseventsd" "tmp/" "anaconda3/" "Volumes/" "dev/" "opt/" "Applications/" "Users/" ".vol/" ".DocumentRevisions-V100/" "private/" ".fseventsd/" "vm/" "System/" ".Trashes/" "Library/" "var/" "etc/" ".file" "sbin/" "Network/" "installer.failurerequests" "bin/" ".PKInstallSandboxManager-SystemSoftware/" ".PKInstallSandboxManager/" ".DS_Store" "net/" ".Spotlight-V100/" "usr/" "home/" ".HFS+ Private Directory Data
+/" "../" "./")
+
+ ("/../Users/" (23649 46425 778293 422000) "Guest/" "adela016/" "Shared/" ".localized" "../" "./")
+
+ ("/Users/" (23649 46425 778293 422000) "Guest/" "adela016/" "Shared/" ".localized" "../" "./")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

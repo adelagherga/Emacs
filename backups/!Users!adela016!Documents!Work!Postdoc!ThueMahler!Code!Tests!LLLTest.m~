@@ -1,0 +1,57 @@
+//;; This buffer is for text that is not saved, and for Lisp evaluation.
+//;; To create a file, visit it with <open> and enter text in its buffer.
+
+n:=4
+Za<a1,a2,a3,a4>:= PolynomialRing(Rationals(),4);
+R:= IdentityMatrix(Za,n);
+a1:= 100; a2:= 98; a3:= 209; a4:= 8765;
+
+R[n,1]:= a1;
+R[n,2]:= a2;
+R[n,3]:= a3;
+R[n,4]:= a4;
+//R[n,5]:= a5;
+R;
+
+function set_column(M,N,i)
+    n:= NumberOfColumns(M);
+    assert n eq NumberOfColumns(N);
+    assert (i gt 0) and (i le n);
+
+    for j in [1..n] do
+	M[j,i]:= N[j,i];
+    end for;
+
+    assert ColumnSubmatrix(M,i,1) eq ColumnSubmatrix(N,i,1);
+    return M;
+end function;
+
+
+// first part of myLLL(R)
+B:= R;
+n:= NumberOfColumns(R);
+V:= IdentityMatrix(Za,n);
+U:= IdentityMatrix(Za,n);
+L:= ZeroMatrix(Za,n,n);
+C:= ZeroMatrix(Za,n,n);
+d:= ZeroMatrix(Za,n+1,1);
+d[1,1]:= 1;
+
+for i in [1..n] do
+    print "----------------";
+    print i;
+    C:= set_column(C,B,i);
+    for j in [1..i-1] do
+	L[i,j]:= (Transpose(ColumnSubmatrix(B,i,1))*ColumnSubmatrix(C,j,1))[1,1];
+	multC1:= ColumnSubmatrix(MultiplyColumn(C,d[j+1,1],i),i,1);
+	multC2:= ColumnSubmatrix(MultiplyColumn(C,L[i,j],j),j,1);
+	InsertBlock(~C,MultiplyColumn(multC1-multC2,1/d[j,1],1),1,i);
+
+
+	//	InsertBlock(~C,MultiplyColumn(ColumnSubmatrix(MultiplyColumn(C,d[j+1,1],i),i,1) - ColumnSubmatrix(MultiplyColumn(C,L[i,j],j),j,1),1/d[j,1],1),1,i);
+    end for;
+    print "L",L;
+    print "C",C;
+    d[i+1,1]:= (Transpose(ColumnSubmatrix(C,i,1))*ColumnSubmatrix(C,i,1))[1,1]/d[i,1];
+    print "d",d;
+end for;

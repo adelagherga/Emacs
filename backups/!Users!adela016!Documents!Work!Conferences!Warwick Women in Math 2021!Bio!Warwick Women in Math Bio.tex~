@@ -1,0 +1,51 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1.5in]{geometry} 	% See geometry.pdf to learn the layout options. There are lots.
+
+%\usepackage[parfill]{parskip}		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{comment}
+\usepackage{abstract}
+\renewcommand{\abstractname}{}    % clear the title
+\renewcommand{\absnamepos}{empty} % originally center
+
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{lemma}{Lemma}
+\newtheorem{question}{Question}
+
+\numberwithin{equation}{section}
+
+%---------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------%
+
+\begin{document}
+\title{Bio}
+\maketitle
+
+%---------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------%
+
+\begin{abstract}
+\noindent I am an EPSRC Postdoctoral Fellow in the Department of Mathematics at the University of Warwick. My research focuses on problems in computational and algebraic number theory, with a particular focus on elliptic curves and Diophantine equations.
+
+I completed my PhD in Mathematics at the University of British Columbia in Vancouver, Canada in 2019. Outside of work, I enjoy coding, climbing, and playing the violin poorly.
+\end{abstract}
+
+%---------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------%
+
+\end{document}

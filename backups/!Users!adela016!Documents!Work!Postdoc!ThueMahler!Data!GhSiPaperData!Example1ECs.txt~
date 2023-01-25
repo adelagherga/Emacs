@@ -1,0 +1,9 @@
+/*
+List of all elliptic curves arising from the irreducible form [a_0,a_1,a_2,a_3] and their corresponding solutions [X,Y].
+Here, [a_0,a_1,a_2,a_3] and [X,Y] satisfy
+	- F(X,Y) = a_0*(X^3) + a_1*(X^2*Y) + a_2*(X*Y^2) + a_3*(Y^3) = u
+	- rad(u) | 3*7*41
+	- (X,Y) = 1
+Authors: A. Gherga and S. Siksek
+Format: [[a_0,a_1,a_2,a_3], Conductor, c Invariants, [X,Y]]
+*/

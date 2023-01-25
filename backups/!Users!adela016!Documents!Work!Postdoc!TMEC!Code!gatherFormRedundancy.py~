@@ -1,0 +1,58 @@
+#!/usr/bin/python
+# gatherFormRedundancy.py
+
+# Author: Adela Gherga <adelagherga@gmail.com>
+# Copyright © 2022, Adela Gherga, all rights reserved.
+# Created: 28 September 2022
+#
+# Description:
+#
+# Commentary:
+#
+# To do list:
+#
+# Example:
+#
+
+def fragle(line):
+    commaSplit=line.split(",")
+    assert (commaSplit[1][0] == "[")
+    assert (commaSplit[4][len(commaSplit[4])-1] == "]")
+    N=int(commaSplit[0])
+    alist="["+line.split("[")[1].split("]")[0]+"]"
+    a=commaSplit[5]
+    primelist="["+line.split("[")[2].split("]")[0]+"]"
+    return N,alist,a,primelist
+
+    if line.split("[")[2][0] != "]":
+        primelist=[int(i) for i in line.split("[")[2].split("]")[0].split(",")]
+    else:
+        primelist=[]
+    return N,alist,a,primelist
+
+
+
+forms={}
+for line in open("/Users/adela016/Desktop/[1..400]Forms.csv"):
+    N,alist,a,primelist=fragle(line)
+    if alist in forms:
+        forms[alist].append([N,a,primelist])
+    else:
+        forms[alist]=[[N,a,primelist]]
+
+forms1={}
+for alist in sorted(forms):
+    forms1[alist]={}
+    for set in forms[alist]:
+        N=set[0]
+        aprimelist=set[1]+","+set[2]
+        if aprimelist in forms1[alist]:
+            forms1[alist][aprimelist].append(N)
+        else:
+            forms1[alist][aprimelist]=[N]
+
+NewFile=open("/Users/adela016/Desktop/[1..400]SortedForms.csv","w")
+for alist in sorted(forms):
+    for aprimelist in sorted(forms1):
+        Nlist=str(forms1[alist][aprimelist]).replace(" ","")
+        out=alist+","+aprimelist

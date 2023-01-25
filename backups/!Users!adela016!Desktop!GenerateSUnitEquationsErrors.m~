@@ -1,0 +1,45 @@
+/*
+Y.m
+
+Author: Adela Gherga <adelagherga@gmail.com>
+Copyright © 2021, Adela Gherga, all rights reserved.
+Created:  1 February 2021
+
+Description:
+
+Commentary:
+
+To do list:
+
+Example:
+
+*/
+
+> clist:= [2,9,24,175];
+> n:=3;
+>     QUV<U,V>:=PolynomialRing(Rationals(),2);
+>     Zx_<x_>:= PolynomialRing(Integers());
+>     F:=&+[clist[i+1]*U^(n-i)*V^i : i in [0..n]];
+> F;
+2*U^3 + 9*U^2*V + 24*U*V^2 + 175*V^3
+>     ThueF:= Thue(Evaluate(F,[x_,1])); // generate Thue equation
+> ThueF;
+Thue object with form:  2 X^3 + 9 X^2 Y + 24 X Y^2 + 175 Y^3
+> i:= 11;
+> Solutions(ThueF,i);
+
+
+Magma: Internal error
+
+Please mail this entire run [*** WITH THE DETAILS BELOW ***]
+    to magma-bugs@maths.usyd.edu.au
+
+You can print the entire input by entering:
+%P
+
+Version: 2.25-7
+Machine type: intel64-linux
+Initial seed: 1529052476
+Time to this point: 3.46
+Memory usage: 32.09MB
+Segmentation fault

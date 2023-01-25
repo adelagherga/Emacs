@@ -1,0 +1,36 @@
+/*
+ * square.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  6 January 2021
+ *
+ * Description: Prints a table of squares using a while statement
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+int main(void)
+{
+  int i, n;
+
+  printf("This program prints a table of squares.\n");
+  printf("Enter number of entries in table: ");
+  scanf("%d", &n);
+
+  i = 1;
+  while (i <= n)
+    {
+      printf("%d %d", i, i * i);
+      i++;
+    }
+
+  return 0;
+}

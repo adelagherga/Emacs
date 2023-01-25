@@ -1,0 +1,101 @@
+%basic cover letter template
+\documentclass{letter}
+\usepackage{amssymb,amsmath}
+\usepackage{graphicx}
+
+\oddsidemargin=.2in
+\evensidemargin=.2in
+\textwidth=5.9in
+\topmargin=-.5in
+\textheight=9in
+
+%\address{Mathematics Department\\University of Illinois\\
+%1409 W. Green St\\Urbana, Illinois 61801}
+
+\newcommand {\qed}{\mbox{$\Box$}}
+\renewcommand {\iff}{\Longleftrightarrow}
+\newcommand {\R}{\mathbb{R}}
+\newcommand {\N}{\mathbb{N}}
+\newcommand {\Q}{\mathbb{Q}}
+\newcommand {\Z}{\mathbb{Z}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{lemma}{Lemma}
+\newtheorem{question}{Question}
+
+% stylistic environment
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{comment}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    linktoc=all
+}
+
+% new commands
+\newcommand{\eps}{\varepsilon}
+\newcommand{\edit}[1]{\textcolor{red}{#1}}
+\newcommand {\sub}{\mbox{SB}}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\begin{document}
+\begin{letter}{Mathematics Search Committee\\
+\edit{Department of Mathematics}\\
+Harvard University and MIT\\
+Cambridge,
+Massachusetts 02138}
+
+
+\opening{Dear Dr. Jennifer Balakrishnan,}
+
+\begin{comment}
+  1. Job you are applying for and where you saw the job listing
+  2. Your degree and when you expect to complete it
+  3. Why you are interested in the position or organization/company (draw from job description/website)
+\end{comment}
+
+I am writing to apply for the position of Postdoctoral Associate \edit{at the University of Boston}. I am currently an EPSRC Postdoctoral Fellow at the University of Warwick, \edit{...}.
+I completed a Ph.D. in Mathematics at the University of British Columbia, working under the supervision of Dr. Michael Bennett. \edit{Why I am interested in the position/organization.}
+
+\begin{comment}
+  1. Background skills you possess specifically related to this job
+  2. Focus is on those skills most important in the job description
+  3. Use their terminology to describe your experience
+  4. Highlight those skills most pertinent to this job.
+\end{comment}
+
+
+My research focuses on problems in computational number theory. In particular, I develop and implement efficient algorithms and computational tools to explicitly resolve complex Diophantine equations. These Diophantine equations are often related to elliptic curves and are part of my largest project to date, the development of a software package to generate elliptic curves over $\mathbb{Q}$ to expand the L-functions and Modular Forms Database (\cite{LMFDB}).
+
+
+
+My research interests lie primarily in the field of computational and algebraic number theory. My thesis work focuses on computing elliptic curves over $\mathbb{Q}$ via solutions of certain binary forms called Thue-Mahler equations. In my work with Dr. Bennett and our collaborators, Dr. Samir Siksek, Dr. Rafael von K\"{a}nel, and Dr. Benjamin Matshke, I am developing new techniques and improved Magma packages to efficiently resolve Thue-Mahler equations. While I am currently working on a paper with my collaborators on these results, variations of these packages have already been used in two papers with my advisor, and we expect at least one more paper to result from the contents of my thesis. Apart from proficiency in Magma, I am also familiar with SageMath, Unix bash, and Python.
+
+Attached you will find my curriculum vitae. Letters in support of my application will be sent separately. You should expect letters from Dr. Michael Bennett, Dr. Andrew Rechnitzer, and Dr. Samir Siksek. Please contact me if you need any further information. Thank you for your consideration.
+
+
+\closing{Sincerely,
+%\includegraphics[width=6cm]{signature.pdf}
+}
+%I made a pdf file of my signature using the scanner, so that all the cover letters I sent
+%electronically were "signed."
+
+Adela Gherga\\
+{(416)-268-8289} \hfill Dept. of Mathematics \\
+\verb+adelagherga@gmail.com+ \hfill University of British Columbia\\
+\verb+https://www.adelagherga.ca+ \hfill  1984 Mathematics Road\\
+\null \hfill Vancouver, BC, Canada \\
+
+\end{letter}
+
+\end{document}

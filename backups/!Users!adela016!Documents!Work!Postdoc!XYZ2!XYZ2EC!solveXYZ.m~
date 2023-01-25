@@ -1,0 +1,377 @@
+
+XSinitialBound:=function(S)
+    /*
+      For x + y = z, <description>
+
+      Parameters
+          <param>: <param type>
+	      <param description>
+      Returns
+          <param>: <param type>
+	      <param description>
+   */
+    NS:=&*S;
+    N:=2^4*NS;
+    s0N:=N;
+    sInfinityN:=1;
+    d:=N;
+    l:=N/6;
+    lStar:=N/6;
+    for p in S do
+	if p eq 2 then
+	    n:=5;
+	else
+	    n:=1;
+	end if;
+	if n ge 2 then
+	    s0N:=s0N*(1-1/p^2);
+	    sInfinityN:=sInfinityN*(p-1)*p^Floor(n/2-1);
+	end if;
+	d:=d*(1+1/p);
+	l:=l*(p+1);
+	lStar:=lStar*(1+1/p);
+    end for;
+
+    gUpperBound:=1+d/12;
+    M:=s0N/12-sInfinityN/2+1/3+1/4;
+    betaBar:=1/2*M*Log(M)+5/8*M*(18+Log(l));
+    betaPrime:=M*(1/2*Log(M) + 3/4*Log(l) + Log(8.5));
+    betaBarStar:=1/2*gUpperBound*Log(gUpperBound*lStar)+1/2*lStar*Log(4+4*Log(lStar));
+    alphaBar:=Min([betaBar, betaBarStar, betaPrime]);
+    HeightBound:= 6/5 * alphaBar + 28;
+
+    return Ceiling(HeightBound);
+end function;
+
+
+
+
+
+
+
+
+// LatticeBoundXYZ.m
+
+/*
+INPUT:
+    S:= {p_1,...,p_s}, p_i primes in S
+
+OUTPUT:
+    The bound C8 such that m(xyz) <= C8, based on Theorem 6.1 of the Reference
+        m(xyz):= max(ord_{p_i}(xzy)) where max runs over all primes p_i in S, and x,y,z are relatively prime
+        ie. bounds the largest possible exponent of the p_i appearing in x,y, or z, where x + y = z
+
+REFERENCE:
+    B.M.M.De Weger. Algorithms For Diophantine Equations. PhD thesis, University of Leiden, 1988.
+
+EXAMPLE:
+    > S:= [2,3,5,7];
+    > LatticeBoundXYZ(S);
+    1037919720087088125.94830455465
+
+    > S:= [2,7,11];
+    > LatticeBoundXYZ(S);
+    1719613135665434941.04287726437
+
+*/
+
+
+function LatticeBoundXYZ(S)
+    s:= #S;     // computes the size of S
+    Sort(~S);   // orders primes by size p_1 < ... < p_s
+    t:= Floor(2*s/3);
+    P:= &*S;    // computes the product of the primes p_i in S
+
+    q:= [];     // stores smallest primes Q such that Q does not divide divide p_i(p_i - 1), for each p_i in S
+    for i in [1..s] do
+        Q:= 3;
+        while (S[i]*(S[i]-1)) mod Q eq 0 do
+            Q:= NextPrime(Q);   // computes smallest prime Q such that Q does not divide p_i(p_i - 1)
+        end while;
+        Append(~q,Q);
+    end for;
+    q:= Max(q);
+
+    C12n:= [768523, 476217, 373024, 318871, 284931, 261379, 2770008];   // C1(2,n) as in Lemma 2.6 CAN MAKE BETTER - THERE HAS SINCE BEEN IMPROVEMENTS ON THIS RESULT
+    if t lt 8 then
+        C12t:= C12n[t-1];       // C1(2,t)
+        a1:= 56*Exp(1)/15;      // a1 as in Lemma 2.6, if t <= 7 (note 2 <= t always)
+    else
+        C12t:= C12n[7];
+        a1:= 8*Exp(1)/3;        // a1 as in Lemma 2.6, if t>7
+    end if;
+    M:= Max([((p-1)*(2 + (1/(p-1)))^t)/((Log(p))^(t+2)) : p in S]);     // computes max_i as in the definition of U
+    U:= (C12t)*(a1^t)*(t^(t+5/2))*(q^(2*t))*(q-1)*((Log(t*q))^2)*(M)*((Log(S[s]))^t)*(Log(4*Log(S[s])) + (Log(S[s]))/(8*t));
+    C1:= U/(6*t);
+    C2:= U*Log(4);
+
+    V:= [];
+    for i in [s-t+1..s] do
+        vi:= Max([1,Log(S[i])]);        // computes V_i = max(1, log(p_i)) for i = s-t+1,...,s
+        Append(~V,vi);
+    end for;
+    Omega:= &*V;     // Omega
+
+    C3:= (2^(9*t + 26))*(t^(t+4))*(Omega)*(Log(Exp(1)*V[#(V)-1]));            // computes C_i as in Theorem 6.1
+    C4:= Max([7.4, (C1*Log(P/S[1])+C3)/Log(S[1])]);
+    C5:= ((C2)*(Log(P/S[1]))+(C3)*(Log(Exp(1)*V[#V])) + 0.327)/Log(S[1]);
+    C6:= Max([C5, ((C2)*Log(P/S[1])+Log(2))/Log(S[1])]);
+    C7:= 2*(C6 + C4*Log(C4));
+    C8:= Max([S[s], Log(2*(P/S[1])^(S[s]))/Log(S[1]), C2 + C1*Log(C7), C7]);
+    return C8;
+end function;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// SmallestLatticeBoundXYZ.m
+
+/*
+INPUT:
+    S:= [p_1,...,p_s], p_i primes in S
+
+OUTPUT:
+    X0:= mu + m0 - 1, smallest upper bound such that m(xyz) <= X0, where
+        mu:= smallest lattice invariant such that m(xyz) <= X0
+        m0:= ord_p(log_p(p0)), a fixed value
+        m(xyz):= max(ord_{p_i}(xzy)) where max runs over all primes p_i in S, and x,y,z are relatively prime
+            ie. bounds the largest possible exponent of the p_i appearing in x,y, or z, where x + y = z
+    U:= [[u_1,p_1],...,[u_s,p_s]], where
+        u_i:= mu + m0 - 1, and
+        ord_{p_i}(xyz)<= u_i for p_i in S
+
+COMMENTS:
+    Lemma 3.14 (de Weger, Algorithms for diophantine equations) in this instance:
+        If (c_1 = 0, c_2 = 1) l(Gamma_{mu}*) > sqrt(s-1)*X1, then x + y = z has no solutions with
+            mu + m0 <= ord_p(z) <= m(xyz) <= X1
+    Hence all solutions of x + y = z must have ord_p(xyz) <= m(xyz):= max(ord_{p_i}(xyz)) < mu + m0
+    This result is applied successively for each p to reduce the bound to the smallest such bound X0 = mu + m0 - 1
+
+    Lemma 3.4 (Lenstra, Lenstra and Lovasz):
+        Let c_1,...,c_n be a reduced basis of the lattice Gamma. Then
+            l(Gamma) >= 2^((1-n)/2)*|c_1|
+    This result is used to compute l(Gamma_{mu}*)
+
+REFERENCE:
+    B.M.M.De Weger. Algorithms For Diophantine Equations. PhD thesis, University of Leiden, 1988.
+
+EXAMPLE:
+    > S:= [2,5,11];
+    > X0,U:= SmallestLatticeBoundXYZ(S);
+    > X0;
+    13
+    > U;
+    [
+        [ 13, 2 ],
+        [ 5, 5 ],
+        [ 4, 11 ]
+    ]
+
+*/
+
+
+function SmallestLatticeBoundXYZ(S)
+    s:= #S;     // computes the size of S
+    Sort(~S);   // orders primes by size p_1 < ... < p_s
+    X0:= LatticeBoundXYZ(S);    // computes initial upper bound
+    const:= 2^(-(s-2)/2);       // computes constant such that l(Gamma_{mu}*) >= const*|c_1|
+    X:= [];     // stores X0 values such that l > sqrt(s-1)*X0
+
+    fixX0:= true;
+    while fixX0 eq true do
+        U:= [];         // stores u_i = mu + m0 - 1 values
+
+        for p in S do   // runs through each prime p in S, in the order provided
+            mu:= Ceiling((s*Log(X0))/Log(p));   // estimates initial mu value for the given prime, p
+
+            changeC:= true;
+            while changeC eq true do
+                B,m0 := LatticeXYZ(S,p,mu);     // computes the lattice Gamma_{mu}* associated to (S,p,mu) and the associated m0 value
+
+                if s eq 3 then
+                    l:= F3Approx(B);            // computes short lattice length based on F3Approx algorithm when S = {p_1,p_2,p_3} only
+                else
+                    C:= LLL(Transpose(B));      // for s > 3, computes lattice lenght l(Gamma_{mu}*) via LLL algorithm
+                    x:= C[1];
+                    l:= const*Sqrt(Norm(x));    // computes |c_1|, the norm of the first column of the reduced lattice
+                end if;
+
+                if l le Sqrt(s-1)*X0 then
+                    mu:= mu + 5;        // changeC still True, returns to start of changeC with updated mu value, repeats until l = l(Gamma_{mu}*) > sqrt(s-1)*X0
+                else
+                    u:= mu + m0 - 1;    // application of Lemma 3.14: no solutions with mu + m0 <= ord_p(z), hence ord_p(z) <= mu + m0 + 1
+                                        // invariant under permutation, so ord_p(x),ord_p(y) < mu + m0 also - ie. ord_p(xyz) <= mu + m0 - 1
+
+                    Append(~U,[u,p]);   // stores u_i = mu + m0 - 1 values; p_i, for p_i, such that p_1 < p_2 <...< p_s
+                    changeC:= false;    // exits changeC algorithm, continues to next value of p in S
+                end if;
+             end while;
+        end for;
+
+        X0:= Max([u[1]: u in U]);       // selects largest u_i value, X0, so ord_p(xyz) <= X0 holds for all primes p in S
+        Append(~X,X0);  // stores all X0 values
+        if &+[1: x in X | x eq X0] eq 2 then    // computes number of times X0 appears in X; terminates algorithm if X0 twice - ie. lowest upper bound cannot be further improved
+            fixX0 := false;
+        end if;
+    end while;
+
+    return X0,U;
+end function;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//SUnitXYZ.m
+
+/*
+INPUT:
+    S:= [p_1,...,p_s], p_i primes in S
+
+OUTPUT:
+    eqns:= [[x_1,y_1,z_1],...,[x_n,y_n,z_n]], all S-unit equations x_i + y_i = z_i, where
+        x_i, y_i, z_i:= prod_{i:= 1 to s} p_i^{a_i}, for pairwise relatively prime rational integers x_i, y_i, z_i
+
+COMMENTS:
+    Computes all S-unit equations x + y = z
+    This algorithm uses the Fincke-Pohst algorithm and LLL
+
+    Based on the algorithm found in Chapter 6 of the Reference
+
+REFERENCE:
+    B.M.M.De Weger. Algorithms For Diophantine Equations. PhD thesis, University of Leiden, 1988.
+
+EXAMPLE:
+    > S:=[2,3,5];
+    > SUnitXYZ(S);
+    [
+        [ 125, 3, 128 ],
+        [ 27, 5, 32 ],
+        [ 80, 1, 81 ],
+        [ 25, 2, 27 ],
+        [ 16, 9, 25 ],
+        [ 24, 1, 25 ],
+        [ 15, 1, 16 ],
+        [ 8, 1, 9 ],
+        [ 5, 4, 9 ],
+        [ 3, 1, 4 ],
+        [ 5, 3, 8 ],
+        [ 4, 1, 5 ],
+        [ 9, 1, 10 ],
+        [ 2, 1, 3 ],
+        [ 3, 2, 5 ],
+        [ 5, 1, 6 ],
+        [ 1, 1, 2 ]
+    ]
+
+*/
+
+Attach("./XYZ2Code/MagmaXYZ2IntrinsicFunctions/pAdicLog.m");
+Attach("./XYZ2Code/MagmaXYZ2IntrinsicFunctions/ConvertpAdic.m");
+Attach("./XYZ2Code/MagmaXYZ2IntrinsicFunctions/SFactors.m");
+
+load "./FinckePohstCode/F3Approx.m";
+load "./FinckePohstCode/MyCholesky.m";
+load "./FinckePohstCode/ShortVectors.m";
+load "./FinckePohstCode/FinckePohst.m";
+load "./XYZ2Code/MagmaXYZFunctions/InitialSortXYZ.m";
+load "./XYZ2Code/MagmaXYZFunctions/LatticeXYZ.m";
+load "./XYZ2Code/MagmaXYZFunctions/LatticeBoundXYZ.m";
+load "./XYZ2Code/MagmaXYZFunctions/SmallestLatticeBoundXYZ.m";
+load "./XYZ2Code/MagmaXYZFunctions/FPRestrictionsXYZ.m";
+
+
+function SUnitXYZ(S)
+    X0,U:= SmallestLatticeBoundXYZ(S);  // computes lowest bound X0 such that m(xyz) <= X0; U:= [[f_1,p_1],...,[f_s,p_s]] such that ord_{p_i}(xyz) <= f_i for each p_i in S
+    s:= #S;     // computes the size of S
+    Sort(~S);   // orders primes by size p_1 < ... < p_s
+    F:= U;      // creates copy of U, to avoid changing U
+    eqns:= [];  // stores S-unit solutions x + y = z
+
+    for i in [1..s] do
+        F,V:= FPRestrictionsXYZ(S,F,S,0.5);         // initial S-unit solution search, with constant 0.5; runs through all primes of S
+        for v in V do
+            if (v in eqns) eq false then
+                Append(~eqns, v);       // stores each [x,y,z] in eqns vector
+            end if;
+        end for;
+    end for;
+
+    while (&or[F[i][1] gt 0 : i in [2..s]]) and (F[1][1] gt 2) do
+        F,V:= FPRestrictionsXYZ(S,F,S,0.125);      // S-unit solution search; runs through all primes of S
+        for v in V do
+            if (v in eqns) eq false then
+                Append(~eqns, v);       // stores each [x,y,z] in eqns vector
+            end if;
+        end for;
+    end while;
+
+    while (&or[F[i][1] gt 0 : i in [2..s]]) do
+        ordering:= [];          // stores determined ordering for each remaining iteration of Fincke-Pohst
+        for k in [2..s] do
+            if F[k][1] gt 0 then
+                Append(~ordering,F[k][2]);      // appends to ordering only those primes p in S\{2} for which f_{p_i} > 0
+            end if;
+        end for;
+
+        if ordering ne [] then
+            F,V:= FPRestrictionsXYZ(S,F,ordering,0.125);        // S-unit solution search; runs through all primes of Ordering
+            for v in V do
+                if (v in eqns) eq false then
+                    Append(~eqns, v);       // stores each [x,y,z] in eqns vector
+                end if;
+            end for;
+        end if;
+    end while;
+
+    while F[1][1] gt 2 do
+        F,V:= FPRestrictionsXYZ(S,F,[2],0.125);         // S-unit solution search on p = 2, iterated until f_{2} <= 2
+        for v in V do
+            if (v in eqns) eq false then
+                Append(~eqns, v);       // stores each [x,y,z] in eqns vector
+            end if;
+        end for;
+    end while;
+
+    Append(~eqns,[1, 1, 2]);    // appends last solution, 1 + 1 = 2
+
+    return eqns;
+end function;

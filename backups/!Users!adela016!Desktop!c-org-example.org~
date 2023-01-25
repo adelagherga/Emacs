@@ -1,0 +1,15 @@
+* Hello
+
+** Hello 2
+
+#+begin_src C :includes <stdio.h> :results output
+
+  void my_func(void) {
+    printf("Hello, World!\n");
+  }
+
+  my_func();
+#+end_src
+
+#+RESULTS:
+: Hello, World!

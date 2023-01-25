@@ -1,0 +1,74 @@
+#!/usr/bin/python
+# compareLMFDB.py
+
+# Author: Adela Gherga <adelagherga@gmail.com>
+# Copyright © 2022, Adela Gherga, all rights reserved.
+# Created: 27 November 2022
+#
+# Description:
+#
+# Commentary:
+#
+# To do list:
+#
+# Example:
+#
+
+NList={int(N) for N in conductors.split(" ")}
+if NList.intersection(range(0,500000)) == set():
+    print("Nothing to do!")
+    exit()
+
+LMFDB=set()
+for i in range(0,50):
+    print(i*10000,(i+1)*10000 -1)
+
+
+    NList.intersection(range(0,500000))
+
+for i in range(0,50)
+
+
+
+
+
+def fargle(X):
+    Y = []
+    X = X.lstrip("[").rstrip("]")
+    for char in X.split(","):
+        Y.append(int(char))
+    return tuple(Y)
+
+TMEC={}
+for line in open("/home/adela/TMEC/Data/[500000..500999]/EllipticCurves/AllCurves.csv"):
+    line=(line.replace(", ", ":")).rstrip()
+    N=int(line.split(",")[0])
+    if N in TMEC:
+        TMEC[N].add(fargle(line.split("[")[1].split("]")[0]))
+    else:
+        TMEC[N]={fargle(line.split("[")[1].split("]")[0])}
+
+for line in open("/home/adela/TMEC/Data/[500080,500262,500346,500518,500550,500650,500745,500786,500890,500955,500994]/EllipticCurves/AllCurves.csv"):
+    line=(line.replace(", ", ":")).rstrip()
+    N=int(line.split(",")[0])
+    if N in TMEC:
+        TMEC[N].add(fargle(line.split("[")[1].split("]")[0]))
+    else:
+        TMEC[N]={fargle(line.split("[")[1].split("]")[0])}
+
+LMFDB={}
+for line in open("/home/jec/oddcurves.500000-500999"):
+    N=int(line.split(" ")[0])
+    if N in LMFDB:
+        LMFDB[N].add(fargle(line.split(" ")[3]))
+    else:
+        LMFDB[N] = {fargle(line.split(" ")[3])}
+
+for N in sorted(LMFDB):
+    if N not in sorted(TMEC):
+        for ainv in LMFDB[N]:
+            print("Missing curve: " + str(ainv) + " of conductor " + str(N))
+    else:
+        for ainv in LMFDB[N]:
+            if ainv not in TMEC[N]:
+                print("Missing curve: " + str(ainv) + " of conductor " + str(N))

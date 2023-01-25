@@ -1,0 +1,22 @@
+/*
+July162020CubicCode.m
+
+Author: Adela Gherga <adelagherga@gmail.com>
+Copyright © 2020, Adela Gherga, all rights reserved.
+Created: 16 July 2020
+
+Description: Code to find all solutions to TM equation -x^3 + 6*x^2*y - 5*x*y^2 + y^3 = p^l for
+	     as many small primes as possible
+
+Commentary:  This code is for Mike Bennett, upon request.
+
+To do list:
+
+Example:
+
+*/
+
+remainingPrimes:=  [43, 71, 83, 97, 113, 127, 139, 167, 181, 197, 211, 223, 239,
+251, 281, 293, 307, 337, 349, 379, 419, 421, 433, 449, 461, 463, 491, 503, 547,
+587, 601, 617, 631, 643, 659, 673, 701, 727, 743, 757, 769, 797, 811, 827, 839,
+853, 881, 883, 911, 937, 953, 967 ];

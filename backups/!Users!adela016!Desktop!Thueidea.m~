@@ -1,0 +1,38 @@
+GL2Zclists:= [];
+abs_max:= 100;
+for a in [-abs_max..abs_max] do
+    for c in [-abs_max..abs_max] do
+	if GCD(a,c) eq 1 then
+	    hasGL2Zaction:= false;
+
+	    if ((a eq 0) and (Abs(c) eq 1)) then
+		b:= -1/c;
+		d:= 0;
+		hasGL2Zaction:= true;
+	    elif ((c eq 0) and (Abs(a) eq 1)) then
+		d:= 1/a;
+		b:= 0;
+		hasGL2Zaction:= true;
+	    elif ((a ne 0) and (c ne 0) and (GCD(a,c) eq 1)) then
+		g,d,b:= XGCD(a,c);
+		b:= -b;
+		assert g eq 1;
+		hasGL2Zaction:= true;
+	    end if;
+
+	    if hasGL2Zaction then
+		assert (a*d - b*c eq 1);
+		GL2ZF:= Evaluate(F,[a*U+b*V,c*U+d*V]);
+		if (#Divisors(Abs(Integers()! Coefficients(GL2ZF)[1])) le 2) then
+		    newclist:= [Integers()! MonomialCoefficient(GL2ZF,U^(n-i)*V^i) : i in [0..n]];
+		    assert newclist eq Reverse(Coefficients(Evaluate(GL2ZF,[x,1])));
+
+		    if (newclist notin GL2Zclists) and ([-i : i in newclist] notin GL2Zclists) then
+			Append(~GL2Zclists,newclist);
+		    end if;
+		end if;
+
+	    end if;
+	end if;
+    end for;
+end for;

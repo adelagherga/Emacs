@@ -1,0 +1,45 @@
+/*
+ * 7.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created: 19 January 2021
+ *
+ * Description: Prints the row sums and column sums of a 5 x 5 array.
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+int main(void)
+{
+  int row_sum[5] = {0}, col_sum[5] = {0};
+  int row, col, n;
+
+  for (row = 0; row < 5; row++)
+    {
+      printf("Enter row %d: ", row + 1);
+      for (col = 0 ; col < 5; col++)
+	{
+	  scanf("%d", &n);
+	  col_sum[col] += n;
+	  row_sum[row] += n;
+	}
+    }
+
+  printf("Row totals:");
+  for (col = 0; col < 5; col++)
+    printf("% d", row_sum[col]);
+  printf("\nColumn totals:");
+  for (row = 0; row < 5; row++)
+    printf("% d", col_sum[row]);
+
+  printf("\n");
+  return 0;
+}

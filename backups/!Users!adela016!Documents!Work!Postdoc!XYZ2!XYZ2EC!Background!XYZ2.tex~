@@ -1,0 +1,184 @@
+\documentclass[reqno]{amsart}
+\usepackage{url}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing, matrix, arrows,tikzmark}
+\usepackage{enumerate}
+%\usepackage{array}
+\usepackage{accents}
+\usepackage{tabu}
+\usepackage{longtable}
+%\usepackage{blkarray}
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amscd}
+\usepackage{amsbsy}
+\usepackage{comment}
+\usepackage[matrix,arrow]{xy}
+\usepackage{arydshln}
+%\usepackage[bookmarks,bookmarksnumbered,%
+%    allbordercolors={0.8 0.8 0.8},%
+%    linktocpage%
+%    ]{hyperref}
+%\usepackage{hyperref}
+%\usepackage{showlabels}
+
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Rad}{Rad}
+\DeclareMathOperator{\Radp}{Rad_{\{2,5,7\}}}
+\DeclareMathOperator{\Radpp}{Rad_{\{2,3,5,7\}}}
+\DeclareMathOperator{\Norm}{Norm}
+\DeclareMathOperator{\Disc}{Disc}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\Sel}{Sel}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Img}{Image}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\red}{red}
+\newcommand{\vv}{\mathbf{v}}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\divisor}{div}
+\DeclareMathOperator{\Alb}{Alb}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\norm}{Norm}
+\DeclareMathOperator{\trace}{Tr}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\image}{im}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\Reg}{Reg}
+\DeclareMathOperator{\Aut}{Aut}
+\newcommand{\crt}{\sqrt[3]{2}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+%\newcommand{\SHA}[1]{{\cyr X}(#1)}
+%\newcommand{\p}{{\mathfrak P}}
+%\newcommand{\A}{{\mathbb A}}
+\newcommand{\mS}{\mathcal{S}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+%\newcommand{\N}{{\mathbb N}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{{\mathbb F}}
+%\newcommand{\D}{{\mathbb D}}
+\newcommand{\PP}{{\mathbb P}}
+%\newcommand{\LL}{{\mathbb L}}
+%\newcommand{\HH}{{G_{\LL}}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\fL}{\mathfrak{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\fM}{\mathfrak{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\fQ}{\mathfrak{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cJ}{{\mathcal J}}
+\newcommand{\cC}{\mathcal C}
+\newcommand{\cV}{\mathcal V}
+\newcommand{\cW}{\mathcal W}
+\newcommand{\OO}{{\mathcal O}}
+\newcommand{\ga}{{\mathfrak{a}}}
+\newcommand{\gb}{{\mathfrak{b}}}
+\newcommand{\gc}{{\mathfrak{c}}}
+\newcommand{\pic}{{\rm Pic}^0(Y)}
+\newcommand{\sS}{\mathfrak{S}}
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fb}{\mathfrak{b}}
+\newcommand{\fc}{\mathfrak{c}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\fq}{\mathfrak{q}}
+\newcommand{\fr}{\mathfrak{r}}
+\newcommand{\fl}{\mathfrak{l}}
+\newcommand{\mP}{\mathfrak{P}}
+\newcommand{\xx}{\mathbf{x}}
+\newcommand{\zz}{\mathbf{z}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\hh}{\mathbf{h}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\bfl}{\mathbf{l}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\aaf}{\mathbf{a}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\mm}{\mathbf{m}}
+\newcommand{\nn}{\mathbf{n}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\fA}{\mathfrak{A}}
+\newcommand{\fB}{\mathfrak{B}}
+\DeclareMathOperator{\Jac}{Jac}
+%\def\mod#1{{\ifbmode\text{\rm\ (mod~$#1$)}
+%\else\discretionary{}{}{\hbox{ }}\rm(mod~$#1$)\fi}}
+
+
+\newcommand\Tstrut{\rule{0pt}{6ex}}         % = `top' strut
+\newcommand\Bstrut{\rule[-5ex]{0pt}{0pt}}   % = `bottom' strut
+
+\newcommand\margnote[1]{\marginpar{\tiny\begin{minipage}{20mm}\begin{flushleft} #1\end{flushleft}\end{minipage}}}
+\newcommand{\edit}[1]{\textcolor{red}{#1}}
+
+%\renewcommand{\baselinestretch}{1.5}
+
+\begin {document}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{proc}{Procedure}
+\newtheorem{alg}{Algorithm}
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{prop}[lem]{Proposition}
+\newtheorem{cor}[lem]{Corollary}
+\newtheorem*{conj}{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{defn}[lem]{Definition}
+\newtheorem{example}[lem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+
+\newtheorem{ack}{Acknowledgement}
+
+\title[]{Efficient Resolution of Thue--Mahler Equations}
+
+\author{Adela Gherga}
+\email{adela.gherga@warwick.ac.uk}
+\address{Mathematics Institute, University of Warwick, Coventry CV4 7AL, United Kingdom}
+\author{Samir Siksek}
+\email{S.Siksek@warwick.ac.uk}
+\address{Mathematics Institute, University of Warwick, Coventry CV4 7AL, United Kingdom}
+\thanks{
+The authors are supported by the
+EPSRC grant \emph{Moduli of Elliptic curves and Classical Diophantine Problems}
+(EP/S031537/1).
+}
+
+\date{\today}
+
+\keywords{Thue equation, Thue--Mahler equation, LLL,
+linear form in logarithms}
+
+\makeatletter
+\@namedef{subjclassname@2020}{%
+  \textup{2020} Mathematics Subject Classification}
+\makeatother
+
+\subjclass[2020]{Primary 11D59, Secondary 11D61}
+
+\maketitle
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\section{Introduction} \label{sec:intro}

@@ -1,0 +1,16 @@
+#!/usr/bin/python
+# SortAllSUnitEqData.py
+
+# Author: Adela Gherga <adelagherga@gmail.com>
+# Copyright © 2020, Adela Gherga, all rights reserved.
+# Created: 16 May 2020
+#
+# Description: This program iterates through the file
+#              "/home/adela/ThueMahler/Data/SUnitEqData/AllSUnitEq.txt" and generates the corresponding list of optimal forms to be solved, ignoring those cases for which no sunit equations are needed or where local obstructions occur
+#
+# Commentary:
+#
+# To do list:
+#
+# Example:
+#

@@ -1,0 +1,165 @@
+\documentclass[11pt]{report}
+
+% relevant packages
+\usepackage[parfill]{parskip} % begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs }
+\usepackage{amsthm}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[all]{xy}
+\usepackage[english]{babel}
+\usepackage{setspace}
+\usepackage{soul}
+
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+% stylistic environment
+\definecolor{grau}{rgb}{0.3,0.3,0.3}
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    linktoc=all
+}
+\urlstyle{same}
+\usepackage[top=1.3in, bottom=1.6in, left=1.3in, right=1.3in]{geometry}
+\frenchspacing
+\sloppy
+\usepackage{booktabs}
+\usepackage[ruled,vlined]{algorithm2e}
+\onehalfspacing
+
+% relevant environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{properties}[theorem]{Properties}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{definition}
+\newtheorem{Algorithm}[theorem]{Algorithm}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+\renewcommand{\chapterautorefname}{Chapter}
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Section}
+\renewcommand{\subsubsectionautorefname}{Section}
+
+% math operators
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Gal}{Gal}
+
+% code environment
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{%frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+% new commands
+\newcommand{\eps}{\varepsilon}
+\newcommand{\edit}[1]{\textcolor{blue}{#1}}
+
+%---------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------%
+
+\numberwithin{equation}{section}
+
+\begin{document}
+\title{Abstract}
+\maketitle
+\textbf{Title:} Implementing Algorithms to Compute Elliptic Curves Over $\mathbb{Q}$
+
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+
+\begin{abstract}
+
+Consider any collection of prime numbers $\{p_1, \dots, p_v\}$ and any collection of integers $c, c_0, \dots, c_n$. Our main result involves the \textit{Thue-Mahler} equation
+\[F(x,y) = c_0x^n + c_1x^{n-1}y + \cdots + c_{n-1}xy^{n-1} + c_ny^n = cp_1^{z_1}\cdots p_v^{z_v},\]
+where the values $x, y$, and $z_1, \dots, z_v$ are unknown. In particular, for any such equation, we know that there are only finitely many values of $x,y$, and $z_1, \dots, z_n$ which satisfy it. In our work, we develop an algorithm to find all of these solutions for any given collection of primes and coefficients $c_i$. The solutions to these Thue-Mahler have many important mathematical applications, and we modify and refine our algorithm for use in those applications.
+
+
+
+  \noindent Let $S = \{p_1, \dots, p_k\}$ be a set of rational primes and consider the set of all elliptic curves over $\mathbb{Q}$ having good reduction outside $S$ and bounded conductor $N$. Currently, using modular forms, all such curves have been determined for $N \leq 390000$, the bulk of this work being attributed to Cremona.
+
+Early attempts to tabulate all such curves often relied on reducing the problem to one of solving a number of certain integral binary forms called Thue-Mahler equations. These are Diophantine equations of the form
+\[F(x,y) = u,\]
+where
+\[F(x,y) = f_0x^n + f_1x^{n-1}y + \cdots + f_{n-1}xy^{n-1} + f_ny^n\]
+is a given binary form of degree at least $3$ and $u$ is an $S$-unit.
+A theorem of Bennett-Rechnitzer show that the problem of computing all elliptic curves $\mathbb{Q}$ of conductor $N$ reduces to solving a number of Thue-Mahler equations. To compute all such equations, there exists a practical method of Tzanakis-de Weger using bounds for linear forms in $p$-adic logarithms and various reduction techniques. In this talk, we describe our implementation of this method and discuss the key steps in used in our algorithm.
+
+
+\end{abstract}
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+
+\begin{thebibliography}{99}
+
+\bibitem{BeRe}
+M.A. Bennett and A. Rechnitzer
+\emph{Computing elliptic curves over $\mathbb{Q}$: bad reduction at one prime},
+Submitted to Proceedings of $2015$ AMMCS-CAIMS Congress, Fields Institute Communications, https://www.math.ubc.ca/~bennett/B-Cubic.pdf
+
+\bibitem{Cremona1}
+J. Cremona,
+\emph{Elliptic curve tables}, http://johncremona.github.io/ecdata/
+
+\bibitem{Cremona2}
+J. Cremona,
+\emph{Algorithms for modular elliptic curves},
+second ed., Cambridge University Press, Cambridge, $1997$. Available online at
+http://homepages.warwick.ac.uk/staff/J.E.Cremona/book/fulltext/index.html
+
+\bibitem{Tzanakis}
+N. Tzanakis and B. M. M. de Weger,
+\emph{Solving a specific Thue-Mahler equation},
+Math. Comp. $57$ ($1991$) $799-815$.
+
+\bibitem{deWeger1}
+B. M. M. de Weger,
+\emph{Algorithms for diophantine equations},
+CWI-Tract No. $65$, Centre for Mathematics and Computer Science, Amsterdam, $1989$.
+
+\bibitem{deWeger2}
+B. M. M. de Weger,
+\emph{The weighted sum of two $S$-units being a square},
+Indag. Mathem. $1$ ($1990$), $243-262$.
+
+\end{thebibliography}
+
+%-----------------------------------------------------------------------------------------------------------------------------------------------
+
+\end{document}

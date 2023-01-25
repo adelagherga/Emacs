@@ -1,0 +1,480 @@
+
+
+frms:=[
+[0,1,0,0,0,0,-144/7,0,0,0,0,-20736,0],
+[-1,0,0,-2,0,0,80/7,0,0,640,0,0,-102400],
+[-1,0,-1,0,3,0,45/7,0,135,0,-2025,0,-91125],
+[1,0,-1,0,-3,0,45/7,0,-135,0,-2025,0,91125],
+[-1,1,1,1,-1,5,-25/7,-35,-65,-215,1025,-7975,-57025],
+[3,1,-2,0,-4,-4,24/7,16,-80,-48,-928,-2176,27072],
+[-10,1,4,7,2,5,80/7,-5,-50,-215,-100,-625,-10150],
+[-19,-5,-8,-2,8,8,80/7,16,64,64,-256,-640,-5632],
+[-7,-22,-13,-6,-3,-6,-207/7,-54,-63,-54,27,1242,4293],
+[-25,0,0,-10,0,0,80/7,0,0,128,0,0,-4096],
+[6,-31,-32,-24,-16,-8,-144/7,-64,-128,-192,-256,256,3072],
+[-64,-32,-32,-32,-16,8,248/7,64,124,262,374,122,-2353],
+[-64,-64,-32,-16,-16,-32,-424/7,-76,-68,-28,134,859,2207],
+[-25,-50,-25,-10,-5,-10,-235/7,-50,-49,-34,31,614,1763],
+[55,29,-7,-3,-9,-15,-81/7,9,-9,-27,-135,-459,567],
+[-81,-27,-27,-27,-9,9,171/7,33,63,141,149,-67,-1657],
+[-125,0,-25,0,15,0,45/7,0,27,0,-81,0,-729],
+[125,0,-25,0,-15,0,45/7,0,-27,0,-81,0,729],
+[-162,-27,0,27,18,9,108/7,15,6,-51,-88,-93,-710],
+[0,81,0,0,0,0,-144/7,0,0,0,0,-256,0],
+[-185,-12,31,44,27,20,157/7,12,-17,-76,-105,-148,-701],
+[100,125,50,15,0,-15,-270/7,-45,-36,-27,-54,-297,-648],
+[192,32,-32,0,-16,-8,24/7,8,-20,-6,-58,-68,423],
+[-395,-153,-92,-26,24,40,304/7,48,64,64,0,-128,-512],
+[-537,-205,-133,-123,-89,-41,45/7,41,71,123,187,205,-57],
+[359,141,-1,-21,-33,-39,-207/7,-9,-9,-27,-81,-189,-81],
+[295,-17,-55,-25,-25,-5,31/7,-5,-25,-25,-55,-17,295]];
+
+assert #frms eq 27;
+
+// verify that each form has 13 coefficients; hence is of degree 12
+for frm in frms do
+    assert #frm eq 13;
+end for;
+Bound:=100;
+
+function hasprimitivesolution(trip, p)
+    P<x>:=PolynomialRing(Rationals());
+
+    tripA:=[Evaluate(f, [x,1]) : f in trip] cat [x,1]; // the affine part of the triple in one variable X
+    tripA:=[P!f : f in tripA];
+    tripI:=[Evaluate(f, [1,p*x]) : f in trip] cat [1,p*x]; // the infinite part of the triple in one variable X
+    tripI:=[P!f : f in tripI];
+
+    // recursively move into residue classes and check if solution exists and is primitive
+    function hpsrec(trip)
+
+	// find lower bounds for valuations. returns minimal valuation together with a flag controling wheter it is achieved only in the constant term
+
+	function lbval(pol)
+	    ms := Monomials(pol);
+	    cs := Coefficients(pol);
+	    vs := [Valuation(c, p) : c in cs];
+	    minv := Min(vs);
+	    minms := [ms[i] : i in [1..#ms] | vs[i] eq minv];
+	    return <minv, minms eq [Parent(pol)!1]>;
+	end function;
+
+	// if the minimal valuation is > 0 it is not primitive
+	vals := [lbval(trip[i]) : i in [1..3]];
+	minv := Min([a[1] : a in vals]);
+	if minv gt 0 then
+	    // not primitive
+	    return {};
+	end if;
+	// minv=0; check if the minv not achieved or is achieved in the constant?? term. if yes, we are OK
+	if forall{i : i in [1..3] | vals[i,1] gt minv or vals[i,2]} then
+	    // all values give something primitive; check if trip[3] can be a fifth power
+	    if vals[3,2] then
+		if IsDivisibleBy(vals[3][1],5) then
+		    return {[trip[4],trip[5]]};
+		else
+		    return {};
+		end if;
+	    elif vals[3][1] ge 5 then
+		return {[trip[4],trip[5]]};
+	    end if;
+	end if;
+	// need to recurse
+	var:={};
+	for k := 0 to p-1 do
+	    subs := p*x+k;
+	    var join:= hpsrec([Evaluate(f, subs) : f in trip]);
+	end for;
+	return var;
+    end function;
+    AUI := hpsrec(tripA) join hpsrec(tripI);
+    if AUI eq {} then
+	print "eliminated using p=", p;
+    end if;
+    return AUI;
+end function;
+
+
+function makepairs5(i,trip);
+    Z5:=Integers(5);
+    Z25:=Integers(5^2);
+    Z25Star,m:=MultiplicativeGroup(Z25);
+    invel:=[m(x) : x in Z25Star];
+    j:=#(Z25Star/(5*Z25Star));
+    g:=m(Z25Star.1);
+    pairs:=[<g^k*u,g^k> : u in Z25, k in [0..j-1]] cat [<g^k,0> : k in [0..j-1]];
+    pairs:=pairs cat [<u,5> : u in invel];
+    Qx<x>:=PolynomialRing(Rationals());
+
+    if i in [2,5] then
+	// hasprimitivesolution(trips,5) returns [x,1]
+	restuv:=[[5*x,1],[5*x+1,1],[5*x+2,1],[5*x+3,1],[5*x+4,1]];
+	// we have reversed the polynomial!
+	restuv:=[<Z5!Evaluate(p[2],0),Z5!Evaluate(p[1],0)> : p in restuv];
+	pairs:=[pr : pr in pairs | Z5!pr[1] ne 0 and <Z5!1,Z5!(pr[2]*pr[1]^(-1))> in restuv] cat [pr : pr in pairs | Z5!pr[1] eq 0 and <Z5!0,Z5!1> in restuv];
+    else
+	restuv:=hasprimitivesolution(trip,5);
+	restuv:=[<Z5!Evaluate(p[1],0),Z5!Evaluate(p[2],0)> : p in restuv];
+	pairs:=[pr : pr in pairs | Z5!pr[2] ne 0 and <Z5!(pr[1]*pr[2]^(-1)),Z5!1> in restuv] cat [pr : pr in pairs | Z5!pr[2] eq 0 and <Z5!1,Z5!0> in restuv];
+    end if;
+    pairs:=[<Integers()!pr[1], Integers()!pr[2]> : pr in pairs];
+    return pairs;
+end function;
+
+
+function makepairsP(p)
+    Zp:=Integers(p);
+    ZpStar,m:=MultiplicativeGroup(Zp);
+    j:=#(ZpStar/(5*ZpStar));
+    if p eq 2 then
+	g:=m(ZpStar.0);
+    else
+	g:=m(ZpStar.1);
+    end if;
+    pairs:=[<g^i*u,g^i> : u in Zp, i in [0..j-1]] cat [<g^i,0> : i in [0..j-1]];
+    pairs:=[<Integers()!pr[1], Integers()!pr[2]> : pr in pairs];
+    return pairs;
+end function;
+
+
+function unitfrompair(pr,gen1,gen2,Maps,pIdeals,C,ResFields,w,OF,inc,Quotients)
+    induv:=pIdeals;
+    n:=#pIdeals;
+    gen1C:=&+[i in induv select inc[i]((Maps[i](gen1))) else inc[i](Identity(Quotients[i,1])) : i in [1..n]];
+    gen2C:=&+[i in induv select inc[i]((Maps[i](gen2))) else inc[i](Identity(Quotients[i,1])) : i in [1..n]];
+    denC:=&+[i in induv select inc[i]((Maps[i](Denominator(w*OF)))) else inc[i](Identity(Quotients[i,1])) : i in [1..n]];
+    Imuv:=&+[i in induv select inc[i](Maps[i](Denominator(w*OF)*(pr[1]-pr[2]*w))) else inc[i](Identity(Quotients[i,1])) : i in [1..n]];
+    unit:=-gen1C-Imuv+gen2C+denC;
+    return unit;
+end function;
+
+
+function eliminateunits5(unitsleft,pairs,pIdeals,Q5,psi,gen1,gen2,w,OF)
+    unleft:=unitsleft;
+    ResFields:=[<f,m> where f,m:=quo<OF | I[1]^(2*I[2])> : I in pIdeals];
+    MultGroups:=[<f,m> where f,m:=MultiplicativeGroup(pair[1]) : pair in ResFields];
+    Quotients:=[<f,m> where f,m:=MultGroups[i,1]/(5*MultGroups[i,1]) : i in [1..#pIdeals]];
+    Maps:=[ResFields[i,2]*Inverse(MultGroups[i,2])*Quotients[i,2] : i in [1..#pIdeals]];
+    C,inc,pj:=DirectSum([pair[1] : pair in Quotients]);
+    assert #inc eq #pIdeals;
+
+    imgen:=[&+[inc[i]((psi*Maps[i])(Q5.j)) : i in [1..#pIdeals]] : j in [1..#Generators(Q5)]];
+    Q5toC:=hom<Q5 -> C | imgen>;
+    kerp:=Kernel(Q5toC);
+    print "the kernel has", #kerp, "elements";
+
+    unitclasses:=SetToSequence(Set([Q5toC(un) : un in unleft]));
+    print "there are", #unitclasses, "cosets of units in C";
+
+    pairs2:=[];
+    remunits:=[];
+    for pr in pairs do
+	prIdeals:=[j : j in [1..#pIdeals] | not (Valuation(pr[1] - w*pr[2],pIdeals[j,1]) gt 0)];
+	if #prIdeals ge 1 then Append(~pairs2,pr); end if;
+	Append(~remunits, unitfrompair(pr,gen1,gen2,Maps,prIdeals,C,ResFields,w,OF,inc,Quotients));
+    end for;
+    print "there are ", #pairs, "pairs and for", #pairs2, "of them u-w*v is not divisible by at least one prime above 5";
+
+    remunits:=Set(unitclasses) meet Set(remunits);
+    remunits:=[Inverse(Q5toC)(unit) : unit in remunits];
+    remunits:=&cat[[remunits[i] + u : u in kerp] : i in [1..#remunits]];
+
+    unleft:=unleft meet Set(remunits);
+
+    return unleft, pairs2;
+end function;
+
+
+PIRL:=function(frms,i)
+// LogFile output fprintf OutFile, "C:=%o; p:=%o; A:=%o;\n", C, p, A;
+
+    /*
+       use the binary forms to generate a set of triples of binary polynomials [f_i,g_i,h_i]
+       as in the reference document. These triples parametrize the primitive solutions to
+       x^2+y^3+z^5=0
+    */
+
+    n:=12; // degree of each form
+    frm:=frms[i];
+    assert i in [5,6,8,9,13,14,15,16,21,22,23,24]; // assert the correct form is chosen
+    assert #frms eq 27;
+    assert #frm eq 13;
+
+    // general setup for each form, as per the reference document
+    QUV<U,V>:=PolynomialRing(Rationals(),2);
+    H:=&+[Binomial(12,j)*frm[j+1]*U^j*V^(12-j)  : j in [0..12]]; // generate the binomial h
+    Hu:=Derivative(H,U);
+    Hv:=Derivative(H,V);
+    Huu:=Derivative(Hu,U);
+    Huv:=Derivative(Hu,V);
+    Hvu:=Derivative(Hv,U);
+    Hvv:=Derivative(Hv,V);
+    assert Huv eq Hvu;
+    G:=(132)^(-2)*(Huu*Hvv-Huv*Hvu);
+    Gu:=Derivative(G,U);
+    Gv:=Derivative(G,V);
+    F:=(240)^(-1)*(Hu*Gv-Hv*Gu);
+    assert F^2+G^3+H^5 eq 0; // verify that the (2,3,5) equation is parametrized
+    trip:=[F,G,H]; // store [f_i,g_i,h_i]
+
+    assert IsHomogeneous(H); // sanity check
+    // Nuno's way; only need one of these
+//    Qx<x>:=PolynomialRing(Rationals());
+    //clist:=[Binomial(n,i)*frm[i+1] : i in [n..0 by -1]]; // coefficients of h
+//    c0:= Integers()!clist[1]; // leading coefficient
+//    h:=Evaluate(H,[x,1]);
+//    assert Degree(htilde) eq n;
+//    assert IsIrreducible(htilde);
+
+    // TM way (NEED to check that (c0,v) = 1)
+    Qx<x>:=PolynomialRing(Rationals());
+    clist:=[Binomial(n,j)*frm[j+1] : j in [n..0 by -1]]; // coefficients of h
+    c0:= Integers()!clist[1]; // leading coefficient
+    hclist:=[1] cat [clist[j+1]*c0^(j-1) : j in [1..n]];
+    h:=&+[hclist[j+1]*x^(n-j) : j in [0..n]];
+    assert IsMonic(h);
+    assert h eq c0^(n-1)*Evaluate(H,[x/c0,1]);
+    assert Degree(h) eq n;
+    assert IsIrreducible(h);
+    assert &and[c in Integers() : c in Coefficients(h)];
+
+    // generate the relevant field
+    K<th>:=NumberField(h);
+    OK:=RingOfIntegers(K);
+//    ClK:=ClassNumber(K); // determine the class number
+    // generate the unit group
+    s,t:=Signature(K);
+    r:=s+t-1;
+    assert (s+2*t) eq n;
+    U,phi:=UnitGroup(OK);
+    Q5,pi:=U/(5*U);
+    psi:=Inverse(pi)*phi;
+
+    // determine factorization of h=(u-th*v)*g(u,v)
+    Kt<t>:=PolynomialRing(K);
+    g:= ExactQuotient(Kt!h,t-th); // monic polynomial
+    // LEFT OFF HERE
+    res:=Evaluate(g,th); // generate the resultant
+    assert Resultant(t-th,g) eq res;
+
+    // determine the necessary primes and prime ideals
+    primelist:=[fac[1] : fac in Factorization(c0)]; // arising from the factorization of c0
+    ideallist:=[]; // stores all necessary prime ideals
+    idealsRes:=Factorization(res*OK); // arising from the resultant
+    for fac in idealsRes do
+	if fac[2] gt 0 then // where Valuation(res,P) > 0
+	    if fac[1] notin ideallist then
+		Append(~ideallist,fac[1]);
+	    end if;
+	    p:=PrimeDivisors(Norm(fac[1]))[1];
+	    if p notin primelist then
+		Append(~primelist,p);
+	    end if;
+	end if;
+    end for;
+    idealsth:=Factorization(th*OK); // arising from th, where K=Q(th)
+    for fac in idealsth do
+	if fac[2] lt 0 then // where Valuation(th,P) < 0
+	    if fac[1] notin ideallist then
+		Append(~ideallist,fac[1]);
+	    end if;
+	    p:=PrimeDivisors(Norm(fac[1]))[1];
+	    if p notin primelist then
+		Append(~primelist,p);
+	    end if;
+	end if;
+    end for;
+    idealsg:=[]; // arising from the coefficients of g(u,v)
+    gclist:=Coefficients(g);
+    for j in [1..#gclist] do
+	facgj:=Factorization(gclist[j]*OK);
+	for fac in facgj do
+	    if fac[2] lt 0 then // where Valuation(coeff(g),P) < 0
+		if fac[1] notin ideallist then
+		    Append(~ideallist,fac[1]);
+		end if;
+		p:=PrimeDivisors(Norm(fac[1]))[1];
+		if p notin primelist then
+		    Append(~primelist,p);
+		end if;
+	    end if;
+	end for;
+    end for;
+    Sort(~primelist);
+
+    /* implentation of the new Prime Ideal Removing Lemma
+       determine bounds on the valuation of each prime ideal above p of c0
+       returns Lp,  where Lp:= [[k],[a_1, ..., a_v]]
+       k corresponds to the unbounded ideal
+       a_1, ..., a_v are the bounds on the remaining ideals
+       if k:= v+1, there is no unbounded prime ideal
+       NB. refinements are possible here but need to be checked for compatability
+   */
+
+    CaseByPrime:=[];
+    IdealInfo:=[];
+    IdealInfoFormat:=recformat<Prime,Ideals>;
+    CaseInfoFormat:= recformat<Prime,UnboundedIndex,IdealValuations,PrincipalIdeal>;
+
+    for l in [1..#primelist] do
+	CaseByPrime[l]:=[];
+	p:= primelist[l];
+	IdealInfo[l]:=rec<IdealInfoFormat | Prime:= p>;
+
+	fprs:=Factorisation(p*OK);
+	fprs:=[fact[1] : fact in fprs]; // the prime ideals above p.
+	IdealInfo[l]`Ideals:= fprs;
+	v:=Valuation(Discriminant(h),p);
+	prec:=10*(v+1);
+	Zp:=pAdicRing(p,prec);
+	rts:=Roots(h,Zp);
+	rts:=[Integers()!r[1] : r in rts];
+	Lp:=[];
+
+	// algorithm 1
+	t:=Valuation(c0,p)+1;
+	ulist:=[c0*w : w in [0..(p-1)]];
+
+	while #ulist ne 0 do
+	    ulistNew:=[];
+            for u in ulist do
+		cPu:=[i : i in [1..#fprs] | Valuation((u-th)*OK,fprs[i]) ge t*RamificationDegree(fprs[i])];
+		fbu:= [ Min([Valuation((u-th)*OK,fprs[i]),t*RamificationDegree(fprs[i])]) : i in [1..#fprs]];
+		assert &*[fprs[i]^fbu[i] : i in [1..#fprs]] eq p^t*OK+(u-th)*OK;
+		k:= #fprs + 1;
+		if #cPu eq 0 then
+		    if [[k],fbu] notin Lp then
+			Append(~Lp, [[k],fbu]);
+                    end if;
+		elif #cPu eq 1 then
+		    fp:=fprs[cPu[1]];
+                    efp:=RamificationDegree(fp)*InertiaDegree(fp);
+                    rtcount:=#[alpha : alpha in rts | Valuation(u-alpha,p) ge t];
+                    if efp eq 1 and rtcount ge 1 then
+			if [[cPu[1]],fbu] notin Lp then
+			    Append(~Lp, [[cPu[1]],fbu]);
+			end if;
+                    else
+			ulistNew:=ulist cat [ u+p^(t)*w : w in [0..(p-1)]];
+                    end if;
+		else
+                    ulistNew:=ulist cat [ u+p^(t)*w : w in [0..(p-1)]];
+		end if;
+            end for;
+            ulist:=ulistNew;
+            t:=t+1;
+	end while; // end of algorithm 1
+
+	// algorithm 2
+	if Valuation(c0,p) eq 0 then
+            ulist:=[p*w : w in [0..(p-1)]];
+            t:=2;
+            while #ulist ne 0 do
+		ulistNew:=[];
+		for u in ulist do
+                    cPu:=[i : i in [1..#fprs] | Valuation(c0-u*th,fprs[i]) ge t*RamificationDegree(fprs[i])];
+                    fbu:= [ Min([Valuation(c0-u*th,fprs[i]), t*RamificationDegree(fprs[i])]) : i in [1..#fprs]];
+                    assert &*[fprs[i]^fbu[i] : i in [1..#fprs]] eq (c0-u*th)*OK+p^t*OK;
+                    k:= #fprs + 1;
+                    if #cPu eq 0 then
+			if [[k],fbu] notin Lp then
+                            Append(~Lp, [[k],fbu]);
+			end if;
+                    else
+			ulistNew:=ulistNew cat [u+p^(t+1)*w : w in [0..(p-1)]];
+                    end if;
+		end for;
+		ulist:=ulistNew;
+		t:=t+1;
+            end while;
+	end if; // end of algorithm 2
+
+	pCases:=[];
+	for lp in Lp do
+//	    if lp[1][1] gt #fprs then // prime ideal exponents of c0 are fully resolved/known
+		// c0 = p_j^(a_j)*b, so t = 11a_j + 5b_j for b_j unknown
+// NEED to check that this still makes sense; ignoring it for now (ie not using it)
+//		t:=&+[InertiaDegree(fprs[j])*lp[2][j] : j in [1..#fprs]];
+//		fiveb:=t - 11*Valuation(c0,p);
+//		if IsDivisibleBy(fiveb,5) then
+		    // rewrite exponents mod 5
+//		    newlp:=lp;
+//		    newlp[2]:=[Integers()!(lp[2][k] mod 5) : k in [1..#fprs]];
+//		end if;
+//	    else // all but one prime ideal exponents of c0 are fully resolved/known
+//		t:=&+[InertiaDegree(fprs[j])*lp[2][j] : j in [1..lp[1][1]]];
+//		t:=t + &+[InertiaDegree(fprs[j])*lp[2][j] : j in [lp[1][1]+1..#fprs]];
+//		u:=(11*Valuation(c0,p) - t) mod 5;
+		// rewrite exponents mod 5
+//		newlp:=lp;
+//		newlp[2]:=[Integers()!(lp[2][k] mod 5) : k in [1..#fprs]];
+//		newlp[2][lp[1][1]]:= Integers()!u;
+//	    end if;
+
+	    // remove ideal cases not appearing in ideallist
+	    caseideals:=[IdealInfo[l]`Ideals[j] : j in [1..#fprs] | lp[2][j] ne 0];
+	    if &and[fp in ideallist : fp in caseideals] then
+		Append(~pCases,lp);
+	    end if;
+	end for;
+
+	CaseInfoFormat:= recformat<Prime,UnboundedIndex,IdealValuations>;
+	for k in [1..#pCases] do
+	    if pCases[k][1][1] gt #fprs then
+		CaseByPrime[l][k]:=rec<CaseInfoFormat | Prime:=p,UnboundedIndex:="none",IdealValuations:=pCases[k][2]>;
+	    else
+		CaseByPrime[l][k]:=rec<CaseInfoFormat | Prime:=p,UnboundedIndex:=pCases[k][1][1],IdealValuations:=pCases[k][2]>;
+	    end if;
+	end for;
+    end for;
+
+    // generate all possible combinations of exponents cases over all primes of c0
+    allCases:=[];
+    C:= CartesianProduct([ [1..#CaseByPrime[j]] : j in [1..#CaseByPrime]]);
+    for c in C do
+	Append(~allCases,[CaseByPrime[j][c[j]] : j in [1..#c]]);
+    end for;
+
+    if ClK eq 1 then
+	for Case in allCases do
+	    unitsleft:=Set(Q5); // generate the list of all relevant units to iterate through
+
+	    // generate the product of ideals, a, arising from c0 with exponent mod 5
+	    // ie. (u-v*th)OK = a*b^5, for ideals a,b
+	    IdealProduct:=1;
+	    for k in [1..#Case] do
+		assert IdealInfo[k]`Prime eq Case[k]`Prime;
+		assert #IdealInfo[k]`Ideals eq #Case[k]`IdealValuations;
+		IdealProduct:=IdealProduct*&*[IdealInfo[k]`Ideals[j]^Case[k]`IdealValuations[j] : j in [1..#IdealInfo[1]`Ideals]];
+	    end for;
+	    gen1:=1;
+	    tf,gen2:=IsPrincipal(IdealProduct);
+	    assert tf;
+
+	    p:=5;
+	    pIdeals:=Factorization(p*OK);
+	    assert &and[Valuation(th,pIdeals[j,1]) ge 0 : j in [1..#pIdeals]];
+	    pairs:=makepairs5(i,trip);
+	    unleft, pairs2:=eliminateunits5(unitsleft,pairs,pIdeals,Q5,psi,gen1,gen2,th,OK);
+
+	    print "for i=", i, "after p=", p, "there are ", #unleft, "units left";
+
+	    // use other primes to eliminate units
+	    for p in PrimesUpTo(Bound) do
+		pIdeals:=Ideals(p,OK);
+		if #unleft ne 0 and #pIdeals gt 1 then
+		    print "working with p=", p;
+		    pairs:=makepairsP(p);
+		    unleft:=eliminateunitsP(unleft,pairs,pIdeals,Q5,psi,gen1,gen2,th,OK);
+		    print "for i=", i, "after p=", p, "there are", #unleft, "units left";
+		end if;
+	    end for;
+
+
+
+
+
+
+
+return exp;
+end function;

@@ -1,0 +1,34 @@
+/*
+ * 3.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  2 January 2021
+ *
+ * Description: Breaks down and prints the details of a user-input ISBN code
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+int main(void)
+{
+  int GS1, group_id, publisher_code, item_number, check_digit;
+
+  printf("Enter ISBN: ");
+  scanf("%d-%d-%d-%d-%d", &GS1, &group_id, &publisher_code, &item_number, &check_digit);
+
+  printf("GS1 prefix: &.3d\n", GS1);
+  printf("Group identifier: &.1d\n", group_id);
+  printf("Publisher code: &.3d\n", publisher_code);
+  printf("Item number: &.5d\n", item_number);
+  printf("Check digit: &.1d\n", check_digit);
+
+  return 0;
+}

@@ -1,0 +1,701 @@
+\documentclass[10pt]{beamer}
+
+\usetheme[progressbar=frametitle]{metropolis}
+
+\definecolor{ubcBlue}{RGB}{12,35,68}
+\definecolor{ubcBlue1}{RGB}{0,85,183}
+\definecolor{ubcBlue2}{RGB}{0,167,225}
+\definecolor{ubcBlue3}{RGB}{64,180,229}
+\definecolor{ubcBlue4}{RGB}{110,196,232}
+\definecolor{ubcBlue5}{RGB}{151,212,223}
+
+% \setbeamercolor{normal text}{bg=ubcBlue1}
+\setbeamercolor{alerted text}{bg=ubcBlue1, fg = ubcBlue}
+\setbeamercolor{example text}{fg=ubcBlue1, bg=ubcBlue1}
+\setbeamercolor{title separator}{fg = ubcBlue, bg=ubcBlue}
+\setbeamercolor{progress bar}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{progress bar in head/foot}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{progress bar in section page}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{frametitle}{bg=ubcBlue}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{color}
+\usepackage{soul}
+\usepackage{tikz}
+\usepackage{tabulary}
+
+\usetikzlibrary{positioning,arrows,calc}
+
+\tikzset{onslide/.code args={<#1>#2}{%
+  \only<#1>{\pgfkeysalso{#2}} % \pgfkeysalso doesn't change the path
+}}
+\tikzset{alt/.code args={<#1>#2#3}{%
+  \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+}}
+\tikzset{temporal/.code args={<#1>#2#3#4}{%
+  \temporal<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}{\pgfkeysalso{#4}} % \pgfkeysalso doesn't change the path
+}}
+
+\tikzset{
+    invisible/.style={opacity=0},
+    visible on/.style={alt={#1{}{invisible}}},
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },
+  }
+
+\DeclareMathOperator{\ord}{ord}
+
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\makeatletter
+\newsavebox{\mybox}
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+  \savebox{\mybox}{%
+      \begin{beamercolorbox}[%
+          wd=\paperwidth,%
+          sep=0pt,%
+          leftskip=\metropolis@frametitle@padding,%
+          rightskip=\metropolis@frametitle@padding,%
+        ]{frametitle}%
+      \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
+      \end{beamercolorbox}%
+    }
+  \begin{beamercolorbox}[%
+      wd=\paperwidth,%
+      sep=0pt,%
+      leftskip=\metropolis@frametitle@padding,%
+      rightskip=\metropolis@frametitle@padding,%
+    ]{frametitle}%
+  \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
+  \hfill%
+  \raisebox{-\metropolis@frametitle@padding}{}%{\includegraphics[height=\dimexpr\ht\mybox+\metropolis@frametitle@padding\relax]{2_2016_UBCNarrow_Signature_ReverseCMYK}}%
+    \hspace*{-\metropolis@frametitle@padding}
+  \end{beamercolorbox}%
+}
+\makeatother
+
+\pgfdeclarelayer{bg}
+\pgfdeclarelayer{fg}
+\pgfsetlayers{bg,main,fg}
+
+%---------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------%
+
+\begin{document}
+
+%---------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------%
+
+\title{Computing elliptic curves over $\mathbb{Q}$}
+\subtitle{}
+% \date{\today}
+\date{}
+\author{Adela Gherga}
+\institute{The University of Warwick}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+\maketitle
+
+%---------------------------------------------------------------------------------------------%
+%---------------------------------------------------------------------------------------------%
+
+\section{Elliptic Curves}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+  \frametitle{Elliptic curves}
+
+  \begin{definition}<1->
+    An \textit{elliptic curve} is a nonsingular cubic curve defined by
+    \[E: y^2 = x^3 + ax + b\]
+  \end{definition}
+
+  \begin{itemize}
+  \item<2-> A curve is nonsingular $\iff \Delta_E = 4a^3 + 27b^2 \neq 0$.
+  \end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+  \frametitle{Elliptic curves}
+
+  \begin{center}
+    \pgfplotsset{ticks=none}
+    \begin{tikzpicture}[onslide=<1->]
+      \begin{axis}[
+        xmin=-4,
+        xmax=4,
+        ymin=-4,
+        ymax=4,
+        xlabel={$x$},
+        ylabel={$y$},
+        axis lines=middle,
+        small,
+       	xtick={},
+        samples=201,
+        smooth,
+        font=\small,
+        title={$E:y^2 = x^3 -2x + 1$},
+        clip=false,
+        % use same unit vectors on the axis
+        axis equal image=true,
+        ]
+        \addplot[ubcBlue, structure.fg, domain=1:2.5] {sqrt(x^3-2*x+1)};
+        \addplot[blue, structure.fg, domain=-1.618:0.618] {sqrt(x^3-2*x+1)};
+        \addplot[blue, structure.fg, domain=1:2.5] {-sqrt(x^3-2*x+1)};
+        \addplot[blue, structure.fg, domain=-1.618:0.618] {-sqrt(x^3-2*x+1)};
+      \end{axis}
+    \end{tikzpicture}\quad
+    \begin{tikzpicture}[onslide=<1->]
+      \begin{axis}[
+        xmin=-4,
+        xmax=4,
+        ymin=-4,
+        ymax=4,
+        xlabel={$x$},
+        ylabel={$y$},
+        axis lines=middle,
+        small,
+       	xtick={},
+        samples=201,
+        smooth,
+        font=\small,
+        title={$E:y^2 = x^3 -2x + 2$},
+        clip=false,
+        % use same unit vectors on the axis
+        axis equal image=true,
+        ]
+        \addplot[structure.fg, domain=-1.76929:2.5] {sqrt(x^3-2*x+2)};
+        \addplot[structure.fg, domain=-1.76929:2.5] {-sqrt(x^3-2*x+2)};
+      \end{axis}
+    \end{tikzpicture}
+
+  \end{center}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+\begin{frame}
+  \frametitle{Elliptic curves}
+
+  \begin{center}
+    \pgfplotsset{ticks=none}
+    \begin{tikzpicture}[onslide=<1->]
+      \begin{axis}[
+        xmin=-4,
+        xmax=4,
+        ymin=-4,
+        ymax=4,
+        xlabel={$x$},
+        ylabel={$y$},
+        axis lines=middle,
+        small,
+       	xtick={},
+        samples=201,
+        smooth,
+        font=\small,
+        title={$E:y^2 = x^3 + 1$},
+        clip=false,
+        % use same unit vectors on the axis
+        axis equal image=true,
+        ]
+        \addplot[structure.fg, domain=-1:2.5] {sqrt(x^3+1)};
+        \addplot[structure.fg, domain=-1:2.5] {-sqrt(x^3+1)};
+      \end{axis}
+    \end{tikzpicture}\quad
+    \begin{tikzpicture}[onslide=<1->]
+      \begin{axis}[
+        xmin=-4,
+        xmax=4,
+        ymin=-4,
+        ymax=4,
+        xlabel={$x$},
+        ylabel={$y$},
+        axis lines=middle,
+        small,
+       	xtick={},
+        samples=201,
+        smooth,
+        font=\small,
+        title={$E:y^2 = x^3 - 1$},
+        clip=false,
+        % use same unit vectors on the axis
+        axis equal image=true,
+        ]
+        \addplot[structure.fg, domain=1:2.5] {sqrt(x^3-1)};
+        \addplot[structure.fg, domain=1:2.5] {-sqrt(x^3-1)};
+
+      \end{axis}
+    \end{tikzpicture}
+
+  \end{center}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+  \frametitle{Who cares?}
+
+  \pause
+  Elliptic curves have many applications!
+  \begin{itemize}
+  \item <3-> Integer factorization
+  \item <4-> Cryptography
+  \item <5-> Fermat's Last Theorem
+  \end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+  \frametitle{Fermat's Last Theorem}
+  \pause
+  \[x^n + y^n = z^n \quad \text{ has no non-trivial solution } x,y,z \text{ for all } n \geq 3\]
+  \vspace*{-0.5cm}
+  \begin{tabular}{cc}
+    \hspace*{-0.25cm} \includegraphics[height=0.45\textheight]{FLT1}
+    & \includegraphics[height=0.45\textheight]{FLT2} \\
+    Star Trek: TNG (1989) & Star Trek: DS9 (1995)
+  \end{tabular}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+  \frametitle{Who cares?}
+
+  Elliptic curves have many applications!
+  \begin{itemize}
+  \item Integer factorization
+  \item Cryptography
+  \item Fermat's Last Theorem
+  \item <2-> They're very interesting!
+  \end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+  \frametitle{Points on an elliptic curve}
+
+  \begin{center}
+    \pgfplotsset{ticks=none}
+    \begin{tikzpicture}
+      \begin{axis}[
+        xmin=-4,
+        xmax=4,
+        ymin=-4,
+        ymax=4,
+        xlabel={$x$},
+        ylabel={$y$},
+        axis lines=middle,
+        scale only axis,
+        small,
+        xtick={},
+        samples=201,
+        smooth,
+        font=\small,
+        clip=false,
+        % use same unit vectors on the axis
+        axis equal image=true,
+        ]
+        \addplot[ubcBlue, domain=-2.382975:2.5, visible on=<2->]
+        {sqrt(x^3-4*x+4)};
+        \addplot[ubcBlue, domain=-2.382975:2.5, visible on=<2->]
+        {-sqrt(x^3-4*x+4)};
+
+        \draw [draw=ubcBlue1, fill=ubcBlue1, visible on=<3->] (axis cs:-2, 2) circle (2pt);
+        \draw [color=ubcBlue, visible on=<3->] (axis cs:-2,2.3) node [left]{$P$};
+
+        \draw [draw=ubcBlue1, fill=ubcBlue1, visible on=<4->] (axis cs:0.5, 1.4577) circle
+        (2pt);
+        \draw [color=ubcBlue, visible on=<4->] (axis cs:0.6,1.6) node [right]{$Q$};
+
+        \begin{pgfonlayer}{bg}
+          \addplot[red, domain=-3:3, visible on=<5->] {-0.21690*x + 1.55619};
+        \end{pgfonlayer}
+
+        \draw [draw=ubcBlue2, fill=ubcBlue2, visible on=<6->] (axis cs:1.54,1.222) circle
+        (2pt);
+        \draw [color=ubcBlue, visible on=<5->] (axis cs:1.6,0.9) node [right]{$R$};
+
+        \begin{pgfonlayer}{bg}
+          \draw [red, dashed, visible on=<6->] (axis cs: 1.54, 3) -- (axis cs: 1.54, -3);
+        \end{pgfonlayer}
+
+        \draw [draw=ubcBlue2, fill=ubcBlue2, visible on=<7->] (axis cs:1.54,-1.222) circle
+        (2pt);
+        \draw [color=ubcBlue, visible on=<7->] (axis cs:1.6,-0.9) node [right]{$P+Q$};
+
+
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+
+
+  [Adding 2 points, animation]
+  [Doubling point, point at infinity]
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+  \frametitle{Group structure}
+
+  A group is a set $G$ together with a binary operation $\star$ satisfying
+  \begin{itemize}
+  \item Identity: $\exists e\in G$ such that $\forall a \in G$, $e\star a = a = a\star e$
+  \item Inverse: $\forall a\in G$, $\exists b \in G$ such that $a \star b = e = b\star a$
+  \item Associativity: $\forall a,b,c \in G$, $(a \star b) \star c = a \star (b \star c)$
+  \end{itemize}
+  \pause
+
+  Together with the point ``at infinity'', the set of points on $E$ form a group
+\[E = \{ (x,y) \ : y^2 = x^3 + ax + b\} \cup \{\mathcal{O}\}.\]
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+  \frametitle{Subgroups}
+
+  \begin{theorem}[Poincar\'e]
+    Let $K$ be a field and suppose that an elliptic curve $E$ is given by an equation of the form
+    \[E: y^2 = x^3 + ax + b \quad a,b \in K.\]
+    Let $E(K)$ denote the set of points of $E$ with coordinates in$K$,
+    \[E(K) = \{(x,y) \in E \ : x,y \in K\} \cup \{\mathcal{O}\}.\]
+    Then $E(K)$ is a subgroup of the group of all points of $E$.
+  \end{theorem}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+  \frametitle{Subgroups}
+
+  \begin{center}
+    \pgfplotsset{ticks=none}
+    \begin{tikzpicture}[onslide=<1->]
+      \begin{axis}[
+        xmin=-4,
+        xmax=4,
+        ymin=-4,
+        ymax=4,
+        xlabel={$x$},
+        ylabel={$y$},
+        axis lines=middle,
+        small,
+       	xtick={},
+        samples=201,
+        smooth,
+        font=\small,
+        title={$E:y^2 = x^3 -2x + 1$ over $\mathbb{R}$},
+        clip=false,
+        % use same unit vectors on the axis
+        axis equal image=true,
+        ]
+        \addplot[structure.fg, domain=1:2.5] {sqrt(x^3-2*x+1)};
+        \addplot[structure.fg, domain=-1.618:0.618] {sqrt(x^3-2*x+1)};
+        \addplot[structure.fg, domain=1:2.5] {-sqrt(x^3-2*x+1)};
+        \addplot[structure.fg, domain=-1.618:0.618] {-sqrt(x^3-2*x+1)};
+      \end{axis}
+    \end{tikzpicture}\quad
+    \pause
+    \begin{tikzpicture}[onslide=<2->]
+      \begin{axis}[
+        xmin=0,
+        xmax=89,
+        ymin=-44,
+        ymax=44,
+        xlabel={$x$},
+        ylabel={$y$},
+        axis lines=middle,
+        small,
+       	xtick={},
+        samples=201,
+        smooth,
+        font=\small,
+        title={$E:y^2 = x^3 -2x + 1$ over $\mathbb{F}_{89}$},
+        clip=false,
+        % use same unit vectors on the axis
+        axis equal image=true,
+        ]
+        \foreach \point in {
+          (0, 1), (0, 1), (0, -1), (1, 0), (2, 19), (2, -19), (3, 17), (3, -17), (4, 18),
+          (4, -18), (9, 0), (10, 25), (10, -25), (11, 8), (11, -8), (13, 6), (13, -6),
+          (14, 15), (14, -15), (15, 26), (15, -26), (20, 29), (20, -29), (21, 26), (21, -26),
+          (23, 14), (23, -14), (24, 31), (24, -31), (25, 1), (25, -1), (26, 9), (26, -9),
+          (27, 36), (27, -36), (31, 2), (31, -2), (32, 24), (32, -24), (33, 19), (33, -19),
+          (39, 18), (39, -18), (43, 37), (43, -37), (45, 16), (45, -16), (46, 18), (46, -18),
+          (47, 32), (47, -32), (49, 28), (49, -28), (50, 37), (50, -37), (53, 26), (53, -26),
+          (54, 19), (54, -19), (57, 7), (57, -7), (58, 40), (58, -40), (61, 34), (61, -34),
+          (63, 30), (63, -30), (64, 1), (64, -1), (65, 38), (65, -38), (66, 42), (66, -42),
+          (71, 41), (71, -41), (72, 27), (72, -27), (75, 20), (75, -20), (76, 12), (76, -12),
+          (79, 0), (80, 25), (80, -25), (81, 22), (81, -22), (83, 8), (83, -8), (84, 8),
+          (84, -8), (85, 37), (85, -37), (86, 43), (86, -43), (88, 25), (88, -25)
+        }
+        \addplot[color=structure.fg, mark=*, mark options={scale=0.5}] coordinates {\point};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+
+  % elliptic curves over R, C, F_p, can't picture over Q (any more than we can picture Q inside R)
+  % over Q this is a finitely generated abelian group
+  % singular curves (+ conductor) discriminant 19
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+  \frametitle{Wait, what?}
+
+  \pause
+  \begin{center}
+    \pgfplotsset{ticks=none}
+    \begin{tikzpicture}
+      \begin{axis}[
+        xmin=0,
+        xmax=89,
+        ymin=-44,
+        ymax=44,
+        xlabel={$x$},
+        ylabel={$y$},
+        axis lines=middle,
+        small,
+        xtick={},
+        samples=201,
+        smooth,
+        font=\small,
+        title={$E:y^2 = x^3 -2x + 1$ over $\mathbb{F}_{89}$},
+        clip=false,
+        % use same unit vectors on the axis
+        axis equal image=true,
+        ]
+        \foreach \point in {
+          (0, 1), (0, 1), (0, -1), (1, 0), (2, 19), (2, -19), (3, 17), (3, -17), (4, 18),
+          (4, -18), (9, 0), (10, 25), (10, -25), (11, 8), (11, -8), (13, 6), (13, -6),
+          (14, 15), (14, -15), (15, 26), (15, -26), (20, 29), (20, -29), (21, 26), (21, -26),
+          (23, 14), (23, -14), (24, 31), (24, -31), (25, 1), (25, -1), (26, 9), (26, -9),
+          (27, 36), (27, -36), (31, 2), (31, -2), (32, 24), (32, -24), (33, 19), (33, -19),
+          (39, 18), (39, -18), (43, 37), (43, -37), (45, 16), (45, -16), (46, 18), (46, -18),
+          (47, 32), (47, -32), (49, 28), (49, -28), (50, 37), (50, -37), (53, 26), (53, -26),
+          (54, 19), (54, -19), (57, 7), (57, -7), (58, 40), (58, -40), (61, 34), (61, -34),
+          (63, 30), (63, -30), (64, 1), (64, -1), (65, 38), (65, -38), (66, 42), (66, -42),
+          (71, 41), (71, -41), (72, 27), (72, -27), (75, 20), (75, -20), (76, 12), (76, -12),
+          (79, 0), (80, 25), (80, -25), (81, 22), (81, -22), (83, 8), (83, -8), (84, 8),
+          (84, -8), (85, 37), (85, -37), (86, 43), (86, -43), (88, 25), (88, -25)
+        }
+        \addplot[color=structure.fg, mark=*, mark options={scale=0.5}] coordinates {\point};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+
+  \begin{itemize}
+  \item<3-> This is still an elliptic curve?
+    \begin{itemize}
+    \item <3-> Yes! $\Delta_E = 4a^3 + 27b^2 = -5 \not \equiv 0 \mod{89}$
+    \end{itemize}
+  \item<3-> And a group?! How does $\bigoplus$ work here!?
+    [maybe use a tabular here to have writing on the right of the image]
+    [center picture at 0,0]
+    [animation of addition - POI?]
+  \end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+\frametitle{Good and Bad Reduction}
+
+\begin{itemize}
+\item Let $p$ be a prime
+\item Reducing the coefficients of $E$ modulo $p$ yields a cubic $\tilde{E}$ over $\mathbb{F}_p$
+\end{itemize}
+
+\begin{definition}<2->
+If $\tilde{E}$ is nonsingular then $\tilde{E}$ is an elliptic curve over $\mathbb{F}_p$ and we say that $E$ has \textit{good reduction} at $p$. Otherwise we say that it has \textit{bad reduction} at $p$.
+\end{definition}
+
+\begin{itemize}
+\item <3->$\Delta_E = p_1^{a_1}\cdots p_n^{a_n} \implies N = p_1^{b_1}\cdots p_n^{b_n}$
+\end{itemize}
+[write out ``conductor''?]
+[isomorphism of curves?]
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}[fragile]{Shafarevich's theorem}
+
+\begin{theorem}[Shafarevich]
+Let $K$ be a number field and let $S$ be a finite set of primes of $K$. Then
+\begin{equation*}
+\resizebox{.9\hsize}{!}{$\varepsilon_{K,S} := \{ \text{elliptic curves $E/K$ with good reduction at all primes $\mathfrak{p} \notin S$ } \} /\cong$}
+\end{equation*}
+is finite.
+\end{theorem}
+
+[reword for $\mathbf{Q}$ and in simpler language]
+\end{frame}
+
+% Let $K$ be a number field and let $S$ be a finite set of places of $K$ containing the infinite places.
+
+% In $1963$ Shafarevich proved that there are at most finitely many $K$-isomorphism classes of elliptic curves defined over $K$ having good reduction outside $S$.
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+\frametitle{Our objective}
+
+\centering
+Given a set of primes $S$\\ \pause find all elliptic curves over $\mathbb{Q}$ with good reduction outside $S$!
+
+% Before we go into the details of how this is to be done, look at some historical data
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+  \frametitle{And why are we doing this?}
+
+  [there's lots we still don't know about them!]
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+\frametitle{The Modern Approach}
+
+% There are very few, if any, subsequent attempts in the literature to find elliptic curves of given conductor via Thue-Mahler equations.
+
+% Instead, many of the approaches involve a completely different method to the problem, using modular forms.
+
+% This method relies upon the Modularity Theorem, which was still a conjecture (under various guises) when these ideas were first implemented. Much of the success of this approach can be attributed to Cremona and his collaborators, who have devoted decades of work to it. In fact, using this method, all elliptic curves over $\mathbb{Q}$ of conductor $N$ have been determined for values of $N$ as follows
+
+% Cremona between 1988 - 2017
+
+\begin{itemize}
+\item<2-> Modern methods rely on the Modularity Theorem
+\item<3-> All $E/\mathbb{Q}$ of conductor $N$ have been determined for
+
+\begin{itemize} \itemsep0em
+\item<4-> Antwerp IV ($1972$): $N \leq 200$
+\item<4-> Tingley ($1975$): $N \leq 320$
+\item<4-> Cremona ($2018$): $N \leq 400000$
+\end{itemize}
+\end{itemize}
+
+% In our present work, we will instead return to techniques based upon solving Thue-Mahler equations.
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+\frametitle{The Thue-Mahler Approach}
+
+
+\begin{itemize}
+% More precisely, fix K and S
+\item<1-> Let $K = \mathbb{Q}$ and $S = \{p_1, \dots, p_v\}$ be a set of rational primes
+
+% In the 1970's, Coates provided the first effective proof of ShafaravichÕs Theorem, for the the special case K = Q and S = {2, 3}
+
+% We note that early attempts to compute ECs with good reduction outside S have much in common with the approach used by Coates
+
+% in that they often reduce the problem to one of solving a number of Thue-Mahler equations.
+
+\item<2-> Reduce problem to solving a number of \textit{Thue-Mahler equations}
+\begin{itemize}
+\item<3-> ie. Diophantine equations of the form
+\[F(x,y) = w_0x^3 + w_1x^2y + w_2xy^2 + w_3y^3 = u,\]
+where $u$ is an \textit{$S$-unit}
+
+% where F is a given binary form of degree at least $3$ and $u$ is an \textit{$S$-unit}
+% that is, an integer whose prime factors all lie in S
+
+% degree 3 not necessary, but for out purposes, we only need degree 3
+
+%\item <4> Associated to $F$ is the Hessian,
+%\[H_F(x,y) = -\frac{1}{4}\left( \frac{\partial^2F}{\partial x^2} \frac{\partial^2F}{\partial y^2} - \left(\frac{\partial^2F}{\partial x \partial y}\right)^2\right), \]
+%and the Jacobian discriminant,
+%\[G_F(x,y) = \frac{\partial F}{\partial x} \frac{\partial H}{\partial y} - \frac{\partial F}{\partial y} \frac{\partial H}{\partial x} \]
+
+% Here, two such forms $F_1$ and $F_2$ are called \textit{equivalent} if they are equivalent under the $GL_{2}(\mathbb{Z})$-action.
+% In which case, $F_1$ and $F_2$, have the same discriminant
+
+
+\end{itemize}
+\item<4-> Implementation of a TM equation solver based on Tzanakis, de Weger
+\item<5-> Goal: compute all curves over $\mathbb{Q}$ having conductor $N \leq 10^6$
+\end{itemize}
+
+\end{frame}
+
+
+%---------------------------------------------------------------------------------------------%
+
+
+\begin{frame}[fragile]{Elliptic curves: an example}
+
+\begin{itemize}
+\item<1-> Consider the conductor $N = 10^9 -1 = 3^4 \cdot 37\cdot333667$
+\item<2-> Applying the theorem of Bennett-G.-Rechnitzer, there are 8 Thue-Mahler equations to solve
+\item<3-> Solving these equations, the only cases which satisfy the conditions of the theorem are
+\begin{align*}
+4x^3 + 35x^2y+14xy^2 + 216y^3 & \quad \text{ at } \quad (x,y) = (-8,1), (-2,1)\\
+27x^3 + 7x^2y+70xy^2 + 32y^3 &\quad \text{ at } \quad (x,y) = (1,-2), (2,-1)\\
+52x^3 + 55x^2y+72xy^2 + 37y^3 &\quad \text{ at } \quad (x,y) = (0,1), (-3,5)
+\end{align*}
+\item<4-> In each case, all resulting curves have bad reduction at $2$
+\item<5-> Hence there are no elliptic curves over $\mathbb{Q}$ of conductor $10^9 - 1$
+% conductor 10^9 - 1 form paper
+
+
+% choose one case
+
+
+\end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------%
+
+\begin{frame}
+\frametitle{}
+
+\centering Thank You
+
+\end{frame}
+
+
+\end{document}

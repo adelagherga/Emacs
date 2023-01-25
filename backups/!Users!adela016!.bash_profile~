@@ -1,0 +1,57 @@
+#  -----------------------------------------------------------------------------
+#
+#  Description:  This file holds all my BASH configurations and aliases
+#
+#  Sections:
+#  1.  Printers and Scanners
+#  2.  File and Folder Management
+#  3.  Reminders & Notes
+#
+#  -----------------------------------------------------------------------------
+
+#  --------------------------------
+#   1. PRINTERS AND SCANNERS
+#  --------------------------------
+
+#   Print remotely to UBC Math 126 printer "pulp"
+
+#   INPUT: 
+#	< File_Name >, where < File_Name > is stored in 
+#		/Users/adela016/Desktop 
+
+#   OUTPUT:
+# 	(see printer "pulp in M125)
+
+#   COMMENTS:
+# 	For double-sided printing, change
+# 		-Ppulp1 to -Ppulp2
+
+#   ------------------------------------------------------------
+
+    RemotePrintUBC () {
+    	m=$1
+    	scp /Users/adela016/Desktop/$m ghergaa@pascal.math.ubc.ca:/nfs/ghergaa # tr$
+    	ssh ghergaa@pascal.math.ubc.ca lpr -r -Ppulp1 /nfs/ghergaa/$m | exit
+    	echo "Printing $m to Math 126 printer 'pulp'... "
+    	return 0
+    }
+
+
+#  -------------------------------- 
+#   2. FILE AND FOLDER MANAGEMENT                          
+#  --------------------------------
+
+
+#  -------------------------------- 
+#   3. TERMINAL PROMPT                          
+#  --------------------------------
+    export PS1="$ "
+
+#  --------------------------------
+#   4. REMINDERS AND NOTES
+#  -------------------------------- 
+
+
+
+# added by Anaconda3 5.0.1 installer
+export PATH="/anaconda3/bin:$PATH"

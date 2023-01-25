@@ -1,0 +1,41 @@
+/*
+pAdic.m
+
+<description>
+
+Authors
+    Adela Gherga <adelagherga@gmail.com>
+Created
+    17 November 2022
+*/
+
+pAdicLog:=function(x,p)
+    /*
+      Determine the p-adic logarithm of x.
+
+      Parameters
+          x: FldPadElt
+          p: RngIntElt
+      Returns
+          <param>: <param type>
+	      <param description>
+   */
+//    {Returns the p-adic logarithm of x.}
+
+    r:= Valuation(x);   // computes the p-adic order of o
+    if r gt 0 then
+        x:= x/(p^r);    // updates o to be the p-free-part of o, since log_p(p^r) = r*log_p(p) = r*0 = 0
+    end if;
+    return Log(x);
+end function;
+
+
+function ConvertpAdic(theta, p, mu)
+//    {Returns the rational integer theta^(mu) such that 0 <= theta^(mu) < p^mu with ord_p(theta - theta^(mu)) >= mu.}
+    x:= IntegerRing()! theta;  // computes x = IntegerPart(theta), where theta = IntegerPart(theta) + O(p^precision)
+    x:= x mod p^mu;
+    if x lt 0 then
+        x:= x + p^mu;
+    end if;
+    return x;
+end function;

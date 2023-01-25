@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: procedure
+# key: procedure_
+# --
+
+$1:=procedure($2)
+    /*
+      $3<description>
+
+      Parameters
+          $4<param>: <param type>
+	      <param description>
+      Returns
+          $5<param>: <param type>
+	      <param description>
+   */

@@ -1,0 +1,170 @@
+vectorTests:=function(alist,a,primelist,a0xy)
+   /*
+      For a rational prime p, determine sets Lp and Mp, adequate for
+      (alpha,beta), as in Algorithm 1.
+
+      Parameters
+          alist: SeqEnum
+              A list of integer coefficients a_0, a_1,...,a_d.
+          a: RngIntElt
+          primelist: SeqEnum
+              A list of rational primes p_1, p_2,...,p_v.
+          a0xy:
+      Returns
+          sol:
+   */
+    d:=#alist-1;
+    ZUV<U,V>:=PolynomialRing(Integers(),2);
+    F:=&+[alist[i+1]*U^(d-i)*V^i : i in [0..d]];
+    a0:=alist[1];
+
+    if (&and[a0xy[i] eq 0 : i in [3..d]] eq false) then
+	// A valid solution must be of the form a0 X - theta Y.
+	return {};
+    end if;
+    if (a0xy[1] notin Integers()) or (a0xy[2] notin Integers()) then
+	return {};
+    end if;
+    a0xy:=[Integers()!a0xy[1],Integers()!a0xy[2]];
+    if (IsDivisibleBy(a0xy[1],a0) eq false) then
+	return {};
+    end if;
+    sol:=[a0xy[1] div a0,-a0xy[2]];
+    if (GCD(sol[1],sol[2]) ne 1) or (GCD(a0,sol[2]) ne 1) then
+	return {};
+    end if;
+    Fsol:=Evaluate(F,sol);
+    if (IsDivisibleBy(Fsol,a) eq false) then
+	return {};
+    end if;
+    Fsol:=Fsol div a;
+    zlist:=[];
+    for p in primelist do
+	z:=Valuation(Fsol,p);
+	Append(~zlist,z);
+	Fsol:=Fsol div p^z;
+    end for;
+    if Fsol eq 1 then
+	if IsEven(d) then
+	    return {sol cat zlist,[-sol[1],-sol[2]] cat zlist};
+	else
+	    return {sol cat zlist};
+	end if;
+    elif Fsol eq -1 then
+	if IsOdd(d) then
+	    return {[-sol[1],-sol[2]] cat zlist};
+	end if;
+    end if;
+end function;
+
+solutionVectors:=function(alist,a,primelist,tau,deltaList,vecs)
+    /*
+      Determine lattice vectors b in the translated lattice wc + Lc such that
+      the squared L^2 norm of b is <= cBfsq, sieved with prime ideals outside
+      of S (as in Procedure 1).
+
+      Parameters
+          Zr: GrpAb
+              The abelian group isomorphic to Z^r.
+          Lc: GrpAb
+              An abelian group defining a lattice of Z^r.
+          wc: GrpAbElt
+              An element of Z^r.
+          cBfsq: FldReElt
+              The final, squared upper bound for the L^2 norm of the vector
+	      (b_1,...,b_r) after reduction.
+	  bigInfs: List
+	      For each entry (q,Bq,Piq,SqShifted) of smallInfs, this is the
+	      pair (phiq,Tq), where phiq defines the map Z^r --> Bq, and Tq
+	      is the set Sq intersected with piq(Z^r).
+          depth: RngIntElt
+              An integer denoting the depth of the recusion.
+      Returns
+          vecs: SeqEnum
+              A list of vectors b of the translated lattice wc + Lc having
+	      squared L^2 norm <= cBfsq.
+   */
+    if #vecs eq 0 then
+	return {};
+    end if;
+
+    eqSols:={};
+    r:=#deltaList;
+    v:=#primelist;
+    d:=#alist-1;
+    K:=NumberField(Universe([tau] cat deltaList));
+    assert d eq Degree(K) and d ge 3;
+    ZUV<U,V>:=PolynomialRing(Integers(),2);
+    F:=&+[alist[i+1]*U^(d-i)*V^i : i in [0..d]];
+    a0:=alist[1];
+
+    for ww in vecs do
+	a0xy:=tau*&*[deltaList[i]^ww[i] : i in [1..r]];
+	a0xy:=Eltseq(K!a0xy);
+	eqSols:= eqSols join vectorTests(alist,a,primelist,a0xy);
+    end for;
+
+    if (Abs(a0) eq 1) and (Abs(a) eq 1) then
+	if (a0 eq a) then
+	    assert (Evaluate(F,[1,0]) eq a0);
+	    eqSols:=eqSols join {[1,0] cat [0 : i in [1..v]]};
+	elif (a0*(-1)^d eq a) then
+	    assert (Evaluate(F,[-1,0]) eq a);
+	    eqSols:=eqSols join {[-1,0] cat [0 : i in [1..v]]};
+	end if;
+    end if;
+    return eqSols;
+end function;
+
+
+/*
+
+
+if #vecs ne 0 then
+	    for ww in vecs do
+		lincom:=tau*&*[deltaList[i]^ww[i] : i in [1..#deltaList]];
+		lincom:=Eltseq(K!lincom);
+		if &and[lincom[i] eq 0 : i in [3..d]] and lincom[1] in Integers()
+		   and lincom[2] in Integers() then
+		    lincom:=[Integers()!lincom[1],Integers()!lincom[2]];
+		    if IsDivisibleBy(lincom[1],a0) then
+			sol:=[lincom[1] div a0, -lincom[2]];
+			Fsol:=Evaluate(F,sol);
+			if GCD(sol[1],sol[2]) eq 1 and GCD(a0,sol[2]) eq 1 and
+			   IsDivisibleBy(Fsol,a) then
+			    Fsol:=Fsol div a;
+			    mlist:=[];
+			    for p in primelist do
+				m:=Valuation(Fsol,p);
+				Append(~mlist,m);
+				Fsol:=Fsol div p^m;
+			    end for;
+			    if Fsol eq 1 then
+				if IsEven(d) then
+				    sols:=sols join {sol cat mlist,
+						     [-sol[1],-sol[2]] cat mlist};
+				else
+				    sols:=sols join {sol cat mlist};
+				end if;
+			    elif Fsol eq -1 then
+				if IsOdd(d) then
+				    sols:=sols join {[-sol[1],-sol[2]] cat  mlist};
+				end if;
+			    end if;
+			end if;
+		    end if;
+		end if;
+	    end for;
+	end if;
+    end for;
+
+    if (Abs(a0) eq 1) and (Abs(a) eq 1) then
+	if (a0 eq a) then
+	    assert (Evaluate(F,[1,0]) eq a0);
+	    sols:= sols join {[1,0] cat [0 : i in [1..#primelist]]};
+	elif (a0*(-1)^d eq a) then
+	    assert (Evaluate(F,[-1,0]) eq a);
+	    sols:= sols join {[-1,0] cat [0 : i in [1..#primelist]]};
+	end if;
+    end if;
+*/

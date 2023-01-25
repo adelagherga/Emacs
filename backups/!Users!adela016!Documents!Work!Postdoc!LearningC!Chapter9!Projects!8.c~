@@ -1,0 +1,52 @@
+/*
+ * 8.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created: 19 January 2021
+ *
+ * Description: Prints the row sums and column sums of a 5 x 5 array.
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+int main(void)
+{
+  int i, j, temp_total;
+  int array[5][5];
+
+  for (i = 0; i < 5; i++)
+    {
+      printf("Enter row %d: ", i + 1);
+      for (j = 0 ; j < 5; j++)
+	scanf("%d", &array[i][j]);
+    }
+
+  printf("Row totals:");
+  for (i = 0; i < 5; i++)
+    {
+      temp_total = 0;
+          for (j = 0; j < 5; j++)
+	temp_total += array[i][j];
+      printf(" %d", temp_total);
+    }
+
+  printf("\nColumn totals:");
+  for (i = 0; i < 5; i++)
+    {
+      temp_total = 0;
+      for (j = 0; j < 5; j++)
+	temp_total += array[j][i];
+      printf(" %d", temp_total);
+    }
+
+  printf("\n");
+  return 0;
+}

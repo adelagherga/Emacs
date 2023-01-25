@@ -1,0 +1,10 @@
+
+
+Attach("/home/adela/ThueMahler/Code/TdWCode/GhergaHambrook.m");
+C:=[1,-6,5,-1];
+p:= PrimesInInterval(1,40);
+A:=1;
+FindAll:=true;
+LogFile:= "tau3log.txt";
+OutFile:= "tau3out.txt";
+TMAllCases(C,p,A,LogFile,OutFile,FindAll);

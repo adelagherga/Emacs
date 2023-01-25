@@ -1,0 +1,342 @@
+* Inbox
+
+** TODO Extra fridge? :@home:
+  [2021-03-02 Tue 18:33]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*Look into counsel, org-brain (mindmapping)][Look into counsel, org-brain (mindmapping)]]
+** TODO Clean up emacs init file (after last org video) :@home:
+SCHEDULED: <2021-03-20 Sat>
+  [2021-03-02 Tue 18:23]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*Inbox][Inbox]]
+** TODO Look into counsel, org-brain (mindmapping) :@home:
+  [2021-03-02 Tue 18:30]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*Active][Active]]
+
+
+** TODO Order Romanian book (?)
+  [2021-03-02 Tue 18:42]
+
+** TODO Go through Chapter 10 of C-programming (now using emacs)
+  [2021-03-02 Tue 18:42]
+
+** TODO Go through list:
+*** finish TM - procrastination
+*** art - painting, sewing (pants to fit me, couch cushions, dess, bra?)
+*** set up emacs via Emacs from scratch playlist
+*** save moneys for Canada
+*** get back into working out
+*** climbing setup (?)
+*** learn to make muhamara
+*** stretching
+*** bike lots
+*** be outside more (morning coffees)
+*** C book
+*** Crypto? CompTIA?
+*** set up a good log system for work
+
+  [2021-03-02 Tue 18:43]
+  [[file:~/Desktop/Desktop/Hello.org][file:~/Desktop/Desktop/Hello.org]]
+** TODO File TM Code info
+
+
+**** currently gathering jobs which are not printed in any of TMForms, NoSUnitEqNeeded, NoSUnitEqPossible
+- this is the only places these output pieces should have gone
+**** (TODO) run GenerateSUnitEq on IncompleteForms
+**** (TODO) clean up files
+**** (TODO) Start daily work log using org - backup in dropbox
+
+**** Next Steps
+   - gather all TMform data and seperate by clist,optimal clist
+     + see if they have same optimal clist, and if not, ensure they do
+   - generate new Thue forms while also generating TMforms to have alist, primelist printed (ie.
+     remainingCase)
+   - issue: cases such as
+     + 891869,"(2,1,2,2)","(1,6,5,2)","(1,6,5,2)","[ 3 ]"
+     + 891958,"(2,1,2,2)","(2,-20,-9,-1)","(1,-20,-18,-4)","[ 3 ]"
+     + 892136,"(2,1,2,2)","(7,-10,7,-2)","(1,-10,49,-98)","[ 3 ]"
+   - all have the same original clist, but opted for different GL2Zaction; *should consolidate*
+   - generate individual files based on original form; consolidate afterwards
+     - retrieve from TMforms via ie. grep "[0-9],\"(1,15,-93,-207)\"" TMFormData.csv
+
+   - idea: generate seperate documents of TMforms for each clist and consolidate there
+     + [do this after ensuring all jobs are finished]
+
+
+
+   - re-align headers (verify all code in TMForms/Code to date
+   - iterate through TMForms.m to generate proper Thue equations
+   - iterate through NoSUnitEqNeeded.m to generate proper Thue quations
+
+
+
+
+  [2021-03-02 Tue 19:09]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*set up a good log system for work][set up a good log system for work]]
+** TODO Go through 2.org and reorganize
+  [2021-03-02 Tue 20:38]
+** TODO Cancel Evernote subscription :@home:
+  [2021-03-03 Wed 11:26]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*Look into counsel, org-brain (mindmapping)][Look into counsel, org-brain (mindmapping)]]
+** TODO Download Dune books to eReader :@home:
+  [2021-03-03 Wed 11:27]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*Look into counsel, org-brain (mindmapping)][Look into counsel, org-brain (mindmapping)]]
+** TODO Org mode unordered list converting - to a dot is not working...
+  [2021-03-03 Wed 15:55]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*File TM Code info][File TM Code info]]
+** TODO [#B] Figure out how to sort out Journal entries
+  [2021-03-04 Thu 14:41]
+** TODO Meeting with Samir - type up notes?
+  [2021-03-04 Thu 14:42]
+** TODO Look into recurring/annual bills
+- BCAA (Aug 28, 2021)
+- Evernote (billed Nov 3, 2021)
+- Dropbox
+- Website (domain name)
+- NYT crossword puzzles (Apr 3, 2021)
+- Amazon UK
+- Amazon Canada
+- Youtube music
+- Zuzka Light
+
+[2021-03-04 Thu 18:06]
+** TODO Organize to dos
+  [2021-03-04 Thu 21:11]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*Look into recurring/annual bills][Look into recurring/annual bills]]
+
+  ie. set up with headers for projects, etc..
+** TODO Setup Tasks/Journal folder
+  [2021-03-05 Fri 12:36]
+  [[file:~/Dropbox/OrgFiles/Tasks.org][file:~/Dropbox/OrgFiles/Tasks.org]]
+
+  - dots not working
+  - set up projects - ask where to drop new task (ie in new projects in the same way that refile does)
+** TODO Workout goals
+  [2021-03-05 Fri 12:38]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*Clean and organize clothes drawer][Clean and organize clothes drawer]]
+
+  Tom Merrick basic goals (10 pullups, 15 dips, etc)
+  checklist from "what gains I made in 2020 video)
+** TODO To try: 10 days of facial exercise?
+  [2021-03-05 Fri 13:36]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*Clean and organize clothes drawer][Clean and organize clothes drawer]]
+
+** TODO Read through Shafarevich for Hilbert symbol
+  [2021-03-11 Thu 22:57]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*S-unit][S-unit]]
+
+** TODO Clean makeup brushes
+  [2021-03-15 Mon 12:45]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*plants, vit C, shampoo, conditioner, fridge (?),][plants, vit C, shampoo, conditioner, fridge (?),]]
+
+
+* Self
+** TODO C Programming [75%]
+*** DONE Ch 1
+CLOSED: [2021-03-15 Mon 12:53]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:53]
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:52]
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:51]
+:END:
+*** DONE Ch 2
+CLOSED: [2021-03-15 Mon 12:51]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:51]
+:END:
+*** DONE Ch 3
+CLOSED: [2021-03-15 Mon 12:51]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:51]
+:END:
+*** DONE Ch 4
+CLOSED: [2021-03-15 Mon 12:51]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:51]
+:END:
+*** DONE Ch 5
+CLOSED: [2021-03-15 Mon 12:52]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:52]
+:END:
+*** DONE Ch 6
+CLOSED: [2021-03-15 Mon 12:52]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:52]
+:END:
+*** DONE Ch 7
+CLOSED: [2021-03-15 Mon 12:52]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:52]
+:END:
+*** DONE Ch 8
+CLOSED: [2021-03-15 Mon 12:52]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:52]
+:END:
+*** DONE Ch 9
+CLOSED: [2021-03-15 Mon 12:52]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:52]
+:END:
+*** NEXT Ch 10
+*** TODO Ch 11
+*** TODO Ch 12
+
+  [2021-03-15 Mon 12:50]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*Ep 12][Ep 12]]
+
+
+** TODO Emacs from Scratch [41%]
+*** DONE Ep 1
+CLOSED: [2021-03-15 Mon 12:48]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:48]
+:END:
+*** DONE Ep 2
+CLOSED: [2021-03-15 Mon 12:48]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:48]
+:END:
+*** DONE Ep 3
+CLOSED: [2021-03-23 Tue 13:42]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-23 Tue 13:42]
+:END:
+*** NEXT Ep 4
+*** DONE Ep 5
+CLOSED: [2021-03-15 Mon 12:49]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:49]
+:END:
+*** DONE Ep 6
+CLOSED: [2021-03-15 Mon 12:49]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-15 Mon 12:49]
+:END:
+*** TODO Ep 7
+*** TODO Ep 8
+*** TODO Ep 9
+*** TODO Ep 10
+*** TODO Ep 11
+*** TODO Ep 12
+  [2021-03-15 Mon 12:47]
+  [[file:~/Dropbox/OrgFiles/Tasks.org::*Ch 1 - Ch 9][Ch 1 - Ch 9]]
+
+
+* Clean/Setup room
+
+** TODO Clean storage closet :@home:
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-03-05 Fri 12:35]
+:END:
+
+
+* Work
+
+* To Do (Today)
+** TODO update website
+** TODO Read Beaugeaud+Gyory
+** TODO AOC day 5
+** TODO comptiAA
+** TODO Women in math panel - update general page for resources
+** TODO plants (water + wash + trim)
+** TODO clean room
+** TODO violin
+** TODO find french class
+
+* Things to do over vacation
+** DONE vaccine
+** DONE hair fix
+** DONE buy hair dye
+** DONE live, laugh, love with Data
+** DONE clean bathroom
+** DONE clean room
+** DONE put up mirror
+** DONE return drill
+** TODO toile of pants
+** TODO sailing with Em
+** TODO star trek tickets
+** DONE piercing
+** TODO book another piercing?
+** TODO cupcakes for Xav
+** TODO buy flight ticket
+** DONE reschedule 2nd vaccine (?)
+** DONE clean backyard
+** TODO book NHS appointment for pelvic floor, derm (redness, tret)
+** TODO comptiaa
+** TODO AOC
+** DONE climb at Ravenswall
+** TODO chat with Rina
+
+
+
+to Buy:
+- candles
+- flight ticket - June
+- Powel river guide?
+- gift for Fi - gift card for tomboyx
+
+* Foods I am allergic to
+** broccoli
+** mushrooms (if more than 1-2)
+** onions
+** snow peas (??)
+
+
+
+split squat with weight - 15, 12, 10, 8
+pulse squat, 1.25 - 4 sets (8-10)
+deadlift - 3 sets (10-12 reps)
+dumbbell sumo squat w up/downs - 8-10 sumos, 30 sec up down (stay low) - 3 sets
+seated calve raise - 3 sets to abs failure
+
+
+* To Do Vancouver
+
+
+ * Hans insurance
+ * money from AC flight
+ * tret
+ * pelvic floor apt
+ * dentist - filling for return
+ * whatsapp replies (German guy, Hannah,)
+ * first step of non-Archimedean sieve
+ * !cancel/freeze gym membership
+ * plant care
+ * message Hannah (switch to Whatsapp)
+ * OKC replies
+ * new jeans (?)
+ * call air canada
+
+ * more general: check emails for conferences
+ * teeth whitening strips
+
+ * people to stay in touch with: Hannah, Mariane, Abi, Chloe, Stella, Alex(?), Matt
+ * bring back all-dressed chips for Abi; graham crackers for Em/Fi
+
+ * check subscriptions; ie. evernote, dropbox, etc
+ * change BCAA to CAA
+
+
+To Do Today - Sept 7, 2021
+ * birthday gift for Anti
+ * check webmail
+ * check LLL
+
+
+Apply for maths-staff: Leverhulme Early Career Fellowships (deadline Nov 19)
+Creative outlets:
+ * comptiaa
+ * learn french, ASL, Romanian
+ * steno
+ * sewing, darning
+ * violin
+ * drawing
+ * make my own bike bag; makerspace (sewing or woodwork)
+ * wig
+ * procreate
+ * fix shirt
+ * take apart nice fitting jeans
+
+Today
+ * book flight
+ * study group reading (due Friday Oct 14)

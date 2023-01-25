@@ -1,0 +1,420 @@
+% Medium Length Professional CV
+% LaTeX Template
+% Version 2.0 (8/5/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Trey Hunner (http://www.treyhunner.com/)
+%
+% Important note:
+% This template requires the resume.cls file to be in the same directory as the
+% .tex file. The resume.cls file provides the resume style used for structuring the
+% document.
+%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper]{resume} % Use the custom resume.cls style
+
+\usepackage[left=0.75in,top=0.6in,right=0.75in,bottom=0.6in]{geometry} % Document margins
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{color}
+\usepackage{bibentry}
+\usepackage{natbib}
+\usepackage{enumitem}
+\definecolor{ubcBlue}{RGB}{12,35,68}
+\definecolor{ubcBlue1}{RGB}{0,85,183}
+\definecolor{ubcBlue2}{RGB}{0,167,225}
+\definecolor{ubcBlue3}{RGB}{64,180,229}
+\definecolor{ubcBlue4}{RGB}{110,196,232}
+\definecolor{ubcBlue5}{RGB}{151,212,223}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ubcBlue1,
+    filecolor=magenta,
+    urlcolor=ubcBlue1,
+  }
+\usepackage{url}
+
+\begin{document}
+\nobibliography{CV2022.bib}
+\bibliographystyle{alpha}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+{\LARGE \bf \sc Adela Gherga}\\
+% Contact information
+{(416)-268-8289} \hfill 8 Buckthorn Rd.\\
+{\color{ubcBlue1}adelagherga@gmail.com} \hfill Thornhill, Ontario\\
+{\color{ubcBlue1}https://www.adelagherga.ca} \hfill L4J 8M4, Canada\\
+{Canadian citizen} \hfill \\
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Research Experience}
+
+
+  \begin{rSubsection}{Mathematics Researcher}{Jan 2023 -- present}{Tutte Institute for Mathematics and Computing}{Ottawa, CA}
+  \item Conduct mathematics and computing research in support of the Canadian Government Cryptologic Program and its international partners
+\end{rSubsection}
+
+  \begin{rSubsection}{EPSRC Postdoctoral Fellow}{Jan 2020 -- Jan 2023}{University of Warwick}{Coventry, UK}
+  \item Advisor: \href{http://homepages.warwick.ac.uk/~maseap/}{Dr. Samir Siksek}
+  \item Developed and implemented algorithms to generate elliptic curves over $\mathbb{Q}$
+  \item Conducted research towards efficient resolution of Diophantine equations
+\end{rSubsection}
+
+\end{rSection}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Education}
+
+\begin{rSubsection}{University of British Columbia}{Sep 2014 -- May 2020 }{Ph.D. Mathematics}{Vancouver, CA}
+\item Advisor: \href{https://www.math.ubc.ca/~bennett/}{Dr. Michael Bennett}
+\item Thesis Title: \href{https://open.library.ubc.ca/media/stream/pdf/24/1.0384820/4}{\color{ubcBlue1}Computing elliptic curves over $\mathbb{Q}$ via Thue--Mahler equations and related problems}
+\item Awarded Four-Year Fellowship (institutional)
+\item Awarded NSERC CGS--D (national)
+\item Awarded the Faculty of Science Excellence in Service Award for department mental health and wellbeing initiatives
+\item President of the Math Graduate Committee (Sep 2015 -- May 2017)
+\end{rSubsection}
+
+\begin{rSubsection}{McMaster University}{Sep 2010 -- Aug 2012}{M.Sc. Mathematics}{Hamilton, CA}
+\item Advisor: \href{https://www.math.mcmaster.ca/index.php/people/65-/professor/294-kolster-manfred.html}{Dr. Manfred Kolster}
+\item Thesis Title: \href{https://macsphere.mcmaster.ca/bitstream/11375/12644/1/fulltext.pdf}{Brauer-Kuroda relations for higher class numbers}
+\item Awarded Ontario Graduate Scholarship (provincial)
+\item Awarded NSERC CGS--M (national)
+\item Graduate representative of the Math and Stats Society
+\end{rSubsection}
+
+\begin{rSubsection}{McMaster University}{Sep 2006 -- Aug 2010}{B.Sc. (Hons.) Mathematics $\&$ Statistics}{Hamilton, CA}
+\item Dean's Honour List (2006 -- 2010)
+\item NSERC Undergraduate Student Research Award recipient (2009, 2010)
+\item Awarded the University (Senate) Scholarship (2007 -- 2010)
+\item Awarded the McMaster Honour Award, Level 3 (2006 -- 2009)
+\end{rSubsection}
+
+\end{rSection}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Publications}
+
+  \begin{enumerate}[leftmargin=0em,label={[\arabic*]}]
+  \item \bibentry{GhSi}
+  \item \bibentry{BGPS}
+  \item \bibentry{BeGhKr}
+  \item \bibentry{BeGhRe}
+    % \item A. Gherga, \textit {Brauer-Kuroda Relations on Higher Class Numbers}, M.Sc. Thesis, {McMaster University}, 2012.
+  \end{enumerate}
+\end{rSection}
+%\newpage
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+% FIX TO BE MORE LIKE BIB
+\begin{rSection}{Computational Projects and Software}
+  \begin{rList}
+  \item {\bf Elliptic curves over $\mathbb{Q}$ via Thue--Mahler equations}\\
+    Available at \href{https://github.com/adelagherga/TMEC}
+    {github.com/adelagherga/TMEC}
+  \item {\bf An efficient Thue--Mahler solver}\\
+    Available at \href{https://github.com/adelagherga/ThueMahler/tree/master/Code/TMSolver}
+    {github.com/adelagherga/ThueMahler/tree/master/Code/TMSolver}
+  \item {\bf $S$-unit solver and the sum of 2 $S$-units being a square}\\
+    Available at \href{https://github.com/adelagherga/TMEC/tree/main/Code/XYZ2}
+    {github.com/adelagherga/TMEC/tree/main/Code/XYZ2}
+  \item {\bf Thue--Mahler solver via Tzanakis-de Weger}\\
+    Available at \href{https://www.nt.math.ubc.ca/BeGhRe/Code/UBC-TMCode/}
+    {www.nt.math.ubc.ca/BeGhRe/Code/UBC-TMCode/}
+  \item {\bf Goormaghtigh equation solver}\\
+    Available at \href{https://www.nt.math.ubc.ca/BeGhKr/}
+    {www.nt.math.ubc.ca/BeGhKr}
+  \end{rList}
+
+\end{rSection}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Selected Research Talks}
+
+  \begin{rSubsection}{S\'{e}minaire Arithm\'{e}tique et Th\'{e}orie de L'information}{upcoming}{Institute de Math\'{e}matiques de Marseille (I2M)}{Remote}
+  \item Efficient resolution of Thue--Mahler equations
+  \end{rSubsection}
+
+  \begin{rSubsection}{Modern Breakthroughs in Diophantine Problems}{Jun 2022}{Banff International Research Station}{Banff, CA}
+  \item Efficient resolution of Thue--Mahler equations
+  \end{rSubsection}
+
+  \begin{rSubsection}{Warwick Women in Maths}{Mar 2021}{University of Warwick}{Coventry, UK}
+  \item Computing elliptic curves over $\mathbb{Q}$
+  \end{rSubsection}
+
+  \begin{rSubsection}{Warwick-Oxford-Reading-Kings Diophantine Geometry Seminar}{May 2021}
+    {University of Warwick}{Remote}
+  \item On the sum of two S-units being a square
+  \end{rSubsection}
+
+  \begin{rSubsection}{Warwick Number Theory Seminar}{Nov 2020}
+    {University of Warwick}{Remote}
+  \item Implementing algorithms to compute elliptic curves over $\mathbb{Q}$
+  \end{rSubsection}
+
+  \begin{rSubsection}{Barcelona Fall Workshop on Number Theory II}{Dec 2019}
+    {Universitat de Barcelona}{Barcelona, ES}
+  \item Implementing algorithms to compute elliptic curves over $\mathbb{Q}$
+  \end{rSubsection}
+
+  \begin{rSubsection}{Greater Vancouver Number Theory Day}{Mar 2019}
+    {University of British Columbia}{Vancouver, CA}
+    \item Computing elliptic curves over $\mathbb{Q}$
+  \end{rSubsection}
+
+\begin{rSubsection}{Tutte Institute for Mathematics and Computing Colloquium}{Sep 2018}{Tutte Institute for Mathematics and Computing}{Ottawa, CA}
+\item Efficient resolution of Thue-Mahler equations.
+\end{rSubsection}
+
+\begin{rSubsection}{Canadian Mathematical Society Summer Meeting}{Jun 2018}{Canadian Mathematical Society}{Fredericton, CA}
+\item Efficient resolution of Thue-Mahler equations.
+\end{rSubsection}
+
+% \begin{rSubsection}{AMMCS - Aug 2017}
+% \item sljf
+% \end{rSubsection}
+
+\begin{rSubsection}{Diophantine Approximation and Algebraic Curves}{Jun 2017}{Banff International Research Station}{Banff, CA}
+\item Computing elliptic curves over $\mathbb{Q}$
+\end{rSubsection}
+
+\begin{rSubsection}{Ottawa Mathematics Conference}{May 2013}{University of Ottawa}{Ottawa, CA}
+\item Brauer-Kuroda Relations for Higher Class Numbers
+\end{rSubsection}
+
+\begin{rSubsection}{Canadian Mathematical Society Winter Meeting}{Dec 2012}{Canadian Mathematical Society}{Montreal, CA}
+\item Brauer-Kuroda Relations for Higher Class Numbers
+\end{rSubsection}
+
+\end{rSection}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Honours and Awards}
+
+\begin{rTitle}{The Faculty of Science Excellence in Service Award}{May 2018}{University of British Columbia}{$\$2,000$}
+\end{rTitle}
+
+\begin{rTitle}{NSERC Canada Graduate Scholarship (CGS--D)}{Sep 2014}{University of British Columbia}{$\$35,000$ p.a.}
+\end{rTitle}
+
+\begin{rTitle}{Four Year Fellowship}{Sep 2014}{University of British Columbia}
+  {$\$18,000$ p.a.}
+\end{rTitle}
+
+\begin{rTitle}{Queen Elizabeth II Graduate Scholarship}{Sep 2013}{University of Lethbridge}{$\$15,000$}
+\end{rTitle}
+
+\begin{rTitle}{Ontario Graduate Scholarship}{Sep 2011}{McMaster University}{$\$15,000$}
+\end{rTitle}
+
+\begin{rTitle}{Milos Novotny Fellowship}{Sep 2010}{McMaster University}{$\$4,000$}
+\end{rTitle}
+
+\begin{rTitle}{NSERC Canada Graduate Scholarship (CGS--M)}{Sep 2010}{McMaster University}{$\$17,500$}
+\end{rTitle}
+%\begin{rList}
+%\item NSERC Alexander Graham Bell Canada Graduate Scholarship (CGS-D) \hfill 2014
+%\item Four Year Fellowship, University of British Columbia \hfill 2014
+%\item Queen Elizabeth II Graduate Scholarship \hfill 2013
+%\item Ontario Graduate Scholarship \hfill 2011
+%\item Milor Novotny Fellowship, McMaster University \hfill 2010
+%\item NSERC Alexander Graham Bell Canada Graduate Scholarship (CGS-M) \hfill 2010
+
+%\item NSERC Undergraduate Student Research Award \hfill 2010
+%\item NSERC Undergraduate Student Research Award \hfill 2009
+%2007   & The Marauder Scholar Award, McMaster University  \\
+%2007-2010 & The University (Senate) Scholarship, McMaster University \\
+%2006-2009 & The McMaster Honour Award, Level 3, McMaster University\\
+%\end{rList}
+
+\end{rSection}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Facilitation and Teaching Experience}
+
+  \begin{rSubsection}{Sessional Instructor}{Jan 2019 -- Apr 2019}{University of British Columbia}{Vancouver, CA}
+    \item Lecturer for Math 110 Calculus (3 hrs/wk)
+    \item Created lecture material, weekly assignments, midterms and exam
+  \end{rSubsection}
+
+  \begin{rSubsection}{Mathematics Host}{Jan 2019, Nov 2018, Jan 2017, Jan 2016}{Science World Future Science Leaders}{Vancouver and Surrey, CA}
+  \item Outreach program for engaged, highly motivated high school students interested in STEM fields
+  \item Led content delivery and facilitated small-group activities
+  \item Developed modules for self-guided learning for cryptography
+  \end{rSubsection}
+
+  \begin{rSubsection}{Participant}{Jan 2019 -- Apr 2019}{UBC Mathematics Teaching Assistant Accreditation Program}{Vancouver, CA}
+  \item Weekly interactive workshop on developing effective teaching and facilitation practices, with a focus on teaching and learning in a mathematics setting
+  \end{rSubsection}
+
+  \begin{rSubsection}{Recitation Instructor}{Jan 2018 -- Apr 2018}{University of British Columbia}{Vancouver, CA}
+  \item Recitation lecturer for Math 180 Calculus (2 hrs/wk)
+  \item Created lecture material for active--learning--based classes
+  \end{rSubsection}
+
+  \begin{rSubsection}{Undergraduate Teaching Assistant Training Organizer and Facilitator}{Sep 2018}{University of British Columbia}{Vancouver, CA}
+  \item Served as organizer for undergraduate teaching assistant training
+  \item Developed, led content delivery for and facilitated small-group activities for new undergraduate student teaching assistants, focusing on facilitative teaching, marking, online coursewares, expectations, communication, and diversity.
+  \end{rSubsection}
+
+  \begin{rSubsection}{Teaching Assistant Training Organizer and Facilitator}{Aug 2018 -- Sep 2018, Sep 2017}{University of British Columbia}{Vancouver, CA}
+  \item Served as organizer for teaching assistant training for incoming mathematics graduate students
+  \item Developed, led content delivery for and facilitated small-group activities for new graduate student teaching assistants, focusing on facilitative teaching, marking, online coursewares, expectations, communication, and diversity.
+  \end{rSubsection}
+
+  \begin{rSubsection}{Recitation Instructor}{Jan 2016 -- Apr 2016}{University of British Columbia}{Vancouver, CA}
+  \item Recitation lecturer for Math 101 Calculus (2 hrs/wk)
+  \item Created lecture material for active--learning--based classes
+  \end{rSubsection}
+
+
+%   \begin{rSubsection}{}{}{}{}
+% \item Math 110 (Calculus) instructor \hfill Jan 2019 - Apr 2019
+% \item Math 180 (Calculus) recitation instructor \hfill 2018
+% \item Math Undergraduate Teaching Assistant Training organizer and facilitator  \hfill 2018
+% \item Math Graduate Teaching Assistant Training organizer and facilitator \hfill 2018
+% %\item Math 312 (Introduction to Number Theory) teaching assistant \hfill 2018
+% %\item Math Learning Centre student tutor \hfill 2017
+% %\item Math 312 (Introduction to Number Theory) teaching assistant \hfill 2017
+% \item Math Graduate Teaching Assistant Training facilitator  \hfill 2017
+% \item Math 101 (Calculus) recitation instructor \hfill 2016
+% %\item Math 103 (Calculus) Piazza teaching assistant \hfill 2016
+% %\item Math Learning Centre student tutor \hfill 2016
+% %\item Math 312 (Introduction to Number Theory) teaching assistant  \hfill 2016
+% %\item Math 180 (Calculus) Workshop instructor \hfill 2015
+% \end{rSubsection}
+
+%\begin{rSubsection}{Science World}{}{}{}
+%\item Future Science Leaders Vancouver fellow and facilitator \hfill 2019
+%\item Future Science Leaders Surrey fellow and facilitator \hfill 2018
+%\item Future Science Leaders Vancouver facilitator \hfill 2017
+%\item Future Science Leaders Vancouver facilitator \hfill 2016
+%\end{rSubsection}
+
+%\begin{rSubsection}{McMaster University}{}{}{}
+%\begin{rList}
+%\item Math 2ZZ3 (Engineering Math IV) Lab instructor \hfill 2012
+%\item Math 3CY3 (Cryptography) teaching assistant \hfill 2011
+%\item Math 1X03 (Calculus for Mathematics $\&$ Statistics) Tutorial instructor \hfill 2010
+%\item Math Help Centre student tutor \hfill 2010
+%\end{rList}
+%\end{rSubsection}
+
+\end{rSection}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Service and Outreach}
+
+  \begin{rSubsection}{Panel organizer}{May 2021}{Warwick International Women in Maths Day Panel}{Remote}
+  \item Organized and hosted a panel discussion with women in mathematics in celebration of International Women in Maths Day
+  \end{rSubsection}
+
+  \begin{rSubsection}{Member}{Jan 2020 -- Jun 2021}{Equity, Diversity, and Inclusion Committee}{Coventry, UK}
+  \item Participated in meetings in support of ED\&I initiatives
+  \item Helped develop department diversity programs
+  \end{rSubsection}
+
+  \begin{rSubsection}{Member}{Sep 2019 -- Jan 2020}{She\&They\&Allies}{Vancouver, BC}
+  \item A mathematics graduate and postdoctoral fellows organization supporting women and non-binary mathematicians
+  \item Participated in meetings, contributing to initiatives to better support women and non-binary mathematicians
+  \end{rSubsection}
+
+  \begin{rSubsection}{Organizer and mentor}{Jan 2017 -- Apr 2018}{Mathematics Graduate Student Mentorship Program}{Vancouver, CA}
+  \item Created, organized, and facilitated a mentorship program for mathematics graduate students to support incoming graduate students
+  \item Developed programs and activities for mentors to better support their mentees
+  \item Served as a mentor to 3 new mathematics graduate students
+  \end{rSubsection}
+
+  \begin{rSubsection}{Organizer}{Sep 2016 -- Aug 2017}{Mathematics Wellbeing Initiatives}{Vancouver, CA}
+  \item Organized workshops with graduate students and faculty to address mental health concerns of graduate students and brainstorm solutions
+  \item Compiled mental health resources, and successfully negotiated with staff for a mathematics graduate student lounge
+  \item Developed the mathematics graduate student mentorship program
+  \item Organized and hosted department de-stress activities such as paint and art nights
+  \end{rSubsection}
+
+  \begin{rSubsection}{Co-coordinator}{Sep 2016 -- Aug 2017}{UBC Graduate Student Wellbeing Network}{Vancouver, CA}
+  \item A campus-wide student organization addressing graduate student wellbeing and mental health issues
+  \item Organized and facilitated meetings with graduate student representatives, university staff and admin to discuss wellbeing concerns of different departments
+  \item Compiled mental health resources, and successfully negotiated with university staff for a dedicated campus-wide graduate student lounge
+  \end{rSubsection}
+
+  \begin{rSubsection}{President}{Sep 2015 -- Aug 2017}{UBC Mathematics Graduate Student Committee}{Vancouver, CA}
+  \item Managed the Mathematics Graduate Student Committee and its suborganizations
+  \item Organized and hosted graduate student socials and the biweekly graduate student seminar
+  \item Successfully negotiated funding for mathematics graduate student events
+  \end{rSubsection}
+
+    \begin{rSubsection}{Seminar Organizer}{Sep 2015 -- Aug 2017}{UBC Mathematics Graduate Student Seminar}{Vancouver, CA}
+  \item Organized and hosted the biweekly graduate student seminar
+  \end{rSubsection}
+
+
+
+
+
+%   \begin{rSubsection}{University of British Columbia}{}{}{}
+%     \item ED\&I member 2020
+% \item Math Graduate Student Mentorship Program, organizer and mentor \hfill 2018
+% \item Math Learning Centre Committee, member \hfill 2018
+% \item Math Wellbeing Initiatives, organizer \hfill 2017
+% \item Math Graduate Student Mentorship Program, organizer and mentor \hfill 2017
+% \item Math Graduate Committee, president \hfill 2016
+% \item Graduate Student Wellbeing Network, co-coordinator \hfill 2016
+% \item Math Graduate Committee, president  \hfill 2015
+% \end{rSubsection}
+
+
+%\begin{rSubsection}{McMaster University}{}{}{}
+%\begin{rList}
+%\item Mathematics Student Committee, graduate representative \hfill 2011
+%\item Mathematics Student Committee, graduate representative \hfill 2010
+%\end{rList}
+%\end{rSubsection}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+% Relevant Skills      														      		     %
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Relevant Skils}
+
+\begin{rSubsection}{Programming Languages}{}{}{}
+\item \textbf{Fluent:} \texttt{Magma}, \texttt{SageMath}, $\textsc{Matlab}$, \LaTeX
+\item \textbf{Intermediate:} \texttt{bash}, \texttt{Python}, \texttt{C++}
+\item \textbf{Beginner:} \texttt{PARI/GP}, Markdown, HTML
+\end{rSubsection}
+
+\end{rSection}
+
+\end{document}

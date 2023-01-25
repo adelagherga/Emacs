@@ -1,0 +1,44 @@
+/*
+ * 1.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created: 18 January 2021
+ *
+ * Description: Returns repeated digits of a user-input number.
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+#include <stdbool.h>
+
+int main(void)
+{
+  bool digit_seen[10] = {false};
+  int digit;
+  long n;
+
+  printf("Enter a number: ");
+  scanf("%ld", &n);
+
+  printf("Repeated digit(s):");
+  while (n > 0)
+    {
+      digit = n % 10;
+      if (digit_seen[digit])
+	printf(" %d", digit);
+
+      digit_seen[digit] = true;
+      n /= 10;
+    }
+
+    printf("\n");
+
+  return 0;
+}

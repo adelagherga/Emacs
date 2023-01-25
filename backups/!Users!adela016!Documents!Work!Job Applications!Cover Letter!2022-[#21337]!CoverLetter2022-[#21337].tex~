@@ -1,0 +1,100 @@
+%basic cover letter template
+\documentclass{letter}
+\usepackage{amssymb,amsmath}
+\usepackage{graphicx}
+
+\oddsidemargin=.2in
+\evensidemargin=.2in
+\textwidth=5.9in
+\topmargin=-.5in
+\textheight=9in
+
+%\address{Mathematics Department\\University of Illinois\\
+%1409 W. Green St\\Urbana, Illinois 61801}
+
+\newcommand {\qed}{\mbox{$\Box$}}
+\renewcommand {\iff}{\Longleftrightarrow}
+\newcommand {\R}{\mathbb{R}}
+\newcommand {\N}{\mathbb{N}}
+\newcommand {\Q}{\mathbb{Q}}
+\newcommand {\Z}{\mathbb{Z}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{lemma}{Lemma}
+\newtheorem{question}{Question}
+
+% stylistic environment
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{comment}
+\definecolor{ubcBlue1}{RGB}{0,85,183}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ubcBlue1,
+    urlcolor=ubcBlue1,
+    linktoc=all
+}
+
+% new commands
+\newcommand{\eps}{\varepsilon}
+\newcommand{\edit}[1]{\textcolor{red}{#1}}
+\newcommand {\sub}{\mbox{SB}}
+
+%--------------------------------------------------------------------------------------------%
+%--------------------------------------------------------------------------------------------%
+
+\begin{document}
+\begin{letter}{Professor Brendan Hassett\\
+Department of Mathematics\\
+Brown University\\
+151 Thayer St\\
+Providence, RI 02912}
+
+\opening{Dear Dr. Jennifer Balakrishnan,}
+
+\begin{comment}
+  1. Job you are applying for and where you saw the job listing
+  2. Your degree and when you expect to complete it
+  3. Why you are interested in the position or organization/company (draw from job description/website)
+\end{comment}
+
+I am writing to apply for the position of Postdoctoral Associate at Boston University. I am currently an EPSRC Postdoctoral Fellow at the University of Warwick working in computational and algebraic number theory. I completed a Ph.D. in Mathematics at the University of British Columbia (UBC), working under the supervision of Dr. Michael Bennett.
+
+\begin{comment}
+  1. Background skills you possess specifically related to this job
+  2. Focus is on those skills most important in the job description
+  3. Use their terminology to describe your experience
+  4. Highlight those skills most pertinent to this job.
+\end{comment}
+
+My work centers on computing elliptic curves and expanding existing elliptic curve databases, with the goal of providing a larger testing ground for conjectures and discoveries. I achieve this by developing and implementing efficient algorithms and computational tools to explicitly resolve certain Diophantine equations, many of which have extensive applications beyond elliptic curves. These algorithms are the realization of recent theoretical advances in number theory which I helped develop. In this work, I use a wide variety of computer programming languages, including \texttt{Magma}, \texttt{SageMath}, \texttt{Python}, \texttt{C++} and \texttt{bash}. My research program focuses on compiling and analyzing these elliptic curve datasets and integrating them into existing platforms such as the L-functions and Modular Forms DataBase, as well as advancing number-theoretic computational algorithms through tools such as machine learning.
+
+I believe that collaboration is an important part of research, and in my work, I regularily coordinate with as many as 10 researchers across the globe. At the University of Warwick and UBC, I organized and ran several workshops and seminars, including the International Women in Maths Day panel, the mathematics graduate student seminar, and 3 teaching assistant training programs. I support diversity, equity, and inclusion efforts, serving as a member of the University of Warwick ED\&I committee and the UBC She\&They\&Allies committee. At UBC, I was awarded the Faculty of Science Excellence in Service Award for department mental health and
+wellbeing initiatives, which included developing and coordinating a graduate student mentorship program.
+
+My background and current research in computational number theory, as well as my fluency in modern computer algebra packages such as \texttt{Magma} and \texttt{SageMath} make me an excellent candidate for this role, and I look forward to contributing to the Simons Collaboration and the Boston University's department mission through my work. Thank you for your consideration.
+
+
+
+
+\closing{Sincerely,
+%\includegraphics[width=6cm]{signature.pdf}
+}
+%I made a pdf file of my signature using the scanner, so that all the cover letters I sent
+%electronically were "signed."
+
+Adela Gherga\\
+{(416)-268-8289} \hfill Dept. of Mathematics \\
+{\color{ubcBlue1}adelagherga@gmail.com} \hfill University of Warwick\\
+{\color{ubcBlue1}https://www.adelagherga.ca} \hfill Coventry, CV4 7AL\\
+\null \hfill United Kingdom \\
+
+\end{letter}
+
+\end{document}

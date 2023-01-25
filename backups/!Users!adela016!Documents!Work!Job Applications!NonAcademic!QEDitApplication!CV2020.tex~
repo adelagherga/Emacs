@@ -1,0 +1,302 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Medium Length Professional CV
+% LaTeX Template
+% Version 2.0 (8/5/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Trey Hunner (http://www.treyhunner.com/)
+%
+% Important note:
+% This template requires the resume.cls file to be in the same directory as the
+% .tex file. The resume.cls file provides the resume style used for structuring the
+% document.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper]{resume} % Use the custom resume.cls style
+
+\usepackage[left=0.75in,top=0.6in,right=0.75in,bottom=0.6in]{geometry} % Document margins
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\usepackage{url}
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+% Name, Contact information															     %
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+
+{\LARGE \bf \sc Adela Gherga} \\
+% Contact information
+{(416)-268-8289} \hfill Dept. of Mathematics \\
+\verb+adelagherga@gmail.com+ \hfill University of British Columbia\\
+\verb+https://www.adelagherga.ca+ \hfill  1984 Mathematics Road\\
+\null \hfill Vancouver, BC, Canada \\
+
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+% Research Interests																     %
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Research Interests}
+Computational and algebraic number theory, with a particular focus on elliptic curves and Diophantine equations.
+\end{rSection}
+
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+% Education 																		     %
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Education}
+
+\begin{rSubsection}{University of British Columbia}{2014 - present }{Ph.D. Candidate, Mathematics}{Vancouver, BC}
+\item Advisor: \href{https://www.math.ubc.ca/~bennett/}{Dr. Michael Bennett}
+\item Thesis Title: Efficient resolution of Thue-Mahler equations and related Diophantine problems
+\item Awarded Four-Year Fellowship (institutional)
+\item Awarded NSERC CGS-D (national)
+\item Awarded the Faculty of Science Excellence in Service Award for department mental health and wellbeing initiatives
+\item President of the Math Graduate Committee (2015-2017)
+\end{rSubsection}
+
+\begin{rSubsection}{McMaster University}{2010 - 2012}{M.Sc. Mathematics}{Hamilton, ON}
+\item Advisor: \href{https://www.math.mcmaster.ca/index.php/people/65-/professor/294-kolster-manfred.html}{Dr. Manfred Kolster}
+\item Thesis Title: Brauer-Kuroda relations on higher class numbers 
+\item Awarded Ontario Graduate Scholarship (provincial)
+\item Awarded NSERC CGS-M (national)
+\item Graduate representative of the Math and Stats Society
+\end{rSubsection}
+
+\begin{rSubsection}{McMaster University}{2006 - 2010}{B.Sc. (Hons.) Mathematics $\&$ Statistics}{Hamilton, ON}
+\item Dean's Honour List (2006-2010)
+\item NSERC Undergraduate Student Research Award recipient (2009, 2010)
+\item Awarded the University (Senate) Scholarship (2007-2010)
+\item Awarded the McMaster Honour Award, Level 3 (2006-2009)
+\end{rSubsection}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+% Publications 																		     %
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Publications}
+
+\begin{rList}
+\item M.A. Bennett, A. Gherga, A. Rechnitzer, \textit{Computing elliptic curves over} $\mathbb{Q}$, \\
+{Math. Comp. 88 (2019)}, no. 317, 1341-1390, \verb+https://doi.org/10.1090/mcom/3370+ \\
+
+\item M.A. Bennett, A. Gherga, D. Kreso, \textit{An old and new approach to Goormaghtigh's equation},\\
+Submitted to Compositio Math., 39 pp.\\
+
+\item A. Gherga, R. von K\"anel, B. Matschke, S. Siksek, \textit{Efficient resolution of Thue-Mahler equations},\\ In preparation. \\
+
+\item M.A. Bennett, A. Gherga, \textit{On the sum of two S-units being a square and associated elliptic curves},\\ In preparation. 
+
+%\item A. Gherga, \textit {Brauer-Kuroda Relations on Higher Class Numbers}, M.Sc. Thesis, {McMaster University}, 2012.
+
+\end{rList}
+\end{rSection}
+\newpage
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+% Talks 														      					     %
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Conference and Seminar Talks}
+
+\begin{rSubsection}{Tutte Institute for Mathematics and Computing}{2018}{Institution-wide Colloquium}{Ottawa, ON}
+\item Invited research talk on efficient resolution of Thue-Mahler equations.
+\end{rSubsection}
+
+\begin{rSubsection}{Canadian Mathematical Society}{2018}{Canadian Mathematical Society Summer Meeting}{Fredericton, NB}
+\item Invited research talk on efficient resolution of Thue-Mahler equations.
+\end{rSubsection}
+
+\begin{rSubsection}{Banff International Research Station}{2017}{Diophantine Approximation and Algebraic Curves}{Banff, AB}
+\item Invited research talk on computing elliptic curves over $\mathbb{Q}$.
+\end{rSubsection}
+
+\begin{rSubsection}{The University of Ottawa}{2013}{Ottawa Mathematics Conference}{Ottawa, ON}
+\item Invited research talk on Brauer-Kuroda Relations for Higher Class Numbers.
+\end{rSubsection}
+
+\begin{rSubsection}{Canadian Mathematical Society}{2012}{Canadian Mathematical Society Winter Meeting}{Montreal, QC}
+\item Invited research talk on Brauer-Kuroda Relations for Higher Class Numbers.
+\end{rSubsection}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+% Software Packages																     %
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Software Packages and Databases}
+
+\begin{rList}
+\item Thue-Mahler equation solver and $S$-unit equation solver via a Tzanakis-de Weger approach\\
+Available at \verb+https://www.nt.math.ubc.ca/BeGhRe/+\\
+
+\item Goormaghtigh equation solver\\
+Available at \verb+https://www.nt.math.ubc.ca/BeGhKr/+\\
+
+\item An efficient Thue-Mahler equation solver via Weil heights\\
+In preparation.\\
+
+\item Elliptic curves over $\mathbb{Q}$ of conductor $N < 10^6$ database\\
+In preparation.
+
+\end{rList}
+\end{rSection}
+
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+% Honours and Awards 														      		     %
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Honours and Awards}
+
+\begin{rSubsection}{The Faculty of Science Excellence in Service Award}{2018}{$\$2,000$}{Vancouver, BC}
+\item The University of British Columbia
+\end{rSubsection}
+
+\begin{rSubsection}{NSERC Canada Graduate Scholarship (CGS-D)}{2014}{$\$35,000$ per annum}{Vancouver, BC}
+\item The University of British Columbia
+\end{rSubsection}
+
+\begin{rSubsection}{Four Year Fellowship}{2014}{$\$18,000$ per annum}{Vancouver, BC}
+\item The University of British Columbia
+\end{rSubsection}
+
+\begin{rSubsection}{Queen Elizabeth II Graduate Scholarship}{2013}{$\$15,000$}{Lethbridge, AB}
+\item The University of Lethbridge
+\end{rSubsection}
+
+\begin{rSubsection}{Ontario Graduate Scholarship}{2011}{$\$15,000$}{Hamilton, ON}
+\item McMaster University
+\end{rSubsection}
+
+\begin{rSubsection}{Milos Novotny Fellowship}{2010}{$\$4,000$}{Hamilton, ON}
+\item McMaster University
+\end{rSubsection}
+
+\begin{rSubsection}{NSERC Canada Graduate Scholarship (CGS-M)}{2010}{$\$17,500$}{Hamilton, ON}
+\item McMaster University
+\end{rSubsection}
+%\begin{rList}
+%\item NSERC Alexander Graham Bell Canada Graduate Scholarship (CGS-D) \hfill 2014
+%\item Four Year Fellowship, University of British Columbia \hfill 2014
+%\item Queen Elizabeth II Graduate Scholarship \hfill 2013
+%\item Ontario Graduate Scholarship \hfill 2011
+%\item Milor Novotny Fellowship, McMaster University \hfill 2010
+%\item NSERC Alexander Graham Bell Canada Graduate Scholarship (CGS-M) \hfill 2010
+
+%\item NSERC Undergraduate Student Research Award \hfill 2010
+%\item NSERC Undergraduate Student Research Award \hfill 2009
+%2007   & The Marauder Scholar Award, McMaster University  \\
+%2007-2010 & The University (Senate) Scholarship, McMaster University \\
+%2006-2009 & The McMaster Honour Award, Level 3, McMaster University\\
+%\end{rList}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+% Teaching Experience 														      		     %
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Teaching Experience}
+
+\begin{rSubsection}{University of British Columbia}{}{}{}
+\item Math 110 (Calculus) instructor \hfill 2019
+\item Math 180 (Calculus) recitation instructor \hfill 2018
+\item Math Undergraduate Teaching Assistant Training organizer and facilitator  \hfill 2018
+\item Math Graduate Teaching Assistant Training organizer and facilitator \hfill 2018
+%\item Math 312 (Introduction to Number Theory) teaching assistant \hfill 2018
+%\item Math Learning Centre student tutor \hfill 2017
+%\item Math 312 (Introduction to Number Theory) teaching assistant \hfill 2017
+\item Math Graduate Teaching Assistant Training facilitator  \hfill 2017
+\item Math 101 (Calculus) recitation instructor \hfill 2016
+%\item Math 103 (Calculus) Piazza teaching assistant \hfill 2016
+%\item Math Learning Centre student tutor \hfill 2016
+%\item Math 312 (Introduction to Number Theory) teaching assistant  \hfill 2016
+%\item Math 180 (Calculus) Workshop instructor \hfill 2015
+\end{rSubsection}
+
+%\begin{rSubsection}{Science World}{}{}{}
+%\item Future Science Leaders Vancouver fellow and facilitator \hfill 2019
+%\item Future Science Leaders Surrey fellow and facilitator \hfill 2018
+%\item Future Science Leaders Vancouver facilitator \hfill 2017
+%\item Future Science Leaders Vancouver facilitator \hfill 2016
+%\end{rSubsection}
+
+%\begin{rSubsection}{McMaster University}{}{}{}
+%\begin{rList}
+%\item Math 2ZZ3 (Engineering Math IV) Lab instructor \hfill 2012
+%\item Math 3CY3 (Cryptography) teaching assistant \hfill 2011
+%\item Math 1X03 (Calculus for Mathematics $\&$ Statistics) Tutorial instructor \hfill 2010
+%\item Math Help Centre student tutor \hfill 2010
+%\end{rList}
+%\end{rSubsection}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+% Volunteering																      		     %
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Services and Outreach}
+
+\begin{rSubsection}{University of British Columbia}{}{}{}
+\item Math Graduate Student Mentorship Program, organizer and mentor \hfill 2018
+\item Math Learning Centre Committee, member \hfill 2018
+\item Math Wellbeing Initiatives, organizer \hfill 2017
+\item Math Graduate Student Mentorship Program, organizer and mentor \hfill 2017
+\item Math Graduate Committee, president \hfill 2016
+\item Graduate Student Wellbeing Network, co-coordinator \hfill 2016
+\item Math Graduate Committee, president  \hfill 2015
+\end{rSubsection}
+
+\begin{rSubsection}{Science World}{}{}{}
+\item Future Science Leaders Vancouver fellow and facilitator \hfill 2019
+\item Future Science Leaders Surrey fellow and facilitator \hfill 2018
+\item Future Science Leaders Vancouver facilitator \hfill 2017
+\item Future Science Leaders Vancouver facilitator \hfill 2016
+\end{rSubsection}
+
+%\begin{rSubsection}{McMaster University}{}{}{}
+%\begin{rList}
+%\item Mathematics Student Committee, graduate representative \hfill 2011
+%\item Mathematics Student Committee, graduate representative \hfill 2010
+%\end{rList}
+%\end{rSubsection}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+% Relevant Skills      														      		     %
+%----------------------------------------------------------------------------------------------------------------------------------------------%
+
+\begin{rSection}{Relevant Skils}
+
+\begin{rSubsection}{Programming Languages}{}{}{}
+\item \textbf{Fluent:} {M}agma, SageMath, $\textsc{Matlab}$, \LaTeX
+\item \textbf{Intermediate:} Unix bash, Python
+\item \textbf{Beginner:} PARI/GP, Markdown, HTML
+\end{rSubsection}
+
+\end{rSection}
+
+\end{document}

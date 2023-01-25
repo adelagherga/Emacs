@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: header
+# key: header_
+# --
+
+/*
+`(file-name-base)`.m
+
+$0<description>
+
+Authors
+    `user-full-name` <`user-mail-address`>
+Created
+    `(format-time-string "%e %B %Y")`
+*/
+
+$1

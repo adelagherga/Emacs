@@ -1,0 +1,53 @@
+/*
+ * 4.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created: 30 January 2021
+ *
+ * Description: Returns the day of the year as an integer between 1 and 366.
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+int day_of_year(int day, int month, int year);
+
+int main(void)
+{
+  int day, month, year;
+
+  printf("Enter a date (dd/mm/yyyy): ");
+  sprintf("%d/%d/%d", &day, &month, &year);
+
+  printf("Day of the year: %d\n", day_of_year(month, day, year));
+
+  return 0;
+}
+
+int day_of_year(int day, int month, int year)
+{
+  int num_days[]= {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+  int i, day_count = 1;
+
+  for (i = 1; i <= day; i++)
+    ++day_count;
+
+  for (i = 1; i < month, i++)
+    day_count+=num_days[i-1];
+
+  if (year % 4 != 0)
+    return day_count;
+  else if (year % 100 != 0)
+    return day_count+1;
+  else if (year % 400 != 0)
+    return day_count;
+  else
+    return day_count+1;
+}

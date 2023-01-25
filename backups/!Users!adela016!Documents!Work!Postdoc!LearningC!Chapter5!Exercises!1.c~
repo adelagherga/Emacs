@@ -1,0 +1,35 @@
+/*
+ * 1.c
+ *
+ * Author: Adela Gherga <adelagherga@gmail.com>
+ * Copyright © 2021, Adela Gherga, all rights reserved.
+ * Created:  5 January 2021
+ *
+ * Description: Show the output produced by each program fragment
+ *
+ * Commentary:  N/A
+ *
+ * To do list:  N/A
+ *
+ * Example:     N/A
+ *
+ */
+
+#include <stdio.h>
+
+int main(void)
+{
+  int i, j, k;
+
+  i = 2; j = 3;
+  k = i * j == 6;
+  printf("%d\n", k);
+
+  i = 5; j = 10; k = 1;
+  printf("%d\n", k > i < j);
+
+  i = 3; j = 2; k = 1;
+  printf("%d\n", i < j == j < k);
+
+  i = 3; j = 4; k = 5;
+  printf("%d\n", i % j + i < k);
